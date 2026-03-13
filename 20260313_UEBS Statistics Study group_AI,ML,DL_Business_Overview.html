@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business AI Research Universe Panorama (Insight Edition)</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f8f9fa; margin: 0; padding: 20px; color: #333; overflow-x: hidden; }
+        h1 { text-align: center; color: #2c3e50; margin-bottom: 5px; }
+        p { text-align: center; color: #7f8c8d; margin-bottom: 15px; font-size: 0.9em; }
+        #main { width: 100%; height: 880px; background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); margin: 0 auto; border: 1px solid #e1e8ed; transition: width 0.3s; }
+        
+        /* Tooltip Styles */
+        .tooltip-title { font-weight: bold; font-size: 1.1em; margin-bottom: 8px; border-bottom: 1px solid #ccc; padding-bottom: 4px; }
+        .tooltip-desc { margin-bottom: 10px; line-height: 1.5; }
+        .tooltip-lit { font-size: 0.9em; color: #f39c12; background-color: rgba(255, 255, 255, 0.1); padding: 5px; border-radius: 4px; border-left: 3px solid #f39c12; margin-bottom: 5px;}
+        .tooltip-click-hint { font-size: 0.85em; color: #2ecc71; font-weight: bold; margin-top: 8px; text-align: right; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
+
+        /* Sidebar Styles */
+        #sidebar { position: fixed; top: 0; right: -500px; width: 450px; height: 100vh; background-color: #ffffff; box-shadow: -5px 0 15px rgba(0,0,0,0.1); transition: right 0.3s ease-in-out; z-index: 1000; display: flex; flex-direction: column; }
+        #sidebar.active { right: 0; }
+        .sidebar-header { padding: 20px; background-color: #2c3e50; color: white; display: flex; justify-content: space-between; align-items: center; }
+        .sidebar-header h3 { margin: 0; font-size: 1.2em; }
+        .close-btn { cursor: pointer; font-size: 24px; font-weight: bold; color: #ecf0f1; transition: color 0.2s; }
+        .close-btn:hover { color: #e74c3c; }
+        .sidebar-content { padding: 25px 20px; overflow-y: auto; flex-grow: 1; background-color: #fafbfc; }
+        
+        /* Citation Card Styles */
+        .citation-item { margin-bottom: 25px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border: 1px solid #e1e4e8; }
+        
+        /* Insight Box */
+        .insight-box { background-color: #f0f7ff; border-left: 4px solid #3498db; padding: 12px; margin-bottom: 12px; border-radius: 4px; font-size: 0.95em; color: #2c3e50; line-height: 1.5; }
+        .insight-box b { color: #2980b9; }
+        
+        /* APA Text */
+        .apa-text { font-size: 0.88em; color: #5c6bc0; line-height: 1.6; border-top: 1px dashed #ecf0f1; padding-top: 10px; }
+        .apa-text a { color: #e74c3c; text-decoration: none; word-break: break-all; display: inline-block; margin-top: 5px; font-weight: 500;}
+        .apa-text a:hover { text-decoration: underline; color: #c0392b; }
+        
+        .overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.3); z-index: 999; display: none; opacity: 0; transition: opacity 0.3s; }
+        .overlay.active { display: block; opacity: 1; }
+    </style>
+</head>
+<body>
+
+    <h1>🌌 Business AI Research Universe Panorama</h1>
+    <p>Integrating underlying tech architectures, research workflows, and frontier business paradigms.<br>Drag nodes to explore connections, hover for overviews, and <b>click nodes with literature to reveal Core Insights & APA citations in the sidebar</b>.</p>
+    
+    <div id="main"></div>
+
+    <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+    <div id="sidebar">
+        <div class="sidebar-header">
+            <h3 id="sidebar-title">Node Literature</h3>
+            <span class="close-btn" onclick="closeSidebar()">&times;</span>
+        </div>
+        <div class="sidebar-content" id="sidebar-content">
+            </div>
+    </div>
+
+    <script>
+        var myChart = echarts.init(document.getElementById('main'));
+
+        var categories = [
+            { name: 'Top Vision (Root)' },
+            { name: 'Core Subfields (Fields)' },
+            { name: 'Data-Driven (ML)' },
+            { name: 'Deep Tech Foundation (DL)' },
+            { name: 'Frontier Intersections (LLMs/Agents)' },
+            { name: '📝 Research Workflows (Layer 2)' },
+            { name: '🎓 Discipline Paradigms (Layer 3)' }
+        ];
+
+        var nodes = [
+            { id: 'AI', name: 'Artificial Intelligence\n(AI)', symbolSize: 60, category: 0, des: 'Broad concept of making machines exhibit human-like intelligence.' },
+            { id: 'NLP', name: 'Natural Language\nProcessing (NLP)', symbolSize: 45, category: 1, des: 'Enabling computers to understand and generate language.' },
+            { id: 'CV', name: 'Computer Vision\n(CV)', symbolSize: 45, category: 1, des: 'Extracting information from images and video.' },
+            { id: 'ML', name: 'Machine Learning\n(ML)', symbolSize: 55, category: 2, des: 'Automatically learning patterns from data without explicit programming. Excels at structured data.' },
+            { id: 'DL', name: 'Deep Learning\n(DL)', symbolSize: 50, category: 3, des: 'Based on multi-layer neural networks, excels at unstructured data (text, images).' },
+            { id: 'Transformer', name: 'Transformer Architecture', symbolSize: 40, category: 3, des: 'The absolute cornerstone of modern large language models.' },
+            { 
+                id: 'GANs', name: 'Synthetic Data\n(GANs/SDV)', symbolSize: 50, category: 3, 
+                des: 'Used to generate synthetic images, time-series, or tabular data, solving privacy and data scarcity issues.', 
+                shortLit: 'Yoon et al. (2019) / Xu et al. (2019)',
+                citations: [
+                    '<div class="insight-box">💡 <b>Core Insight:</b> Proposes TimeGAN, solving the difficulty of generating financial time-series data while protecting privacy; a cornerstone for quant strategy backtesting using synthetic data.</div><div class="apa-text">Yoon, J., Jarrett, D., & van der Schaar, M. (2019). Time-series generative adversarial networks. In <i>Advances in Neural Information Processing Systems</i>. <br><a href="https://proceedings.neurips.cc/paper/2019/hash/c9efe5f26cd17ba6216bbe2a7d26d490-Abstract.html" target="_blank">https://proceedings.neurips.cc/paper/2019...</a></div>',
+                    '<div class="insight-box">💡 <b>Core Insight:</b> Introduces the CTGAN architecture, specifically targeting the high-fidelity synthesis of tabular data (a mix of categorical and continuous variables) commonly found in business databases.</div><div class="apa-text">Xu, L., Skoularidou, M., Cuesta-Infante, A., & Veeramachaneni, K. (2019). Modeling tabular data using conditional GAN. In <i>Advances in Neural Information Processing Systems</i>. <br><a href="https://proceedings.neurips.cc/paper/2019/hash/254ed7d2de3b23ab10936522dd547b78-Abstract.html" target="_blank">https://proceedings.neurips.cc/paper/2019...</a></div>',
+                    '<div class="insight-box">💡 <b>Core Insight:</b> Provides a comprehensive overview of synthetic data generation in finance, outlining opportunities (e.g., fraud detection, compliance testing) and critical privacy pitfalls.</div><div class="apa-text">Assefa, S. A., Dervovic, D., Mahfouz, M., Tillman, R. E., Reddy, P., & Veloso, M. (2020). Generating synthetic data in finance: Opportunities, challenges and pitfalls. In <i>Proceedings of the First ACM International Conference on AI in Finance</i>. <br><a href="https://doi.org/10.1145/3383455.3422554" target="_blank">https://doi.org/10.1145/3383455.3422554</a></div>'
+                ] 
+            },
+            { id: 'LLM', name: 'Large Language Models\n(LLMs)', symbolSize: 55, category: 4, des: 'e.g., GPT-4, Claude. The core engine of modern AI research.' },
+            { 
+                id: 'Agents', name: 'AI Agents', symbolSize: 55, category: 4, 
+                des: 'The future paradigm capable of autonomous planning and tool execution (e.g., MCP/Stata).', 
+                shortLit: 'Horton (2023) / Argyle et al. (2023)',
+                citations: [
+                    '<div class="insight-box">💡 <b>Core Insight:</b> Forward-looking proposal treating LLMs as "Homo Silicus", proving AI can simulate and replicate traditional human behavioral economics experiments computationally.</div><div class="apa-text">Horton, J. J. (2023). Large language models as simulated economic agents: What can we learn from homo silicus? (NBER Working Paper No. 31122). <br><a href="https://doi.org/10.3386/w31122" target="_blank">https://doi.org/10.3386/w31122</a></div>',
+                    '<div class="insight-box">💡 <b>Core Insight:</b> Proves that with specific persona conditioning, LLMs can accurately replicate human sample behaviors across race, class, and partisan backgrounds, providing a novel tool for social science surveys.</div><div class="apa-text">Argyle, L. P., Busby, E. C., Fulda, N., Gubler, J. R., Rytting, C., & Wingate, D. (2023). Out of one, many: Using language models to simulate human samples. <i>Political Analysis</i>, <i>31</i>(3), 337–351. <br><a href="https://doi.org/10.1017/pan.2023.2" target="_blank">https://doi.org/10.1017/pan.2023.2</a></div>'
+                ] 
+            },
+
+            { id: 'LitRev', name: 'Lit Review & Synthesis', symbolSize: 45, category: 5, des: 'Tools: ResearchRabbit, Elicit, RAG systems.\nCompresses weeks of literature mapping into days.' },
+            { 
+                id: 'DataProc', name: 'Data Collection & NLP', symbolSize: 50, category: 5, 
+                des: 'Auto-generating web scrapers, extracting data from unstructured text (e.g., SEC 10-Ks), and zero-shot classification.', 
+                shortLit: 'FinBERT / Loughran & McDonald',
+                citations: [
+                    '<div class="insight-box">💡 <b>Core Insight:</b> The modern standard for business text analysis! Pre-trained on massive financial corpora, FinBERT achieves 88% accuracy in financial sentiment classification, vastly outperforming traditional dictionaries.</div><div class="apa-text">Huang, A. H., Wang, H., & Yang, Y. (2023). FinBERT: A large language model for extracting information from financial text. <i>Contemporary Accounting Research</i>, <i>40</i>(2), 806–841. <br><a href="https://doi.org/10.1111/1911-3846.12832" target="_blank">https://doi.org/10.1111/1911-3846.12832</a></div>',
+                    '<div class="insight-box">💡 <b>Core Insight:</b> A classic pre-AI era cornerstone. Pointed out the limitations of general English dictionaries (like Harvard IV) for financial 10-K filings and pioneered finance-specific positive/negative sentiment dictionaries.</div><div class="apa-text">Loughran, T., & McDonald, B. (2011). When is a liability not a liability? Textual analysis, dictionaries, and 10-Ks. <i>The Journal of Finance</i>, <i>66</i>(1), 35–65. <br><a href="https://doi.org/10.1111/j.1540-6261.2010.01625.x" target="_blank">https://doi.org/10.1111/j.1540-6261.2010.01625.x</a></div>',
+                    '<div class="insight-box">💡 <b>Core Insight:</b> The latest comprehensive survey summarizing frontier applications of NLP and LLMs across ten core financial areas, including sentiment analysis, risk assessment, and robo-advising.</div><div class="apa-text">Du, J., Gan, Z., & Cambria, E. (2025). Natural language processing in finance: A survey. <i>Information Fusion</i>, <i>115</i>, 102755. <br><a href="https://doi.org/10.1016/j.inffus.2024.102755" target="_blank">https://doi.org/10.1016/j.inffus.2024.102755</a></div>'
+                ] 
+            },
+            { 
+                id: 'Econometrics', name: 'Econometrics & Stats Code', symbolSize: 50, category: 5, 
+                des: 'Tools: Stata-MCP, GitHub Copilot.\nCombining advanced ML packages (EconML, DoubleML) for causal inference.', 
+                shortLit: 'Bach et al. (2022) / Baiardi & Naghi (2024)',
+                citations: [
+                    '<div class="insight-box">💡 <b>Core Insight:</b> Re-ran past classic empirical studies using DML, proving that traditional OLS regressions often miss the true causal effects because they fail to capture non-linear relationships.</div><div class="apa-text">Baiardi, A., & Naghi, A. A. (2024). The value added of machine learning to causal inference: Evidence from revisited studies. <i>The Econometrics Journal</i>, <i>27</i>(2), 213–234. <br><a href="https://doi.org/10.1093/ectj/utae003" target="_blank">https://doi.org/10.1093/ectj/utae003</a></div>',
+                    '<div class="insight-box">💡 <b>Core Insight:</b> A must-have toolkit for empirical scholars. Provides an accessible, object-oriented official Python framework (DoubleML) to implement Chernozhukov\'s DML theory.</div><div class="apa-text">Bach, P., Chernozhukov, V., Kurz, M. S., & Spindler, M. (2022). DoubleML — An object-oriented implementation of double machine learning in Python. <i>Journal of Machine Learning Research</i>, <i>23</i>(53), 1–6. <br><a href="https://jmlr.org/papers/v23/21-0862.html" target="_blank">https://jmlr.org/papers/v23/21-0862.html</a></div>'
+                ] 
+            },
+            { id: 'ExpWrite', name: 'Experiment Design & Writing', symbolSize: 45, category: 5, des: 'Tools: Zotero+AI, SDV (Synthetic Data), Overleaf LaTeX integration.' },
+
+            { 
+                id: 'Finance', name: 'Accounting & Finance', symbolSize: 70, category: 6, 
+                des: 'Paradigm Shift: Complex non-linear ML models reshape asset pricing; satellite images assess climate risk; deep neural networks solve option pricing dimensionality.', 
+                shortLit: 'Gu et al. (2020) / Kelly et al. / Chen et al. (2026)',
+                citations: [
+                    '<div class="insight-box">💡 <b>Core Insight:</b> The benchmark for modern empirical asset pricing! Comprehensively proved that non-linear models (random forests, neural networks) crush traditional linear methods in measuring risk premia using massive historical US stock data.</div><div class="apa-text">Gu, S., Kelly, B., & Xiu, D. (2020). Empirical asset pricing via machine learning. <i>The Review of Financial Studies</i>, <i>33</i>(5), 2223–2273. <br><a href="https://doi.org/10.1093/rfs/hhaa009" target="_blank">https://doi.org/10.1093/rfs/hhaa009</a></div>',
+                    '<div class="insight-box">💡 <b>Core Insight:</b> Overturns the traditional finance "Occam\'s razor" (simpler is better), proving the "virtue of complexity"—massive, high-degree-of-freedom ML models often systematically outperform parsimonious ones in financial forecasting.</div><div class="apa-text">Kelly, B., Malamud, S., & Zhou, K. (2024). The virtue of complexity in return prediction. <i>The Journal of Finance</i>, <i>79</i>(1), 459–503. <br><a href="https://doi.org/10.1111/jofi.13298" target="_blank">https://doi.org/10.1111/jofi.13298</a></div>',
+                    '<div class="insight-box">💡 <b>Core Insight:</b> Breaks the limit of manual factor hunting by using Autoencoders (a deep learning method) to automatically extract latent financial factors that explain returns from massive stock characteristics.</div><div class="apa-text">Gu, S., Kelly, B., & Xiu, D. (2021). Autoencoder asset pricing models. <i>Journal of Econometrics</i>, <i>222</i>(1), 429–450. <br><a href="https://doi.org/10.1016/j.jeconom.2020.07.009" target="_blank">https://doi.org/10.1016/j.jeconom.2020.07.009</a></div>',
+                    '<div class="insight-box">💡 <b>Core Insight:</b> Innovatively treats financial term structure data (implied volatility surfaces) as images, utilizing Convolutional Neural Networks (CNNs) to learn the complex regression function mapping to future returns.</div><div class="apa-text">Kelly, B., et al. (2023). Deep Learning from Implied Volatility Surfaces (Working Paper). <br><a href="https://wp.lancs.ac.uk/fofi2024/files/2024/04/FoFI-2024-004-Teng-Andrea-Xu.pdf" target="_blank">https://wp.lancs.ac.uk/fofi2024/files/2024/04/FoFI-2024-004-Teng-Andrea-Xu.pdf</a></div>',
+                    '<div class="insight-box">💡 <b>Core Insight:</b> Introduces "deep surrogates" by using deep neural networks to pre-train economic models. This drastically reduces the computational complexity of estimating structural model parameters and effectively tackles the curse of dimensionality in option pricing.</div><div class="apa-text">Chen, H., Didisheim, A., & Scheidegger, S. (2026). Deep surrogates for finance: With an application to option pricing. <i>Journal of Financial Economics</i>, <i>177</i>, 104222. <br><a href="https://doi.org/10.1016/j.jfineco.2025.104222" target="_blank">https://doi.org/10.1016/j.jfineco.2025.104222</a></div>',
+                    '<div class="insight-box">💡 <b>Core Insight:</b> Shows how frontier NLP models empower sustainable finance. By analyzing corporate environmental disclosures via BERT, it proves extracted textual climate risks directly impact Credit Default Swap (CDS) market pricing.</div><div class="apa-text">Kölbel, J. F., Leippold, M., Rillaerts, J., & Wang, Q. (2024). Ask BERT: How regulatory disclosure of transition and physical climate risks affects the CDS term structure. <i>Journal of Financial Econometrics</i>, <i>22</i>(1), 30–69. <br><a href="https://doi.org/10.1093/jjfinec/nbad002" target="_blank">https://doi.org/10.1093/jjfinec/nbad002</a></div>'
+                ]
+            },
+            { 
+                id: 'Economics', name: 'Mgmt Sci & Economics', symbolSize: 70, category: 6, 
+                des: 'Paradigm Shift: Double Machine Learning (DML) and Causal Forests become standard; Text-as-data; LLM agent simulations.', 
+                shortLit: 'Chernozhukov (2018) / Ludwig (2024)',
+                citations: [
+                    '<div class="insight-box">💡 <b>Core Insight:</b> A masterclass paper in causal inference. Proposed the Double Machine Learning (DML) framework, perfectly solving how to ensure unbiased causal effect estimation when controlling for hundreds of complex confounding variables.</div><div class="apa-text">Chernozhukov, V., Chetverikov, D., Demirer, M., Duflo, E., Hansen, C., Newey, W., & Robins, J. (2018). Double/debiased machine learning for treatment and structural parameters. <i>The Econometrics Journal</i>, <i>21</i>(1), C1–C68. <br><a href="https://doi.org/10.1111/ectj.12097" target="_blank">https://doi.org/10.1111/ectj.12097</a></div>',
+                    '<div class="insight-box">💡 <b>Core Insight:</b> Broke the limitation of only calculating "average treatment effects" by inventing "Causal Forests". Allows researchers to granularly estimate the heterogeneous impact of an intervention on different subpopulations.</div><div class="apa-text">Wager, S., & Athey, S. (2018). Estimation and inference of heterogeneous treatment effects using random forests. <i>Journal of the American Statistical Association</i>, <i>113</i>(523), 1228–1242. <br><a href="https://doi.org/10.1080/01621459.2017.1319839" target="_blank">https://doi.org/10.1080/01621459.2017.1319839</a></div>',
+                    '<div class="insight-box">💡 <b>Core Insight:</b> Sets the rules for using LLMs in quantitative economics research! Builds a highly operational econometric framework, answering how to rigorously use LLMs to measure text data without introducing training leakage or validation bias.</div><div class="apa-text">Ludwig, J., Mullainathan, S., & Rambachan, A. (2024). Large language models: An applied econometric framework (NBER Working Paper No. 33344). <br><a href="https://doi.org/10.3386/w33344" target="_blank">https://doi.org/10.3386/w33344</a></div>'
+                ]
+            },
+            { 
+                id: 'Marketing', name: 'Marketing', symbolSize: 70, category: 6, 
+                des: 'Paradigm Shift: XGBoost for consumer prediction; AI generates experimental stimuli and synthetic consumers; causal inference for personalization.', 
+                shortLit: 'Hitsch & Misra (2018) / Givi (2024)',
+                citations: [
+                    '<div class="insight-box">💡 <b>Core Insight:</b> The underlying logic of precision marketing targeting. Shows how to accurately estimate heterogeneous treatment effects of consumers using ML, enabling optimal personalized pricing and marketing strategies.</div><div class="apa-text">Hitsch, G. J., & Misra, S. (2018). Heterogeneous treatment effects and optimal targeting policy evaluation (SSRN Working Paper). <br><a href="https://doi.org/10.2139/ssrn.3111957" target="_blank">https://doi.org/10.2139/ssrn.3111957</a></div>',
+                    '<div class="insight-box">💡 <b>Core Insight:</b> Comprehensively discusses the paradigm of AI in marketing personalization, emphasizing the absolute core status of "causal inference" in evaluating true advertising effects and breaking recommendation system echo chambers.</div><div class="apa-text">Rafieian, O., & Yoganarasimhan, H. (2023). AI and personalization. In <i>Handbook of Marketing Analytics</i>. <br><a href="https://doi.org/10.2139/ssrn.3890226" target="_blank">https://doi.org/10.2139/ssrn.3890226</a></div>',
+                    '<div class="insight-box">💡 <b>Core Insight:</b> Sounds an alarm for researchers relying on AI-generated experimental materials: discovered the "AI-authorship effect"—when consumers/respondents know content is AI-generated, their authenticity and brand loyalty ratings plummet significantly.</div><div class="apa-text">Givi, J., Puntoni, S., & Woolley, K. (2024). The AI-authorship effect: Understanding aversion to AI-made products. <i>Journal of Business Research</i>, <i>185</i>, 114997. <br><a href="https://doi.org/10.1016/j.jbusres.2024.114997" target="_blank">https://doi.org/10.1016/j.jbusres.2024.114997</a></div>'
+                ]
+            }
+        ];
+
+        var links = [
+            { source: 'AI', target: 'ML', value: 'Contains' },
+            { source: 'AI', target: 'NLP', value: 'Parallel field' },
+            { source: 'AI', target: 'CV', value: 'Parallel field' },
+            { source: 'ML', target: 'DL', value: 'Evolves into' },
+            { source: 'DL', target: 'Transformer', value: 'Foundation' },
+            { source: 'DL', target: 'GANs', value: 'Foundation' },
+            { source: 'Transformer', target: 'LLM', value: 'Builds' },
+            { source: 'NLP', target: 'LLM', value: 'Belongs to' },
+            { source: 'LLM', target: 'Agents', value: 'Evolves to action-oriented' },
+            { source: 'LLM', target: 'LitRev', value: 'Literature synthesis', lineStyle: { color: '#2ecc71', type: 'dashed', curveness: 0.1 } },
+            { source: 'LLM', target: 'ExpWrite', value: 'Drafting papers', lineStyle: { color: '#2ecc71', type: 'dashed', curveness: 0.1 } },
+            { source: 'NLP', target: 'DataProc', value: 'Sentiment analysis', lineStyle: { color: '#2ecc71', type: 'dashed', curveness: 0.1 } },
+            { source: 'Agents', target: 'Econometrics', value: 'Automated execution', lineStyle: { color: '#2ecc71', type: 'dashed', curveness: 0.1 } },
+            { source: 'GANs', target: 'ExpWrite', value: 'Synthetic data', lineStyle: { color: '#2ecc71', type: 'dashed', curveness: 0.1 } },
+            { source: 'ML', target: 'Finance', value: 'Reshapes asset pricing', lineStyle: { color: '#1abc9c', width: 3, curveness: 0.2 } },
+            { source: 'CV', target: 'Finance', value: 'Satellite imagery', lineStyle: { color: '#1abc9c', width: 2, curveness: 0.2 } },
+            { source: 'DataProc', target: 'Finance', value: 'Processing filings', lineStyle: { color: '#1abc9c', width: 2, curveness: 0.1 } },
+            { source: 'ML', target: 'Economics', value: 'DML & Causal Forests', lineStyle: { color: '#1abc9c', width: 3, curveness: 0.2 } },
+            { source: 'Agents', target: 'Economics', value: 'Simulating economic systems', lineStyle: { color: '#1abc9c', width: 2, curveness: 0.2 } },
+            { source: 'Econometrics', target: 'Economics', value: 'Complex model estimation', lineStyle: { color: '#1abc9c', width: 2, curveness: 0.1 } },
+            { source: 'ML', target: 'Marketing', value: 'Predicting consumer behavior', lineStyle: { color: '#1abc9c', width: 3, curveness: 0.2 } },
+            { source: 'ExpWrite', target: 'Marketing', value: 'Generating stimuli', lineStyle: { color: '#1abc9c', width: 2, curveness: 0.2 } }
+        ];
+
+        var option = {
+            tooltip: {
+                backgroundColor: 'rgba(44, 62, 80, 0.95)',
+                textStyle: { color: '#fff' },
+                borderWidth: 0,
+                padding: 12,
+                formatter: function (x) {
+                    if (x.dataType === 'node') {
+                        let html = '<div style="max-width:320px; white-space:normal;">';
+                        html += '<div class="tooltip-title">' + x.data.name.replace('\n', ' ') + '</div>';
+                        html += '<div class="tooltip-desc">' + x.data.des + '</div>';
+                        if (x.data.shortLit) {
+                            html += '<div class="tooltip-lit">📄 Rep. Authors: ' + x.data.shortLit + '</div>';
+                            html += '<div class="tooltip-click-hint">🖱️ Click node to view [Core Insights] & links in sidebar</div>';
+                        }
+                        html += '</div>';
+                        return html;
+                    } else if (x.dataType === 'edge') {
+                        return 'Support Relation: ' + x.data.value;
+                    }
+                }
+            },
+            legend: [{
+                data: categories.map(function (a) { return a.name; }),
+                orient: 'horizontal', bottom: 10, itemGap: 15, textStyle: { fontSize: 13 }
+            }],
+            series: [{
+                type: 'graph', layout: 'force',
+                nodes: nodes, links: links, categories: categories,
+                roam: true, 
+                label: { show: true, position: 'inside', formatter: '{b}', fontSize: 11, color: '#fff', textBorderColor: '#000', textBorderWidth: 1.5 },
+                force: { repulsion: 4000, edgeLength: [70, 260], gravity: 0.08 },
+                lineStyle: { color: 'source', curveness: 0.2, opacity: 0.8 },
+                emphasis: { focus: 'adjacency', lineStyle: { width: 5 } }
+            }],
+            color: ['#34495e', '#3498db', '#e67e22', '#e74c3c', '#9b59b6', '#2ecc71', '#1abc9c']
+        };
+
+        myChart.setOption(option);
+
+        myChart.on('click', function (params) {
+            if (params.dataType === 'node' && params.data.citations) {
+                document.getElementById('sidebar-title').innerText = params.data.name.replace('\n', ' ') + ' - Literature Insights';
+                
+                let contentHtml = '';
+                params.data.citations.forEach(function(cite) {
+                    contentHtml += '<div class="citation-item">' + cite + '</div>';
+                });
+                
+                document.getElementById('sidebar-content').innerHTML = contentHtml;
+                document.getElementById('sidebar').classList.add('active');
+                document.getElementById('overlay').classList.add('active');
+            }
+        });
+
+        function closeSidebar() {
+            document.getElementById('sidebar').classList.remove('active');
+            document.getElementById('overlay').classList.remove('active');
+        }
+
+        window.addEventListener('resize', function() { myChart.resize(); });
+    </script>
+</body>
+</html>
