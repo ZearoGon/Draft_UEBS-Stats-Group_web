@@ -1,0 +1,2 @@
+# UEBS-Statistics-Study-Group_AI-Business-Universe
+This project, initiated by the Statistics Study Group led by PGR (PhD) students and PhD alumni from the University of Edinburgh Business School, tracks emerging AI technologies and their applications in business research. It organizes insights through a layered network map to help researchers understand the evolving AI–business research landscape.
