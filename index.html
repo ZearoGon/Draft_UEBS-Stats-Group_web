@@ -285,6 +285,42 @@
     transition: background .3s;
   }
   .hero.split .hero-carousel .dots button.on { background: rgba(255,255,255,0.95); }
+  .hero.split .hero-carousel .nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px) saturate(120%);
+    -webkit-backdrop-filter: blur(8px) saturate(120%);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: rgba(255, 255, 255, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: background 0.3s, color 0.3s, transform 0.2s, border-color 0.3s;
+    outline: none;
+    padding: 0;
+  }
+  .hero.split .hero-carousel .nav-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.45);
+    transform: translateY(-50%) scale(1.05);
+  }
+  .hero.split .hero-carousel .nav-btn:active {
+    transform: translateY(-50%) scale(0.95);
+  }
+  .hero.split .hero-carousel .nav-btn.prev {
+    left: 16px;
+  }
+  .hero.split .hero-carousel .nav-btn.next {
+    right: 16px;
+  }
   @media (max-width: 900px){
     .hero.split .hero-grid { grid-template-columns: 1fr; }
     .hero.split .hero-carousel { display: none; }
@@ -998,10 +1034,20 @@ function HeroCarousel() {
     { src: "https://pub-2f317f8151d14a0da62cf2e5fb439603.r2.dev/UK%20Finnovator_20260201.jpg", label: "2026 · UK Finnovator Winner · Birmingham" },
   ];
   const [i, setI] = useState(0);
+
   useEffect(() => {
     const id = setInterval(() => setI(n => (n + 1) % slides.length), 4200);
     return () => clearInterval(id);
-  }, []);
+  }, [i]);
+
+  const handlePrev = () => {
+    setI(n => (n - 1 + slides.length) % slides.length);
+  };
+
+  const handleNext = () => {
+    setI(n => (n + 1) % slides.length);
+  };
+
   return (
     <div className="hero-carousel">
       {slides.map((s, idx) => (
@@ -1009,6 +1055,16 @@ function HeroCarousel() {
              className={"slide" + (idx === i ? " active" : "")}
              style={{ backgroundImage: `url("${s.src}")` }} />
       ))}
+      <button className="nav-btn prev" onClick={handlePrev} aria-label="Previous Slide">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+      <button className="nav-btn next" onClick={handleNext} aria-label="Next Slide">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
       <div className="dots">
         {slides.map((_, idx) => (
           <button key={idx} className={idx === i ? "on" : ""} onClick={() => setI(idx)} aria-label={`Slide ${idx+1}`} />
