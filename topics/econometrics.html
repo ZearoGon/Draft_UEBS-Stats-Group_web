@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Econometrics Foundation — Statistics Study Group</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=Source+Sans+3:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{--bg:#f5f0e8;--fg:#1a1a1a;--accent:#0b384e;--rule:rgba(0,0,0,.12);--paper:#faf7f2}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Source Sans 3",system-ui,sans-serif;background:var(--bg);color:var(--fg);line-height:1.7}
+.topic-nav{position:sticky;top:0;z-index:100;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);background:rgba(245,240,232,.88);border-bottom:1px solid var(--rule);padding:16px 0}
+.topic-nav .inner{max-width:1080px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between}
+.topic-nav .brand{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--fg)}
+.topic-nav .brand img{height:36px}
+.topic-nav .brand-text .a{font-family:"Source Sans 3";font-weight:600;font-size:16px;letter-spacing:.04em}
+.topic-nav .brand-text .b{display:block;font-family:"Source Serif 4";font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#333}
+.topic-nav .back{font-family:"IBM Plex Mono";font-size:13px;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:var(--accent);border:1px solid var(--accent);padding:8px 20px;border-radius:100px;transition:all .2s}
+.topic-nav .back:hover{background:var(--accent);color:#fff}
+.topic-hero{padding:100px 0 60px;text-align:center}
+.topic-hero .container{max-width:800px;margin:0 auto;padding:0 32px}
+.topic-hero .eyebrow{font-family:"IBM Plex Mono";font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:18px;display:flex;align-items:center;justify-content:center;gap:10px}
+.topic-hero .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.topic-hero h1{font-family:"Source Serif 4";font-size:clamp(36px,5vw,56px);font-weight:600;line-height:1.15;margin-bottom:24px}
+.topic-hero h1 em{font-style:italic;color:var(--accent)}
+.topic-hero .desc{font-size:18px;line-height:1.8;color:#444;max-width:680px;margin:0 auto}
+.topic-content{max-width:800px;margin:0 auto;padding:0 32px 80px}
+.topic-content h2{font-family:"Source Serif 4";font-size:28px;font-weight:600;margin:48px 0 18px;padding-bottom:12px;border-bottom:1px solid var(--rule)}
+.topic-content h3{font-family:"Source Serif 4";font-size:22px;font-weight:500;margin:32px 0 14px}
+.topic-content p{font-size:17px;line-height:1.8;color:#333;margin-bottom:16px}
+.topic-content ul{margin:0 0 20px 28px;font-size:17px;line-height:1.9;color:#333}
+.topic-content .post-card{border:1px solid var(--rule);border-radius:8px;padding:24px 28px;margin:20px 0;background:var(--paper);transition:box-shadow .2s}
+.topic-content .post-card:hover{box-shadow:0 4px 20px rgba(0,0,0,.06)}
+.topic-content .post-card .cat{font-family:"IBM Plex Mono";font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.topic-content .post-card h4{font-family:"Source Serif 4";font-size:20px;font-weight:500;margin-bottom:8px}
+.topic-content .post-card p{font-size:15px;color:#555;margin-bottom:0}
+.topic-footer{text-align:center;padding:40px 0;border-top:1px solid var(--rule);font-family:"IBM Plex Mono";font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#888}
+.related-topics{max-width:800px;margin:0 auto 60px;padding:0 32px}
+.related-topics h2{font-family:"Source Serif 4";font-size:28px;font-weight:600;margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid var(--rule)}
+.related-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
+.related-grid a{display:block;text-decoration:none;border:1px solid var(--rule);border-radius:8px;padding:24px;background:var(--paper);transition:all .2s;color:var(--fg)}
+.related-grid a:hover{border-color:var(--accent);box-shadow:0 4px 16px rgba(0,0,0,.06)}
+.related-grid a .label{font-family:"IBM Plex Mono";font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.related-grid a .name{font-family:"Source Serif 4";font-size:18px;font-weight:500}
+</style>
+</head>
+<body>
+<nav class="topic-nav">
+  <div class="inner">
+    <a href="../index.html" class="brand">
+      <img src="https://pub-b81c5cb2cfb84660aab0debca4907696.r2.dev/UEBS_logo.svg" alt="UEBS Logo" />
+      <div class="brand-text">
+        <span class="a">Statistics</span>
+        <span class="b">Study Group</span>
+      </div>
+    </a>
+    <a href="../index.html#about" class="back">← Back to Home</a>
+  </div>
+</nav>
+
+<section class="topic-hero">
+  <div class="container">
+    <div class="eyebrow">
+      <span class="dot"></span>
+      <span>Research Topic</span>
+    </div>
+    <h1><em>Econometrics</em> Foundation</h1>
+    <p class="desc">
+      Econometrics is a fundamental discipline that bridges economics and statistics. It seeks to provide empirical content to economic theories by applying statistical methods to economic data. Econometric studies aim to quantify economic relationships, test hypotheses, and forecast future trends using real-world data. Statistical models and estimation techniques are intensively used to analyze economic phenomena and inform policy decisions.
+    </p>
+  </div>
+</section>
+
+<div class="topic-content">
+  <h2>Key Concepts & Frameworks</h2>
+  <p>We summarize the important econometric concepts, frameworks, tools and methodologies below. The econometrics section covers a range of fundamental techniques used in empirical research across business disciplines.</p>
+
+  <h3>Core Areas</h3>
+  <ul>
+    <li><strong>Ordinary Least Squares (OLS)</strong> — The foundational regression technique for estimating linear relationships</li>
+    <li><strong>Instrumental Variables (IV)</strong> — Addressing endogeneity through external instruments</li>
+    <li><strong>Panel Data Methods</strong> — Fixed and random effects for longitudinal data analysis</li>
+    <li><strong>Maximum Likelihood Estimation (MLE)</strong> — Parametric estimation under distributional assumptions</li>
+    <li><strong>Generalized Method of Moments (GMM)</strong> — Flexible estimation using moment conditions</li>
+    <li><strong>Time Series Analysis</strong> — ARIMA, VAR, and cointegration methods</li>
+  </ul>
+
+  <h2>Related Talks</h2>
+  <div class="post-card">
+    <div class="cat">Talk · Yifan Qi</div>
+    <h4>Econometrics Foundation 1</h4>
+    <p>Introduction to core econometric concepts and OLS estimation — <a href="https://www.dropbox.com/scl/fi/a4kh4t1u07wja5dmhgt0a/Econometric-Foundation_Discuss1_Yifan-Qi.pdf?rlkey=jwqwy981fi4j1mrttryjvs8a1&st=k885ao04&dl=0" target="_blank">Download notes →</a></p>
+  </div>
+  <div class="post-card">
+    <div class="cat">Talk · Ke Bi</div>
+    <h4>Econometrics Foundation 2</h4>
+    <p>Deep dive into instrumental variables and endogeneity — <a href="https://www.dropbox.com/scl/fi/11l9de4k067q0pdmfertl/IV.pptx?rlkey=2huic7f23bcvs0zfut7ernmsr&st=ulk4cqym&dl=0" target="_blank">Download notes →</a></p>
+  </div>
+  <div class="post-card">
+    <div class="cat">Talk · Ke Bi</div>
+    <h4>Difference-in-Differences</h4>
+    <p>Causal inference using the DiD methodology — <a href="https://www.dropbox.com/scl/fi/fux8sj0ldcdlmhj8k6s5l/DiD.pdf?rlkey=61ymfgxyzny8l3q4v4skfrtgl&st=v0dtd0vf&dl=0" target="_blank">Download notes →</a></p>
+  </div>
+  <div class="post-card">
+    <div class="cat">Talk · Yizhuo Hu</div>
+    <h4>Maximum Likelihood Estimation</h4>
+    <p>Parametric estimation techniques and applications — <a href="https://www.dropbox.com/scl/fi/f1pt2cokqsllraxqbp7hp/Maximum-Likelihood-Estimation.pdf?rlkey=uwqzcfc3ayx162ct2csrfx6ni&st=h1cfev32&dl=0" target="_blank">Download notes →</a></p>
+  </div>
+</div>
+
+<div class="related-topics">
+  <h2>Related Topics</h2>
+  <div class="related-grid">
+    <a href="asset-pricing.html">
+      <div class="label">Finance</div>
+      <div class="name">Asset Pricing</div>
+    </a>
+    <a href="credit-research.html">
+      <div class="label">Finance</div>
+      <div class="name">Credit Research</div>
+    </a>
+    <a href="risk-management.html">
+      <div class="label">Finance</div>
+      <div class="name">Risk Management</div>
+    </a>
+    <a href="statistical-methods.html">
+      <div class="label">Methodology</div>
+      <div class="name">Statistical Methods</div>
+    </a>
+  </div>
+</div>
+
+<footer class="topic-footer">
+  Statistics Study Group · University of Edinburgh Business School · © 2026
+</footer>
+</body>
+</html>

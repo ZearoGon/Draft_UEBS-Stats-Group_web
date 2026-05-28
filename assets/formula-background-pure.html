@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formula Background · Pure</title>
+
+<!-- KaTeX -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.querySelector('.formula-bg'), {delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}], throwOnError:false});"></script>
+
+<!-- 字体：Computer Modern（LaTeX 原生字体）+ Crimson Pro 作为后备 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vsalvino/computer-modern@main/fonts/serif.css">
+
+<style>
+  /* ============================================================
+     LATEX FORMULA BACKGROUND · 独立背景组件
+     ———————————————————————————————————————————————————————
+     用法：
+       <div class="formula-bg" aria-hidden="true"> ... </div>
+     可挂在 body、任意 section 或容器中作为装饰背景
+  ============================================================ */
+
+  .formula-bg{
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+
+    --paper:         #fbfaf6;
+    --paper-grain:   rgba(180,165,130,0.04);
+    --ink:           #1c1c1c;
+    --ink-muted:     rgba(28,28,28,0.055);
+    --ink-faint:     rgba(28,28,28,0.035);
+    --ink-tag:       rgba(28,28,28,0.18);
+    --rule:          rgba(28,28,28,0.1);
+  }
+
+  .formula-bg::before{
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 15% 20%, var(--paper-grain), transparent 50%),
+      radial-gradient(ellipse at 85% 60%, var(--paper-grain), transparent 50%),
+      var(--paper);
+    z-index: -1;
+  }
+
+  .formula-bg::after{
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 1px;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      var(--rule) 8%,
+      var(--rule) 92%,
+      transparent 100%
+    );
+    opacity: 0.4;
+  }
+
+  .formula-bg__column{
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 48%;
+    overflow: visible;
+  }
+  .formula-bg__column--left  { left: 0; }
+  .formula-bg__column--right { right: 0; }
+
+  .formula-bg__header{
+    position: absolute;
+    top: 32px;
+    font-family: 'Latin Modern Roman', 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: var(--ink-tag);
+    text-transform: uppercase;
+    padding-bottom: 6px;
+    border-bottom: 0.5px solid var(--rule);
+    width: 80%;
+  }
+  .formula-bg__column--left  .formula-bg__header{ left:  5%; text-align: left; }
+  .formula-bg__column--right .formula-bg__header{ right: 5%; text-align: right; }
+
+  .formula-bg__header .pagenum{
+    float: right;
+    font-style: normal;
+    font-variant-numeric: oldstyle-nums;
+  }
+  .formula-bg__column--right .formula-bg__header .pagenum{
+    float: left;
+  }
+
+  .fb-item{
+    position: absolute;
+    color: var(--ink-muted);
+    font-family: 'Latin Modern Roman', 'Crimson Pro', 'Times New Roman', serif;
+    white-space: nowrap;
+    user-select: none;
+    will-change: transform;
+  }
+  .fb-item .katex,
+  .fb-item .katex *{
+    color: inherit !important;
+    font-family: 'Latin Modern Math', 'KaTeX_Main', 'Latin Modern Roman', serif !important;
+  }
+
+  .fb-item--xs{ font-size: 15px; color: var(--ink-faint); }
+  .fb-item--sm{ font-size: 20px; }
+  .fb-item--md{ font-size: 28px; }
+  .fb-item--lg{ font-size: 40px; }
+  .fb-item--xl{ font-size: 54px; color: var(--ink-muted); }
+
+  .fb-eq-num{
+    position: absolute;
+    font-family: 'Latin Modern Roman', 'Crimson Pro', serif;
+    font-size: 11px;
+    color: var(--ink-tag);
+    font-variant-numeric: oldstyle-nums;
+    user-select: none;
+    will-change: transform;
+  }
+
+  .fb-label{
+    position: absolute;
+    font-family: 'Latin Modern Roman', 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--ink-tag);
+    letter-spacing: 0.03em;
+    user-select: none;
+    will-change: transform;
+  }
+  .fb-label::before{
+    content: '§ ';
+    font-style: normal;
+  }
+
+  /* ============================================================
+     基础重置 —— 仅提供给 demo 的滚动容器
+  ============================================================ */
+  *{ box-sizing: border-box; margin: 0; padding: 0; }
+  html{ scroll-behavior: smooth; }
+  body{
+    background: #fbfaf6;
+    overflow-x: hidden;
+  }
+
+  /* 页面包装：提供相对定位 + 足够的滚动高度以触发视差 */
+  .page-wrap{
+    position: relative;
+    min-height: 420vh;
+  }
+
+  @media (max-width: 900px){
+    .formula-bg__column{ width: 50%; }
+    .fb-item--xl{ font-size: 36px; }
+    .fb-item--lg{ font-size: 28px; }
+    .fb-item--md{ font-size: 20px; }
+    .fb-item--sm{ font-size: 16px; }
+  }
+  @media (max-width: 640px){
+    .formula-bg__column{ display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+
+  <!-- ============================================================
+       FORMULA BACKGROUND COMPONENT · 可直接复制复用
+  ============================================================ -->
+  <div class="formula-bg" aria-hidden="true">
+
+    <!-- 左栏 · 计量经济学 -->
+    <div class="formula-bg__column formula-bg__column--left">
+
+      <div class="formula-bg__header" data-speed="0.05">
+        Econometrica · Frequentist Inference
+        <span class="pagenum">i</span>
+      </div>
+
+      <!-- 单元 1 · Linear Regression  [6% – 18%] -->
+      <div class="fb-label"                style="top:  6%; left: 6%;"  data-speed="0.18">Linear Regression</div>
+      <div class="fb-item fb-item--xl"     style="top:  9%; left: 4%;"  data-speed="0.12">$\hat{\beta} = (X'X)^{-1}X'y$</div>
+      <div class="fb-eq-num"               style="top: 12%; right: 4%;" data-speed="0.12">(1.1)</div>
+      <div class="fb-item fb-item--sm"     style="top: 16%; left: 30%;" data-speed="0.34">$E[u_i \mid X] = 0$</div>
+
+      <!-- 单元 2 · Model Equation  [21% – 28%] -->
+      <div class="fb-item fb-item--md"     style="top: 22%; left: 6%;"  data-speed="0.28">$y_i = \beta_0 + \beta_1 x_i + u_i$</div>
+
+      <!-- 单元 3 · Variance Estimation  [31% – 46%] -->
+      <div class="fb-label"                style="top: 31%; left: 6%;"  data-speed="0.16">Variance Estimation</div>
+      <div class="fb-item fb-item--lg"     style="top: 34%; left: 3%;"  data-speed="0.14">$\text{Var}(\hat{\beta}) = \sigma^2(X'X)^{-1}$</div>
+      <div class="fb-eq-num"               style="top: 38%; right: 4%;" data-speed="0.14">(1.2)</div>
+      <div class="fb-item fb-item--xs"     style="top: 41%; left: 32%;" data-speed="0.40">$\Omega = \sum_i \hat{u}_i^2 x_i x_i'$</div>
+      <div class="fb-item fb-item--md"     style="top: 43%; left: 5%;"  data-speed="0.30">$\text{Var}_{HC} = (X'X)^{-1}\Omega(X'X)^{-1}$</div>
+
+      <!-- 单元 4 · Instrumental Variables  [54% – 66%] -->
+      <div class="fb-label"                style="top: 54%; left: 6%;"  data-speed="0.18">Instrumental Variables</div>
+      <div class="fb-item fb-item--lg"     style="top: 57%; left: 4%;"  data-speed="0.16">$\hat{\beta}_{2SLS} = (X'P_Z X)^{-1}X'P_Z y$</div>
+      <div class="fb-eq-num"               style="top: 61%; right: 4%;" data-speed="0.16">(2.1)</div>
+      <div class="fb-item fb-item--sm"     style="top: 64%; left: 28%;" data-speed="0.34">$P_Z = Z(Z'Z)^{-1}Z'$</div>
+
+      <!-- 单元 5 · Asymptotic Theory  [72% – 84%] -->
+      <div class="fb-label"                style="top: 72%; left: 6%;"  data-speed="0.20">Asymptotic Theory</div>
+      <div class="fb-item fb-item--xl"     style="top: 75%; left: 3%;"  data-speed="0.10">$\sqrt{n}(\hat{\beta}-\beta) \xrightarrow{d} N(0,V)$</div>
+      <div class="fb-eq-num"               style="top: 80%; right: 4%;" data-speed="0.10">(3.1)</div>
+      <div class="fb-item fb-item--sm"     style="top: 83%; left: 26%;" data-speed="0.32">$\dfrac{\partial \log L}{\partial \theta} = 0$</div>
+
+      <!-- 单元 6 · Causal Inference  [90% – 106%] -->
+      <div class="fb-label"                style="top:  90%; left: 6%;"  data-speed="0.22">Causal Inference</div>
+      <div class="fb-item fb-item--lg"     style="top:  93%; left: 3%;"  data-speed="0.14">$\text{ATE} = E[Y(1) - Y(0)]$</div>
+      <div class="fb-eq-num"               style="top:  97%; right: 4%;" data-speed="0.14">(4.1)</div>
+      <div class="fb-item fb-item--md"     style="top: 101%; left: 7%;"  data-speed="0.28">$\hat{\tau}_{DID} = \Delta\bar{Y}_{tr} - \Delta\bar{Y}_{ct}$</div>
+
+      <!-- 单元 7 · Hypothesis Testing  [112% – 132%] -->
+      <div class="fb-label"                style="top: 112%; left: 6%;"  data-speed="0.18">Hypothesis Testing</div>
+      <div class="fb-item fb-item--lg"     style="top: 115%; left: 4%;"  data-speed="0.16">$W = (R\hat{\beta}-r)'[R\hat{V}R']^{-1}(R\hat{\beta}-r)$</div>
+      <div class="fb-item fb-item--sm"     style="top: 121%; left: 30%;" data-speed="0.36">$t = \dfrac{\hat{\beta}-\beta_0}{SE(\hat{\beta})}$</div>
+      <div class="fb-item fb-item--md"     style="top: 125%; left: 6%;"  data-speed="0.30">$R^2 = 1 - \dfrac{SSR}{SST}$</div>
+
+      <!-- 单元 8 · Information Matrix  [138% – 150%] -->
+      <div class="fb-label"                style="top: 138%; left: 6%;"  data-speed="0.20">Information Matrix</div>
+      <div class="fb-item fb-item--xl"     style="top: 141%; left: 4%;"  data-speed="0.12">$I(\theta) = -E\!\left[\dfrac{\partial^2 \log L}{\partial \theta \partial \theta'}\right]$</div>
+      <div class="fb-eq-num"               style="top: 147%; right: 4%;" data-speed="0.12">(5.1)</div>
+
+    </div>
+
+    <!-- 右栏 · 贝叶斯 -->
+    <div class="formula-bg__column formula-bg__column--right">
+
+      <div class="formula-bg__header" data-speed="0.05">
+        <span class="pagenum">ii</span>
+        Bayes · Posterior Inference
+      </div>
+
+      <!-- 单元 1 · Fundamental Theorem  [6% – 20%] -->
+      <div class="fb-label"                style="top:  6%; right: 6%;"  data-speed="0.18">Fundamental Theorem</div>
+      <div class="fb-item fb-item--xl"     style="top:  9%; right: 4%;"  data-speed="0.13">$p(\theta\mid y) = \dfrac{p(y\mid\theta)\,p(\theta)}{p(y)}$</div>
+      <div class="fb-eq-num"               style="top: 13%; left: 4%;"   data-speed="0.13">(1.1)</div>
+      <div class="fb-item fb-item--sm"     style="top: 17%; right: 30%;" data-speed="0.34">$\pi(\theta\mid y) \propto L(\theta)\pi(\theta)$</div>
+
+      <!-- 单元 2 · Marginal Likelihood  [24% – 30%] -->
+      <div class="fb-item fb-item--md"     style="top: 25%; right: 6%;"  data-speed="0.28">$p(y) = \int p(y\mid\theta)p(\theta)\,d\theta$</div>
+
+      <!-- 单元 3 · Conjugate Priors  [34% – 50%] -->
+      <div class="fb-label"                style="top: 34%; right: 6%;"  data-speed="0.16">Conjugate Priors</div>
+      <div class="fb-item fb-item--lg"     style="top: 37%; right: 3%;"  data-speed="0.15">$\theta\mid y \sim \text{Beta}(\alpha+y,\,\beta+n-y)$</div>
+      <div class="fb-eq-num"               style="top: 41%; left: 4%;"   data-speed="0.15">(2.1)</div>
+      <div class="fb-item fb-item--md"     style="top: 44%; right: 5%;"  data-speed="0.30">$\mu_n = \dfrac{\sigma^2\mu_0 + n\tau_0^2\bar{y}}{\sigma^2 + n\tau_0^2}$</div>
+      <div class="fb-item fb-item--xs"     style="top: 48%; right: 32%;" data-speed="0.40">$\tau_n^2 = \dfrac{\sigma^2\tau_0^2}{\sigma^2 + n\tau_0^2}$</div>
+
+      <!-- 单元 4 · Model Comparison  [56% – 70%] -->
+      <div class="fb-label"                style="top: 56%; right: 6%;"  data-speed="0.18">Model Comparison</div>
+      <div class="fb-item fb-item--lg"     style="top: 59%; right: 4%;"  data-speed="0.14">$BF_{12} = \dfrac{p(y\mid M_1)}{p(y\mid M_2)}$</div>
+      <div class="fb-eq-num"               style="top: 63%; left: 4%;"   data-speed="0.14">(3.1)</div>
+      <div class="fb-item fb-item--md"     style="top: 67%; right: 5%;"  data-speed="0.30">$p(\tilde{y}\mid y) = \int p(\tilde{y}\mid\theta)p(\theta\mid y)d\theta$</div>
+
+      <!-- 单元 5 · MCMC Methods  [76% – 92%] -->
+      <div class="fb-label"                style="top: 76%; right: 6%;"  data-speed="0.20">MCMC Methods</div>
+      <div class="fb-item fb-item--xl"     style="top: 79%; right: 3%;"  data-speed="0.11">$\alpha = \min\!\left(1,\,\dfrac{p(\theta^*\mid y)q(\theta\mid\theta^*)}{p(\theta\mid y)q(\theta^*\mid\theta)}\right)$</div>
+      <div class="fb-eq-num"               style="top: 85%; left: 4%;"   data-speed="0.11">(4.1)</div>
+      <div class="fb-item fb-item--sm"     style="top: 89%; right: 28%;" data-speed="0.36">$\theta^{(t+1)} \sim q(\cdot\mid\theta^{(t)})$</div>
+
+      <!-- 单元 6 · Variational Inference  [96% – 114%] -->
+      <div class="fb-label"                style="top:  96%; right: 6%;"  data-speed="0.22">Variational Inference</div>
+      <div class="fb-item fb-item--lg"     style="top:  99%; right: 3%;"  data-speed="0.14">$KL(q\,\|\,p) = \int q(\theta)\log\dfrac{q(\theta)}{p(\theta)}d\theta$</div>
+      <div class="fb-eq-num"               style="top: 103%; left: 4%;"   data-speed="0.14">(5.1)</div>
+      <div class="fb-item fb-item--md"     style="top: 107%; right: 5%;"  data-speed="0.28">$\mathcal{L}(q) = E_q[\log p(y,\theta)] - E_q[\log q]$</div>
+
+      <!-- 单元 7 · MAP Estimation  [118% – 124%] -->
+      <div class="fb-item fb-item--sm"     style="top: 118%; right: 6%;"  data-speed="0.36">$\hat{\theta}_{MAP} = \arg\max_\theta\, p(\theta\mid y)$</div>
+
+      <!-- 单元 8 · Bayesian Regression  [130% – 150%] -->
+      <div class="fb-label"                style="top: 130%; right: 6%;"  data-speed="0.18">Bayesian Regression</div>
+      <div class="fb-item fb-item--lg"     style="top: 133%; right: 4%;"  data-speed="0.16">$\beta\mid y \sim N(\beta_n, \Sigma_n)$</div>
+      <div class="fb-eq-num"               style="top: 137%; left: 4%;"   data-speed="0.16">(6.1)</div>
+      <div class="fb-item fb-item--md"     style="top: 141%; right: 5%;"  data-speed="0.30">$\Sigma_n = (\Sigma_0^{-1} + \sigma^{-2}X'X)^{-1}$</div>
+      <div class="fb-item fb-item--xl"     style="top: 147%; right: 4%;"  data-speed="0.12">$E[\theta\mid y] = \int \theta\, p(\theta\mid y)\, d\theta$</div>
+      <div class="fb-eq-num"               style="top: 153%; left: 4%;"   data-speed="0.12">(7.1)</div>
+
+    </div>
+  </div>
+  <!-- ============================================================
+       END BACKGROUND COMPONENT
+  ============================================================ -->
+
+</div>
+
+<script>
+  // —— 滚动视差 ——
+  const parallaxItems = document.querySelectorAll('.formula-bg [data-speed]');
+
+  let ticking = false;
+  function updateParallax(){
+    const scrollY = window.scrollY;
+    for(let i = 0; i < parallaxItems.length; i++){
+      const el = parallaxItems[i];
+      const speed = parseFloat(el.dataset.speed);
+      const offset = -scrollY * speed;
+      el.style.transform = `translate3d(0, ${offset}px, 0)`;
+    }
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', () => {
+    if(!ticking){
+      requestAnimationFrame(updateParallax);
+      ticking = true;
+    }
+  }, { passive: true });
+
+  updateParallax();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1573 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Statistics Study Group — University of Edinburgh Business School</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=Source+Sans+3:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vsalvino/computer-modern@main/fonts/serif.css">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+<!-- KaTeX -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.querySelector('.formula-bg'), {delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}], throwOnError:false});"></script>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script>
+  // ====== TWEAKS DEFAULTS ======
+  window.TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+    "theme": "ink",
+    "hero": "split"
+  }/*EDITMODE-END*/;
+</script>
+<style>
+  :root {
+    --bg: #F4EFE6;
+    --bg-2: #ECE5D6;
+    --ink: #1F1A17;
+    --ink-soft: #4A413B;
+    --ink-mute: #8A7F75;
+    --rule: #D9CFBE;
+    --paper: #FBF7EF;
+    --accent: #6E1A1A;     /* oxblood */
+    --accent-deep: #4E0F0F;
+    --accent-soft: #F0DCDC;
+    --serif: "Source Serif 4", Georgia, serif;
+    --sans: "Source Sans 3", system-ui, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, monospace;
+  }
+  /* THEME: ink/paper */
+  html[data-theme="ink"] {
+    --bg: #F2F0EC;
+    --bg-2: #E6E3DD;
+    --ink: #14130F;
+    --ink-soft: #2E2C28;
+    --ink-mute: #7A766E;
+    --rule: #CFCBC2;
+    --paper: #FAF8F4;
+    --accent: #14130F;
+    --accent-deep: #000;
+    --accent-soft: #DEDBD3;
+  }
+  /* THEME: forest */
+  html[data-theme="forest"] {
+    --bg: #EFEBDD;
+    --bg-2: #E2DDC9;
+    --ink: #161C16;
+    --ink-soft: #2F3A2F;
+    --ink-mute: #7E8278;
+    --rule: #CDC9B6;
+    --paper: #F7F3E5;
+    --accent: #2D4A2A;
+    --accent-deep: #1B3019;
+    --accent-soft: #D9E2D3;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    /* subtle paper grain */
+    background-image:
+      radial-gradient(rgba(0,0,0,0.018) 1px, transparent 1px),
+      radial-gradient(rgba(0,0,0,0.014) 1px, transparent 1px);
+    background-size: 3px 3px, 7px 7px;
+    background-position: 0 0, 1px 2px;
+    position: relative;
+  }
+
+  /* ============================================================
+     TARTAN WATERMARK — anchored to top, fades down to transparent
+  ============================================================ */
+  .tartan-bg {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1100px;
+    pointer-events: none;
+    z-index: 0;
+    background-image: url("https://pub-2f317f8151d14a0da62cf2e5fb439603.r2.dev/tartan.png");
+    background-repeat: repeat;
+    background-size: 420px 420px;
+    opacity: 0.22;
+    -webkit-mask-image: linear-gradient(to bottom,
+      rgba(0,0,0,1) 0%,
+      rgba(0,0,0,0.85) 30%,
+      rgba(0,0,0,0.4) 65%,
+      rgba(0,0,0,0) 100%);
+            mask-image: linear-gradient(to bottom,
+      rgba(0,0,0,1) 0%,
+      rgba(0,0,0,0.85) 30%,
+      rgba(0,0,0,0.4) 65%,
+      rgba(0,0,0,0) 100%);
+    mix-blend-mode: multiply;
+  }
+  html[data-theme="ink"]     .tartan-bg { opacity: 0.18; }
+  html[data-theme="oxblood"] .tartan-bg { opacity: 0.20; }
+  html[data-theme="forest"]  .tartan-bg { opacity: 0.20; }
+
+  #root { position: relative; z-index: 1; }
+  ::selection { background: var(--accent); color: var(--paper); }
+
+  a { color: inherit; }
+
+  /* utilities */
+  .mono { font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-mute); }
+  .serif { font-family: var(--serif); }
+  .rule { border: 0; border-top: 1px solid var(--rule); margin: 0; }
+
+  .container { width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 40px; }
+  @media (max-width: 720px){ .container { padding: 0 22px; } }
+
+  /* reveal */
+  .reveal { opacity: 0; transform: translateY(14px); transition: opacity .9s ease, transform .9s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* ====== NAV ====== */
+  .nav {
+    position: sticky; top: 0; z-index: 50;
+    background: color-mix(in oklab, var(--bg) 50%, transparent);
+    backdrop-filter: saturate(140%) blur(8px);
+    -webkit-backdrop-filter: saturate(140%) blur(8px);
+    border-bottom: 1px solid transparent;
+    transition: border-color .3s, background .3s;
+  }
+  .nav.scrolled { border-bottom-color: var(--rule); }
+  .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 72px;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 14px;
+    text-decoration: none; color: var(--ink);
+  }
+  .brand-mark {
+    width: 38px; height: 38px; border-radius: 50%;
+    background: var(--accent);
+    display: grid; place-items: center;
+    color: var(--paper); font-family: var(--serif); font-weight: 600;
+    font-size: 18px; letter-spacing: -0.01em;
+  }
+  .brand-text { display: flex; flex-direction: column; line-height: 1.05; }
+  .brand-text .a { font-family: var(--serif); font-weight: 600; font-size: 17px; }
+  .brand-text .b { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-mute); margin-top: 3px; }
+
+  .nav-links { display: flex; gap: 28px; align-items: center; }
+  .nav-links a {
+    text-decoration: none; color: var(--ink-soft); font-size: 14.5px;
+    position: relative; padding: 6px 0;
+  }
+  .nav-links a::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: 0;
+    height: 1px; background: var(--accent); transform: scaleX(0); transform-origin: left;
+    transition: transform .3s ease;
+  }
+  .nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
+  .nav-cta {
+    font-family: var(--sans); font-size: 14px;
+    background: var(--ink); color: var(--paper);
+    border: 0; padding: 10px 18px; border-radius: 999px;
+    cursor: pointer; transition: background .2s;
+    white-space: nowrap;
+  }
+  /* Logo is white on its source; invert to ink on our cream background */
+  .brand-logo {
+    filter: brightness(0) saturate(100%);
+  }
+  html[data-theme="oxblood"] .brand-logo { filter: brightness(0) saturate(100%) invert(10%) sepia(60%) saturate(1800%) hue-rotate(340deg); }
+  html[data-theme="forest"]  .brand-logo { filter: brightness(0) saturate(100%) invert(20%) sepia(25%) saturate(800%) hue-rotate(80deg); }
+  html[data-theme="ink"]     .brand-logo { filter: brightness(0) saturate(100%); }
+  .nav-cta:hover { background: var(--accent); }
+  .nav-mobile { display: none; }
+  @media (max-width: 900px){
+    .nav-links { display: none; }
+    .nav-mobile { display: block; }
+  }
+
+  /* ====== HERO (editorial) ====== */
+  .hero { padding: 80px 0 100px; position: relative; }
+  .hero-eyebrow { display: flex; align-items: center; gap: 14px; margin-bottom: 36px; }
+  .hero-eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+  .hero h1 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(48px, 8vw, 112px);
+    line-height: 0.98;
+    letter-spacing: -0.025em;
+    margin: 0 0 36px;
+    font-variation-settings: "opsz" 60;
+    text-wrap: balance;
+  }
+  .hero h1 em { font-style: italic; color: var(--accent); font-weight: 400; }
+  .hero-sub {
+    max-width: 640px;
+    font-size: 20px; line-height: 1.5;
+    color: var(--ink-soft);
+    text-wrap: pretty;
+  }
+  .hero-meta {
+    margin-top: 64px;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px;
+    border-top: 1px solid var(--rule); padding-top: 28px;
+  }
+  .hero-meta .cell .k { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-mute); margin-bottom: 8px; }
+  .hero-meta .cell .v { font-family: var(--serif); font-size: 28px; font-weight: 500; letter-spacing: -0.01em; }
+  .hero-meta .cell .v small { font-family: var(--mono); font-size: 12px; color: var(--ink-mute); margin-left: 4px; }
+  @media (max-width: 720px){ .hero-meta { grid-template-columns: repeat(2, 1fr); gap: 24px; } }
+
+  /* HERO variant: split */
+  .hero.split { padding: 56px 0 88px; }
+  .hero.split .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    gap: 72px;
+    align-items: center;
+  }
+  .hero.split .hero-text { max-width: 520px; }
+  .hero.split .hero-eyebrow { margin-bottom: 28px; }
+  .hero.split h1 {
+    font-size: clamp(36px, 4.6vw, 72px);
+    line-height: 1.02;
+    letter-spacing: -0.022em;
+    margin: 0 0 28px;
+  }
+  .hero.split .hero-sub {
+    font-size: 17.5px; line-height: 1.55; max-width: 46ch;
+  }
+  .hero.split .hero-carousel {
+    aspect-ratio: 4/3;
+    width: 100%;
+    border: 1px solid var(--rule);
+    position: relative;
+    overflow: hidden;
+    background: var(--bg-2);
+    box-shadow: 0 30px 60px -30px rgba(0,0,0,0.25);
+  }
+  .hero.split .hero-carousel .slide {
+    position: absolute; inset: 0;
+    background-size: cover; background-position: center;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+  }
+  .hero.split .hero-carousel .slide.active { opacity: 1; }
+  .hero.split .hero-carousel .slide::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(20,19,15,0.55) 0%, rgba(20,19,15,0) 45%);
+    pointer-events: none;
+  }
+  .hero.split .hero-carousel .caption {
+    position: absolute; left: 18px; bottom: 16px; right: 18px;
+    display: flex; align-items: flex-end; justify-content: space-between; gap: 12px;
+    font-family: var(--mono); font-size: 11px;
+    color: rgba(255,255,255,0.9);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    z-index: 2;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.4);
+  }
+  .hero.split .hero-carousel .caption .t { max-width: 70%; }
+  .hero.split .hero-carousel .dots {
+    position: absolute; top: 16px; right: 16px;
+    display: flex; gap: 6px; z-index: 2;
+  }
+  .hero.split .hero-carousel .dots button {
+    width: 22px; height: 3px; border: 0; padding: 0;
+    background: rgba(255,255,255,0.4); cursor: pointer;
+    transition: background .3s;
+  }
+  .hero.split .hero-carousel .dots button.on { background: rgba(255,255,255,0.95); }
+  @media (max-width: 900px){
+    .hero.split .hero-grid { grid-template-columns: 1fr; }
+    .hero.split .hero-carousel { display: none; }
+  }
+
+  /* ====== SECTION HEADER ====== */
+  .section { padding: 96px 0; border-top: 1px solid var(--rule); }
+  .section-header {
+    display: grid; grid-template-columns: 180px 1fr; gap: 40px;
+    margin-bottom: 56px; align-items: baseline;
+  }
+  .section-header .num { font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; color: var(--ink-mute); }
+  .section-header .num span { color: var(--accent); }
+  .section-header h2 {
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(32px, 4.4vw, 58px); line-height: 1.05;
+    letter-spacing: -0.02em; margin: 0;
+    text-wrap: balance;
+  }
+  .section-header h2 em { font-style: italic; color: var(--accent); }
+  @media (max-width: 720px){
+    .section-header { grid-template-columns: 1fr; gap: 12px; }
+    .section { padding: 72px 0; }
+  }
+
+  /* ====== ABOUT TABS ====== */
+  .tabs-row {
+    display: flex; gap: 4px; border-bottom: 1px solid var(--rule);
+    margin-bottom: 40px; flex-wrap: wrap;
+  }
+  .tab-btn {
+    background: transparent; border: 0; cursor: pointer;
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--ink-mute); padding: 14px 18px;
+    border-bottom: 2px solid transparent;
+    transition: color .2s, border-color .2s;
+    margin-bottom: -1px;
+  }
+  .tab-btn:hover { color: var(--ink-soft); }
+  .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  .about-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 60px; }
+  @media (max-width: 900px){ .about-grid { grid-template-columns: 1fr; gap: 40px; } }
+
+  .about-prose p {
+    font-family: var(--serif); font-size: 20px; line-height: 1.55;
+    color: var(--ink-soft); margin: 0 0 22px;
+    text-wrap: pretty;
+  }
+  .about-prose p:first-of-type::first-letter {
+    font-family: var(--serif); font-size: 64px; line-height: 0.85;
+    float: left; padding: 6px 12px 0 0; color: var(--accent); font-weight: 500;
+    font-variation-settings: "opsz" 60;
+  }
+  .about-aside {
+    background: var(--paper); border: 1px solid var(--rule);
+    padding: 32px; position: relative;
+  }
+  .about-aside .label { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-mute); margin-bottom: 18px; }
+  .about-aside ul { list-style: none; padding: 0; margin: 0; }
+  .about-aside li {
+    display: grid; grid-template-columns: 28px 1fr;
+    align-items: baseline; gap: 12px;
+    padding: 14px 0; border-bottom: 1px dashed var(--rule);
+    font-size: 15.5px;
+  }
+  .about-aside li:last-child { border-bottom: 0; }
+  .about-aside li .n { font-family: var(--mono); font-size: 11px; color: var(--accent); }
+  .about-aside li .t { color: var(--ink-soft); }
+
+  /* ====== COMMITTEE ====== */
+  .committee-list { border-top: 1px solid var(--rule); }
+  .member {
+    border-bottom: 1px solid var(--rule);
+    transition: background .25s;
+  }
+  .member:hover { background: var(--paper); }
+  .member-head {
+    display: grid; grid-template-columns: 60px 1.4fr 1fr 1fr 40px;
+    align-items: center; gap: 24px; padding: 22px 8px;
+    cursor: pointer; user-select: none;
+  }
+  .member-avatar {
+    width: 52px; height: 52px; border-radius: 50%;
+    background:
+      repeating-linear-gradient(45deg, var(--bg-2) 0 6px, var(--bg) 6px 12px);
+    border: 1px solid var(--rule);
+    display: grid; place-items: center;
+    font-family: var(--serif); color: var(--ink-soft); font-weight: 500; font-size: 18px;
+  }
+  .member-name { font-family: var(--serif); font-size: 22px; font-weight: 500; letter-spacing: -0.01em; }
+  .member-name .pron { font-family: var(--mono); font-size: 11px; color: var(--ink-mute); margin-left: 8px; text-transform: lowercase; letter-spacing: 0.04em; }
+  .member-role { font-family: var(--mono); font-size: 12px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; }
+  .member-field { font-size: 14.5px; color: var(--ink-soft); }
+  .member-toggle {
+    width: 30px; height: 30px; border-radius: 50%;
+    border: 1px solid var(--rule); display: grid; place-items: center;
+    transition: transform .3s, background .2s, border-color .2s;
+    color: var(--ink-soft);
+  }
+  .member.open .member-toggle { transform: rotate(45deg); background: var(--accent); border-color: var(--accent); color: var(--paper); }
+  .member-bio {
+    max-height: 0; overflow: hidden;
+    transition: max-height .5s cubic-bezier(.2,.7,.2,1);
+  }
+  .member-bio-inner {
+    display: grid; grid-template-columns: 60px 1fr 280px; gap: 24px;
+    padding: 8px 8px 32px 8px;
+  }
+  .member-bio p {
+    font-family: var(--serif); font-size: 17px; line-height: 1.6; color: var(--ink-soft);
+    margin: 0 0 16px; max-width: 60ch; text-wrap: pretty;
+  }
+  .member-bio .meta {
+    background: var(--paper); border: 1px solid var(--rule); padding: 18px;
+  }
+  .member-bio .meta .row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed var(--rule); font-size: 13.5px; }
+  .member-bio .meta .row:last-child { border: 0; }
+  .member-bio .meta .k { font-family: var(--mono); font-size: 11px; color: var(--ink-mute); text-transform: uppercase; letter-spacing: 0.06em; }
+  .member-bio .meta .v { color: var(--ink-soft); text-align: right; }
+  @media (max-width: 900px){
+    .member-head { grid-template-columns: 50px 1fr 40px; }
+    .member-field, .member-role { display: none; }
+    .member-bio-inner { grid-template-columns: 1fr; }
+  }
+
+  /* ====== EVENTS ====== */
+  .events-toolbar {
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 20px; margin-bottom: 32px;
+  }
+  .filter-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+  .chip {
+    background: transparent; border: 1px solid var(--rule);
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--ink-soft);
+    padding: 8px 14px; border-radius: 999px; cursor: pointer;
+    transition: all .2s;
+  }
+  .chip:hover { border-color: var(--ink-soft); }
+  .chip.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .events-count { font-family: var(--mono); font-size: 12px; color: var(--ink-mute); }
+
+  .event-row {
+    display: grid; grid-template-columns: 110px 1.6fr 1fr 130px 40px;
+    gap: 28px; align-items: center;
+    padding: 26px 0; border-bottom: 1px solid var(--rule);
+    transition: padding .25s, background .25s;
+    cursor: pointer;
+  }
+  .event-row:first-child { border-top: 1px solid var(--rule); }
+  .event-row:hover { padding-left: 12px; background: linear-gradient(90deg, var(--paper), transparent); }
+  .event-date {
+    text-align: center; padding: 8px 0;
+    border-left: 2px solid var(--accent);
+  }
+  .event-date .d { font-family: var(--serif); font-size: 36px; font-weight: 500; line-height: 1; }
+  .event-date .m { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-mute); margin-top: 4px; }
+  .event-title { font-family: var(--serif); font-size: 22px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.2; }
+  .event-title .kicker { display: block; font-family: var(--mono); font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; font-weight: 400; }
+  .event-loc { font-size: 14px; color: var(--ink-soft); }
+  .event-loc .pin { font-family: var(--mono); font-size: 10.5px; color: var(--ink-mute); text-transform: uppercase; letter-spacing: 0.06em; display: block; margin-bottom: 4px; }
+  .event-time { font-family: var(--mono); font-size: 12.5px; color: var(--ink-soft); }
+  .event-arrow { color: var(--ink-mute); transition: transform .25s, color .25s; }
+  .event-row:hover .event-arrow { transform: translateX(6px); color: var(--accent); }
+  @media (max-width: 900px){
+    .event-row { grid-template-columns: 80px 1fr 32px; gap: 18px; padding: 20px 0; }
+    .event-loc, .event-time { display: none; }
+    .event-date .d { font-size: 28px; }
+  }
+
+  .event-empty {
+    padding: 60px 0; text-align: center;
+    font-family: var(--serif); font-style: italic; font-size: 20px; color: var(--ink-mute);
+  }
+
+  /* ====== NEWS ====== */
+  .news-toolbar { display: flex; gap: 16px; margin-bottom: 36px; align-items: center; }
+  .search-box {
+    flex: 1; max-width: 460px;
+    display: flex; align-items: center; gap: 10px;
+    border-bottom: 1px solid var(--rule); padding: 10px 0;
+    transition: border-color .2s;
+  }
+  .search-box:focus-within { border-color: var(--accent); }
+  .search-box svg { color: var(--ink-mute); flex-shrink: 0; }
+  .search-box input {
+    flex: 1; border: 0; background: transparent; outline: none;
+    font-family: var(--sans); font-size: 16px; color: var(--ink);
+  }
+  .search-box input::placeholder { color: var(--ink-mute); font-style: italic; }
+
+  .news-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+    border-top: 1px solid var(--rule);
+  }
+  @media (max-width: 900px){ .news-grid { grid-template-columns: 1fr; } }
+
+  .news-card {
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 28px 28px 32px;
+    cursor: pointer;
+    transition: background .25s;
+    display: flex; flex-direction: column;
+    min-height: 360px;
+  }
+  .news-card:hover { background: var(--paper); }
+  .news-grid .news-card:nth-child(3n) { border-right: 0; }
+  .news-card .img {
+    aspect-ratio: 16/10; margin: -28px -28px 22px;
+    background: repeating-linear-gradient(135deg, var(--bg-2) 0 12px, var(--bg) 12px 24px);
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+  }
+  .news-card .img::after {
+    content: attr(data-label);
+    position: absolute; left: 14px; bottom: 12px;
+    font-family: var(--mono); font-size: 10.5px; color: var(--ink-mute);
+    text-transform: uppercase; letter-spacing: 0.06em;
+  }
+  .news-card .meta {
+    font-family: var(--mono); font-size: 11px; color: var(--ink-mute);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    display: flex; gap: 12px; margin-bottom: 14px;
+  }
+  .news-card .meta .cat { color: var(--accent); }
+  .news-card h3 {
+    font-family: var(--serif); font-weight: 500;
+    font-size: 22px; line-height: 1.2; letter-spacing: -0.01em;
+    margin: 0 0 12px; text-wrap: balance;
+  }
+  .news-card p {
+    font-size: 14.5px; color: var(--ink-soft);
+    line-height: 1.5; margin: 0 0 auto;
+    text-wrap: pretty;
+  }
+  .news-card .read {
+    margin-top: 18px;
+    font-family: var(--mono); font-size: 11px;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--accent);
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+
+  /* ====== JOIN FORM ====== */
+  .join {
+    background: var(--ink); color: var(--paper);
+    margin-top: 0;
+    padding: 110px 0;
+  }
+  .join .container { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+  .join h2 {
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(36px, 4.5vw, 64px); line-height: 1.02; letter-spacing: -0.02em;
+    margin: 0 0 24px; color: var(--paper);
+    text-wrap: balance;
+  }
+  .join h2 em { font-style: italic; color: color-mix(in oklab, var(--accent) 70%, white); }
+  .join .lead { font-family: var(--serif); font-size: 19px; line-height: 1.55; color: rgba(255,255,255,0.75); max-width: 42ch; }
+  .join .num { color: rgba(255,255,255,0.5); }
+  .join .section-header { margin-bottom: 0; }
+  .join .section-header h2 em { color: color-mix(in oklab, var(--accent) 70%, white); }
+
+  form.join-form { display: grid; gap: 22px; }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field label { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.55); }
+  .field input, .field select, .field textarea {
+    background: transparent; border: 0; border-bottom: 1px solid rgba(255,255,255,0.25);
+    color: var(--paper); font-family: var(--sans); font-size: 17px;
+    padding: 10px 0; outline: none; transition: border-color .2s;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus { border-bottom-color: color-mix(in oklab, var(--accent) 70%, white); }
+  .field input::placeholder, .field textarea::placeholder { color: rgba(255,255,255,0.35); }
+  .field select option { background: var(--ink); color: var(--paper); }
+  .field.error input, .field.error select, .field.error textarea { border-bottom-color: #E08585; }
+  .field .err { font-family: var(--mono); font-size: 11px; color: #E08585; margin-top: 4px; }
+
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  @media (max-width: 720px){ .field-row { grid-template-columns: 1fr; } .join .container { grid-template-columns: 1fr; gap: 40px; } }
+
+  .submit-row { display: flex; align-items: center; justify-content: space-between; margin-top: 14px; gap: 18px; flex-wrap: wrap; }
+  .submit-btn {
+    background: var(--paper); color: var(--ink);
+    border: 0; padding: 14px 26px; border-radius: 999px;
+    font-family: var(--sans); font-size: 15px; font-weight: 500;
+    cursor: pointer; transition: background .2s, transform .2s;
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .submit-btn:hover { background: color-mix(in oklab, var(--accent) 70%, white); color: var(--paper); }
+  .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .form-note { font-family: var(--mono); font-size: 11px; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.06em; }
+  .form-success {
+    padding: 28px; border: 1px dashed rgba(255,255,255,0.35);
+    font-family: var(--serif); font-style: italic; font-size: 18px;
+    color: var(--paper);
+  }
+
+  /* ====== FOOTER ====== */
+  .footer {
+    background: var(--bg);
+    padding: 28px 0 22px;
+    border-top: 1px solid var(--rule);
+  }
+  .footer-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 24px; flex-wrap: wrap;
+  }
+  .footer-left { display: flex; align-items: center; gap: 16px; font-family: var(--mono); font-size: 11.5px; color: var(--ink-mute); text-transform: uppercase; letter-spacing: 0.08em; }
+  .footer-left .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); }
+  .footer-links { display: flex; gap: 22px; }
+  .footer-links a { font-family: var(--mono); font-size: 11.5px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.08em; text-decoration: none; }
+  .footer-links a:hover { color: var(--accent); }
+
+  /* ====== TWEAKS PANEL ====== */
+  .tweaks-panel {
+    position: fixed; right: 20px; bottom: 20px; z-index: 100;
+    background: var(--paper); border: 1px solid var(--rule);
+    padding: 18px; width: 260px;
+    font-family: var(--sans); font-size: 13px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+    display: none;
+  }
+  .tweaks-panel.show { display: block; }
+  .tweaks-panel .tw-title { font-family: var(--serif); font-size: 18px; font-weight: 500; margin: 0 0 4px; }
+  .tweaks-panel .tw-sub { font-family: var(--mono); font-size: 10.5px; color: var(--ink-mute); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px; }
+  .tweaks-panel .tw-group { margin-bottom: 14px; }
+  .tweaks-panel .tw-label { font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-mute); margin-bottom: 8px; }
+  .tw-swatches { display: flex; gap: 8px; }
+  .tw-swatch {
+    width: 32px; height: 32px; border-radius: 50%; cursor: pointer;
+    border: 2px solid transparent; outline: 1px solid var(--rule);
+    transition: outline-color .2s;
+  }
+  .tw-swatch.on { outline-color: var(--ink); outline-width: 2px; }
+  .tw-segmented { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; }
+  .tw-segmented button {
+    background: transparent; border: 0; padding: 8px 10px;
+    font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em;
+    color: var(--ink-soft); cursor: pointer;
+  }
+  .tw-segmented button.on { background: var(--ink); color: var(--paper); }
+
+  /* hide scrollbar weirdness on hero */
+  body { overflow-x: hidden; }
+
+  /* ============================================================
+     LATEX FORMULA BACKGROUND
+     ============================================================ */
+  .formula-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+
+    --paper-grain:   rgba(180,165,130,0.04);
+    --ink-muted:     color-mix(in oklab, var(--ink) 5.5%, transparent);
+    --ink-faint:     color-mix(in oklab, var(--ink) 3.5%, transparent);
+    --ink-tag:       color-mix(in oklab, var(--ink) 18%, transparent);
+    --rule:          color-mix(in oklab, var(--ink) 10%, transparent);
+  }
+
+  .formula-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 15% 20%, var(--paper-grain), transparent 50%),
+      radial-gradient(ellipse at 85% 60%, var(--paper-grain), transparent 50%);
+    z-index: -1;
+  }
+
+  .formula-bg::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 1px;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      var(--rule) 8%,
+      var(--rule) 92%,
+      transparent 100%
+    );
+    opacity: 0.4;
+  }
+
+  .formula-bg__column {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 48%;
+    overflow: visible;
+  }
+  .formula-bg__column--left  { left: 0; }
+  .formula-bg__column--right { right: 0; }
+
+  .formula-bg__header {
+    position: absolute;
+    top: 32px;
+    font-family: 'Latin Modern Roman', 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: var(--ink-tag);
+    text-transform: uppercase;
+    padding-bottom: 6px;
+    border-bottom: 0.5px solid var(--rule);
+    width: 80%;
+  }
+  .formula-bg__column--left  .formula-bg__header { left:  5%; text-align: left; }
+  .formula-bg__column--right .formula-bg__header { right: 5%; text-align: right; }
+
+  .formula-bg__header .pagenum {
+    float: right;
+    font-style: normal;
+    font-variant-numeric: oldstyle-nums;
+  }
+  .formula-bg__column--right .formula-bg__header .pagenum {
+    float: left;
+  }
+
+  .fb-item {
+    position: absolute;
+    color: var(--ink-muted);
+    font-family: 'Latin Modern Roman', 'Crimson Pro', 'Times New Roman', serif;
+    white-space: nowrap;
+    user-select: none;
+    will-change: transform;
+  }
+  .fb-item .katex,
+  .fb-item .katex * {
+    color: inherit !important;
+    font-family: 'Latin Modern Math', 'KaTeX_Main', 'Latin Modern Roman', serif !important;
+  }
+
+  .fb-item--xs { font-size: 15px; color: var(--ink-faint); }
+  .fb-item--sm { font-size: 20px; }
+  .fb-item--md { font-size: 28px; }
+  .fb-item--lg { font-size: 40px; }
+  .fb-item--xl { font-size: 54px; color: var(--ink-muted); }
+
+  .fb-eq-num {
+    position: absolute;
+    font-family: 'Latin Modern Roman', 'Crimson Pro', serif;
+    font-size: 11px;
+    color: var(--ink-tag);
+    font-variant-numeric: oldstyle-nums;
+    user-select: none;
+    will-change: transform;
+  }
+
+  .fb-label {
+    position: absolute;
+    font-family: 'Latin Modern Roman', 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--ink-tag);
+    letter-spacing: 0.03em;
+    user-select: none;
+    will-change: transform;
+  }
+  .fb-label::before {
+    content: '§ ';
+    font-style: normal;
+  }
+
+  @media (max-width: 900px) {
+    .formula-bg__column { width: 50%; }
+    .fb-item--xl { font-size: 36px; }
+    .fb-item--lg { font-size: 28px; }
+    .fb-item--md { font-size: 20px; }
+    .fb-item--sm { font-size: 16px; }
+  }
+  @media (max-width: 640px) {
+    .formula-bg__column { display: none; }
+  }
+</style>
+</head>
+<body>
+  <div class="tartan-bg" aria-hidden="true"></div>
+
+  <!-- ============================================================
+       FORMULA BACKGROUND COMPONENT
+  ============================================================ -->
+  <div class="formula-bg" aria-hidden="true">
+
+    <!-- 左栏 · 计量经济学 -->
+    <div class="formula-bg__column formula-bg__column--left">
+
+      <div class="formula-bg__header" data-speed="0.05">
+        Econometrica · Frequentist Inference
+        <span class="pagenum">i</span>
+      </div>
+
+      <!-- 单元 1 · Linear Regression  [6% – 18%] -->
+      <div class="fb-label"                style="top:  6%; left: 6%;"  data-speed="0.18">Linear Regression</div>
+      <div class="fb-item fb-item--xl"     style="top:  9%; left: 4%;"  data-speed="0.12">$\hat{\beta} = (X'X)^{-1}X'y$</div>
+      <div class="fb-eq-num"               style="top: 12%; right: 4%;" data-speed="0.12">(1.1)</div>
+      <div class="fb-item fb-item--sm"     style="top: 16%; left: 30%;" data-speed="0.34">$E[u_i \mid X] = 0$</div>
+
+      <!-- 单元 2 · Model Equation  [21% – 28%] -->
+      <div class="fb-item fb-item--md"     style="top: 22%; left: 6%;"  data-speed="0.28">$y_i = \beta_0 + \beta_1 x_i + u_i$</div>
+
+      <!-- 单元 3 · Variance Estimation  [31% – 46%] -->
+      <div class="fb-label"                style="top: 31%; left: 6%;"  data-speed="0.16">Variance Estimation</div>
+      <div class="fb-item fb-item--lg"     style="top: 34%; left: 3%;"  data-speed="0.14">$\text{Var}(\hat{\beta}) = \sigma^2(X'X)^{-1}$</div>
+      <div class="fb-eq-num"               style="top: 38%; right: 4%;" data-speed="0.14">(1.2)</div>
+      <div class="fb-item fb-item--xs"     style="top: 41%; left: 32%;" data-speed="0.40">$\Omega = \sum_i \hat{u}_i^2 x_i x_i'$</div>
+      <div class="fb-item fb-item--md"     style="top: 43%; left: 5%;"  data-speed="0.30">$\text{Var}_{HC} = (X'X)^{-1}\Omega(X'X)^{-1}$</div>
+
+      <!-- 单元 4 · Instrumental Variables  [54% – 66%] -->
+      <div class="fb-label"                style="top: 54%; left: 6%;"  data-speed="0.18">Instrumental Variables</div>
+      <div class="fb-item fb-item--lg"     style="top: 57%; left: 4%;"  data-speed="0.16">$\hat{\beta}_{2SLS} = (X'P_Z X)^{-1}X'P_Z y$</div>
+      <div class="fb-eq-num"               style="top: 61%; right: 4%;" data-speed="0.16">(2.1)</div>
+      <div class="fb-item fb-item--sm"     style="top: 64%; left: 28%;" data-speed="0.34">$P_Z = Z(Z'Z)^{-1}Z'$</div>
+
+      <!-- 单元 5 · Asymptotic Theory  [72% – 84%] -->
+      <div class="fb-label"                style="top: 72%; left: 6%;"  data-speed="0.20">Asymptotic Theory</div>
+      <div class="fb-item fb-item--xl"     style="top: 75%; left: 3%;"  data-speed="0.10">$\sqrt{n}(\hat{\beta}-\beta) \xrightarrow{d} N(0,V)$</div>
+      <div class="fb-eq-num"               style="top: 80%; right: 4%;" data-speed="0.10">(3.1)</div>
+      <div class="fb-item fb-item--sm"     style="top: 83%; left: 26%;" data-speed="0.32">$\dfrac{\partial \log L}{\partial \theta} = 0$</div>
+
+      <!-- 单元 6 · Causal Inference  [90% – 106%] -->
+      <div class="fb-label"                style="top:  90%; left: 6%;"  data-speed="0.22">Causal Inference</div>
+      <div class="fb-item fb-item--lg"     style="top:  93%; left: 3%;"  data-speed="0.14">$\text{ATE} = E[Y(1) - Y(0)]$</div>
+      <div class="fb-eq-num"               style="top:  97%; right: 4%;" data-speed="0.14">(4.1)</div>
+      <div class="fb-item fb-item--md"     style="top: 101%; left: 7%;"  data-speed="0.28">$\hat{\tau}_{DID} = \Delta\bar{Y}_{tr} - \Delta\bar{Y}_{ct}$</div>
+
+      <!-- 单元 7 · Hypothesis Testing  [112% – 132%] -->
+      <div class="fb-label"                style="top: 112%; left: 6%;"  data-speed="0.18">Hypothesis Testing</div>
+      <div class="fb-item fb-item--lg"     style="top: 115%; left: 4%;"  data-speed="0.16">$W = (R\hat{\beta}-r)'[R\hat{V}R']^{-1}(R\hat{\beta}-r)$</div>
+      <div class="fb-item fb-item--sm"     style="top: 121%; left: 30%;" data-speed="0.36">$t = \dfrac{\hat{\beta}-\beta_0}{SE(\hat{\beta})}$</div>
+      <div class="fb-item fb-item--md"     style="top: 125%; left: 6%;"  data-speed="0.30">$R^2 = 1 - \dfrac{SSR}{SST}$</div>
+
+      <!-- 单元 8 · Information Matrix  [138% – 150%] -->
+      <div class="fb-label"                style="top: 138%; left: 6%;"  data-speed="0.20">Information Matrix</div>
+      <div class="fb-item fb-item--xl"     style="top: 141%; left: 4%;"  data-speed="0.12">$I(\theta) = -E\!\left[\dfrac{\partial^2 \log L}{\partial \theta \partial \theta'}\right]$</div>
+      <div class="fb-eq-num"               style="top: 147%; right: 4%;" data-speed="0.12">(5.1)</div>
+
+    </div>
+
+    <!-- 右栏 · 贝叶斯 -->
+    <div class="formula-bg__column formula-bg__column--right">
+
+      <div class="formula-bg__header" data-speed="0.05">
+        <span class="pagenum">ii</span>
+        Bayes · Posterior Inference
+      </div>
+
+      <!-- 单元 1 · Fundamental Theorem  [6% – 20%] -->
+      <div class="fb-label"                style="top:  6%; right: 6%;"  data-speed="0.18">Fundamental Theorem</div>
+      <div class="fb-item fb-item--xl"     style="top:  9%; right: 4%;"  data-speed="0.13">$p(\theta\mid y) = \dfrac{p(y\mid\theta)\,p(\theta)}{p(y)}$</div>
+      <div class="fb-eq-num"               style="top: 13%; left: 4%;"   data-speed="0.13">(1.1)</div>
+      <div class="fb-item fb-item--sm"     style="top: 17%; right: 30%;" data-speed="0.34">$\pi(\theta\mid y) \propto L(\theta)\pi(\theta)$</div>
+
+      <!-- 单元 2 · Marginal Likelihood  [24% – 30%] -->
+      <div class="fb-item fb-item--md"     style="top: 25%; right: 6%;"  data-speed="0.28">$p(y) = \int p(y\mid\theta)p(\theta)\,d\theta$</div>
+
+      <!-- 单元 3 · Conjugate Priors  [34% – 50%] -->
+      <div class="fb-label"                style="top: 34%; right: 6%;"  data-speed="0.16">Conjugate Priors</div>
+      <div class="fb-item fb-item--lg"     style="top: 37%; right: 3%;"  data-speed="0.15">$\theta\mid y \sim \text{Beta}(\alpha+y,\,\beta+n-y)$</div>
+      <div class="fb-eq-num"               style="top: 41%; left: 4%;"   data-speed="0.15">(2.1)</div>
+      <div class="fb-item fb-item--md"     style="top: 44%; right: 5%;"  data-speed="0.30">$\mu_n = \dfrac{\sigma^2\mu_0 + n\tau_0^2\bar{y}}{\sigma^2 + n\tau_0^2}$</div>
+      <div class="fb-item fb-item--xs"     style="top: 48%; right: 32%;" data-speed="0.40">$\tau_n^2 = \dfrac{\sigma^2\tau_0^2}{\sigma^2 + n\tau_0^2}$</div>
+
+      <!-- 单元 4 · Model Comparison  [56% – 70%] -->
+      <div class="fb-label"                style="top: 56%; right: 6%;"  data-speed="0.18">Model Comparison</div>
+      <div class="fb-item fb-item--lg"     style="top: 59%; right: 4%;"  data-speed="0.14">$BF_{12} = \dfrac{p(y\mid M_1)}{p(y\mid M_2)}$</div>
+      <div class="fb-eq-num"               style="top: 63%; left: 4%;"   data-speed="0.14">(3.1)</div>
+      <div class="fb-item fb-item--md"     style="top: 67%; right: 5%;"  data-speed="0.30">$p(\tilde{y}\mid y) = \int p(\tilde{y}\mid\theta)p(\theta\mid y)d\theta$</div>
+
+      <!-- 单元 5 · MCMC Methods  [76% – 92%] -->
+      <div class="fb-label"                style="top: 76%; right: 6%;"  data-speed="0.20">MCMC Methods</div>
+      <div class="fb-item fb-item--xl"     style="top: 79%; right: 3%;"  data-speed="0.11">$\alpha = \min\!\left(1,\,\dfrac{p(\theta^*\mid y)q(\theta\mid\theta^*)}{p(\theta\mid y)q(\theta^*\mid\theta)}\right)$</div>
+      <div class="fb-eq-num"               style="top: 85%; left: 4%;"   data-speed="0.11">(4.1)</div>
+      <div class="fb-item fb-item--sm"     style="top: 89%; right: 28%;" data-speed="0.36">$\theta^{(t+1)} \sim q(\cdot\mid\theta^{(t)})$</div>
+
+      <!-- 单元 6 · Variational Inference  [96% – 114%] -->
+      <div class="fb-label"                style="top:  96%; right: 6%;"  data-speed="0.22">Variational Inference</div>
+      <div class="fb-item fb-item--lg"     style="top:  99%; right: 3%;"  data-speed="0.14">$KL(q\,\|\,p) = \int q(\theta)\log\dfrac{q(\theta)}{p(\theta)}d\theta$</div>
+      <div class="fb-eq-num"               style="top: 103%; left: 4%;"   data-speed="0.14">(5.1)</div>
+      <div class="fb-item fb-item--md"     style="top: 107%; right: 5%;"  data-speed="0.28">$\mathcal{L}(q) = E_q[\log p(y,\theta)] - E_q[\log q]$</div>
+
+      <!-- 单元 7 · MAP Estimation  [118% – 124%] -->
+      <div class="fb-item fb-item--sm"     style="top: 118%; right: 6%;"  data-speed="0.36">$\hat{\theta}_{MAP} = \arg\max_\theta\, p(\theta\mid y)$</div>
+
+      <!-- 单元 8 · Bayesian Regression  [130% – 150%] -->
+      <div class="fb-label"                style="top: 130%; right: 6%;"  data-speed="0.18">Bayesian Regression</div>
+      <div class="fb-item fb-item--lg"     style="top: 133%; right: 4%;"  data-speed="0.16">$\beta\mid y \sim N(\beta_n, \Sigma_n)$</div>
+      <div class="fb-eq-num"               style="top: 137%; left: 4%;"   data-speed="0.16">(6.1)</div>
+      <div class="fb-item fb-item--md"     style="top: 141%; right: 5%;"  data-speed="0.30">$\Sigma_n = (\Sigma_0^{-1} + \sigma^{-2}X'X)^{-1}$</div>
+      <div class="fb-item fb-item--xl"     style="top: 147%; right: 4%;"  data-speed="0.12">$E[\theta\mid y] = \int \theta\, p(\theta\mid y)\, d\theta$</div>
+      <div class="fb-eq-num"               style="top: 153%; left: 4%;"   data-speed="0.12">(7.1)</div>
+
+    </div>
+  </div>
+
+  <div id="root"></div>
+
+  <script type="text/babel" data-presets="env,react">
+
+
+
+const { useState, useEffect, useRef, useMemo } = React;
+
+// -------- DATA --------
+const COMMITTEE = [
+{ initials: "ZC", name: "Dr Zexun Chen", pron: "", role: "Faculty Maintainer", field: "MSBE", year: "", supervisor: "", topic: "Statistical methods for business research", email: "Zexun.Chen@ed.ac.uk", bio: "Dr Zexun Chen leads the Statistics Study Group at the University of Edinburgh Business School, focusing on statistical tools and methods that are extensively used in business school research. He organises discussion sessions and coordinates the group's activities." },
+{ initials: "SF", name: "Shiqi Fang", pron: "", role: "PhD Maintainer", field: "MSBE", year: "", supervisor: "", topic: "Gaussian processes, Bayesian methods, Git & GitHub", email: "S.Fang-6@sms.ed.ac.uk", bio: "Shiqi Fang contributes to the group from a management research perspective. He has presented on topics including Git & GitHub, Gaussian Process, and Bayesian Linear Regression, helping bridge statistical methods with management science." },
+{ initials: "HS", name: "Heqing Shi", pron: "", role: "PhD Maintainer", field: "Fintech", year: "", supervisor: "", topic: "Covariance estimation, kernel methods, credit scoring", email: "Heqing.Shi@ed.ac.uk", bio: "Heqing Shi focuses on fintech applications, contributing knowledge in high-dimensional covariance matrix estimation and the kernel trick. His research spans credit scoring, risk forecasting, and asset pricing statistical tools." },
+{ initials: "YQ", name: "Yifan Qi", pron: "", role: "PhD Maintainer", field: "Accounting&Finance", year: "", supervisor: "", topic: "Econometrics, asset pricing, Fama-MacBeth regression", email: "Y.Qi-18@sms.ed.ac.uk", bio: "Yifan Qi focuses on econometrics and asset pricing. He has presented on Econometrics Foundation and the Fama-MacBeth two-pass regression procedure, a cornerstone methodology for testing asset pricing models in cross-sectional finance research." },
+{ initials: "CG", name: "Chenyang Guo", pron: "", role: "PhD Maintainer", field: "MSBE", year: "", supervisor: "", topic: "Sampling methods, change-point detection, MOSUM", email: "C.Guo-17@sms.ed.ac.uk", bio: "Chenyang Guo contributes expertise in statistical sampling and time series analysis. He has presented on Accept-Reject Sampling methods and MOSUM-based change-point detection techniques for identifying structural breaks in financial data." },
+{ initials: "YH", name: "Yizhuo Hu", pron: "", role: "PhD Maintainer", field: "FinTech", year: "", supervisor: "", topic: "MLE, propensity score matching, synthetic data", email: "yhu8@ed.ac.uk", bio: "Yizhuo Hu works on statistical estimation and causal inference methods. He has presented on Maximum Likelihood Estimation, Propensity Score Matching, and Synthetic Data generation for financial research applications." },
+{ initials: "RT", name: "Runzhi Tian", pron: "", role: "PhD Maintainer", field: "FinTech", year: "", supervisor: "", topic: "AI research agents, Stata & Python integration", email: "R.Tian-6@sms.ed.ac.uk", bio: "Runzhi Tian bridges AI-powered research workflows with traditional econometrics. He co-presented the hands-on workshop on Claude Code × Stata & Python, guiding researchers through building domain-specific AI research agents." },
+{ initials: "YJ", name: "Yuyang Jiang", pron: "", role: "PhD Maintainer", field: "MSBE&Finance", year: "", supervisor: "", topic: "AI methods in finance", email: "Y.Jiang-172@sms.ed.ac.uk", bio: "Yuyang Jiang focuses on applying artificial intelligence and machine learning methods to explore financial research questions." }];
+
+
+const EVENTS = [
+{ date: "29", month: "May", year: "2026", kicker: "Schedule", title: "Factor Momentum Revisited: Does the 47-Factor Kernel Collapse to BAB and QMJ?", loc: "Conference Room, 4th Floor, UEBS", time: "17:00 – 18:00", cat: "schedule", speaker: "Zhengnan Lu", pdf: "" },
+{ date: "27", month: "Mar", year: "2026", kicker: "Schedule", title: "Claude Code × Stata & Python: AI Research Agent", loc: "UEBS Boardroom", time: "17:00 – 18:00", cat: "schedule", speaker: "Runzhi Tian, Yifan Qi", pdf: "" },
+{ date: "17", month: "Oct", year: "2025", kicker: "Schedule", title: "Synthetic Data", loc: "UEBS Boardroom", time: "17:00 – 18:00", cat: "schedule", speaker: "Yizhuo Hu", pdf: "" },
+{ date: "03", month: "Oct", year: "2025", kicker: "Talk", title: "Bayesian Linear Regression", loc: "UEBS", time: "", cat: "talk", speaker: "Shiqi Fang", pdf: "https://www.dropbox.com/scl/fi/3jz3x5ami44gb44oiwpxp/bayesian-linear-regression.pdf?rlkey=jlyu5rg1nimf9ln1953u0l59j&st=pi203pjt&dl=0" },
+{ date: "17", month: "Apr", year: "2025", kicker: "Talk", title: "Change-Point Detection: MOSUM Methods", loc: "UEBS", time: "", cat: "talk", speaker: "Chenyang Guo", pdf: "https://www.dropbox.com/scl/fi/9tkoswo22bozi93a6jke1/Statistic_Study_Group_MOSUM.pdf?rlkey=vx4qk4yzfp49akxzugrfrsx8v&st=e2y4mzly&dl=0" },
+{ date: "25", month: "Mar", year: "2025", kicker: "Talk", title: "Gaussian Process", loc: "UEBS", time: "", cat: "talk", speaker: "Shiqi Fang", pdf: "https://www.dropbox.com/scl/fi/kexcpoyhye1cnj1pbt93i/Gaussian_Process.pdf?rlkey=vh228goc3ydcqt156x9yb50h9&st=fc0rvck6&dl=0" },
+{ date: "17", month: "Mar", year: "2025", kicker: "Talk", title: "Asset Pricing: Fama-MacBeth", loc: "UEBS", time: "", cat: "talk", speaker: "Yifan Qi", pdf: "https://www.dropbox.com/scl/fi/fb8audgy6o0w186q2r47c/Yifan-Qi_Fama-MacBeth20250317.pdf?rlkey=u6vy48y1eultn2136pa3lcync&st=kcvjvs3l&dl=0" },
+{ date: "27", month: "Feb", year: "2025", kicker: "Talk", title: "Matching Techniques – Propensity Score Matching", loc: "UEBS", time: "", cat: "talk", speaker: "YiZhuo Hu", pdf: "https://www.dropbox.com/scl/fi/a643rh9nh9x50asrs8q1i/psm.pdf?rlkey=4nijr2dp2lemecv3sorxyxlux&st=fc7ux3js&dl=0" },
+{ date: "13", month: "Feb", year: "2025", kicker: "Talk", title: "Difference-in-Differences", loc: "UEBS", time: "", cat: "talk", speaker: "Ke Bi", pdf: "https://www.dropbox.com/scl/fi/fux8sj0ldcdlmhj8k6s5l/DiD.pdf?rlkey=61ymfgxyzny8l3q4v4skfrtgl&st=v0dtd0vf&dl=0" },
+{ date: "30", month: "Jan", year: "2025", kicker: "Talk", title: "The Kernel Trick", loc: "UEBS", time: "", cat: "talk", speaker: "Heqing Shi", pdf: "https://www.dropbox.com/scl/fi/zu843zmrowdmsqoe3zaql/The_Kernel_Trick.pdf?rlkey=siad2qsrngvwpbjhdbclnrdo9&st=rd3g3j1r&dl=0" },
+{ date: "06", month: "Dec", year: "2024", kicker: "Talk", title: "Maximum Likelihood Estimation", loc: "UEBS", time: "", cat: "talk", speaker: "Yizhuo Hu", pdf: "https://www.dropbox.com/scl/fi/f1pt2cokqsllraxqbp7hp/Maximum-Likelihood-Estimation.pdf?rlkey=uwqzcfc3ayx162ct2csrfx6ni&st=h1cfev32&dl=0" },
+{ date: "22", month: "Nov", year: "2024", kicker: "Talk", title: "Git & GitHub", loc: "UEBS", time: "", cat: "talk", speaker: "Shiqi Fang", pdf: "https://www.dropbox.com/scl/fi/046ag2pcb8xe82it58zl6/git-and-github.pdf?rlkey=xx8i9gbyamggtsvaoxsn5tw8d&st=rk8jo8rz&dl=0" },
+{ date: "08", month: "Nov", year: "2024", kicker: "Talk", title: "Sampling Method: Accept-Reject Sampling", loc: "UEBS", time: "", cat: "talk", speaker: "Chenyang Guo", pdf: "https://www.dropbox.com/scl/fi/zqshamol6je8l81weyscd/Accept_Reject_Sampling.pdf?rlkey=urw2z6qwfz9cvvc4r91oqjisw&st=bx0r9p4a&dl=0" },
+{ date: "25", month: "Oct", year: "2024", kicker: "Talk", title: "Econometrics Foundation 2", loc: "UEBS", time: "", cat: "talk", speaker: "Ke Bi", pdf: "https://www.dropbox.com/scl/fi/11l9de4k067q0pdmfertl/IV.pptx?rlkey=2huic7f23bcvs0zfut7ernmsr&st=ulk4cqym&dl=0" },
+{ date: "18", month: "Oct", year: "2024", kicker: "Talk", title: "Econometrics Foundation 1", loc: "UEBS", time: "", cat: "talk", speaker: "Yifan Qi", pdf: "https://www.dropbox.com/scl/fi/a4kh4t1u07wja5dmhgt0a/Econometric-Foundation_Discuss1_Yifan-Qi.pdf?rlkey=jwqwy981fi4j1mrttryjvs8a1&st=k885ao04&dl=0" },
+{ date: "26", month: "Sep", year: "2024", kicker: "Talk", title: "High-dimensional Covariance Matrix Estimation", loc: "UEBS", time: "", cat: "talk", speaker: "Heqing Shi", pdf: "https://www.dropbox.com/scl/fi/nq15yeqswst16jt1ytf08/high_dimensional_covariance_matrix_estimation.pdf?rlkey=r9atw5fpoc7wfl1i4w3aiqgit&st=g9t4ty29&dl=0" }];
+
+
+const NEWS = [
+{ cat: "Blog", date: "14 Jun 2024", title: "What You Can Get From This Website", excerpt: "The resources from this website are mainly for researchers in the area of finance. We record statistical tools — models, tests and more — into blogs covering credit research, risk management and asset pricing.", img: "blog · statistics tools" },
+{ cat: "Blog", date: "06 Jun 2024", title: "Conference & Workshop Opportunities", excerpt: "A curated list of upcoming conferences and workshops including the 2024 Edinburgh World-Class Workshop on FinTech, Economics of Financial Technology Conference, and the 1st Doctoral Finance Symposium.", img: "events · conferences" },
+{ cat: "Talk", date: "29 May 2026", title: "Factor Momentum Revisited: BAB and QMJ", excerpt: "Zhengnan Lu replicates Ehsani & Linnainmaa (2022, JF) and shows that time-series factor momentum collapses onto just two well-known factors (BAB and QMJ), offering a concentrated view of pricing power.", img: "talk · factor momentum" },
+{ cat: "Talk", date: "27 Mar 2026", title: "Claude Code × Stata & Python: AI Research Agent", excerpt: "A hands-on workshop guiding participants through the full setup of an AI-powered Stata & Python research environment. Part of the UEBS Statistics Study Group series bridging econometrics and AI.", img: "workshop · AI coding" },
+{ cat: "Talk", date: "17 Oct 2025", title: "Synthetic Data in Finance", excerpt: "Exploring how synthetic data helps address privacy concerns, supports model training, and enhances data sharing — while acknowledging limitations in fidelity, validation, and regulatory uncertainty.", img: "talk · synthetic data" },
+{ cat: "Talk", date: "17 Apr 2025", title: "Change-Point Detection: MOSUM Methods", excerpt: "Chenyang Guo presents MOSUM-based change-point detection methods and their applications in financial time series analysis and structural break identification.", img: "talk · time series" },
+{ cat: "Talk", date: "17 Mar 2025", title: "Asset Pricing: Fama-MacBeth Regression", excerpt: "Yifan Qi walks through the Fama-MacBeth two-pass regression procedure — a cornerstone methodology for testing asset pricing models in cross-sectional finance research.", img: "talk · asset pricing" }];
+
+
+// -------- NAV --------
+function Nav() {
+  const [scrolled, setScrolled] = useState(false);
+  const [active, setActive] = useState("about");
+  useEffect(() => {
+    const onScroll = () => {
+      setScrolled(window.scrollY > 20);
+      const sections = ["about", "maintainers", "talks", "posts", "join"];
+      let cur = "about";
+      for (const id of sections) {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top < 140) cur = id;
+      }
+      setActive(cur);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  const go = (id) => (e) => {
+    e.preventDefault();
+    const el = document.getElementById(id);
+    if (el) window.scrollTo({ top: el.offsetTop - 60, behavior: "smooth" });
+  };
+  return (
+    <nav className={"nav" + (scrolled ? " scrolled" : "")}>
+        <div className="container nav-inner">
+          <a className="brand" href="#" onClick={(e) => {e.preventDefault();window.scrollTo({ top: 0, behavior: "smooth" });}}>
+            <img src="https://pub-d017772d240145f2a7c2bee6e495cf7a.r2.dev/uebs-logo-white.svg"
+          alt="Northgate Business School"
+          className="brand-logo"
+          style={{ height: 38, width: 'auto', display: 'block' }} />
+            <div className="brand-text">
+              <span className="a">Statistics</span>
+              <span className="b" style={{ fontFamily: "\"Source Serif 4\"", color: "rgb(2, 2, 2)" }}>STUDY GROUP</span>
+            </div>
+          </a>
+          <div className="nav-links">
+            <a href="#about" className={active === "about" ? "active" : ""} onClick={go("about")}>About</a>
+            <a href="#maintainers" className={active === "maintainers" ? "active" : ""} onClick={go("maintainers")}>Maintainers</a>
+            <a href="#talks" className={active === "talks" ? "active" : ""} onClick={go("talks")}>Talks</a>
+            <a href="#posts" className={active === "posts" ? "active" : ""} onClick={go("posts")}>Posts</a>
+            <button className="nav-cta" onClick={go("join")}>Join Us</button>
+          </div>
+          <div className="nav-mobile">
+            <button className="nav-cta" onClick={go("join")}>Join</button>
+          </div>
+        </div>
+      </nav>);
+
+}
+
+// -------- HERO --------
+function HeroCarousel() {
+  const slides = [
+    { src: "https://pub-2f317f8151d14a0da62cf2e5fb439603.r2.dev/2024.jpg",   label: "2024 · Christmas" },
+    { src: "https://pub-2f317f8151d14a0da62cf2e5fb439603.r2.dev/2025_1.jpg", label: "2025 · Easter" },
+    { src: "https://pub-2f317f8151d14a0da62cf2e5fb439603.r2.dev/2025_2.jpg", label: "2025 · Halloween" },
+    { src: "https://pub-2f317f8151d14a0da62cf2e5fb439603.r2.dev/UK%20Finnovator_20260201.jpg", label: "2026 · UK Finnovator Winner · Birmingham" },
+  ];
+  const [i, setI] = useState(0);
+  useEffect(() => {
+    const id = setInterval(() => setI(n => (n + 1) % slides.length), 4200);
+    return () => clearInterval(id);
+  }, []);
+  return (
+    <div className="hero-carousel">
+      {slides.map((s, idx) => (
+        <div key={idx}
+             className={"slide" + (idx === i ? " active" : "")}
+             style={{ backgroundImage: `url("${s.src}")` }} />
+      ))}
+      <div className="dots">
+        {slides.map((_, idx) => (
+          <button key={idx} className={idx === i ? "on" : ""} onClick={() => setI(idx)} aria-label={`Slide ${idx+1}`} />
+        ))}
+      </div>
+      <div className="caption">
+        <span className="t">{slides[i].label}</span>
+        <span>{String(i+1).padStart(2,"0")} / {String(slides.length).padStart(2,"0")}</span>
+      </div>
+    </div>
+  );
+}
+
+function Hero({ variant }) {
+  if (variant === "split") {
+    return (
+      <section className="hero split">
+          <div className="container">
+            <div className="hero-grid">
+              <div className="hero-text">
+                <div className="hero-eyebrow">
+                  <span className="dot" />
+                  <span className="mono">EST. 2024 · STATISTICS FOR BUSINESS SCHOOL RESEARCH</span>
+                </div>
+                <h1>
+                  A community sharing <em>statistical tools</em> for business school research.
+                </h1>
+                <p className="hero-sub">
+                  Welcome to Statistics for Business School Research! We document and share statistical tools — tests, regression models, and more — extensively used in business school research. All content is contributed by PhD researchers from the University of Edinburgh Business School, covering credit scoring, risk forecasting, asset pricing and beyond.
+                </p>
+              </div>
+              <HeroCarousel />
+            </div>
+            <HeroMeta />
+          </div>
+        </section>);
+
+  }
+  return (
+    <section className="hero">
+        <div className="container">
+          <div className="hero-eyebrow">
+            <span className="dot" />
+            <span className="mono">Est. 2024 · Statistics for Business School Research</span>
+          </div>
+          <h1>
+            A community sharing <em>statistical tools</em><br />for business school research.
+          </h1>
+          <p className="hero-sub">
+            We document and share statistical tools — tests, regression models, and more — extensively used in business school research. All content is contributed by PhD researchers from the University of Edinburgh Business School.
+          </p>
+          <HeroMeta />
+        </div>
+      </section>);
+
+}
+
+function HeroMeta() {
+  return (
+    <div className="hero-meta">
+        <div className="cell"><div className="k">Maintainers</div><div className="v">8<small>active</small></div></div>
+        <div className="cell"><div className="k">Topics</div><div className="v">5+<small>fields</small></div></div>
+        <div className="cell"><div className="k">Talks</div><div className="v">16<small>sessions</small></div></div>
+        <div className="cell"><div className="k">Founded</div><div className="v">2024<small>UEBS</small></div></div>
+      </div>);
+
+}
+
+// -------- ABOUT --------
+function About() {
+  const TABS = [
+  { id: "mission", label: "Our Mission" },
+  { id: "topics", label: "Research Topics" },
+  { id: "talks", label: "Previous Talks" },
+  { id: "schedule", label: "Schedule" }];
+
+  const [tab, setTab] = useState("mission");
+  const CONTENT = {
+    mission: {
+      prose: [
+      "This website is managed by the UEBS Statistics Group. We document and share basic statistical tools — statistical tests, regression models and more — that are extensively used in business school research. All posts and blogs are contributed by PhD researchers from the University of Edinburgh Business School.",
+      "The resources are mainly for researchers in the area of finance. We find it useful to record the statistical tools we come across into blogs. Topics such as credit scoring, risk forecasting and asset pricing are primarily covered, as these span our current main research interests. We believe these tools are also meaningful to researchers in accounting, marketing, operations research and beyond."],
+
+      list: [
+      "In-person discussion sessions",
+      "Blog-style statistical tools",
+      "Presentation materials & PDFs",
+      "Open to all UEBS researchers",
+      "Google Form subscription",
+      "GitHub: uebs-stats-group"]
+
+    },
+    topics: {
+      prose: [
+      "Econometrics is a fundamental discipline that bridges economics and statistics. It seeks to provide empirical content to economic theories by applying statistical methods to economic data. Econometric studies aim to quantify economic relationships, test hypotheses, and forecast future trends using real-world data.",
+      "Asset Pricing is an important research topic in finance. Asset pricing studies try to answer the fundamental question — whether the return of financial assets (stocks, bonds, options and other derivatives) can be predicted in cross-section. Statistical models and tests are intensively used to examine return predictability."],
+
+      list: [
+      "Credit Research",
+      "Risk Management",
+      "Econometrics Foundation",
+      "Asset Pricing",
+      "Statistical Tests & Models",
+      "AI (Machine Learning & Deep Learning) Methods"]
+
+    },
+    talks: {
+      prose: [
+      "Previous Talks archive contains recordings and materials from our past research discussions and presentations. These sessions cover various topics in statistics, econometrics, and their applications in business research.",
+      "Below you can find the complete collection of our previous talks with links to presentation materials, notes and PDFs available for download. All materials are freely accessible to the research community."],
+
+      list: [
+      "High-dimensional Covariance Matrix Estimation",
+      "Econometrics Foundation (2 parts)",
+      "Accept-Reject Sampling",
+      "Fama-MacBeth Regression",
+      "Gaussian Process",
+      "Factor Momentum Revisited"]
+
+    },
+    schedule: {
+      prose: [
+      "We organise in-person group discussions from time to time. Most of the discussions are hosted at the University of Edinburgh Business School. Scheduled meetings are posted below with exact location and time confirmed in each session.",
+      "The discussion sessions are set up to share the knowledge of the statistical tools we blog about in a seminar presentation mode. To join the discussion sessions, please fill in the subscribe form or contact one of the maintainers directly."],
+
+      list: [
+      "2026-05 — Factor Momentum Revisited",
+      "2026-03 — Claude Code × Stata & Python",
+      "2025-10 — Synthetic Data",
+      "Venue: Conference Room, 4th Floor / Boardroom",
+      "Format: Seminar presentations",
+      "Duration: ~1 hour sessions",
+      "Open to all researchers"]
+
+    }
+  };
+  const c = CONTENT[tab];
+  return (
+    <section id="about" className="section">
+        <div className="container">
+          <div className="section-header reveal">
+            <div className="num"><span>01 / 05</span> &nbsp; About</div>
+            <h2>A community held together by <em>statistics, seminars, and a shared passion</em> for rigorous research.</h2>
+          </div>
+          <div className="reveal">
+            <div className="tabs-row">
+              {TABS.map((t) =>
+            <button key={t.id} className={"tab-btn" + (tab === t.id ? " active" : "")} onClick={() => setTab(t.id)}>{t.label}</button>
+            )}
+            </div>
+            <div className="about-grid">
+              <div className="about-prose" key={tab}>
+                {c.prose.map((p, i) => <p key={i}>{p}</p>)}
+              </div>
+              <aside className="about-aside">
+                <div className="label">What we do · {TABS.find((t) => t.id === tab).label}</div>
+                <ul>
+                  {c.list.map((item, i) =>
+                <li key={i}>
+                      <span className="n">{String(i + 1).padStart(2, "0")}</span>
+                      <span className="t">{item}</span>
+                    </li>
+                )}
+                </ul>
+              </aside>
+            </div>
+          </div>
+        </div>
+      </section>);
+
+}
+
+// -------- COMMITTEE --------
+function Committee() {
+  const [open, setOpen] = useState(null);
+  return (
+    <section id="maintainers" className="section">
+        <div className="container">
+          <div className="section-header reveal">
+            <div className="num"><span>02 / 05</span> &nbsp; Maintainers</div>
+            <h2>Eight maintainers, open community. <em>Click the rows</em> to see what they work on.</h2>
+          </div>
+          <div className="committee-list reveal">
+            {COMMITTEE.map((m, i) => {
+            const isOpen = open === i;
+            return (
+              <div key={i} className={"member" + (isOpen ? " open" : "")}>
+                  <div className="member-head" onClick={() => setOpen(isOpen ? null : i)}>
+                    <div className="member-avatar">{m.initials}</div>
+                    <div className="member-name">{m.name}<span className="pron">{m.pron}</span></div>
+                    <div className="member-role">{m.role}</div>
+                    <div className="member-field">{m.field} · {m.year}</div>
+                    <div className="member-toggle">
+                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" strokeWidth="1.4" /></svg>
+                    </div>
+                  </div>
+                  <div className="member-bio" style={{ maxHeight: isOpen ? 600 : 0 }}>
+                    <div className="member-bio-inner">
+                      <div></div>
+                      <div>
+                        <p>{m.bio}</p>
+                      </div>
+                      <div className="meta">
+                        <div className="row"><span className="k">Email</span><span className="v">{m.email}</span></div>
+                        <div className="row"><span className="k">Topic</span><span className="v">{m.topic}</span></div>
+                        <div className="row"><span className="k">Field</span><span className="v">{m.field}</span></div>
+                        <div className="row"><span className="k">Role</span><span className="v">{m.role}</span></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>);
+
+          })}
+          </div>
+        </div>
+      </section>);
+
+}
+
+// -------- EVENTS --------
+function Events() {
+  const CATS = [
+  { id: "all", label: "All" },
+  { id: "talk", label: "Talks" },
+  { id: "schedule", label: "Schedule" }];
+
+  const [filter, setFilter] = useState("all");
+  const filtered = filter === "all" ? EVENTS : EVENTS.filter((e) => e.cat === filter);
+  return (
+    <section id="talks" className="section">
+        <div className="container">
+          <div className="section-header reveal">
+            <div className="num"><span>03 / 05</span> &nbsp; Talks</div>
+            <h2>Previous talks, upcoming sessions, and <em>materials to download</em>.</h2>
+          </div>
+          <div className="reveal">
+            <div className="events-toolbar">
+              <div className="filter-chips">
+                {CATS.map((c) =>
+              <button key={c.id} className={"chip" + (filter === c.id ? " active" : "")} onClick={() => setFilter(c.id)}>{c.label}</button>
+              )}
+              </div>
+              <div className="events-count">{filtered.length} upcoming</div>
+            </div>
+            <div>
+              {filtered.length === 0 && <div className="event-empty">No events match that filter.</div>}
+              {filtered.map((e, i) =>
+            <div key={i} className="event-row">
+                  <div className="event-date">
+                    <div className="d">{e.date}</div>
+                    <div className="m">{e.month} · {e.year}</div>
+                  </div>
+                  <div className="event-title">
+                    <span className="kicker">{e.kicker}{e.speaker ? " · " + e.speaker : ""}</span>
+                    {e.title}
+                  </div>
+                  <div className="event-loc">
+                    <span className="pin">Location</span>
+                    {e.loc}
+                  </div>
+                  <div className="event-time">{e.time}</div>
+                  <div className="event-arrow">
+                    {e.pdf ? <a href={e.pdf} target="_blank" rel="noopener noreferrer" style={{color:"var(--accent)",textDecoration:"none"}} title="Download materials"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3v12M12 15l-4-4M12 15l4-4M5 21h14" stroke="currentColor" strokeWidth="1.6" /></svg></a> : <svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M1 6h16M12 1l5 5-5 5" stroke="currentColor" strokeWidth="1.4" /></svg>}
+                  </div>
+                </div>
+            )}
+            </div>
+          </div>
+        </div>
+      </section>);
+
+}
+
+// -------- NEWS --------
+function News() {
+  const [q, setQ] = useState("");
+  const filtered = useMemo(() => {
+    const s = q.trim().toLowerCase();
+    if (!s) return NEWS;
+    return NEWS.filter((n) =>
+    n.title.toLowerCase().includes(s) ||
+    n.excerpt.toLowerCase().includes(s) ||
+    n.cat.toLowerCase().includes(s)
+    );
+  }, [q]);
+  return (
+    <section id="posts" className="section">
+        <div className="container">
+          <div className="section-header reveal">
+            <div className="num"><span>04 / 05</span> &nbsp; Posts</div>
+            <h2>Recent posts from <em>the group — tools, tutorials, and updates</em>.</h2>
+          </div>
+          <div className="reveal">
+            <div className="news-toolbar">
+              <div className="search-box">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5.5" stroke="currentColor" strokeWidth="1.4" /><path d="M11 11l4 4" stroke="currentColor" strokeWidth="1.4" /></svg>
+                <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search news, awards, fieldwork…" />
+              </div>
+              <div className="events-count">{filtered.length} {filtered.length === 1 ? "story" : "stories"}</div>
+            </div>
+            <div className="news-grid">
+              {filtered.map((n, i) =>
+            <article key={i} className="news-card">
+                  <div className="img" data-label={n.img}></div>
+                  <div className="meta"><span className="cat">{n.cat}</span> · <span>{n.date}</span></div>
+                  <h3>{n.title}</h3>
+                  <p>{n.excerpt}</p>
+                  <span className="read">Read more →</span>
+                </article>
+            )}
+              {filtered.length === 0 &&
+            <div style={{ gridColumn: "1/-1", padding: "60px 0", textAlign: "center", fontFamily: "var(--serif)", fontStyle: "italic", color: "var(--ink-mute)", fontSize: 20 }}>
+                  Nothing matches that search.
+                </div>
+            }
+            </div>
+          </div>
+        </div>
+      </section>);
+
+}
+
+// -------- JOIN FORM --------
+function Join() {
+  const [form, setForm] = useState({ name: "", email: "", program: "", year: "", interests: "" });
+  const [errors, setErrors] = useState({});
+  const [submitted, setSubmitted] = useState(false);
+
+  const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
+
+  const validate = () => {
+    const e = {};
+    if (!form.name.trim()) e.name = "Required";
+    if (!form.email.trim()) e.email = "Required";else
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = "Doesn't look like an email";
+    if (!form.program) e.program = "Pick one";
+    if (!form.year) e.year = "Pick one";
+    return e;
+  };
+
+  const onSubmit = (ev) => {
+    ev.preventDefault();
+    const e = validate();
+    setErrors(e);
+    if (Object.keys(e).length === 0) setSubmitted(true);
+  };
+
+  return (
+    <section id="join" className="join" style={{ backgroundColor: "rgb(11, 56, 78)" }}>
+        <div className="container">
+          <div>
+            <div className="section-header" style={{ gridTemplateColumns: "1fr", gap: 18, marginBottom: 24 }}>
+              <div className="num"><span style={{ color: "rgba(255,255,255,0.7)" }}>05 / 05</span> &nbsp; <span style={{ color: "rgba(255,255,255,0.5)" }}>Membership</span></div>
+              <h2>Join the <em>Study Group</em>. Open to all UEBS doctoral researchers and beyond.</h2>
+            </div>
+            <p className="lead">
+              This website is managed by the UEBS Statistics Group. Please feel free to email one of the maintainers listed above or fill in the form to join us. We will add you to the discussion session invites.
+            </p>
+          </div>
+          <div>
+            {submitted ?
+          <div className="form-success">
+                Thank you, {form.name.split(" ")[0]}. Your request has been received. A maintainer will add you to the discussion session invites — usually within a few days.
+              </div> :
+
+          <form className="join-form" onSubmit={onSubmit} noValidate>
+                <div className={"field" + (errors.name ? " error" : "")}>
+                  <label>Full name</label>
+                  <input value={form.name} onChange={set("name")} placeholder="e.g. John Smith" />
+                  {errors.name && <div className="err">{errors.name}</div>}
+                </div>
+                <div className={"field" + (errors.email ? " error" : "")}>
+                  <label>University email</label>
+                  <input value={form.email} onChange={set("email")} placeholder="you@ed.ac.uk" />
+                  {errors.email && <div className="err">{errors.email}</div>}
+                </div>
+                <div className="field-row">
+                  <div className={"field" + (errors.program ? " error" : "")}>
+                    <label>Research Area</label>
+                    <select value={form.program} onChange={set("program")}>
+                      <option value="">Select…</option>
+                      <option>Credit Research</option>
+                      <option>Risk Management</option>
+                      <option>Econometrics</option>
+                      <option>Asset Pricing</option>
+                      <option>Statistics</option>
+                      <option>AI (Machine Learning & Deep Learning)</option>
+                      <option>FinTech</option>
+                      <option>Other</option>
+                    </select>
+                    {errors.program && <div className="err">{errors.program}</div>}
+                  </div>
+                  <div className={"field" + (errors.year ? " error" : "")}>
+                    <label>Year of study</label>
+                    <select value={form.year} onChange={set("year")}>
+                      <option value="">Select…</option>
+                      <option>Year 1</option><option>Year 2</option>
+                      <option>Year 3</option><option>Year 4</option>
+                      <option>Year 5+</option>
+                    </select>
+                    {errors.year && <div className="err">{errors.year}</div>}
+                  </div>
+                </div>
+                <div className="field">
+                  <label>Research interests (optional)</label>
+                  <textarea rows="3" value={form.interests} onChange={set("interests")} placeholder="One or two lines on what you're working on." />
+                </div>
+                <div className="submit-row">
+                  <button type="submit" className="submit-btn">
+                    Send membership request
+                    <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M1 5h12M9 1l4 4-4 4" stroke="currentColor" strokeWidth="1.4" /></svg>
+                  </button>
+                  <span className="form-note">Reviewed manually · ~3 working days</span>
+                </div>
+              </form>
+          }
+          </div>
+        </div>
+      </section>);
+
+}
+
+// -------- FOOTER --------
+function Footer() {
+  return (
+    <footer className="footer">
+        <div className="container footer-inner">
+          <div className="footer-left">
+            <span className="dot" />
+            <span>STATISTICS STUDY GROUP · UNIVERSITY OF EDINBURGH BUSINESS SCHOOL</span>
+            <span style={{ color: "var(--rule)" }}>—</span>
+            <span>© {new Date().getFullYear()}</span>
+          </div>
+          <div className="footer-links">
+            <a href="#about">About</a>
+            <a href="#maintainers">Maintainers</a>
+            <a href="#talks">Talks</a>
+            <a href="#posts">Posts</a>
+            <a href="#join">Contact</a>
+          </div>
+        </div>
+      </footer>);
+
+}
+
+// -------- TWEAKS --------
+function Tweaks({ open, theme, hero, onTheme, onHero }) {
+  if (!open) return null;
+  const themes = [
+  { id: "oxblood", color: "#6E1A1A" },
+  { id: "ink", color: "#14130F" },
+  { id: "forest", color: "#2D4A2A" }];
+
+  return (
+    <div className="tweaks-panel show">
+        <div className="tw-title">Tweaks</div>
+        <div className="tw-sub">Live design controls</div>
+        <div className="tw-group">
+          <div className="tw-label">Color theme</div>
+          <div className="tw-swatches">
+            {themes.map((t) =>
+          <button key={t.id} className={"tw-swatch" + (theme === t.id ? " on" : "")}
+          style={{ background: t.color }} onClick={() => onTheme(t.id)} aria-label={t.id} />
+          )}
+          </div>
+        </div>
+        <div className="tw-group">
+          <div className="tw-label">Hero layout</div>
+          <div className="tw-segmented">
+            <button className={hero === "editorial" ? "on" : ""} onClick={() => onHero("editorial")}>Editorial</button>
+            <button className={hero === "split" ? "on" : ""} onClick={() => onHero("split")}>Split</button>
+          </div>
+        </div>
+      </div>);
+
+}
+
+// -------- APP --------
+function App() {
+  const [tweakOpen, setTweakOpen] = useState(false);
+  const [theme, setTheme] = useState(window.TWEAK_DEFAULTS.theme);
+  const [hero, setHero] = useState(window.TWEAK_DEFAULTS.hero);
+
+  // Apply theme to <html>
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+  }, [theme]);
+
+  // Tweak host protocol
+  useEffect(() => {
+    const onMsg = (ev) => {
+      const d = ev.data || {};
+      if (d.type === "__activate_edit_mode") setTweakOpen(true);
+      if (d.type === "__deactivate_edit_mode") setTweakOpen(false);
+    };
+    window.addEventListener("message", onMsg);
+    window.parent.postMessage({ type: "__edit_mode_available" }, "*");
+    return () => window.removeEventListener("message", onMsg);
+  }, []);
+
+  const persist = (edits) => {
+    window.parent.postMessage({ type: "__edit_mode_set_keys", edits }, "*");
+  };
+
+  // Reveal on scroll
+  useEffect(() => {
+    const els = document.querySelectorAll(".reveal");
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {if (e.isIntersecting) e.target.classList.add("in");});
+    }, { threshold: 0.12 });
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, [hero, theme]);
+
+  return (
+    <div data-screen-label="Statistics Study Group Home">
+        <Nav />
+        <Hero variant={hero} />
+        <About />
+        <Committee />
+        <Events />
+        <News />
+        <Join />
+        <Footer />
+        <Tweaks
+        open={tweakOpen}
+        theme={theme} hero={hero}
+        onTheme={(t) => {setTheme(t);persist({ theme: t });}}
+        onHero={(h) => {setHero(h);persist({ hero: h });}} />
+      
+      </div>);
+
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+  <script>
+    // —— 滚动视差 ——
+    (function() {
+      const parallaxItems = document.querySelectorAll('.formula-bg [data-speed]');
+      let ticking = false;
+      function updateParallax(){
+        const scrollY = window.scrollY;
+        for(let i = 0; i < parallaxItems.length; i++){
+          const el = parallaxItems[i];
+          const speed = parseFloat(el.dataset.speed);
+          const offset = -scrollY * speed;
+          el.style.transform = `translate3d(0, ${offset}px, 0)`;
+        }
+        ticking = false;
+      }
+      window.addEventListener('scroll', () => {
+        if(!ticking){
+          requestAnimationFrame(updateParallax);
+          ticking = true;
+        }
+      }, { passive: true });
+      updateParallax();
+    })();
+  </script>
+</body>
+</html>

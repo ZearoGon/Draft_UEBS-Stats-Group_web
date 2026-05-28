@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Asset Pricing — Statistics Study Group</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=Source+Sans+3:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{--bg:#f5f0e8;--fg:#1a1a1a;--accent:#0b384e;--rule:rgba(0,0,0,.12);--paper:#faf7f2}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Source Sans 3",system-ui,sans-serif;background:var(--bg);color:var(--fg);line-height:1.7}
+.topic-nav{position:sticky;top:0;z-index:100;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);background:rgba(245,240,232,.88);border-bottom:1px solid var(--rule);padding:16px 0}
+.topic-nav .inner{max-width:1080px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between}
+.topic-nav .brand{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--fg)}
+.topic-nav .brand img{height:36px}
+.topic-nav .brand-text .a{font-family:"Source Sans 3";font-weight:600;font-size:16px;letter-spacing:.04em}
+.topic-nav .brand-text .b{display:block;font-family:"Source Serif 4";font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#333}
+.topic-nav .back{font-family:"IBM Plex Mono";font-size:13px;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:var(--accent);border:1px solid var(--accent);padding:8px 20px;border-radius:100px;transition:all .2s}
+.topic-nav .back:hover{background:var(--accent);color:#fff}
+.topic-hero{padding:100px 0 60px;text-align:center}
+.topic-hero .container{max-width:800px;margin:0 auto;padding:0 32px}
+.topic-hero .eyebrow{font-family:"IBM Plex Mono";font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:18px;display:flex;align-items:center;justify-content:center;gap:10px}
+.topic-hero .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.topic-hero h1{font-family:"Source Serif 4";font-size:clamp(36px,5vw,56px);font-weight:600;line-height:1.15;margin-bottom:24px}
+.topic-hero h1 em{font-style:italic;color:var(--accent)}
+.topic-hero .desc{font-size:18px;line-height:1.8;color:#444;max-width:680px;margin:0 auto}
+.topic-content{max-width:800px;margin:0 auto;padding:0 32px 80px}
+.topic-content h2{font-family:"Source Serif 4";font-size:28px;font-weight:600;margin:48px 0 18px;padding-bottom:12px;border-bottom:1px solid var(--rule)}
+.topic-content h3{font-family:"Source Serif 4";font-size:22px;font-weight:500;margin:32px 0 14px}
+.topic-content p{font-size:17px;line-height:1.8;color:#333;margin-bottom:16px}
+.topic-content ul{margin:0 0 20px 28px;font-size:17px;line-height:1.9;color:#333}
+.topic-content .post-card{border:1px solid var(--rule);border-radius:8px;padding:24px 28px;margin:20px 0;background:var(--paper);transition:box-shadow .2s}
+.topic-content .post-card:hover{box-shadow:0 4px 20px rgba(0,0,0,.06)}
+.topic-content .post-card .cat{font-family:"IBM Plex Mono";font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.topic-content .post-card h4{font-family:"Source Serif 4";font-size:20px;font-weight:500;margin-bottom:8px}
+.topic-content .post-card p{font-size:15px;color:#555;margin-bottom:0}
+.topic-footer{text-align:center;padding:40px 0;border-top:1px solid var(--rule);font-family:"IBM Plex Mono";font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#888}
+.related-topics{max-width:800px;margin:0 auto 60px;padding:0 32px}
+.related-topics h2{font-family:"Source Serif 4";font-size:28px;font-weight:600;margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid var(--rule)}
+.related-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
+.related-grid a{display:block;text-decoration:none;border:1px solid var(--rule);border-radius:8px;padding:24px;background:var(--paper);transition:all .2s;color:var(--fg)}
+.related-grid a:hover{border-color:var(--accent);box-shadow:0 4px 16px rgba(0,0,0,.06)}
+.related-grid a .label{font-family:"IBM Plex Mono";font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.related-grid a .name{font-family:"Source Serif 4";font-size:18px;font-weight:500}
+</style>
+</head>
+<body>
+<nav class="topic-nav">
+  <div class="inner">
+    <a href="../index.html" class="brand">
+      <img src="https://pub-b81c5cb2cfb84660aab0debca4907696.r2.dev/UEBS_logo.svg" alt="UEBS Logo" />
+      <div class="brand-text">
+        <span class="a">Statistics</span>
+        <span class="b">Study Group</span>
+      </div>
+    </a>
+    <a href="../index.html#about" class="back">← Back to Home</a>
+  </div>
+</nav>
+
+<section class="topic-hero">
+  <div class="container">
+    <div class="eyebrow">
+      <span class="dot"></span>
+      <span>Research Topic · Finance</span>
+    </div>
+    <h1><em>Asset Pricing</em></h1>
+    <p class="desc">
+      Asset Pricing is an important research topic in finance. Asset pricing studies try to answer the fundamental question — whether the return of financial assets (typically stocks, bonds, options and other derivative instruments) can be predicted (usually in cross-section). Statistical models and tests are intensively used to examine the return predictability. We summarize some important tools and post them below.
+    </p>
+  </div>
+</section>
+
+<div class="topic-content">
+  <h2>Key Concepts & Tools</h2>
+  <p>Asset pricing research draws on a rich set of statistical and econometric tools to examine whether expected returns vary across assets and over time. Below are the core frameworks commonly used in the field.</p>
+
+  <h3>Core Areas</h3>
+  <ul>
+    <li><strong>CAPM & Factor Models</strong> — Capital Asset Pricing Model and multi-factor extensions (Fama-French, Carhart)</li>
+    <li><strong>Fama-MacBeth Regression</strong> — Two-pass procedure for testing cross-sectional return predictability</li>
+    <li><strong>GMM-based Tests</strong> — Hansen-Jagannathan bounds and stochastic discount factor tests</li>
+    <li><strong>Anomalies & Trading Strategies</strong> — Momentum, value, size effects and their statistical significance</li>
+    <li><strong>High-Frequency Econometrics</strong> — Realized volatility, microstructure noise, and intraday patterns</li>
+    <li><strong>Machine Learning in Asset Pricing</strong> — Prediction with high-dimensional covariates</li>
+  </ul>
+
+  <h2>Related Talks</h2>
+  <div class="post-card">
+    <div class="cat">Talk · Zhengnan Lu</div>
+    <h4>Factor Momentum Revisited: Does the 47-Factor Kernel Collapse to BAB and QMJ?</h4>
+    <p>Zhengnan replicates and extends Ehsani and Linnainmaa (2022, JF), confirming that time-series factor momentum is widespread, and showing that a minimal 2-factor PCA on Betting-Against-Beta (BAB) and Quality-Minus-Junk (QMJ) is sufficient to explain the momentum cross-section.</p>
+  </div>
+  <div class="post-card">
+    <div class="cat">Talk · Yifan Qi</div>
+    <h4>Asset Pricing: Fama-MacBeth</h4>
+    <p>A detailed walkthrough of the Fama-MacBeth two-pass regression procedure — a cornerstone methodology for testing asset pricing models — <a href="https://www.dropbox.com/scl/fi/fb8audgy6o0w186q2r47c/Yifan-Qi_Fama-MacBeth20250317.pdf?rlkey=u6vy48y1eultn2136pa3lcync&st=kcvjvs3l&dl=0" target="_blank">Download notes →</a></p>
+  </div>
+  <div class="post-card">
+    <div class="cat">Talk · Heqing Shi</div>
+    <h4>High-dimensional Covariance Matrix Estimation</h4>
+    <p>Methods for estimating large covariance matrices, fundamental to portfolio construction and risk measurement — <a href="https://www.dropbox.com/scl/fi/nq15yeqswst16jt1ytf08/high_dimensional_covariance_matrix_estimation.pdf?rlkey=r9atw5fpoc7wfl1i4w3aiqgit&st=g9t4ty29&dl=0" target="_blank">Download notes →</a></p>
+  </div>
+</div>
+
+<div class="related-topics">
+  <h2>Related Topics</h2>
+  <div class="related-grid">
+    <a href="econometrics.html">
+      <div class="label">Methodology</div>
+      <div class="name">Econometrics Foundation</div>
+    </a>
+    <a href="credit-research.html">
+      <div class="label">Finance</div>
+      <div class="name">Credit Research</div>
+    </a>
+    <a href="risk-management.html">
+      <div class="label">Finance</div>
+      <div class="name">Risk Management</div>
+    </a>
+    <a href="statistical-methods.html">
+      <div class="label">Methodology</div>
+      <div class="name">Statistical Methods</div>
+    </a>
+  </div>
+</div>
+
+<footer class="topic-footer">
+  Statistics Study Group · University of Edinburgh Business School · © 2026
+</footer>
+</body>
+</html>
