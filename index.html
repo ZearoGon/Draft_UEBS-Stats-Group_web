@@ -1134,12 +1134,11 @@ function HeroMeta() {
 // -------- ABOUT --------
 function About() {
   const TABS = [
+  { id: "schedule", label: "Schedule (Latest)" },
   { id: "mission", label: "Our Mission" },
-  { id: "topics", label: "Research Topics" },
-  { id: "talks", label: "Previous Talks" },
-  { id: "schedule", label: "Schedule" }];
+  { id: "topics", label: "Research Topics" }];
 
-  const [tab, setTab] = useState("mission");
+  const [tab, setTab] = useState("schedule");
   const CONTENT = {
     mission: {
       prose: [
@@ -1216,6 +1215,17 @@ function About() {
             <div className="about-grid">
               <div className="about-prose" key={tab}>
                 {c.prose.map((p, i) => <p key={i}>{p}</p>)}
+                {tab === "schedule" && (
+                  <p style={{ marginTop: 24 }}>
+                    <a href="#talks" onClick={(e) => {
+                      e.preventDefault();
+                      const el = document.getElementById("talks");
+                      if (el) window.scrollTo({ top: el.offsetTop - 60, behavior: "smooth" });
+                    }} style={{ color: "var(--accent)", textDecoration: "none", fontFamily: "var(--mono)", fontSize: 13, display: "inline-flex", alignItems: "center", gap: 8, borderBottom: "1px solid var(--accent)", paddingBottom: 2, fontWeight: 500 }}>
+                      View Previous Talks & Materials →
+                    </a>
+                  </p>
+                )}
               </div>
               <aside className="about-aside">
                 <div className="label">What we do · {TABS.find((t) => t.id === tab).label}</div>
@@ -1290,7 +1300,15 @@ function Events() {
   { id: "schedule", label: "Schedule" }];
 
   const [filter, setFilter] = useState("all");
+  const [expanded, setExpanded] = useState(false);
   const filtered = filter === "all" ? EVENTS : EVENTS.filter((e) => e.cat === filter);
+
+  useEffect(() => {
+    setExpanded(false);
+  }, [filter]);
+
+  const displayed = expanded ? filtered : filtered.slice(0, 5);
+
   return (
     <section id="talks" className="section">
         <div className="container">
@@ -1305,11 +1323,10 @@ function Events() {
               <button key={c.id} className={"chip" + (filter === c.id ? " active" : "")} onClick={() => setFilter(c.id)}>{c.label}</button>
               )}
               </div>
-              <div className="events-count">{filtered.length} upcoming</div>
             </div>
             <div>
-              {filtered.length === 0 && <div className="event-empty">No events match that filter.</div>}
-              {filtered.map((e, i) =>
+              {displayed.length === 0 && <div className="event-empty">No events match that filter.</div>}
+              {displayed.map((e, i) =>
             <div key={i} className="event-row">
                   <div className="event-date">
                     <div className="d">{e.date}</div>
@@ -1330,6 +1347,23 @@ function Events() {
                 </div>
             )}
             </div>
+            {filtered.length > 5 && (
+              <div style={{ display: "flex", justifyContent: "center", marginTop: 32 }}>
+                <button onClick={() => setExpanded(!expanded)} className="chip" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "10px 24px" }}>
+                  {expanded ? (
+                    <>
+                      Show Less
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                    </>
+                  ) : (
+                    <>
+                      Show More (+{filtered.length - 5})
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </>
+                  )}
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </section>);
