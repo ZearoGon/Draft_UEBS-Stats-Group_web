@@ -1228,11 +1228,38 @@ function HeroMeta() {
 // -------- ABOUT --------
 function About() {
   const TABS = [
-  { id: "schedule", label: "Schedule (Latest)" },
+  { id: "schedule", label: "Schedule (Upcoming)" },
   { id: "mission", label: "Our Mission" },
   { id: "topics", label: "Research Topics" }];
 
   const [tab, setTab] = useState("schedule");
+
+  const getBadge = (item, idx) => {
+    if (tab !== "schedule" || idx !== 0) return null;
+    const eventDate = new Date("2026-05-29T17:00:00");
+    const today = new Date();
+    const isUpcoming = today < eventDate;
+    const label = isUpcoming ? "upcoming" : "newest";
+    return (
+      <span style={{
+        marginLeft: 10,
+        padding: "2px 8px",
+        borderRadius: "99px",
+        fontSize: "10px",
+        fontFamily: "var(--mono)",
+        textTransform: "uppercase",
+        letterSpacing: "0.06em",
+        fontWeight: "600",
+        background: isUpcoming ? "var(--accent)" : "var(--bg-2)",
+        color: isUpcoming ? "var(--paper)" : "var(--ink-soft)",
+        display: "inline-block",
+        lineHeight: "1.2",
+        verticalAlign: "middle"
+      }}>
+        {label}
+      </span>
+    );
+  };
   const CONTENT = {
     mission: {
       prose: [
@@ -1327,7 +1354,10 @@ function About() {
                   {c.list.map((item, i) =>
                 <li key={i}>
                       <span className="n">{String(i + 1).padStart(2, "0")}</span>
-                      <span className="t">{item}</span>
+                      <span className="t">
+                        {item}
+                        {getBadge(item, i)}
+                      </span>
                     </li>
                 )}
                 </ul>
