@@ -1,0 +1,818 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Contributors — Statistics Study Group</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=Source+Sans+3:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vsalvino/computer-modern@main/fonts/serif.css">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+<!-- KaTeX -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script>
+  window.TWEAK_DEFAULTS = {
+    "theme": "ink",
+    "hero": "split"
+  };
+</script>
+<style>
+  :root {
+    --bg: #F4EFE6;
+    --bg-2: #ECE5D6;
+    --ink: #1F1A17;
+    --ink-soft: #4A413B;
+    --ink-mute: #8A7F75;
+    --rule: #D9CFBE;
+    --paper: #FBF7EF;
+    --accent: #6E1A1A;     /* oxblood */
+    --accent-deep: #4E0F0F;
+    --accent-soft: #F0DCDC;
+    --nav-bg-tint: #6E1A1A;
+    --serif: "Source Serif 4", Georgia, serif;
+    --sans: "Source Sans 3", system-ui, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, monospace;
+  }
+  /* THEME: ink/paper */
+  html[data-theme="ink"] {
+    --bg: #F2F0EC;
+    --bg-2: #E6E3DD;
+    --ink: #14130F;
+    --ink-soft: #2E2C28;
+    --ink-mute: #7A766E;
+    --rule: #CFCBC2;
+    --paper: #FAF8F4;
+    --accent: #14130F;
+    --accent-deep: #000;
+    --accent-soft: #DEDBD3;
+    --nav-bg-tint: #6E1A1A;
+  }
+  /* THEME: forest */
+  html[data-theme="forest"] {
+    --bg: #EFEBDD;
+    --bg-2: #E2DDC9;
+    --ink: #161C16;
+    --ink-soft: #2F3A2F;
+    --ink-mute: #7E8278;
+    --rule: #CDC9B6;
+    --paper: #F7F3E5;
+    --accent: #2D4A2A;
+    --accent-deep: #1B3019;
+    --accent-soft: #D9E2D3;
+    --nav-bg-tint: #2D4A2A;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    background-image:
+      radial-gradient(rgba(0,0,0,0.018) 1px, transparent 1px),
+      radial-gradient(rgba(0,0,0,0.014) 1px, transparent 1px);
+    background-size: 3px 3px, 7px 7px;
+    background-position: 0 0, 1px 2px;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  .tartan-bg {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1100px;
+    pointer-events: none;
+    z-index: 0;
+    background-image: url("https://pub-2f317f8151d14a0da62cf2e5fb439603.r2.dev/tartan.png");
+    background-repeat: repeat;
+    background-size: 420px 420px;
+    opacity: 0.22;
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.85) 30%, rgba(0,0,0,0.4) 65%, rgba(0,0,0,0) 100%);
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.85) 30%, rgba(0,0,0,0.4) 65%, rgba(0,0,0,0) 100%);
+    mix-blend-mode: multiply;
+  }
+  html[data-theme="ink"]     .tartan-bg { opacity: 0.18; }
+  html[data-theme="oxblood"] .tartan-bg { opacity: 0.20; }
+  html[data-theme="forest"]  .tartan-bg { opacity: 0.20; }
+
+  #root { position: relative; z-index: 1; }
+  ::selection { background: var(--accent); color: var(--paper); }
+  a { color: inherit; }
+
+  /* utilities */
+  .mono { font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-mute); }
+  .serif { font-family: var(--serif); }
+  .rule { border: 0; border-top: 1px solid var(--rule); margin: 0; }
+  .container { width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 40px; }
+  @media (max-width: 720px){ .container { padding: 0 22px; } }
+
+  .reveal { opacity: 0; transform: translateY(14px); transition: opacity .9s ease, transform .9s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* ====== NAV ====== */
+  .nav {
+    position: sticky; top: 0; z-index: 50;
+    background: color-mix(in oklab, var(--nav-bg-tint) 8%, color-mix(in oklab, var(--bg) 65%, transparent));
+    backdrop-filter: saturate(140%) blur(8px);
+    -webkit-backdrop-filter: saturate(140%) blur(8px);
+    border-bottom: 1px solid transparent;
+    transition: border-color .3s, background .3s;
+  }
+  .nav.scrolled { border-bottom-color: var(--rule); }
+  .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 72px;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 14px;
+    text-decoration: none; color: var(--ink);
+  }
+  .brand-text { display: flex; flex-direction: column; line-height: 1.05; }
+  .brand-text .a { font-family: var(--serif); font-weight: 600; font-size: 17px; }
+  .brand-text .b { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-mute); margin-top: 3px; }
+  .brand-logo { filter: brightness(0) saturate(100%); }
+  html[data-theme="oxblood"] .brand-logo { filter: brightness(0) saturate(100%) invert(10%) sepia(60%) saturate(1800%) hue-rotate(340deg); }
+  html[data-theme="forest"]  .brand-logo { filter: brightness(0) saturate(100%) invert(20%) sepia(25%) saturate(800%) hue-rotate(80deg); }
+  html[data-theme="ink"]     .brand-logo { filter: brightness(0) saturate(100%); }
+
+  .nav-links { display: flex; gap: 28px; align-items: center; }
+  .nav-links a {
+    text-decoration: none; color: var(--ink-soft); font-size: 14.5px;
+    position: relative; padding: 6px 0;
+  }
+  .nav-links a::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: 0;
+    height: 1px; background: var(--accent); transform: scaleX(0); transform-origin: left;
+    transition: transform .3s ease;
+  }
+  .nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
+  .nav-cta {
+    font-family: var(--sans); font-size: 14px;
+    background: var(--ink); color: var(--paper);
+    border: 0; padding: 10px 18px; border-radius: 999px;
+    cursor: pointer; transition: background .2s;
+    white-space: nowrap;
+  }
+  .nav-cta:hover { background: var(--accent); }
+  .nav-mobile { display: none; }
+  @media (max-width: 900px){
+    .nav-links { display: none; }
+    .nav-mobile { display: block; }
+  }
+
+  /* ====== HERO (editorial) ====== */
+  .subpage-hero { padding: 80px 0 60px; position: relative; }
+  .subpage-hero-eyebrow { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; }
+  .subpage-hero-eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+  .subpage-hero h1 {
+    font-family: var(--serif); font-size: clamp(38px, 6vw, 68px);
+    font-weight: 500; line-height: 1.05; letter-spacing: -0.02em;
+    margin: 0 0 24px; text-wrap: balance;
+  }
+  .subpage-hero h1 em { font-style: italic; color: var(--accent); }
+  .subpage-hero-sub {
+    font-size: 20px; line-height: 1.6; color: var(--ink-soft);
+    max-width: 780px; font-weight: 400; text-wrap: pretty;
+    margin-bottom: 40px;
+  }
+
+  /* ====== SECTION STYLE ====== */
+  .section { padding: 60px 0 100px; position: relative; }
+  .section-header { margin-bottom: 50px; max-width: 800px; }
+  .section-header .num {
+    font-family: var(--mono); font-size: 13px; color: var(--accent);
+    display: flex; align-items: center; gap: 8px; margin-bottom: 16px;
+  }
+  .section-header h2 {
+    font-family: var(--serif); font-size: 32px; font-weight: 400;
+    line-height: 1.35; margin: 0; color: var(--ink); text-wrap: pretty;
+  }
+  .section-header h2 em { font-style: italic; font-weight: 400; color: var(--accent); }
+
+  /* ====== CONTRIBUTORS GRID / CARDS ====== */
+  .contributors-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    border-top: 1px solid var(--rule);
+    padding-top: 40px;
+  }
+  @media (max-width: 1100px) {
+    .contributors-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 820px) {
+    .contributors-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 520px) {
+    .contributors-grid { grid-template-columns: 1fr; }
+  }
+
+  .member-card-wrapper {
+    perspective: 1000px;
+    height: 380px;
+  }
+  .member-card {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .member-card.flipped {
+    transform: rotateY(180deg);
+  }
+  .member-card-front, .member-card-back {
+    position: absolute;
+    inset: 0;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border: 1px solid var(--rule);
+    background: var(--paper);
+    border-radius: 8px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.02);
+    transition: box-shadow 0.3s, border-color 0.3s;
+    cursor: pointer;
+  }
+  .member-card-front {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .member-card-front:hover {
+    box-shadow: 0 12px 30px -10px rgba(0,0,0,0.08);
+    border-color: var(--accent);
+  }
+  .member-card-back {
+    transform: rotateY(180deg);
+    justify-content: space-between;
+    font-size: 14.5px;
+    text-align: left;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+  }
+  .member-avatar-large {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background: repeating-linear-gradient(45deg, var(--bg-2) 0 6px, var(--bg) 6px 12px);
+    border: 1px solid var(--rule);
+    display: grid;
+    place-items: center;
+    font-family: var(--serif);
+    color: var(--ink-soft);
+    font-weight: 500;
+    font-size: 22px;
+    margin-bottom: 20px;
+    transition: transform 0.3s;
+  }
+  .member-card-front:hover .member-avatar-large {
+    transform: scale(1.08);
+  }
+  .member-card-name {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    margin-bottom: 4px;
+    color: var(--ink);
+  }
+  .member-card-role {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+  .member-card-field {
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    font-weight: 500;
+    background: var(--bg-2);
+    padding: 4px 12px;
+    border-radius: 99px;
+    margin-bottom: 10px;
+  }
+  .member-card-talk-count {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-mute);
+    margin-top: 4px;
+  }
+  .member-card-flip-hint {
+    position: absolute;
+    bottom: 16px;
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--ink-mute);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .member-card-bio {
+    font-family: var(--serif);
+    font-size: 13.5px;
+    line-height: 1.45;
+    color: var(--ink-soft);
+    margin: 0 0 14px 0;
+    text-wrap: pretty;
+    flex-grow: 1;
+    overflow-y: auto;
+  }
+  .member-card-bio::-webkit-scrollbar { width: 4px; }
+  .member-card-bio::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 2px; }
+
+  .contributor-talks-list::-webkit-scrollbar { width: 3px; }
+  .contributor-talks-list::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 2px; }
+
+  /* ====== FOOTER ====== */
+  footer { background: var(--paper); border-top: 1px solid var(--rule); padding: 80px 0 40px; position: relative; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 60px; margin-bottom: 60px; }
+  @media (max-width: 720px){
+    .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+  }
+  .footer-brand .name { font-family: var(--serif); font-size: 22px; font-weight: 500; margin-bottom: 8px; }
+  .footer-brand .desc { font-size: 14.5px; color: var(--ink-soft); max-width: 480px; }
+  .footer-links { display: flex; flex-direction: column; gap: 14px; }
+  .footer-links a { font-family: var(--mono); font-size: 11.5px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.08em; text-decoration: none; }
+  .footer-links a:hover { color: var(--accent); }
+
+  /* ====== TWEAKS PANEL ====== */
+  .tweaks-panel {
+    position: fixed; right: 20px; bottom: 20px; z-index: 100;
+    background: var(--paper); border: 1px solid var(--rule);
+    padding: 18px; width: 260px;
+    font-family: var(--sans); font-size: 13px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+    display: none;
+  }
+  .tweaks-panel.show { display: block; }
+  .tweaks-panel .tw-title { font-family: var(--serif); font-size: 18px; font-weight: 500; margin: 0 0 4px; }
+  .tweaks-panel .tw-sub { font-family: var(--mono); font-size: 10.5px; color: var(--ink-mute); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px; }
+  .tweaks-panel .tw-group { margin-bottom: 14px; }
+  .tweaks-panel .tw-label { font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-mute); margin-bottom: 8px; }
+  .tw-swatches { display: flex; gap: 8px; }
+  .tw-swatch {
+    width: 32px; height: 32px; border-radius: 50%; cursor: pointer;
+    border: 2px solid transparent; outline: 1px solid var(--rule);
+    transition: outline-color .2s;
+  }
+  .tw-swatch.on { outline-color: var(--ink); outline-width: 2px; }
+  .tw-segmented { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; }
+  .tw-segmented button {
+    background: transparent; border: 0; padding: 8px 10px;
+    font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em;
+    color: var(--ink-soft); cursor: pointer;
+  }
+  .tw-segmented button.on { background: var(--ink); color: var(--paper); }
+</style>
+</head>
+<body>
+
+  <div class="tartan-bg"></div>
+  <div id="root"></div>
+
+  <script type="text/babel" data-presets="env,react">
+    const { useState, useEffect } = React;
+
+    // -------- DATA --------
+    const CONTRIBUTORS = [
+      {
+        initials: "ZL",
+        name: "Zhengnan Lu",
+        role: "PhD Contributor",
+        field: "Finance",
+        topic: "Asset Pricing, Factor Models, Portfolio Management",
+        bio: "Zhengnan Lu is a PhD researcher in Finance, focusing on empirical asset pricing, factor structures, and market anomalies.",
+        talks: [
+          {
+            title: "Factor Momentum Revisited: Does the 47-Factor Kernel Collapse to BAB and QMJ?",
+            date: "29 May 2026",
+            pdf: ""
+          }
+        ]
+      },
+      {
+        initials: "KB",
+        name: "Ke Bi",
+        role: "PhD Contributor",
+        field: "Economics & Finance",
+        topic: "Econometrics, Causal Inference, Difference-in-Differences",
+        bio: "Ke Bi is a PhD researcher specializing in micro-econometrics, policy evaluation, and causal inference methodologies in business research.",
+        talks: [
+          {
+            title: "Difference-in-Differences",
+            date: "13 Feb 2025",
+            pdf: "https://www.dropbox.com/scl/fi/fux8sj0ldcdlmhj8k6s5l/DiD.pdf?rlkey=61ymfgxyzny8l3q4v4skfrtgl&st=v0dtd0vf&dl=0"
+          },
+          {
+            title: "Econometrics Foundation 2",
+            date: "25 Oct 2024",
+            pdf: "https://www.dropbox.com/scl/fi/11l9de4k067q0pdmfertl/IV.pptx?rlkey=2huic7f23bcvs0zfut7ernmsr&st=ulk4cqym&dl=0"
+          }
+        ]
+      },
+      {
+        initials: "ZC",
+        name: "Dr Zexun Chen",
+        role: "Faculty Maintainer & Organizer",
+        field: "MSBE",
+        topic: "Statistical methods for business research",
+        bio: "Dr Zexun Chen leads the Statistics Study Group at the University of Edinburgh Business School, focusing on statistical tools and methods that are extensively used in business school research.",
+        talks: [
+          {
+            title: "Study Group Research Methods & Discussions",
+            date: "Continuous / 持续开展",
+            pdf: ""
+          }
+        ]
+      },
+      {
+        initials: "SF",
+        name: "Shiqi Fang",
+        role: "PhD Maintainer & Speaker",
+        field: "MSBE",
+        topic: "Gaussian processes, Bayesian methods, Git & GitHub",
+        bio: "Shiqi Fang is a PhD researcher contributing to the group from a management research perspective, bridging statistical methods with management science.",
+        talks: [
+          {
+            title: "Bayesian Linear Regression",
+            date: "03 Oct 2025",
+            pdf: "https://www.dropbox.com/scl/fi/3jz3x5ami44gb44oiwpxp/bayesian-linear-regression.pdf?rlkey=jlyu5rg1nimf9ln1953u0l59j&st=pi203pjt&dl=0"
+          },
+          {
+            title: "Gaussian Process",
+            date: "25 Mar 2025",
+            pdf: "https://www.dropbox.com/scl/fi/kexcpoyhye1cnj1pbt93i/Gaussian_Process.pdf?rlkey=vh228goc3ydcqt156x9yb50h9&st=fc0rvck6&dl=0"
+          },
+          {
+            title: "Git & GitHub",
+            date: "22 Nov 2024",
+            pdf: "https://www.dropbox.com/scl/fi/046ag2pcb8xe82it58zl6/git-and-github.pdf?rlkey=xx8i9gbyamggtsvaoxsn5tw8d&st=rk8jo8rz&dl=0"
+          }
+        ]
+      },
+      {
+        initials: "HS",
+        name: "Heqing Shi",
+        role: "PhD Maintainer & Speaker",
+        field: "Fintech",
+        topic: "Covariance estimation, kernel methods, credit scoring",
+        bio: "Heqing Shi's research focuses on fintech applications, high-dimensional covariance matrix estimation, and credit scoring statistical tools.",
+        talks: [
+          {
+            title: "The Kernel Trick",
+            date: "30 Jan 2025",
+            pdf: "https://www.dropbox.com/scl/fi/zu843zmrowdmsqoe3zaql/The_Kernel_Trick.pdf?rlkey=siad2qsrngvwpbjhdbclnrdo9&st=rd3g3j1r&dl=0"
+          },
+          {
+            title: "High-dimensional Covariance Matrix Estimation",
+            date: "26 Sep 2024",
+            pdf: "https://www.dropbox.com/scl/fi/nq15yeqswst16jt1ytf08/high_dimensional_covariance_matrix_estimation.pdf?rlkey=r9atw5fpoc7wfl1i4w3aiqgit&st=g9t4ty29&dl=0"
+          }
+        ]
+      },
+      {
+        initials: "YQ",
+        name: "Yifan Qi",
+        role: "PhD Maintainer & Speaker",
+        field: "Accounting & Finance",
+        topic: "Econometrics, asset pricing, Fama-MacBeth regression",
+        bio: "Yifan Qi focuses on econometrics and empirical asset pricing, particularly cross-sectional return predictability testing.",
+        talks: [
+          {
+            title: "Claude Code × Stata & Python: AI Research Agent",
+            date: "27 Mar 2026",
+            pdf: ""
+          },
+          {
+            title: "Asset Pricing: Fama-MacBeth",
+            date: "17 Mar 2025",
+            pdf: "https://www.dropbox.com/scl/fi/fb8audgy6o0w186q2r47c/Yifan-Qi_Fama-MacBeth20250317.pdf?rlkey=u6vy48y1eultn2136pa3lcync&st=kcvjvs3l&dl=0"
+          },
+          {
+            title: "Econometrics Foundation 1",
+            date: "18 Oct 2024",
+            pdf: "https://www.dropbox.com/scl/fi/a4kh4t1u07wja5dmhgt0a/Econometric-Foundation_Discuss1_Yifan-Qi.pdf?rlkey=jwqwy981fi4j1mrttryjvs8a1&st=k885ao04&dl=0"
+          }
+        ]
+      },
+      {
+        initials: "CG",
+        name: "Chenyang Guo",
+        role: "PhD Maintainer & Speaker",
+        field: "MSBE",
+        topic: "Sampling methods, change-point detection, MOSUM",
+        bio: "Chenyang Guo contributes expertise in statistical sampling methods and change-point detection in financial time series analysis.",
+        talks: [
+          {
+            title: "Change-Point Detection: MOSUM Methods",
+            date: "17 Apr 2025",
+            pdf: "https://www.dropbox.com/scl/fi/9tkoswo22bozi93a6jke1/Statistic_Study_Group_MOSUM.pdf?rlkey=vx4qk4yzfp49akxzugrfrsx8v&st=e2y4mzly&dl=0"
+          },
+          {
+            title: "Sampling Method: Accept-Reject Sampling",
+            date: "08 Nov 2024",
+            pdf: "https://www.dropbox.com/scl/fi/zqshamol6je8l81weyscd/Accept_Reject_Sampling.pdf?rlkey=urw2z6qwfz9cvvc4r91oqjisw&st=bx0r9p4a&dl=0"
+          }
+        ]
+      },
+      {
+        initials: "YH",
+        name: "Yizhuo Hu",
+        role: "PhD Maintainer & Speaker",
+        field: "FinTech",
+        topic: "MLE, propensity score matching, synthetic data",
+        bio: "Yizhuo Hu works on statistical estimation, causal inference, and synthetic data generation for financial research applications.",
+        talks: [
+          {
+            title: "Synthetic Data",
+            date: "17 Oct 2025",
+            pdf: ""
+          },
+          {
+            title: "Matching Techniques – Propensity Score Matching",
+            date: "27 Feb 2025",
+            pdf: "https://www.dropbox.com/scl/fi/a643rh9nh9x50asrs8q1i/psm.pdf?rlkey=4nijr2dp2lemecv3sorxyxlux&st=fc7ux3js&dl=0"
+          },
+          {
+            title: "Maximum Likelihood Estimation",
+            date: "06 Dec 2024",
+            pdf: "https://www.dropbox.com/scl/fi/f1pt2cokqsllraxqbp7hp/Maximum-Likelihood-Estimation.pdf?rlkey=uwqzcfc3ayx162ct2csrfx6ni&st=h1cfev32&dl=0"
+          }
+        ]
+      },
+      {
+        initials: "RT",
+        name: "Runzhi Tian",
+        role: "PhD Maintainer & Speaker",
+        field: "FinTech",
+        topic: "AI research agents, Stata & Python integration",
+        bio: "Runzhi Tian focuses on bridging AI-powered research workflows with traditional econometric and statistical tools.",
+        talks: [
+          {
+            title: "Claude Code × Stata & Python: AI Research Agent",
+            date: "27 Mar 2026",
+            pdf: ""
+          }
+        ]
+      }
+    ];
+
+    // -------- NAV --------
+    function Nav() {
+      const [scrolled, setScrolled] = useState(false);
+      useEffect(() => {
+        const onScroll = () => {
+          setScrolled(window.scrollY > 20);
+        };
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+        return () => window.removeEventListener("scroll", onScroll);
+      }, []);
+
+      return (
+        <nav className={"nav" + (scrolled ? " scrolled" : "")}>
+          <div className="container nav-inner">
+            <a className="brand" href="index.html">
+              <img src="https://pub-d017772d240145f2a7c2bee6e495cf7a.r2.dev/uebs-logo-white.svg"
+                alt="UEBS Logo"
+                className="brand-logo"
+                style={{ height: 38, width: 'auto', display: 'block' }} />
+              <div className="brand-text">
+                <span className="a">Statistics</span>
+                <span className="b" style={{ fontFamily: "\"Source Serif 4\"", color: "rgb(2, 2, 2)" }}>STUDY GROUP</span>
+              </div>
+            </a>
+            <div className="nav-links">
+              <a href="index.html#about">About</a>
+              <a href="index.html#maintainers">Maintainers</a>
+              <a href="contributors.html" className="active">Contributors</a>
+              <a href="index.html#talks">Talks</a>
+              <a href="index.html#posts">Posts</a>
+              <a className="nav-cta" href="index.html#join">Join Us</a>
+            </div>
+            <div className="nav-mobile">
+              <a className="nav-cta" href="index.html#join">Join</a>
+            </div>
+          </div>
+        </nav>
+      );
+    }
+
+    // -------- TWEAKS --------
+    function Tweaks({ open, theme, onTheme }) {
+      if (!open) return null;
+      const themes = [
+        { id: "oxblood", color: "#6E1A1A" },
+        { id: "ink", color: "#14130F" },
+        { id: "forest", color: "#2D4A2A" }
+      ];
+
+      return (
+        <div className="tweaks-panel show">
+          <div className="tw-title">Tweaks</div>
+          <div className="tw-sub">Live design controls</div>
+          <div className="tw-group">
+            <div className="tw-label">Color theme</div>
+            <div className="tw-swatches">
+              {themes.map((t) =>
+                <button key={t.id} className={"tw-swatch" + (theme === t.id ? " on" : "")}
+                  style={{ background: t.color }} onClick={() => onTheme(t.id)} aria-label={t.id} />
+              )}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // -------- FOOTER --------
+    function Footer() {
+      return (
+        <footer>
+          <div className="container">
+            <div className="footer-grid">
+              <div className="footer-brand">
+                <div className="name serif">UBES Statistics Study Group</div>
+                <div className="desc">
+                  A doctoral research knowledge exchange platform based at the University of Edinburgh Business School. We document and share statistical knowledge, tools, and methodologies.
+                </div>
+              </div>
+              <div className="footer-links">
+                <a href="index.html#about">About</a>
+                <a href="index.html#maintainers">Maintainers</a>
+                <a href="contributors.html">Contributors</a>
+                <a href="index.html#talks">Talks</a>
+                <a href="index.html#posts">Posts</a>
+                <a href="https://github.com/uebs-stats-group" target="_blank" rel="noopener noreferrer">GitHub</a>
+              </div>
+            </div>
+            <hr className="rule" />
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: "40px", flexWrap: "wrap", gap: "16px" }}>
+              <div style={{ fontSize: "13px", color: "var(--ink-mute)" }}>
+                &copy; {new Date().getFullYear()} UBES Statistics Study Group. All rights reserved.
+              </div>
+              <div style={{ fontSize: "11px", fontFamily: "var(--mono)", color: "var(--ink-mute)", textTransform: "uppercase", letterSpacing: "0.06em" }}>
+                University of Edinburgh Business School
+              </div>
+            </div>
+          </div>
+        </footer>
+      );
+    }
+
+    // -------- APP --------
+    function App() {
+      const [tweakOpen, setTweakOpen] = useState(false);
+      const [theme, setTheme] = useState(window.TWEAK_DEFAULTS.theme);
+      const [flipped, setFlipped] = useState({});
+
+      const toggleFlip = (idx) => {
+        setFlipped(prev => ({ ...prev, [idx]: !prev[idx] }));
+      };
+
+      // Apply theme to <html>
+      useEffect(() => {
+        document.documentElement.setAttribute("data-theme", theme);
+      }, [theme]);
+
+      // Tweak host protocol
+      useEffect(() => {
+        const onMsg = (ev) => {
+          const d = ev.data || {};
+          if (d.type === "__activate_edit_mode") setTweakOpen(true);
+          if (d.type === "__deactivate_edit_mode") setTweakOpen(false);
+        };
+        window.addEventListener("message", onMsg);
+        window.parent.postMessage({ type: "__edit_mode_available" }, "*");
+        return () => window.removeEventListener("message", onMsg);
+      }, []);
+
+      // Scroll-reveal simulation
+      useEffect(() => {
+        const els = document.querySelectorAll(".reveal");
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add("in"); });
+        }, { threshold: 0.12 });
+        els.forEach((el) => io.observe(el));
+        return () => io.disconnect();
+      }, []);
+
+      return (
+        <div data-screen-label="Statistics Study Group Contributors">
+          <Nav />
+          
+          {/* HERO */}
+          <section className="subpage-hero">
+            <div className="container">
+              <div className="subpage-hero-eyebrow reveal">
+                <span className="dot"></span>
+                <span className="mono">Study Group Members & Contributors</span>
+              </div>
+              <h1 className="reveal">
+                Our <em>Historical Contributors</em>
+              </h1>
+              <p className="subpage-hero-sub reveal">
+                Meet the scholars who have presented, chaired, and shared statistical tools & research methodologies at the University of Edinburgh Business School Statistics Study Group.
+              </p>
+            </div>
+          </section>
+
+          {/* CONTRIBUTORS LIST */}
+          <section className="section" style={{ paddingTop: 0 }}>
+            <div className="container">
+              <div className="section-header reveal">
+                <div className="num"><span>01 / 01</span> &nbsp; Speakers & Discussants</div>
+                <h2>Scholars contributing statistical insights. <em>Click the cards</em> to see their profile and talks.</h2>
+              </div>
+              
+              <div className="contributors-grid reveal">
+                {CONTRIBUTORS.map((m, i) => {
+                  const isFlipped = !!flipped[i];
+                  return (
+                    <div key={i} className="member-card-wrapper">
+                      <div className={"member-card" + (isFlipped ? " flipped" : "")} onClick={() => toggleFlip(i)}>
+                        
+                        {/* Front Side */}
+                        <div className="member-card-front">
+                          <div className="member-avatar-large">{m.initials}</div>
+                          <div className="member-card-name">{m.name}</div>
+                          <div className="member-card-role">{m.role}</div>
+                          <span className="member-card-field">{m.field}</span>
+                          <div className="member-card-talk-count">
+                            {m.talks.length} {m.talks.length === 1 ? "Talk" : "Talks"} / 演讲
+                          </div>
+                          <div className="member-card-flip-hint">
+                            <span>Click to flip / 点击翻面</span>
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginLeft: 4 }}><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+                          </div>
+                        </div>
+
+                        {/* Back Side */}
+                        <div className="member-card-back">
+                          <div className="member-card-bio">{m.bio}</div>
+                          
+                          <div style={{ borderTop: "1px dashed var(--rule)", paddingTop: "12px", marginTop: "auto", paddingBottom: "12px" }}>
+                            <div style={{ fontFamily: "var(--mono)", fontSize: "9px", color: "var(--ink-mute)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "6px" }}>Talks / 演讲记录</div>
+                            <div className="contributor-talks-list" style={{ display: "flex", flexDirection: "column", gap: "8px", maxHeight: "160px", overflowY: "auto", paddingRight: "4px" }}>
+                              {m.talks.map((talk, idx) => (
+                                <div key={idx} style={{ fontSize: "12px", lineHeight: "1.3" }}>
+                                  <div style={{ color: "var(--ink-mute)", fontFamily: "var(--mono)", fontSize: "10px" }}>{talk.date}</div>
+                                  <div style={{ color: "var(--ink)", fontWeight: "500" }}>{talk.title}</div>
+                                  {talk.pdf && (
+                                    <a href={talk.pdf} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} style={{ color: "var(--accent)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "2px", marginTop: "2px" }}>
+                                      <span>Notes/Slides</span>
+                                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                                    </a>
+                                  )}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                          
+                          <div className="member-card-flip-hint" style={{ bottom: "16px", left: "24px" }}>
+                            <span>Back / 返回</span>
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginLeft: 4 }}><path d="M2.5 22v-6h6M2.66 8.43a10 10 0 1 1 .57 8.38l-5.67 5.67"/></svg>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </section>
+
+          <Footer />
+
+          <Tweaks
+            open={tweakOpen}
+            theme={theme}
+            onTheme={(t) => {
+              setTheme(t);
+              window.parent.postMessage({ type: "__edit_mode_set_keys", edits: { theme: t } }, "*");
+            }}
+          />
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>
