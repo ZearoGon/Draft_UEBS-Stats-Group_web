@@ -745,43 +745,90 @@
   }
 
   /* ====== PEOPLE DECK (maintainers & contributors in rotation) ====== */
+  .section-people { position: relative; }
   .people-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; min-height: 36px; }
   .people-label { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-mute); }
-  .deck { position: relative; overflow: hidden; cursor: pointer; padding: 12px 0 4px; outline: none; }
+  .deck { position: relative; overflow: hidden; padding: 12px 0 4px; }
   .deck::before, .deck::after {
     content: ""; position: absolute; top: 0; bottom: 0; width: 64px; z-index: 2; pointer-events: none;
   }
   .deck::before { left: 0; background: linear-gradient(to right, var(--bg), transparent); }
   .deck::after { right: 0; background: linear-gradient(to left, var(--bg), transparent); }
   .deck-track {
-    display: flex; width: max-content; padding-left: 40px;
+    display: flex; width: max-content; padding-left: 30px;
     animation: deckFlow linear infinite;
+    will-change: transform;
   }
   .deck:hover .deck-track { animation-play-state: paused; }
-  @keyframes deckFlow { from { transform: translateX(0); } to { transform: translateX(calc(var(--deck-shift) * -1)); } }
+  @keyframes deckFlow { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(calc(var(--deck-shift) * -1), 0, 0); } }
   .deck-card {
-    flex-shrink: 0; width: 184px; margin-left: -40px;
+    flex-shrink: 0; width: 150px; margin-left: -30px;
     background: var(--paper); border: 1px solid var(--rule); border-radius: 10px;
-    /* right padding ≈ overlap of the next card, so text centres in the visible zone */
-    padding: 20px 48px 16px 12px; text-align: center;
+    overflow: hidden; text-align: center; cursor: pointer;
     box-shadow: 0 10px 24px rgba(0,0,0,0.07);
-    transform: rotate(-1.4deg);
-    transition: transform .25s, border-color .25s;
+    transform: rotate(-1deg);
+    transition: transform .25s ease, border-color .25s ease;
   }
-  .deck-card:nth-child(even) { transform: rotate(1.2deg) translateY(6px); }
+  .deck-card:nth-child(even) { transform: rotate(0.9deg) translateY(5px); }
+  .deck-card:hover { transform: translateY(-6px) rotate(0deg); border-color: var(--accent); }
   .deck-card.ghost { border-style: dashed; background: transparent; box-shadow: none; }
-  .deck-avatar {
-    width: 52px; height: 52px; border-radius: 999px; border: 1px solid var(--ink);
+  /* square photo zone — real portraits can drop in later without distortion */
+  .deck-photo {
+    width: 100%; aspect-ratio: 1 / 1;
     display: flex; align-items: center; justify-content: center;
-    font-family: var(--serif); font-size: 17px; font-weight: 600;
-    margin: 0 auto 10px; background: var(--bg-2);
+    font-family: var(--serif); font-size: 26px; font-weight: 600;
+    background: var(--bg-2); border-bottom: 1px solid var(--rule);
   }
-  .deck-card.ghost .deck-avatar { border-style: dashed; color: var(--ink-mute); background: transparent; }
-  .deck-name { font-family: var(--serif); font-size: 15px; font-weight: 600; line-height: 1.2; }
+  .deck-card.ghost .deck-photo { background: transparent; border-bottom-style: dashed; color: var(--ink-mute); }
+  /* right padding ≈ overlap of the next card, so text centres in the visible zone */
+  .deck-meta { padding: 10px 34px 12px 6px; }
+  .deck-name { font-family: var(--serif); font-size: 13.5px; font-weight: 600; line-height: 1.25; }
   .deck-card.ghost .deck-name { font-style: italic; color: var(--ink-mute); }
-  .deck-role { font-family: var(--mono); font-size: 8.5px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-mute); margin-top: 5px; line-height: 1.5; }
+  .deck-role { font-family: var(--mono); font-size: 8px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-mute); margin-top: 4px; line-height: 1.5; }
   .deck-cue { text-align: center; font-family: var(--mono); font-size: 11px; color: var(--ink-mute); margin-top: 16px; letter-spacing: 0.05em; }
   @media (prefers-reduced-motion: reduce) { .deck-track { animation: none; } }
+
+  .unfold-anim { animation: unfoldIn 0.38s cubic-bezier(0.25, 0.8, 0.35, 1); }
+  @keyframes unfoldIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ====== PERSON FOCUS OVERLAY ====== */
+  .person-overlay {
+    position: absolute; inset: 0; z-index: 40;
+    display: flex; align-items: center; justify-content: center; padding: 28px;
+    background: rgba(20, 15, 10, 0.22);
+    backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+    animation: overlayIn 0.25s ease;
+  }
+  @keyframes overlayIn { from { opacity: 0; } to { opacity: 1; } }
+  .person-modal {
+    position: relative; width: min(560px, 94%); max-height: 92%; overflow: auto;
+    background: var(--paper); border: 1px solid var(--rule); border-radius: 14px;
+    padding: 32px 32px 28px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.28);
+    display: flex; flex-direction: column; gap: 14px;
+    animation: modalIn 0.32s cubic-bezier(0.2, 0.9, 0.3, 1);
+  }
+  @keyframes modalIn { from { opacity: 0; transform: translateY(16px) scale(0.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
+  .person-close {
+    position: absolute; top: 14px; right: 14px; width: 32px; height: 32px;
+    border-radius: 999px; border: 1px solid var(--rule); background: var(--paper);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 13px; color: var(--ink-soft); transition: all .2s;
+  }
+  .person-close:hover { border-color: var(--accent); color: var(--accent); }
+  .person-modal-top { display: flex; gap: 16px; align-items: center; }
+  .person-modal-avatar {
+    width: 64px; height: 64px; flex-shrink: 0; border-radius: 12px; border: 1px solid var(--ink);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--serif); font-weight: 600; font-size: 21px; background: var(--bg-2);
+  }
+  .person-modal-name { font-family: var(--serif); font-size: 23px; font-weight: 600; letter-spacing: -0.01em; }
+  .person-modal-row { font-size: 14px; color: var(--ink-soft); }
+  .person-modal-row span {
+    display: block; font-family: var(--mono); font-size: 9px; color: var(--ink-mute);
+    text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 3px;
+  }
+  .person-modal-row a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent); }
 
   /* ====== CONTRIBUTORS (expanded grid) ====== */
   .contrib-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; }
@@ -889,8 +936,10 @@
     background: var(--ink); color: var(--paper);
     margin-top: 0;
     padding: 110px 0;
+    position: relative; overflow: hidden;
   }
-  .join .container { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+  .star-river { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+  .join .container { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; position: relative; z-index: 1; }
   .join h2 {
     font-family: var(--serif); font-weight: 400;
     font-size: clamp(36px, 4.5vw, 64px); line-height: 1.02; letter-spacing: -0.02em;
@@ -1299,11 +1348,11 @@ const EVENTS_SORTED = [...EVENTS].sort((a, b) => eventDate(b) - eventDate(a));
 const NEWS = [
 { cat: "Blog", date: "14 Jun 2024", title: "What You Can Get From This Website", excerpt: "The resources from this website are mainly for researchers in the area of finance. We record statistical tools — models, tests and more — into blogs covering credit research, risk management and asset pricing.", img: "blog · statistics tools" },
 { cat: "Blog", date: "06 Jun 2024", title: "Conference & Workshop Opportunities", excerpt: "A curated list of upcoming conferences and workshops including the 2024 Edinburgh World-Class Workshop on FinTech, Economics of Financial Technology Conference, and the 1st Doctoral Finance Symposium.", img: "events · conferences" },
-{ cat: "Lecture", date: "29 May 2026", title: "Factor Momentum Revisited: BAB and QMJ", excerpt: "Zhengnan Lu replicates Ehsani & Linnainmaa (2022, JF) and shows that time-series factor momentum collapses onto just two well-known factors (BAB and QMJ), offering a concentrated view of pricing power.", img: "talk · factor momentum" },
+{ cat: "Lecture", date: "29 May 2026", title: "Factor Momentum Revisited: BAB and QMJ", excerpt: "Zhengnan Lu replicates Ehsani & Linnainmaa (2022, JF) and shows that time-series factor momentum collapses onto just two well-known factors (BAB and QMJ), offering a concentrated view of pricing power.", img: "lecture · factor momentum" },
 { cat: "Lecture", date: "27 Mar 2026", title: "Claude Code × Stata & Python: AI Research Agent", excerpt: "A hands-on workshop guiding participants through the full setup of an AI-powered Stata & Python research environment. Part of the UEBS Statistics Study Group series bridging econometrics and AI.", img: "workshop · AI coding" },
-{ cat: "Lecture", date: "17 Oct 2025", title: "Synthetic Data in Finance", excerpt: "Exploring how synthetic data helps address privacy concerns, supports model training, and enhances data sharing — while acknowledging limitations in fidelity, validation, and regulatory uncertainty.", img: "talk · synthetic data" },
-{ cat: "Lecture", date: "17 Apr 2025", title: "Change-Point Detection: MOSUM Methods", excerpt: "Chenyang Guo presents MOSUM-based change-point detection methods and their applications in financial time series analysis and structural break identification.", img: "talk · time series" },
-{ cat: "Lecture", date: "17 Mar 2025", title: "Asset Pricing: Fama-MacBeth Regression", excerpt: "Yifan Qi walks through the Fama-MacBeth two-pass regression procedure — a cornerstone methodology for testing asset pricing models in cross-sectional finance research.", img: "talk · asset pricing" }];
+{ cat: "Lecture", date: "17 Oct 2025", title: "Synthetic Data in Finance", excerpt: "Exploring how synthetic data helps address privacy concerns, supports model training, and enhances data sharing — while acknowledging limitations in fidelity, validation, and regulatory uncertainty.", img: "lecture · synthetic data" },
+{ cat: "Lecture", date: "17 Apr 2025", title: "Change-Point Detection: MOSUM Methods", excerpt: "Chenyang Guo presents MOSUM-based change-point detection methods and their applications in financial time series analysis and structural break identification.", img: "lecture · time series" },
+{ cat: "Lecture", date: "17 Mar 2025", title: "Asset Pricing: Fama-MacBeth Regression", excerpt: "Yifan Qi walks through the Fama-MacBeth two-pass regression procedure — a cornerstone methodology for testing asset pricing models in cross-sectional finance research.", img: "lecture · asset pricing" }];
 
 
 // -------- NAV --------
@@ -1558,23 +1607,24 @@ const CONTRIBUTORS = [
   { title: "Claude Code × Stata & Python: AI Research Agent", date: "27 Mar 2026", pdf: "" }] }];
 
 
-// -------- PEOPLE DECK (overlapping, slowly rotating card strip) --------
-// Everyone the same size, endlessly in rotation — hover pauses the flow,
-// a short dwell or a click unfolds the full layout.
-function PeopleDeck({ items, onExpand, cue }) {
-  const dwell = useRef(null);
-  const enter = () => { dwell.current = setTimeout(onExpand, 500); };
-  const leave = () => { if (dwell.current) clearTimeout(dwell.current); };
-  useEffect(() => () => { if (dwell.current) clearTimeout(dwell.current); }, []);
+// -------- PEOPLE DECK (overlapping, slowly drifting card strip) --------
+// Everyone the same size, endlessly in rotation — hovering pauses the flow,
+// clicking a card opens that person's focus card. Portrait cards keep a
+// square photo zone so real photos can drop in later without distortion.
+function PeopleDeck({ items, onPick, cue }) {
   return (
-    <div className="deck" role="button" tabIndex={0} onMouseEnter={enter} onMouseLeave={leave}
-      onClick={onExpand} onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") onExpand(); }}>
-      <div className="deck-track" style={{ "--deck-shift": `${items.length * 144}px`, animationDuration: `${items.length * 4.5}s` }}>
+    <div className="deck unfold-anim">
+      <div className="deck-track" style={{ "--deck-shift": `${items.length * 120}px`, animationDuration: `${items.length * 9}s` }}>
         {[...items, ...items].map((m, i) =>
-          <div key={i} className={"deck-card" + (m.ghost ? " ghost" : "")}>
-            <div className="deck-avatar">{m.ghost ? "+" : m.initials}</div>
-            <div className="deck-name">{m.name}</div>
-            <div className="deck-role">{m.role}</div>
+          <div key={i} className={"deck-card" + (m.ghost ? " ghost" : "")} role="button"
+            tabIndex={i < items.length ? 0 : -1}
+            onClick={() => onPick(m)}
+            onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onPick(m); } }}>
+            <div className="deck-photo">{m.ghost ? "+" : m.initials}</div>
+            <div className="deck-meta">
+              <div className="deck-name">{m.name}</div>
+              <div className="deck-role">{m.role}</div>
+            </div>
           </div>
         )}
       </div>
@@ -1588,6 +1638,7 @@ function Committee() {
   const [flipped, setFlipped] = useState({});
   const [mExp, setMExp] = useState(false);
   const [cExp, setCExp] = useState(false);
+  const [focusP, setFocusP] = useState(null);
   const toggleFlip = (idx) => {
     setFlipped(prev => ({ ...prev, [idx]: !prev[idx] }));
   };
@@ -1595,29 +1646,39 @@ function Committee() {
     const el = document.getElementById("join");
     if (el) window.scrollTo({ top: el.offsetTop - 60, behavior: "smooth" });
   };
+  const pick = (m) => {
+    if (m.ghost) goJoin();
+    else setFocusP(m);
+  };
+  useEffect(() => {
+    if (!focusP) return;
+    const onKey = (e) => { if (e.key === "Escape") setFocusP(null); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [focusP]);
 
   return (
-    <section id="maintainers" className="section">
+    <section id="maintainers" className="section section-people">
         <div className="container">
           <div className="section-header reveal">
             <div className="num"><span>02 / 05</span> &nbsp; Maintainers & Contributors</div>
-            <h2>An equal community in rotation — <em>hover or tap a deck</em> to meet everyone.</h2>
+            <h2>A community in rotation — <em>click any card</em> for a closer look.</h2>
           </div>
 
           <div className="reveal">
             <div className="people-head">
-              <div className="people-label">Maintainers · {COMMITTEE.length} · equal &amp; in rotation</div>
-              {mExp && <button className="chip" onClick={() => setMExp(false)}>Fold the deck ↺</button>}
+              <div className="people-label">Maintainers · {COMMITTEE.length}</div>
+              <button className="chip" onClick={() => setMExp(!mExp)}>{mExp ? "Fold the deck ↺" : "Unfold all ▾"}</button>
             </div>
             {!mExp &&
               <PeopleDeck
                 items={COMMITTEE}
-                onExpand={() => setMExp(true)}
-                cue="hover / tap to unfold all maintainers · then click a card to flip for details" />}
+                onPick={pick}
+                cue="hover to pause the flow · click a card for a closer look" />}
           </div>
 
           {mExp &&
-          <div className="committee-grid">
+          <div className="committee-grid unfold-anim">
             {COMMITTEE.map((m, i) => {
             const isFlipped = !!flipped[i];
             return (
@@ -1667,16 +1728,16 @@ function Committee() {
 
           <div className="reveal" id="contributors" style={{ marginTop: 72 }}>
             <div className="people-head">
-              <div className="people-label">Speakers &amp; Contributors · {CONTRIBUTORS.length} · the stage rotates</div>
-              {cExp && <button className="chip" onClick={() => setCExp(false)}>Fold the deck ↺</button>}
+              <div className="people-label">Contributors · {CONTRIBUTORS.length}</div>
+              <button className="chip" onClick={() => setCExp(!cExp)}>{cExp ? "Fold the deck ↺" : "Unfold all ▾"}</button>
             </div>
             {!cExp &&
               <PeopleDeck
                 items={[...CONTRIBUTORS, { ghost: true, name: "Your name here?", role: "the next lecture" }]}
-                onExpand={() => setCExp(true)}
-                cue="hover / tap to unfold every speaker and their lectures · one seat is always open" />}
+                onPick={pick}
+                cue="hover to pause · click a contributor for their lectures · one seat is always open" />}
             {cExp &&
-            <div className="contrib-grid">
+            <div className="contrib-grid unfold-anim">
               {CONTRIBUTORS.map((m, i) =>
                 <div key={i} className="contrib-card">
                   <div className="contrib-top">
@@ -1706,6 +1767,37 @@ function Committee() {
             </div>}
           </div>
         </div>
+
+        {focusP &&
+        <div className="person-overlay" onClick={() => setFocusP(null)}>
+          <div className="person-modal" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-label={focusP.name}>
+            <button className="person-close" onClick={() => setFocusP(null)} aria-label="Close">✕</button>
+            <div className="person-modal-top">
+              <div className="person-modal-avatar">{focusP.initials}</div>
+              <div>
+                <div className="person-modal-name">{focusP.name}</div>
+                <div className="contrib-role">{focusP.role}{focusP.field ? " · " + focusP.field : ""}</div>
+              </div>
+            </div>
+            {focusP.bio && <div className="contrib-bio" style={{ fontSize: 14.5 }}>{focusP.bio}</div>}
+            {focusP.topic &&
+              <div className="person-modal-row"><span>Research Focus</span>{focusP.topic}</div>}
+            {focusP.email &&
+              <div className="person-modal-row"><span>Contact</span><a href={"mailto:" + focusP.email}>{focusP.email}</a></div>}
+            {focusP.lectures && focusP.lectures.length > 0 &&
+              <div>
+                <div className="contrib-lechead" style={{ marginBottom: 10 }}>Lectures · {focusP.lectures.length}</div>
+                <ul className="contrib-lectures">
+                  {focusP.lectures.map((t, j) =>
+                    <li key={j}>
+                      <span className="d">{t.date}</span>
+                      <span className="t">{t.title}</span>
+                      {t.pdf && <a href={t.pdf} target="_blank" rel="noopener noreferrer">PDF ↓</a>}
+                    </li>)}
+                </ul>
+              </div>}
+          </div>
+        </div>}
       </section>);
 
 }
@@ -1735,6 +1827,36 @@ function ResearchAtlas() {
   const [focus, setFocus] = useState(talkKey(newest));
   const [zoom, setZoom] = useState(1);
   const interacted = useRef(false);
+
+  // Wheel-to-zoom on the map: percentage steps, anchored at the cursor.
+  const mapWrapRef = useRef(null);
+  const zoomRef = useRef(1);
+  zoomRef.current = zoom;
+  const pendingScroll = useRef(null);
+  useEffect(() => {
+    if (view !== "map") return;
+    const el = mapWrapRef.current;
+    if (!el) return;
+    const onWheel = (e) => {
+      e.preventDefault();
+      const old = zoomRef.current;
+      const next = Math.min(2, Math.max(1, +(old * (e.deltaY < 0 ? 1.1 : 1 / 1.1)).toFixed(3)));
+      if (next === old) return;
+      const rect = el.getBoundingClientRect();
+      const px = e.clientX - rect.left, py = e.clientY - rect.top;
+      pendingScroll.current = { px, py, cx: el.scrollLeft + px, cy: el.scrollTop + py, ratio: next / old };
+      setZoom(next);
+    };
+    el.addEventListener("wheel", onWheel, { passive: false });
+    return () => el.removeEventListener("wheel", onWheel);
+  }, [view]);
+  useEffect(() => {
+    const el = mapWrapRef.current, p = pendingScroll.current;
+    if (!el || !p) return;
+    el.scrollLeft = p.cx * p.ratio - p.px;
+    el.scrollTop = p.cy * p.ratio - p.py;
+    pendingScroll.current = null;
+  }, [zoom]);
 
   // Latest rail: click-and-drag horizontal scrolling
   const railRef = useRef(null);
@@ -1827,7 +1949,7 @@ function ResearchAtlas() {
           {view === "map" ? (
             <>
               <div className="atlas-map-outer">
-                <div className="atlas-map-wrap">
+                <div className="atlas-map-wrap" ref={mapWrapRef}>
                 <svg className="atlas-svg" viewBox="0 0 1290 760" role="img"
                   style={{ width: `${zoom * 100}%`, minWidth: `${860 * zoom}px` }}
                   aria-label="Research atlas: statistics at the centre, research fields as branches, lectures as leaves">
@@ -1911,11 +2033,11 @@ function ResearchAtlas() {
                 </div>
                 <div className="atlas-zoom">
                   <button className="atlas-zoom-btn" onClick={() => setZoom((z) => Math.max(1, +(z - 0.25).toFixed(2)))} disabled={zoom <= 1} aria-label="Zoom out">−</button>
-                  <button className="atlas-zoom-btn reset" onClick={() => setZoom(1)} disabled={zoom === 1} aria-label="Reset zoom">1:1</button>
+                  <button className="atlas-zoom-btn reset" onClick={() => setZoom(1)} disabled={zoom === 1} aria-label="Reset zoom">{Math.round(zoom * 100)}%</button>
                   <button className="atlas-zoom-btn" onClick={() => setZoom((z) => Math.min(2, +(z + 0.25).toFixed(2)))} disabled={zoom >= 2} aria-label="Zoom in">+</button>
                 </div>
               </div>
-              <div className="atlas-hint">Click a field to unfold its branch · leaves are lectures, newest first · the map grows with every session</div>
+              <div className="atlas-hint">Click a field to unfold its branch · leaves are lectures, newest first · scroll the map to zoom · the map grows with every session</div>
 
               <div className="atlas-panel">
                 <div className="atlas-panel-head">
@@ -2114,6 +2236,126 @@ function News() {
 
 }
 
+// -------- STAR RIVER (Join section backdrop) --------
+// A slow galactic drift over the deep-blue join panel: stars ride gentle
+// streamlines (a nod to fluid dynamics), twinkle stochastically (random
+// fluctuation), and the group's formulas float past as ringed planets.
+// Canvas-based, DPR-capped, paused off-screen, reduced-motion aware.
+function StarRiver() {
+  const ref = useRef(null);
+  useEffect(() => {
+    const canvas = ref.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const DPR = Math.min(window.devicePixelRatio || 1, 1.5);
+    let W = 0, H = 0, raf = 0, visible = true, t = Math.random() * 100;
+
+    const resize = () => {
+      W = canvas.offsetWidth; H = canvas.offsetHeight;
+      canvas.width = Math.max(1, Math.round(W * DPR));
+      canvas.height = Math.max(1, Math.round(H * DPR));
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    };
+    resize();
+
+    const rand = (a, b) => a + Math.random() * (b - a);
+    const stars = Array.from({ length: 130 }, () => ({
+      x: Math.random(), y: Math.random(),
+      r: rand(0.4, 1.5), v: rand(0.004, 0.014),
+      tw: rand(0, Math.PI * 2), ts: rand(0.25, 0.9), band: rand(0.5, 1)
+    }));
+    const planets = [
+      "β̂ = (X′X)⁻¹X′y",
+      "√n(θ̂ − θ) → N(0, V)",
+      "p(θ | y) ∝ p(y | θ) p(θ)",
+      "dS = μS dt + σS dW",
+      "∂u/∂t + (u·∇)u = −∇p/ρ + ν∇²u",
+      "E[R] − Rf = βλ",
+      "Var(β̂) = σ²(X′X)⁻¹"
+    ].map((tex, i) => ({
+      tex, x: Math.random(), y: 0.14 + 0.72 * (i / 6),
+      v: rand(0.0012, 0.0035), s: rand(12.5, 15.5), ring: i % 2 === 0, ph: rand(0, Math.PI * 2)
+    }));
+
+    // gentle streamline field — everything in the river bends the same way
+    const flowY = (nx, ny, tt) => Math.sin(nx * 4.2 + tt * 0.12 + ny * 7) * 7;
+
+    const draw = (dt) => {
+      t += dt;
+      ctx.clearRect(0, 0, W, H);
+
+      // faint milky band breathing across the panel
+      const g = ctx.createLinearGradient(0, H * 0.1, W, H * 0.9);
+      g.addColorStop(0, "rgba(160,200,225,0)");
+      g.addColorStop(0.45 + 0.08 * Math.sin(t * 0.05), "rgba(160,200,225,0.05)");
+      g.addColorStop(1, "rgba(160,200,225,0)");
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, W, H);
+
+      // stars adrift on the streamlines
+      ctx.fillStyle = "#cfe3ee";
+      for (const s of stars) {
+        s.x += s.v * dt;
+        if (s.x > 1.02) s.x = -0.02;
+        const px = s.x * W;
+        const py = s.y * H + flowY(s.x, s.y, t);
+        ctx.globalAlpha = (0.14 + 0.3 * Math.abs(Math.sin(t * s.ts + s.tw))) * s.band;
+        ctx.beginPath();
+        ctx.arc(px, py, s.r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // formula planets, slower and larger — the statistics among the stars
+      ctx.textAlign = "center";
+      for (const p of planets) {
+        p.x += p.v * dt;
+        if (p.x > 1.18) p.x = -0.18;
+        const px = p.x * W;
+        const py = p.y * H + flowY(p.x, p.y, t * 0.6) * 1.6;
+        ctx.font = `italic ${p.s}px "Source Serif 4", Georgia, serif`;
+        ctx.globalAlpha = 0.17;
+        ctx.fillStyle = "#bcd8e8";
+        ctx.fillText(p.tex, px, py);
+        if (p.ring) {
+          ctx.globalAlpha = 0.07;
+          ctx.strokeStyle = "#cfe3ee";
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.ellipse(px, py - p.s * 0.35, ctx.measureText(p.tex).width / 2 + 16, p.s * 1.2, Math.sin(p.ph) * 0.16, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+      }
+      ctx.globalAlpha = 1;
+    };
+
+    const io = new IntersectionObserver((entries) => { visible = entries[0].isIntersecting; });
+    io.observe(canvas);
+    window.addEventListener("resize", resize);
+
+    if (reduced) {
+      draw(0);
+      return () => { io.disconnect(); window.removeEventListener("resize", resize); };
+    }
+
+    let last = performance.now();
+    const loop = (now) => {
+      const dt = Math.min(0.05, (now - last) / 1000);
+      last = now;
+      if (visible && W > 0) draw(dt);
+      raf = requestAnimationFrame(loop);
+    };
+    raf = requestAnimationFrame(loop);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      io.disconnect();
+      window.removeEventListener("resize", resize);
+    };
+  }, []);
+  return <canvas ref={ref} className="star-river" aria-hidden="true" />;
+}
+
 // -------- JOIN FORM --------
 function Join() {
   const [form, setForm] = useState({ name: "", email: "", program: "", year: "", interests: "" });
@@ -2141,6 +2383,7 @@ function Join() {
 
   return (
     <section id="join" className="join" style={{ backgroundColor: "rgb(11, 56, 78)" }}>
+        <StarRiver />
         <div className="container">
           <div>
             <div className="section-header" style={{ gridTemplateColumns: "1fr", gap: 18, marginBottom: 24 }}>
