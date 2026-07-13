@@ -601,8 +601,8 @@
             <div className="nav-links">
               <a href="index.html#about">About</a>
               <a href="index.html#maintainers">Maintainers</a>
-              <a href="contributors.html" className="active">Contributors</a>
-              <a href="index.html#talks">Talks</a>
+              <a href="index.html#contributors" className="active">Contributors</a>
+              <a href="index.html#talks">Research Atlas</a>
               <a href="index.html#posts">Posts</a>
               <a className="nav-cta" href="index.html#join">Join Us</a>
             </div>
@@ -655,8 +655,8 @@
               <div className="footer-links">
                 <a href="index.html#about">About</a>
                 <a href="index.html#maintainers">Maintainers</a>
-                <a href="contributors.html">Contributors</a>
-                <a href="index.html#talks">Talks</a>
+                <a href="index.html#contributors">Contributors</a>
+                <a href="index.html#talks">Research Atlas</a>
                 <a href="index.html#posts">Posts</a>
                 <a href="https://github.com/uebs-stats-group" target="_blank" rel="noopener noreferrer">GitHub</a>
               </div>
@@ -737,7 +737,7 @@
             <div className="container">
               <div className="section-header reveal">
                 <div className="num"><span>01 / 01</span> &nbsp; Speakers & Discussants</div>
-                <h2>Scholars contributing statistical insights. <em>Click the cards</em> to see their profile and talks.</h2>
+                <h2>Scholars contributing statistical insights. <em>Click the cards</em> to see their profile and lectures.</h2>
               </div>
               
               <div className="contributors-grid reveal">
@@ -754,7 +754,7 @@
                           <div className="member-card-role">{m.role}</div>
                           <span className="member-card-field">{m.field}</span>
                           <div className="member-card-talk-count">
-                            {m.talks.length} {m.talks.length === 1 ? "Talk" : "Talks"} / 演讲
+                            {m.talks.length} {m.talks.length === 1 ? "Lecture" : "Lectures"}
                           </div>
                           <div className="member-card-flip-hint">
                             <span>Click to flip / 点击翻面</span>
@@ -767,7 +767,7 @@
                           <div className="member-card-bio">{m.bio}</div>
                           
                           <div style={{ borderTop: "1px dashed var(--rule)", paddingTop: "12px", marginTop: "auto", paddingBottom: "12px" }}>
-                            <div style={{ fontFamily: "var(--mono)", fontSize: "9px", color: "var(--ink-mute)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "6px" }}>Talks / 演讲记录</div>
+                            <div style={{ fontFamily: "var(--mono)", fontSize: "9px", color: "var(--ink-mute)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "6px" }}>Lectures</div>
                             <div className="contributor-talks-list" style={{ display: "flex", flexDirection: "column", gap: "8px", maxHeight: "160px", overflowY: "auto", paddingRight: "4px" }}>
                               {m.talks.map((talk, idx) => (
                                 <div key={idx} style={{ fontSize: "12px", lineHeight: "1.3" }}>
