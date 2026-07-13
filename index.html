@@ -612,6 +612,119 @@
     font-family: var(--serif); font-style: italic; font-size: 20px; color: var(--ink-mute);
   }
 
+  /* ====== RESEARCH ATLAS ====== */
+  .atlas-toolbar { display: flex; gap: 16px; align-items: center; justify-content: space-between; margin-bottom: 28px; }
+  .atlas-rail { display: flex; gap: 10px; align-items: center; overflow-x: auto; padding-bottom: 4px; flex: 1; min-width: 0; }
+  .atlas-rail::-webkit-scrollbar { height: 4px; }
+  .atlas-rail::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 4px; }
+  .atlas-rail-label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); flex-shrink: 0; font-weight: 600; }
+  .atlas-rail-chip { white-space: nowrap; flex-shrink: 0; text-transform: none; letter-spacing: 0.02em; }
+  .atlas-rail-chip .d { color: var(--ink-mute); margin-right: 7px; font-size: 10px; text-transform: uppercase; }
+  .atlas-rail-chip .f { color: var(--ink-mute); }
+  .atlas-rail-chip.active .d, .atlas-rail-chip.active .f { color: inherit; opacity: 0.72; }
+  .atlas-switch { display: flex; gap: 8px; flex-shrink: 0; }
+
+  .atlas-map-wrap {
+    border: 1px solid var(--rule); border-radius: 6px;
+    background: radial-gradient(ellipse at center, var(--paper) 0%, transparent 75%);
+    overflow-x: auto; margin-bottom: 30px;
+  }
+  .atlas-svg { display: block; width: 100%; min-width: 860px; height: auto; }
+
+  .atlas-edge {
+    fill: none; stroke: var(--rule); stroke-width: 1.4;
+    stroke-dasharray: 1400; stroke-dashoffset: 1400;
+    animation: atlasDraw 1.8s ease forwards;
+  }
+  .atlas-edge.active { stroke: var(--accent); stroke-width: 2; }
+  .atlas-edge.ghost { stroke-dasharray: 5 7; stroke-dashoffset: 0; animation: none; opacity: 0.65; }
+  .atlas-edge-flow {
+    fill: none; stroke: var(--accent); stroke-width: 2; opacity: 0.45;
+    stroke-dasharray: 3 11; animation: atlasFlow 1.1s linear infinite;
+  }
+  @keyframes atlasDraw { to { stroke-dashoffset: 0; } }
+  @keyframes atlasFlow { to { stroke-dashoffset: -14; } }
+
+  .atlas-node { cursor: pointer; }
+  .atlas-node-c { fill: var(--paper); stroke: var(--ink); stroke-width: 1.5; transition: stroke .25s, fill .25s; }
+  .atlas-node:hover .atlas-node-c { stroke: var(--accent); stroke-width: 2; }
+  .atlas-node-c.active { fill: var(--accent); stroke: var(--accent-deep); }
+  .atlas-node-c.empty { stroke-dasharray: 4 5; }
+  .atlas-count { font-family: var(--serif); font-size: 26px; font-weight: 600; fill: var(--ink); pointer-events: none; }
+  .atlas-count.active { fill: var(--paper); }
+  .atlas-count-sub { font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; fill: var(--ink-mute); pointer-events: none; }
+  .atlas-count-sub.active { fill: var(--paper); opacity: 0.8; }
+  .atlas-node-label {
+    font-family: var(--serif); font-size: 15px; font-weight: 600; fill: var(--ink);
+    paint-order: stroke; stroke: var(--bg); stroke-width: 5px; stroke-linejoin: round;
+  }
+  .atlas-node-label.ghost { font-size: 13px; font-style: italic; fill: var(--ink-mute); }
+  .atlas-flag {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
+    fill: var(--accent); font-weight: 600;
+    paint-order: stroke; stroke: var(--bg); stroke-width: 4px; stroke-linejoin: round;
+  }
+  .atlas-pulse {
+    fill: none; stroke: var(--accent); stroke-width: 1.6;
+    animation: atlasPulse 2.8s ease-out infinite;
+    transform-box: fill-box; transform-origin: center;
+    pointer-events: none;
+  }
+  @keyframes atlasPulse {
+    0% { transform: scale(1); opacity: 0.75; }
+    70% { transform: scale(1.45); opacity: 0; }
+    100% { transform: scale(1.45); opacity: 0; }
+  }
+  .atlas-float { animation: atlasFloat 7s ease-in-out infinite; }
+  .atlas-float.f1 { animation-duration: 8.5s; animation-delay: -2.4s; }
+  .atlas-float.f2 { animation-duration: 10s; animation-delay: -4.8s; }
+  @keyframes atlasFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+
+  .atlas-twig { stroke: var(--ink-mute); stroke-width: 1; opacity: 0.55; }
+  .atlas-leaf { fill: var(--paper); stroke: var(--ink); stroke-width: 1.4; transition: stroke .2s, fill .2s; }
+  .atlas-leaf.focused { fill: var(--accent); stroke: var(--accent-deep); }
+  .atlas-leaf-g { cursor: pointer; opacity: 0; animation: atlasLeafIn 0.45s ease forwards; }
+  .atlas-leaf-g:hover .atlas-leaf { stroke: var(--accent); }
+  .atlas-leaf-label {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.03em; fill: var(--ink-soft);
+    paint-order: stroke; stroke: var(--bg); stroke-width: 4px; stroke-linejoin: round;
+  }
+  @keyframes atlasLeafIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .atlas-core-c { fill: var(--accent); stroke: var(--accent-deep); stroke-width: 2; transition: fill .25s; }
+  .atlas-core-c.active { fill: var(--accent-deep); }
+  .atlas-core-t { font-family: var(--serif); font-style: italic; font-size: 27px; font-weight: 600; fill: var(--paper); pointer-events: none; }
+  .atlas-core-sub { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase; fill: var(--paper); opacity: 0.8; pointer-events: none; }
+  .atlas-ghost-c { fill: transparent; stroke: var(--ink-mute); stroke-width: 1.4; stroke-dasharray: 4 5; transition: stroke .25s; }
+  .atlas-ghost:hover .atlas-ghost-c { stroke: var(--accent); }
+  .atlas-ghost-plus { font-family: var(--serif); font-size: 22px; fill: var(--ink-mute); pointer-events: none; }
+  .atlas-ghost:hover .atlas-ghost-plus { fill: var(--accent); }
+
+  .atlas-hint { font-family: var(--mono); font-size: 11.5px; color: var(--ink-mute); text-align: center; margin: -18px 0 34px; letter-spacing: 0.04em; }
+
+  .atlas-panel-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 28px; margin-bottom: 8px; }
+  .atlas-panel-kicker { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  .atlas-panel-title { font-family: var(--serif); font-size: 30px; font-weight: 600; margin: 0 0 10px; letter-spacing: -0.01em; }
+  .atlas-panel-blurb { max-width: 640px; color: var(--ink-soft); font-size: 15.5px; margin: 0 0 18px; }
+  .atlas-panel-link {
+    flex-shrink: 0; font-family: var(--mono); font-size: 12.5px; color: var(--accent);
+    text-decoration: none; border-bottom: 1px solid var(--accent); padding-bottom: 2px;
+    margin-bottom: 22px; white-space: nowrap;
+  }
+  .atlas-badge {
+    margin-left: 10px; padding: 2px 8px; border-radius: 99px;
+    font-size: 10px; font-family: var(--mono); text-transform: uppercase;
+    letter-spacing: 0.06em; font-weight: 600;
+    background: var(--accent); color: var(--paper);
+    display: inline-block; vertical-align: middle; line-height: 1.2;
+  }
+  .event-row.focused { background: linear-gradient(90deg, var(--accent-soft), transparent); padding-left: 12px; }
+  @media (max-width: 900px) {
+    .atlas-toolbar { flex-direction: column; align-items: stretch; }
+    .atlas-switch { justify-content: flex-end; }
+    .atlas-panel-head { flex-direction: column; align-items: flex-start; gap: 6px; }
+  }
+
   /* ====== NEWS ====== */
   .news-toolbar { display: flex; gap: 16px; margin-bottom: 36px; align-items: center; }
   .search-box {
@@ -1059,23 +1172,38 @@ const COMMITTEE = [
 { initials: "YJ", name: "Yuyang Jiang", pron: "", role: "PhD Maintainer", field: "MSBE&Finance", year: "", supervisor: "", topic: "AI methods in finance", email: "Y.Jiang-172@sms.ed.ac.uk", bio: "Yuyang Jiang focuses on applying artificial intelligence and machine learning methods to explore financial research questions." }];
 
 
+// -------- RESEARCH ATLAS DATA --------
+// Fields of the knowledge network. Statistics is the trunk ("core");
+// every talk hangs on one branch via its `topic` key.
+const TOPICS = [
+{ id: "core", label: "Statistics", caption: "The Backbone", x: 600, y: 380, href: "", blurb: "Statistics is the connective tissue of everything we do — the shared language that lets credit researchers argue with asset pricers and econometricians borrow from machine learning. Talks on research craft and tooling live on the trunk itself." },
+{ id: "stat", label: "Statistical Methods", x: 600, y: 150, href: "topics/statistical-methods.html", blurb: "Tests, estimators and sampling schemes — the raw machinery. From maximum likelihood to Gaussian processes and change-point detection, these talks sharpen the tools every other branch depends on." },
+{ id: "econ", label: "Econometrics", x: 265, y: 258, href: "topics/econometrics.html", blurb: "Bridging economics and statistics: identification, causal inference and the foundations of regression. DiD, matching and IV — the grammar of empirical economic arguments." },
+{ id: "asset", label: "Asset Pricing", x: 935, y: 258, href: "topics/asset-pricing.html", blurb: "Can returns be predicted in the cross-section? Factor models, Fama-MacBeth regressions and the ongoing hunt for pricing power in stocks, bonds and derivatives." },
+{ id: "credit", label: "Credit Research", x: 265, y: 502, href: "topics/credit-research.html", blurb: "Credit scoring, default prediction and the statistics of lending decisions. A growing branch — blog material is up, and the first dedicated talk is waiting for a speaker." },
+{ id: "ai", label: "AI & Machine Learning", x: 935, y: 502, href: "20260313_UEBS%20Statistics%20Study%20group_AI,ML,DL_Business_Overview.html", blurb: "Machine learning, deep learning and AI-powered research workflows — from kernel methods to synthetic data and AI research agents driving Stata & Python." },
+{ id: "risk", label: "Risk Management", x: 600, y: 610, href: "topics/risk-management.html", blurb: "Risk forecasting and the high-dimensional statistics behind it — covariance estimation, portfolio risk and the models that keep tail events honest." }];
+
 const EVENTS = [
-{ date: "29", month: "May", year: "2026", kicker: "Schedule", title: "Factor Momentum Revisited: Does the 47-Factor Kernel Collapse to BAB and QMJ?", loc: "Conference Room, 4th Floor, UEBS", time: "17:00 – 18:00", cat: "schedule", speaker: "Zhengnan Lu", pdf: "" },
-{ date: "27", month: "Mar", year: "2026", kicker: "Schedule", title: "Claude Code × Stata & Python: AI Research Agent", loc: "UEBS Boardroom", time: "17:00 – 18:00", cat: "schedule", speaker: "Runzhi Tian, Yifan Qi", pdf: "" },
-{ date: "17", month: "Oct", year: "2025", kicker: "Schedule", title: "Synthetic Data", loc: "UEBS Boardroom", time: "17:00 – 18:00", cat: "schedule", speaker: "Yizhuo Hu", pdf: "" },
-{ date: "03", month: "Oct", year: "2025", kicker: "Talk", title: "Bayesian Linear Regression", loc: "UEBS", time: "", cat: "talk", speaker: "Shiqi Fang", pdf: "https://www.dropbox.com/scl/fi/3jz3x5ami44gb44oiwpxp/bayesian-linear-regression.pdf?rlkey=jlyu5rg1nimf9ln1953u0l59j&st=pi203pjt&dl=0" },
-{ date: "17", month: "Apr", year: "2025", kicker: "Talk", title: "Change-Point Detection: MOSUM Methods", loc: "UEBS", time: "", cat: "talk", speaker: "Chenyang Guo", pdf: "https://www.dropbox.com/scl/fi/9tkoswo22bozi93a6jke1/Statistic_Study_Group_MOSUM.pdf?rlkey=vx4qk4yzfp49akxzugrfrsx8v&st=e2y4mzly&dl=0" },
-{ date: "25", month: "Mar", year: "2025", kicker: "Talk", title: "Gaussian Process", loc: "UEBS", time: "", cat: "talk", speaker: "Shiqi Fang", pdf: "https://www.dropbox.com/scl/fi/kexcpoyhye1cnj1pbt93i/Gaussian_Process.pdf?rlkey=vh228goc3ydcqt156x9yb50h9&st=fc0rvck6&dl=0" },
-{ date: "17", month: "Mar", year: "2025", kicker: "Talk", title: "Asset Pricing: Fama-MacBeth", loc: "UEBS", time: "", cat: "talk", speaker: "Yifan Qi", pdf: "https://www.dropbox.com/scl/fi/fb8audgy6o0w186q2r47c/Yifan-Qi_Fama-MacBeth20250317.pdf?rlkey=u6vy48y1eultn2136pa3lcync&st=kcvjvs3l&dl=0" },
-{ date: "27", month: "Feb", year: "2025", kicker: "Talk", title: "Matching Techniques – Propensity Score Matching", loc: "UEBS", time: "", cat: "talk", speaker: "YiZhuo Hu", pdf: "https://www.dropbox.com/scl/fi/a643rh9nh9x50asrs8q1i/psm.pdf?rlkey=4nijr2dp2lemecv3sorxyxlux&st=fc7ux3js&dl=0" },
-{ date: "13", month: "Feb", year: "2025", kicker: "Talk", title: "Difference-in-Differences", loc: "UEBS", time: "", cat: "talk", speaker: "Ke Bi", pdf: "https://www.dropbox.com/scl/fi/fux8sj0ldcdlmhj8k6s5l/DiD.pdf?rlkey=61ymfgxyzny8l3q4v4skfrtgl&st=v0dtd0vf&dl=0" },
-{ date: "30", month: "Jan", year: "2025", kicker: "Talk", title: "The Kernel Trick", loc: "UEBS", time: "", cat: "talk", speaker: "Heqing Shi", pdf: "https://www.dropbox.com/scl/fi/zu843zmrowdmsqoe3zaql/The_Kernel_Trick.pdf?rlkey=siad2qsrngvwpbjhdbclnrdo9&st=rd3g3j1r&dl=0" },
-{ date: "06", month: "Dec", year: "2024", kicker: "Talk", title: "Maximum Likelihood Estimation", loc: "UEBS", time: "", cat: "talk", speaker: "Yizhuo Hu", pdf: "https://www.dropbox.com/scl/fi/f1pt2cokqsllraxqbp7hp/Maximum-Likelihood-Estimation.pdf?rlkey=uwqzcfc3ayx162ct2csrfx6ni&st=h1cfev32&dl=0" },
-{ date: "22", month: "Nov", year: "2024", kicker: "Talk", title: "Git & GitHub", loc: "UEBS", time: "", cat: "talk", speaker: "Shiqi Fang", pdf: "https://www.dropbox.com/scl/fi/046ag2pcb8xe82it58zl6/git-and-github.pdf?rlkey=xx8i9gbyamggtsvaoxsn5tw8d&st=rk8jo8rz&dl=0" },
-{ date: "08", month: "Nov", year: "2024", kicker: "Talk", title: "Sampling Method: Accept-Reject Sampling", loc: "UEBS", time: "", cat: "talk", speaker: "Chenyang Guo", pdf: "https://www.dropbox.com/scl/fi/zqshamol6je8l81weyscd/Accept_Reject_Sampling.pdf?rlkey=urw2z6qwfz9cvvc4r91oqjisw&st=bx0r9p4a&dl=0" },
-{ date: "25", month: "Oct", year: "2024", kicker: "Talk", title: "Econometrics Foundation 2", loc: "UEBS", time: "", cat: "talk", speaker: "Ke Bi", pdf: "https://www.dropbox.com/scl/fi/11l9de4k067q0pdmfertl/IV.pptx?rlkey=2huic7f23bcvs0zfut7ernmsr&st=ulk4cqym&dl=0" },
-{ date: "18", month: "Oct", year: "2024", kicker: "Talk", title: "Econometrics Foundation 1", loc: "UEBS", time: "", cat: "talk", speaker: "Yifan Qi", pdf: "https://www.dropbox.com/scl/fi/a4kh4t1u07wja5dmhgt0a/Econometric-Foundation_Discuss1_Yifan-Qi.pdf?rlkey=jwqwy981fi4j1mrttryjvs8a1&st=k885ao04&dl=0" },
-{ date: "26", month: "Sep", year: "2024", kicker: "Talk", title: "High-dimensional Covariance Matrix Estimation", loc: "UEBS", time: "", cat: "talk", speaker: "Heqing Shi", pdf: "https://www.dropbox.com/scl/fi/nq15yeqswst16jt1ytf08/high_dimensional_covariance_matrix_estimation.pdf?rlkey=r9atw5fpoc7wfl1i4w3aiqgit&st=g9t4ty29&dl=0" }];
+{ date: "29", month: "May", year: "2026", kicker: "Schedule", title: "Factor Momentum Revisited: Does the 47-Factor Kernel Collapse to BAB and QMJ?", short: "Factor Momentum", topic: "asset", loc: "Conference Room, 4th Floor, UEBS", time: "17:00 – 18:00", cat: "schedule", speaker: "Zhengnan Lu", pdf: "" },
+{ date: "27", month: "Mar", year: "2026", kicker: "Schedule", title: "Claude Code × Stata & Python: AI Research Agent", short: "Claude Code × Stata", topic: "ai", loc: "UEBS Boardroom", time: "17:00 – 18:00", cat: "schedule", speaker: "Runzhi Tian, Yifan Qi", pdf: "" },
+{ date: "17", month: "Oct", year: "2025", kicker: "Schedule", title: "Synthetic Data", short: "Synthetic Data", topic: "ai", loc: "UEBS Boardroom", time: "17:00 – 18:00", cat: "schedule", speaker: "Yizhuo Hu", pdf: "" },
+{ date: "03", month: "Oct", year: "2025", kicker: "Talk", title: "Bayesian Linear Regression", short: "Bayesian LR", topic: "stat", loc: "UEBS", time: "", cat: "talk", speaker: "Shiqi Fang", pdf: "https://www.dropbox.com/scl/fi/3jz3x5ami44gb44oiwpxp/bayesian-linear-regression.pdf?rlkey=jlyu5rg1nimf9ln1953u0l59j&st=pi203pjt&dl=0" },
+{ date: "17", month: "Apr", year: "2025", kicker: "Talk", title: "Change-Point Detection: MOSUM Methods", short: "MOSUM", topic: "stat", loc: "UEBS", time: "", cat: "talk", speaker: "Chenyang Guo", pdf: "https://www.dropbox.com/scl/fi/9tkoswo22bozi93a6jke1/Statistic_Study_Group_MOSUM.pdf?rlkey=vx4qk4yzfp49akxzugrfrsx8v&st=e2y4mzly&dl=0" },
+{ date: "25", month: "Mar", year: "2025", kicker: "Talk", title: "Gaussian Process", short: "Gaussian Process", topic: "stat", loc: "UEBS", time: "", cat: "talk", speaker: "Shiqi Fang", pdf: "https://www.dropbox.com/scl/fi/kexcpoyhye1cnj1pbt93i/Gaussian_Process.pdf?rlkey=vh228goc3ydcqt156x9yb50h9&st=fc0rvck6&dl=0" },
+{ date: "17", month: "Mar", year: "2025", kicker: "Talk", title: "Asset Pricing: Fama-MacBeth", short: "Fama-MacBeth", topic: "asset", loc: "UEBS", time: "", cat: "talk", speaker: "Yifan Qi", pdf: "https://www.dropbox.com/scl/fi/fb8audgy6o0w186q2r47c/Yifan-Qi_Fama-MacBeth20250317.pdf?rlkey=u6vy48y1eultn2136pa3lcync&st=kcvjvs3l&dl=0" },
+{ date: "27", month: "Feb", year: "2025", kicker: "Talk", title: "Matching Techniques – Propensity Score Matching", short: "PSM", topic: "econ", loc: "UEBS", time: "", cat: "talk", speaker: "YiZhuo Hu", pdf: "https://www.dropbox.com/scl/fi/a643rh9nh9x50asrs8q1i/psm.pdf?rlkey=4nijr2dp2lemecv3sorxyxlux&st=fc7ux3js&dl=0" },
+{ date: "13", month: "Feb", year: "2025", kicker: "Talk", title: "Difference-in-Differences", short: "DiD", topic: "econ", loc: "UEBS", time: "", cat: "talk", speaker: "Ke Bi", pdf: "https://www.dropbox.com/scl/fi/fux8sj0ldcdlmhj8k6s5l/DiD.pdf?rlkey=61ymfgxyzny8l3q4v4skfrtgl&st=v0dtd0vf&dl=0" },
+{ date: "30", month: "Jan", year: "2025", kicker: "Talk", title: "The Kernel Trick", short: "Kernel Trick", topic: "ai", loc: "UEBS", time: "", cat: "talk", speaker: "Heqing Shi", pdf: "https://www.dropbox.com/scl/fi/zu843zmrowdmsqoe3zaql/The_Kernel_Trick.pdf?rlkey=siad2qsrngvwpbjhdbclnrdo9&st=rd3g3j1r&dl=0" },
+{ date: "06", month: "Dec", year: "2024", kicker: "Talk", title: "Maximum Likelihood Estimation", short: "MLE", topic: "stat", loc: "UEBS", time: "", cat: "talk", speaker: "Yizhuo Hu", pdf: "https://www.dropbox.com/scl/fi/f1pt2cokqsllraxqbp7hp/Maximum-Likelihood-Estimation.pdf?rlkey=uwqzcfc3ayx162ct2csrfx6ni&st=h1cfev32&dl=0" },
+{ date: "22", month: "Nov", year: "2024", kicker: "Talk", title: "Git & GitHub", short: "Git & GitHub", topic: "core", loc: "UEBS", time: "", cat: "talk", speaker: "Shiqi Fang", pdf: "https://www.dropbox.com/scl/fi/046ag2pcb8xe82it58zl6/git-and-github.pdf?rlkey=xx8i9gbyamggtsvaoxsn5tw8d&st=rk8jo8rz&dl=0" },
+{ date: "08", month: "Nov", year: "2024", kicker: "Talk", title: "Sampling Method: Accept-Reject Sampling", short: "A-R Sampling", topic: "stat", loc: "UEBS", time: "", cat: "talk", speaker: "Chenyang Guo", pdf: "https://www.dropbox.com/scl/fi/zqshamol6je8l81weyscd/Accept_Reject_Sampling.pdf?rlkey=urw2z6qwfz9cvvc4r91oqjisw&st=bx0r9p4a&dl=0" },
+{ date: "25", month: "Oct", year: "2024", kicker: "Talk", title: "Econometrics Foundation 2", short: "Econometrics II", topic: "econ", loc: "UEBS", time: "", cat: "talk", speaker: "Ke Bi", pdf: "https://www.dropbox.com/scl/fi/11l9de4k067q0pdmfertl/IV.pptx?rlkey=2huic7f23bcvs0zfut7ernmsr&st=ulk4cqym&dl=0" },
+{ date: "18", month: "Oct", year: "2024", kicker: "Talk", title: "Econometrics Foundation 1", short: "Econometrics I", topic: "econ", loc: "UEBS", time: "", cat: "talk", speaker: "Yifan Qi", pdf: "https://www.dropbox.com/scl/fi/a4kh4t1u07wja5dmhgt0a/Econometric-Foundation_Discuss1_Yifan-Qi.pdf?rlkey=jwqwy981fi4j1mrttryjvs8a1&st=k885ao04&dl=0" },
+{ date: "26", month: "Sep", year: "2024", kicker: "Talk", title: "High-dimensional Covariance Matrix Estimation", short: "HD Covariance", topic: "risk", loc: "UEBS", time: "", cat: "talk", speaker: "Heqing Shi", pdf: "https://www.dropbox.com/scl/fi/nq15yeqswst16jt1ytf08/high_dimensional_covariance_matrix_estimation.pdf?rlkey=r9atw5fpoc7wfl1i4w3aiqgit&st=g9t4ty29&dl=0" }];
+
+const eventDate = (e) => new Date(`${e.month} ${e.date}, ${e.year}`);
+const EVENTS_SORTED = [...EVENTS].sort((a, b) => eventDate(b) - eventDate(a));
 
 
 const NEWS = [
@@ -1129,7 +1257,7 @@ function Nav() {
             <a href="#about" className={active === "about" ? "active" : ""} onClick={go("about")}>About</a>
             <a href="#maintainers" className={active === "maintainers" ? "active" : ""} onClick={go("maintainers")}>Maintainers</a>
             <a href="contributors.html">Contributors</a>
-            <a href="#talks" className={active === "talks" ? "active" : ""} onClick={go("talks")}>Talks</a>
+            <a href="#talks" className={active === "talks" ? "active" : ""} onClick={go("talks")}>Research Atlas</a>
             <a href="#posts" className={active === "posts" ? "active" : ""} onClick={go("posts")}>Posts</a>
             <button className="nav-cta" onClick={go("join")}>Join Us</button>
           </div>
@@ -1251,100 +1379,23 @@ function HeroMeta() {
 }
 
 // -------- ABOUT --------
+// Schedule & Research Topics moved into the Research Atlas (section 03);
+// About now carries the mission alone.
 function About() {
-  const TABS = [
-  { id: "schedule", label: "Schedule (Upcoming)" },
-  { id: "mission", label: "Our Mission" },
-  { id: "topics", label: "Research Topics" }];
+  const MISSION = {
+    prose: [
+    "This website is managed by the UEBS Statistics Group. We are a statistics-based knowledge exchange platform for doctoral research, documenting and sharing methodologies — statistical tests, regression models and more — that are extensively used in business school research. All posts and blogs are contributed by PhD researchers from the University of Edinburgh Business School.",
+    "The resources are mainly for researchers in the area of finance. We find it useful to record the statistics-based knowledge we come across into blogs. Topics such as credit scoring, risk forecasting and asset pricing are primarily covered, as these span our current main research interests. We believe these insights are also meaningful to researchers in accounting, marketing, operations research and beyond."],
 
-  const [tab, setTab] = useState("schedule");
+    list: [
+    "In-person discussion sessions",
+    "Blog-style statistics-based knowledge",
+    "Presentation materials & PDFs",
+    "Open to all UEBS researchers",
+    "Google Form subscription",
+    "GitHub: uebs-stats-group"]
 
-  const getBadge = (item, idx) => {
-    if (tab !== "schedule" || idx !== 0) return null;
-    const eventDate = new Date("2026-05-29T17:00:00");
-    const today = new Date();
-    const isUpcoming = today < eventDate;
-    const label = isUpcoming ? "upcoming" : "newest";
-    return (
-      <span style={{
-        marginLeft: 10,
-        padding: "2px 8px",
-        borderRadius: "99px",
-        fontSize: "10px",
-        fontFamily: "var(--mono)",
-        textTransform: "uppercase",
-        letterSpacing: "0.06em",
-        fontWeight: "600",
-        background: isUpcoming ? "var(--accent)" : "var(--bg-2)",
-        color: isUpcoming ? "var(--paper)" : "var(--ink-soft)",
-        display: "inline-block",
-        lineHeight: "1.2",
-        verticalAlign: "middle"
-      }}>
-        {label}
-      </span>
-    );
   };
-  const CONTENT = {
-    mission: {
-      prose: [
-      "This website is managed by the UEBS Statistics Group. We are a statistics-based knowledge exchange platform for doctoral research, documenting and sharing methodologies — statistical tests, regression models and more — that are extensively used in business school research. All posts and blogs are contributed by PhD researchers from the University of Edinburgh Business School.",
-      "The resources are mainly for researchers in the area of finance. We find it useful to record the statistics-based knowledge we come across into blogs. Topics such as credit scoring, risk forecasting and asset pricing are primarily covered, as these span our current main research interests. We believe these insights are also meaningful to researchers in accounting, marketing, operations research and beyond."],
-
-      list: [
-      "In-person discussion sessions",
-      "Blog-style statistics-based knowledge",
-      "Presentation materials & PDFs",
-      "Open to all UEBS researchers",
-      "Google Form subscription",
-      "GitHub: uebs-stats-group"]
-
-    },
-    topics: {
-      prose: [
-      "Econometrics is a fundamental discipline that bridges economics and statistics. It seeks to provide empirical content to economic theories by applying statistical methods to economic data. Econometric studies aim to quantify economic relationships, test hypotheses, and forecast future trends using real-world data.",
-      "Asset Pricing is an important research topic in finance. Asset pricing studies try to answer the fundamental question — whether the return of financial assets (stocks, bonds, options and other derivatives) can be predicted in cross-section. Statistical models and tests are intensively used to examine return predictability."],
-
-      list: [
-      "Credit Research",
-      "Risk Management",
-      "Econometrics Foundation",
-      "Asset Pricing",
-      "Statistical Tests & Models",
-      "AI (Machine Learning & Deep Learning) Methods"]
-
-    },
-    talks: {
-      prose: [
-      "Previous Talks archive contains recordings and materials from our past research discussions and presentations. These sessions cover various topics in statistics, econometrics, and their applications in business research.",
-      "Below you can find the complete collection of our previous talks with links to presentation materials, notes and PDFs available for download. All materials are freely accessible to the research community."],
-
-      list: [
-      "High-dimensional Covariance Matrix Estimation",
-      "Econometrics Foundation (2 parts)",
-      "Accept-Reject Sampling",
-      "Fama-MacBeth Regression",
-      "Gaussian Process",
-      "Factor Momentum Revisited"]
-
-    },
-    schedule: {
-      prose: [
-      "We organise in-person group discussions from time to time. Most of the discussions are hosted at the University of Edinburgh Business School. Scheduled meetings are posted below with exact location and time confirmed in each session.",
-      "The discussion sessions are set up to share the knowledge of the statistical tools we blog about in a seminar presentation mode. To join the discussion sessions, please fill in the subscribe form or contact one of the maintainers directly."],
-
-      list: [
-      "2026-05 — Factor Momentum Revisited",
-      "2026-03 — Claude Code × Stata & Python",
-      "2025-10 — Synthetic Data",
-      "Venue: Conference Room, 4th Floor / Boardroom",
-      "Format: Seminar presentations",
-      "Duration: ~1 hour sessions",
-      "Open to all researchers"]
-
-    }
-  };
-  const c = CONTENT[tab];
   return (
     <section id="about" className="section">
         <div className="container">
@@ -1353,35 +1404,27 @@ function About() {
             <h2>A community held together by <em>statistics, seminars, and a shared passion</em> for rigorous research.</h2>
           </div>
           <div className="reveal">
-            <div className="tabs-row">
-              {TABS.map((t) =>
-            <button key={t.id} className={"tab-btn" + (tab === t.id ? " active" : "")} onClick={() => setTab(t.id)}>{t.label}</button>
-            )}
-            </div>
             <div className="about-grid">
-              <div className="about-prose" key={tab}>
-                {c.prose.map((p, i) => <p key={i}>{p}</p>)}
-                {tab === "schedule" && (
-                  <p style={{ marginTop: 24 }}>
-                    <a href="#talks" onClick={(e) => {
-                      e.preventDefault();
-                      const el = document.getElementById("talks");
-                      if (el) window.scrollTo({ top: el.offsetTop - 60, behavior: "smooth" });
-                    }} style={{ color: "var(--accent)", textDecoration: "none", fontFamily: "var(--mono)", fontSize: 13, display: "inline-flex", alignItems: "center", gap: 8, borderBottom: "1px solid var(--accent)", paddingBottom: 2, fontWeight: 500 }}>
-                      View Previous Talks & Materials →
-                    </a>
-                  </p>
-                )}
+              <div className="about-prose">
+                {MISSION.prose.map((p, i) => <p key={i}>{p}</p>)}
+                <p style={{ marginTop: 24 }}>
+                  <a href="#talks" onClick={(e) => {
+                    e.preventDefault();
+                    const el = document.getElementById("talks");
+                    if (el) window.scrollTo({ top: el.offsetTop - 60, behavior: "smooth" });
+                  }} style={{ color: "var(--accent)", textDecoration: "none", fontFamily: "var(--mono)", fontSize: 13, display: "inline-flex", alignItems: "center", gap: 8, borderBottom: "1px solid var(--accent)", paddingBottom: 2, fontWeight: 500 }}>
+                    Explore the Research Atlas — schedule, topics & talks →
+                  </a>
+                </p>
               </div>
               <aside className="about-aside">
-                <div className="label">What we do · {TABS.find((t) => t.id === tab).label}</div>
+                <div className="label">What we do · Our Mission</div>
                 <ul>
-                  {c.list.map((item, i) =>
+                  {MISSION.list.map((item, i) =>
                 <li key={i}>
                       <span className="n">{String(i + 1).padStart(2, "0")}</span>
                       <span className="t">
                         {item}
-                        {getBadge(item, i)}
                       </span>
                     </li>
                 )}
@@ -1467,8 +1510,228 @@ function Committee() {
 
 }
 
-// -------- EVENTS --------
-function Events() {
+// -------- RESEARCH ATLAS (Schedule × Research Topics, merged) --------
+// Statistics sits at the centre as the trunk; the six fields branch off it;
+// every talk is a leaf on its branch, newest first. Clicking a field unfolds
+// its branch on the map and opens the dossier below.
+const ATLAS_C = { x: 600, y: 380 };
+const talkKey = (e) => `${e.year}-${e.month}-${e.date}`;
+
+function leafPoints(t, n) {
+  const base = Math.atan2(t.y - ATLAS_C.y, t.x - ATLAS_C.x);
+  const spread = Math.min(1.9, 0.55 * Math.max(n - 1, 0));
+  const R = 108;
+  return Array.from({ length: n }, (_, i) => {
+    const a = n === 1 ? base : base - spread / 2 + (spread * i) / (n - 1);
+    return { x: t.x + R * Math.cos(a), y: t.y + R * Math.sin(a) };
+  });
+}
+
+function ResearchAtlas() {
+  const newest = EVENTS_SORTED[0];
+  const isUpcoming = eventDate(newest) > new Date();
+  const [view, setView] = useState("map");
+  const [sel, setSel] = useState(newest.topic);
+  const [focus, setFocus] = useState(talkKey(newest));
+  const interacted = useRef(false);
+
+  const byTopic = useMemo(() => {
+    const m = {};
+    TOPICS.forEach((t) => { m[t.id] = EVENTS_SORTED.filter((e) => e.topic === t.id); });
+    return m;
+  }, []);
+
+  const pick = (topicId, key) => {
+    interacted.current = true;
+    setSel(topicId);
+    setFocus(key || null);
+  };
+
+  const goJoin = (ev) => {
+    if (ev) ev.preventDefault();
+    const el = document.getElementById("join");
+    if (el) window.scrollTo({ top: el.offsetTop - 60, behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    if (!interacted.current || !focus) return;
+    const el = document.getElementById("atlas-talk-" + focus);
+    if (el) el.scrollIntoView({ block: "nearest", behavior: "smooth" });
+  }, [focus, sel]);
+
+  const selTopic = TOPICS.find((t) => t.id === sel);
+  const selTalks = byTopic[sel] || [];
+  const branches = TOPICS.filter((t) => t.id !== "core");
+
+  return (
+    <section id="talks" className="section">
+      <div className="container">
+        <div className="section-header reveal">
+          <div className="num"><span>03 / 05</span> &nbsp; Research Atlas</div>
+          <h2>Statistics as the backbone — <em>a living map</em> of our fields, talks and materials.</h2>
+        </div>
+
+        <div className="reveal">
+          <div className="atlas-toolbar">
+            <div className="atlas-rail">
+              <span className="atlas-rail-label">Latest</span>
+              {EVENTS_SORTED.slice(0, 5).map((e) => {
+                const k = talkKey(e);
+                const t = TOPICS.find((x) => x.id === e.topic);
+                return (
+                  <button key={k}
+                    className={"chip atlas-rail-chip" + (view === "map" && focus === k ? " active" : "")}
+                    onClick={() => { setView("map"); pick(e.topic, k); }}>
+                    <span className="d">{e.month} {e.year}</span>{e.short}<span className="f"> · {t.label}</span>
+                  </button>);
+              })}
+            </div>
+            <div className="atlas-switch">
+              <button className={"chip" + (view === "map" ? " active" : "")} onClick={() => setView("map")}>Atlas</button>
+              <button className={"chip" + (view === "list" ? " active" : "")} onClick={() => setView("list")}>Index</button>
+            </div>
+          </div>
+
+          {view === "map" ? (
+            <>
+              <div className="atlas-map-wrap">
+                <svg className="atlas-svg" viewBox="0 0 1240 760" role="img"
+                  aria-label="Research atlas: statistics at the centre, research fields as branches, talks as leaves">
+                  <g transform="translate(20,0)">
+
+                    {/* trunk → field edges */}
+                    {branches.map((t, i) => {
+                      const mx = (ATLAS_C.x + t.x) / 2, my = (ATLAS_C.y + t.y) / 2;
+                      const px = t.y - ATLAS_C.y, py = ATLAS_C.x - t.x;
+                      const plen = Math.hypot(px, py) || 1;
+                      const off = (i % 2 ? -1 : 1) * 26;
+                      const d = `M ${ATLAS_C.x} ${ATLAS_C.y} Q ${mx + (px / plen) * off} ${my + (py / plen) * off} ${t.x} ${t.y}`;
+                      return (
+                        <g key={t.id}>
+                          <path className={"atlas-edge" + (sel === t.id ? " active" : "")} d={d} />
+                          {sel === t.id && <path className="atlas-edge-flow" d={d} />}
+                        </g>);
+                    })}
+
+                    {/* frontier: the branch that doesn't exist yet */}
+                    <path className="atlas-edge ghost" d="M 600 380 Q 860 336 1105 380" />
+
+                    {/* leaves of the selected branch */}
+                    {sel !== "core" && selTopic && leafPoints(selTopic, selTalks.length).map((p, i) => {
+                      const e = selTalks[i];
+                      const k = talkKey(e);
+                      const rightSide = p.x >= selTopic.x;
+                      return (
+                        <g key={sel + "-" + k} className="atlas-leaf-g" style={{ animationDelay: `${i * 70}ms` }} onClick={() => pick(sel, k)}>
+                          <line className="atlas-twig" x1={selTopic.x} y1={selTopic.y} x2={p.x} y2={p.y} />
+                          <circle className={"atlas-leaf" + (focus === k ? " focused" : "")} cx={p.x} cy={p.y} r={focus === k ? 7 : 5.5} />
+                          <text className="atlas-leaf-label" x={p.x + (rightSide ? 12 : -12)} y={p.y + 4}
+                            textAnchor={rightSide ? "start" : "end"}>{e.short} · {e.year}</text>
+                          <title>{e.title}</title>
+                        </g>);
+                    })}
+
+                    {/* field nodes */}
+                    {branches.map((t, i) => {
+                      const n = byTopic[t.id].length;
+                      const r = 30 + 2.5 * n;
+                      const isNewestField = t.id === newest.topic;
+                      const topRow = t.y < ATLAS_C.y;   // caption sits on the side facing the centre, flag on the other
+                      const capY = t.y + (topRow ? r + 24 : -(r + 16));
+                      const flagY = topRow ? t.y - r - 16 : t.y + r + 40;
+                      return (
+                        <g key={t.id} className={"atlas-node atlas-float f" + (i % 3)} onClick={() => pick(t.id, null)}>
+                          {isNewestField && <circle className="atlas-pulse" cx={t.x} cy={t.y} r={r + 6} />}
+                          <circle className={"atlas-node-c" + (sel === t.id ? " active" : "") + (n === 0 ? " empty" : "")} cx={t.x} cy={t.y} r={r} />
+                          <text className={"atlas-count" + (sel === t.id ? " active" : "")} x={t.x} y={t.y + 4} textAnchor="middle">{String(n).padStart(2, "0")}</text>
+                          <text className={"atlas-count-sub" + (sel === t.id ? " active" : "")} x={t.x} y={t.y + 19} textAnchor="middle">{n === 0 ? "growing" : n === 1 ? "talk" : "talks"}</text>
+                          <text className="atlas-node-label" x={t.x} y={capY + 4} textAnchor="middle">{t.label}</text>
+                          {isNewestField &&
+                            <text className="atlas-flag" x={t.x} y={flagY} textAnchor="middle">
+                              {(isUpcoming ? "next · " : "latest · ") + newest.month + " " + newest.year}
+                            </text>}
+                          <title>{t.label}</title>
+                        </g>);
+                    })}
+
+                    {/* ghost node: the map keeps growing */}
+                    <g className="atlas-node atlas-ghost" onClick={() => goJoin()}>
+                      <circle className="atlas-ghost-c" cx="1105" cy="380" r="24" />
+                      <text className="atlas-ghost-plus" x="1105" y="387" textAnchor="middle">+</text>
+                      <text className="atlas-node-label ghost" x="1105" y="426" textAnchor="middle">your field?</text>
+                      <title>Propose a new branch — join us</title>
+                    </g>
+
+                    {/* the trunk */}
+                    <g className="atlas-node atlas-core" onClick={() => pick("core", null)}>
+                      <ellipse className={"atlas-core-c" + (sel === "core" ? " active" : "")} cx="600" cy="380" rx="95" ry="48" />
+                      <text className="atlas-core-t" x="600" y="378" textAnchor="middle">Statistics</text>
+                      <text className="atlas-core-sub" x="600" y="400" textAnchor="middle">
+                        the backbone · {byTopic.core.length} trunk {byTopic.core.length === 1 ? "talk" : "talks"}
+                      </text>
+                      <title>Statistics — the backbone of every branch</title>
+                    </g>
+
+                  </g>
+                </svg>
+              </div>
+              <div className="atlas-hint">Click a field to unfold its branch · leaves are talks, newest first · the map grows with every session</div>
+
+              <div className="atlas-panel">
+                <div className="atlas-panel-head">
+                  <div>
+                    <div className="atlas-panel-kicker">{sel === "core" ? "The trunk" : "Branch"} · {selTalks.length} {selTalks.length === 1 ? "talk" : "talks"}</div>
+                    <h3 className="atlas-panel-title">{selTopic.label}</h3>
+                    <p className="atlas-panel-blurb">{selTopic.blurb}</p>
+                  </div>
+                  {selTopic.href && <a className="atlas-panel-link" href={selTopic.href}>Read the field notes →</a>}
+                </div>
+                <div>
+                  {selTalks.length === 0 &&
+                    <div className="event-empty">
+                      This branch is still growing — no talks yet.&nbsp;
+                      <a href="#join" onClick={goJoin} style={{ color: "var(--accent)" }}>Propose the first one →</a>
+                    </div>}
+                  {selTalks.map((e) => {
+                    const k = talkKey(e);
+                    const isNewestAll = e === newest;
+                    return (
+                      <div key={k} id={"atlas-talk-" + k} className={"event-row" + (focus === k ? " focused" : "")} onClick={() => pick(sel, k)}>
+                        <div className="event-date">
+                          <div className="d">{e.date}</div>
+                          <div className="m">{e.month} · {e.year}</div>
+                        </div>
+                        <div className="event-title">
+                          <span className="kicker">
+                            {e.kicker}{e.speaker ? " · " + e.speaker : ""}
+                            {isNewestAll && <span className="atlas-badge">{isUpcoming ? "upcoming" : "newest"}</span>}
+                          </span>
+                          {e.title}
+                        </div>
+                        <div className="event-loc">
+                          <span className="pin">Location</span>
+                          {e.loc}
+                        </div>
+                        <div className="event-time">{e.time}</div>
+                        <div className="event-arrow">
+                          {e.pdf ? <a href={e.pdf} target="_blank" rel="noopener noreferrer" onClick={(ev) => ev.stopPropagation()} style={{color:"var(--accent)",textDecoration:"none"}} title="Download materials"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3v12M12 15l-4-4M12 15l4-4M5 21h14" stroke="currentColor" strokeWidth="1.6" /></svg></a> : <svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M1 6h16M12 1l5 5-5 5" stroke="currentColor" strokeWidth="1.4" /></svg>}
+                        </div>
+                      </div>);
+                  })}
+                </div>
+              </div>
+            </>
+          ) : (
+            <TalkIndex />
+          )}
+        </div>
+      </div>
+    </section>);
+
+}
+
+// -------- TALK INDEX (flat list view inside the Atlas) --------
+function TalkIndex() {
   const CATS = [
   { id: "all", label: "All" },
   { id: "talk", label: "Talks" },
@@ -1485,13 +1748,7 @@ function Events() {
   const displayed = expanded ? filtered : filtered.slice(0, 5);
 
   return (
-    <section id="talks" className="section">
-        <div className="container">
-          <div className="section-header reveal">
-            <div className="num"><span>03 / 05</span> &nbsp; Talks</div>
-            <h2>Previous talks, upcoming sessions, and <em>materials to download</em>.</h2>
-          </div>
-          <div className="reveal">
+    <div>
             <div className="events-toolbar">
               <div className="filter-chips">
                 {CATS.map((c) =>
@@ -1539,9 +1796,7 @@ function Events() {
                 </button>
               </div>
             )}
-          </div>
-        </div>
-      </section>);
+    </div>);
 
 }
 
@@ -1733,7 +1988,7 @@ function Footer() {
           <div className="footer-links">
             <a href="#about">About</a>
             <a href="#maintainers">Maintainers</a>
-            <a href="#talks">Talks</a>
+            <a href="#talks">Research Atlas</a>
             <a href="#posts">Posts</a>
             <a href="#join">Contact</a>
           </div>
@@ -1817,7 +2072,7 @@ function App() {
         <Hero variant={hero} />
         <About />
         <Committee />
-        <Events />
+        <ResearchAtlas />
         <News />
         <Join />
         <Footer />
