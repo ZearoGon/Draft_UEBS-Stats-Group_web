@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "artifacts": [
+    {
+      "package": "katex",
+      "version": "0.16.9",
+      "file": "katex.min.js",
+      "bytes": 277038,
+      "sha256": "dc84b296ec3e884de093158f760fd9d45b6c7abe58b5381557f4e138f46a58ae",
+      "source": "https://unpkg.com/katex@0.16.9/dist/katex.min.js",
+      "license": "MIT",
+      "licenseFile": "../../THIRD_PARTY_LICENSES/katex-0.16.9-LICENSE.txt"
+    },
+    {
+      "package": "katex",
+      "version": "0.16.9",
+      "file": "auto-render.min.js",
+      "bytes": 3478,
+      "sha256": "9cb8dacfc086c2966c9ec4ba54f4a2dc43b7cbe2b33cec1a2743d886c7fb47a7",
+      "source": "https://unpkg.com/katex@0.16.9/dist/contrib/auto-render.min.js",
+      "license": "MIT",
+      "licenseFile": "../../THIRD_PARTY_LICENSES/katex-0.16.9-LICENSE.txt"
+    },
+    {
+      "package": "react",
+      "version": "18.3.1",
+      "file": "react.production.min.js",
+      "bytes": 10751,
+      "sha256": "d949f1c3687aedadcedac85261865f29b17cd273997e7f6b2bfc53b2f9d4c4dd",
+      "source": "https://unpkg.com/react@18.3.1/umd/react.production.min.js",
+      "license": "MIT",
+      "licenseFile": "../../THIRD_PARTY_LICENSES/react-18.3.1-LICENSE.txt"
+    },
+    {
+      "package": "react-dom",
+      "version": "18.3.1",
+      "file": "react-dom.production.min.js",
+      "bytes": 131835,
+      "sha256": "35f4f974f4b2bcd44da73963347f8952e341f83909e4498227d4e26b98f66f0d",
+      "source": "https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js",
+      "license": "MIT",
+      "licenseFile": "../../THIRD_PARTY_LICENSES/react-dom-18.3.1-LICENSE.txt"
+    },
+    {
+      "package": "three",
+      "version": "0.185.1",
+      "file": "three.core.min.js",
+      "bytes": 385386,
+      "sha256": "05b2609338c76cd65daf74f3ac515bc9a5045e1b3b33edc07d8c9bd55250fa90",
+      "source": "https://unpkg.com/three@0.185.1/build/three.core.min.js",
+      "license": "MIT",
+      "licenseFile": "../../THIRD_PARTY_LICENSES/three-0.185.1-LICENSE.txt"
+    },
+    {
+      "package": "three",
+      "version": "0.185.1",
+      "file": "three.module.min.js",
+      "bytes": 365552,
+      "sha256": "86bcee248b64f44bcfc23c331ae74619061957d59cab040171dcb6fb5900beb6",
+      "source": "https://unpkg.com/three@0.185.1/build/three.module.min.js",
+      "license": "MIT",
+      "licenseFile": "../../THIRD_PARTY_LICENSES/three-0.185.1-LICENSE.txt"
+    },
+    {
+      "package": "p5",
+      "version": "2.3.2",
+      "file": "p5.min.js",
+      "bytes": 990372,
+      "sha256": "87adc350e8ec0e9bced22d4f03c181bdd208dc997d3956ab3ec2e90537643c9a",
+      "source": "https://unpkg.com/p5@2.3.2/lib/p5.min.js",
+      "license": "LGPL-2.1",
+      "licenseFile": "../../THIRD_PARTY_LICENSES/p5-2.3.2-LICENSE.txt"
+    }
+  ]
+}

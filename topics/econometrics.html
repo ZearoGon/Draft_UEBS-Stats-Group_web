@@ -3,7 +3,9 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Econometrics Foundation — Statistics Study Group</title>
+<meta name="description" content="Research notes and study-group talks on econometrics, causal inference, and empirical methods." />
+<title>Econometrics Foundation - Statistics Study Group</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=Source+Sans+3:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
@@ -14,11 +16,14 @@ body{font-family:"Source Sans 3",system-ui,sans-serif;background:var(--bg);color
 .topic-nav{position:sticky;top:0;z-index:100;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);background:rgba(245,240,232,.88);border-bottom:1px solid var(--rule);padding:16px 0}
 .topic-nav .inner{max-width:1080px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between}
 .topic-nav .brand{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--fg)}
-.topic-nav .brand img{height:36px}
+.topic-nav .brand img{height:36px;width:auto;display:block;filter:brightness(0) saturate(100%);opacity:.88}
 .topic-nav .brand-text .a{font-family:"Source Sans 3";font-weight:600;font-size:16px;letter-spacing:.04em}
 .topic-nav .brand-text .b{display:block;font-family:"Source Serif 4";font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#333}
 .topic-nav .back{font-family:"IBM Plex Mono";font-size:13px;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:var(--accent);border:1px solid var(--accent);padding:8px 20px;border-radius:100px;transition:all .2s}
-.topic-nav .back:hover{background:var(--accent);color:#fff}
+.topic-nav .back:hover{background:var(--accent);color:var(--paper)}
+.topic-nav .back:active{transform:translateY(1px)}
+.topic-nav a:focus-visible,.related-grid a:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+@media (max-width:640px){.topic-nav{padding:12px 0}.topic-nav .inner{padding:0 18px;gap:12px}.topic-nav .brand-text{display:none}.topic-nav .brand img{height:28px}.topic-nav .back{font-size:11px;letter-spacing:.04em;padding:8px 12px;white-space:nowrap}}
 .topic-hero{padding:100px 0 60px;text-align:center}
 .topic-hero .container{max-width:800px;margin:0 auto;padding:0 32px}
 .topic-hero .eyebrow{font-family:"IBM Plex Mono";font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:18px;display:flex;align-items:center;justify-content:center;gap:10px}
@@ -50,13 +55,13 @@ body{font-family:"Source Sans 3",system-ui,sans-serif;background:var(--bg);color
 <nav class="topic-nav">
   <div class="inner">
     <a href="../index.html" class="brand">
-      <img src="https://pub-b81c5cb2cfb84660aab0debca4907696.r2.dev/UEBS_logo.svg" alt="UEBS Logo" />
+      <img src="../assets/uebs-logo.svg" alt="University of Edinburgh Business School" />
       <div class="brand-text">
         <span class="a">Statistics</span>
         <span class="b">Study Group</span>
       </div>
     </a>
-    <a href="../index.html#about" class="back">← Back to Home</a>
+    <a href="../index.html" class="back">← Back to Home</a>
   </div>
 </nav>
 
@@ -79,34 +84,34 @@ body{font-family:"Source Sans 3",system-ui,sans-serif;background:var(--bg);color
 
   <h3>Core Areas</h3>
   <ul>
-    <li><strong>Ordinary Least Squares (OLS)</strong> — The foundational regression technique for estimating linear relationships</li>
-    <li><strong>Instrumental Variables (IV)</strong> — Addressing endogeneity through external instruments</li>
-    <li><strong>Panel Data Methods</strong> — Fixed and random effects for longitudinal data analysis</li>
-    <li><strong>Maximum Likelihood Estimation (MLE)</strong> — Parametric estimation under distributional assumptions</li>
-    <li><strong>Generalized Method of Moments (GMM)</strong> — Flexible estimation using moment conditions</li>
-    <li><strong>Time Series Analysis</strong> — ARIMA, VAR, and cointegration methods</li>
+    <li><strong>Ordinary Least Squares (OLS)</strong> - The foundational regression technique for estimating linear relationships</li>
+    <li><strong>Instrumental Variables (IV)</strong> - Addressing endogeneity through external instruments</li>
+    <li><strong>Panel Data Methods</strong> - Fixed and random effects for longitudinal data analysis</li>
+    <li><strong>Maximum Likelihood Estimation (MLE)</strong> - Parametric estimation under distributional assumptions</li>
+    <li><strong>Generalized Method of Moments (GMM)</strong> - Flexible estimation using moment conditions</li>
+    <li><strong>Time Series Analysis</strong> - ARIMA, VAR, and cointegration methods</li>
   </ul>
 
   <h2>Related Talks</h2>
   <div class="post-card">
     <div class="cat">Talk · Yifan Qi</div>
     <h4>Econometrics Foundation 1</h4>
-    <p>Introduction to core econometric concepts and OLS estimation — <a href="https://www.dropbox.com/scl/fi/a4kh4t1u07wja5dmhgt0a/Econometric-Foundation_Discuss1_Yifan-Qi.pdf?rlkey=jwqwy981fi4j1mrttryjvs8a1&st=k885ao04&dl=0" target="_blank">Download notes →</a></p>
+    <p>Introduction to core econometric concepts and OLS estimation - <a href="https://www.dropbox.com/scl/fi/a4kh4t1u07wja5dmhgt0a/Econometric-Foundation_Discuss1_Yifan-Qi.pdf?rlkey=jwqwy981fi4j1mrttryjvs8a1&st=k885ao04&dl=0" target="_blank">Download notes →</a></p>
   </div>
   <div class="post-card">
     <div class="cat">Talk · Ke Bi</div>
     <h4>Econometrics Foundation 2</h4>
-    <p>Deep dive into instrumental variables and endogeneity — <a href="https://www.dropbox.com/scl/fi/11l9de4k067q0pdmfertl/IV.pptx?rlkey=2huic7f23bcvs0zfut7ernmsr&st=ulk4cqym&dl=0" target="_blank">Download notes →</a></p>
+    <p>Deep dive into instrumental variables and endogeneity - <a href="https://www.dropbox.com/scl/fi/11l9de4k067q0pdmfertl/IV.pptx?rlkey=2huic7f23bcvs0zfut7ernmsr&st=ulk4cqym&dl=0" target="_blank">Download notes →</a></p>
   </div>
   <div class="post-card">
     <div class="cat">Talk · Ke Bi</div>
     <h4>Difference-in-Differences</h4>
-    <p>Causal inference using the DiD methodology — <a href="https://www.dropbox.com/scl/fi/fux8sj0ldcdlmhj8k6s5l/DiD.pdf?rlkey=61ymfgxyzny8l3q4v4skfrtgl&st=v0dtd0vf&dl=0" target="_blank">Download notes →</a></p>
+    <p>Causal inference using the DiD methodology - <a href="https://www.dropbox.com/scl/fi/fux8sj0ldcdlmhj8k6s5l/DiD.pdf?rlkey=61ymfgxyzny8l3q4v4skfrtgl&st=v0dtd0vf&dl=0" target="_blank">Download notes →</a></p>
   </div>
   <div class="post-card">
     <div class="cat">Talk · Yizhuo Hu</div>
     <h4>Maximum Likelihood Estimation</h4>
-    <p>Parametric estimation techniques and applications — <a href="https://www.dropbox.com/scl/fi/f1pt2cokqsllraxqbp7hp/Maximum-Likelihood-Estimation.pdf?rlkey=uwqzcfc3ayx162ct2csrfx6ni&st=h1cfev32&dl=0" target="_blank">Download notes →</a></p>
+    <p>Parametric estimation techniques and applications - <a href="https://www.dropbox.com/scl/fi/f1pt2cokqsllraxqbp7hp/Maximum-Likelihood-Estimation.pdf?rlkey=uwqzcfc3ayx162ct2csrfx6ni&st=h1cfev32&dl=0" target="_blank">Download notes →</a></p>
   </div>
 </div>
 

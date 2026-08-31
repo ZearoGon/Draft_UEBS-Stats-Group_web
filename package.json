@@ -1,0 +1,14 @@
+{
+  "name": "statistics-study-group-web-optimisation",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Reproducible static build for the optimised Statistics Study Group website",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "build:check": "node scripts/build.mjs --check",
+    "preview": "npx --yes http-server@14.1.1 . -c-1"
+  },
+  "engines": {
+    "node": ">=18.17"
+  }
+}
