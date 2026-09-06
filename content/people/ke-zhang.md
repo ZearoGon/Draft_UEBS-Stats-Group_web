@@ -4,8 +4,7 @@ initials: "KZ"
 name: "Ke Zhang"
 kind: "member"
 slot: 3
-role: "Visiting PhD"
-standing: "Visiting PhD · Finance"
+level: "Visiting PhD"
 field: "Finance"
 new: true
 ---

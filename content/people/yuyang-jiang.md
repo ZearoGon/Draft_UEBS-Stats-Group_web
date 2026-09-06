@@ -4,7 +4,7 @@ initials: "YJ"
 name: "Yuyang Jiang"
 kind: "maintainer"
 order: 8
-role: "PhD Maintainer"
+level: "PhD"
 field: "MSBE & Finance"
 topic: "AI methods in finance"
 email: "Y.Jiang-172@sms.ed.ac.uk"

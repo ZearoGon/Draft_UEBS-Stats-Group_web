@@ -73,8 +73,8 @@ id: "first-last"
 initials: "FL"                 # unique, 2 letters, shown on the network
 name: "First Last"
 kind: "contributor"            # maintainer | contributor | member
+level: "PhD"                   # Faculty | PhD | Visiting PhD - the roster shows "<level> <Maintainer|Contributor>"
 order: 14                      # position in the roster
-role: "PhD Contributor"
 field: "Finance"               # must have a colour in the network - see KNOWN_FIELDS in scripts/content.mjs
 topic: "One line of research interests"
 email: ""                      # optional
@@ -84,8 +84,8 @@ new: true                      # shows the "New" tag in the roster
 One or two sentences of biography.
 ```
 
-Members who have joined but not presented yet use `kind: "member"`, a `slot`
-(position on the ring, 0-7) and a `standing` line such as `"Visiting PhD · Finance"`.
+Members who have joined but not presented yet use `kind: "member"` and a `slot`
+(position on the ring, 0-7); their standing shows the level alone.
 Their lecture list is derived automatically from the sessions they speak at.
 
 ## Adding a post (opportunity, announcement, blog)

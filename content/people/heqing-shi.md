@@ -4,7 +4,7 @@ initials: "HS"
 name: "Heqing Shi"
 kind: "maintainer"
 order: 3
-role: "PhD Maintainer"
+level: "PhD"
 field: "FinTech"
 topic: "Covariance estimation, kernel methods, credit scoring"
 email: "Heqing.Shi@ed.ac.uk"

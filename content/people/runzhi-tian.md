@@ -4,7 +4,7 @@ initials: "RT"
 name: "Runzhi Tian"
 kind: "maintainer"
 order: 7
-role: "PhD Maintainer"
+level: "PhD"
 field: "FinTech"
 topic: "AI research agents, Stata & Python integration"
 email: "R.Tian-6@sms.ed.ac.uk"

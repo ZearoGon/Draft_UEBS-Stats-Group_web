@@ -4,7 +4,7 @@ initials: "HZ"
 name: "Han Zhang"
 kind: "contributor"
 order: 11
-role: "PhD Contributor"
+level: "PhD"
 field: "Marketing"
 topic: "Influencer marketing, sponsored content, LLMs and social media platforms"
 new: true

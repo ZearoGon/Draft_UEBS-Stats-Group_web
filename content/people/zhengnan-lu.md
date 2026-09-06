@@ -4,7 +4,7 @@ initials: "ZL"
 name: "Zhengnan Lu"
 kind: "contributor"
 order: 9
-role: "PhD Contributor"
+level: "PhD"
 field: "Finance"
 topic: "Empirical asset pricing, factor structures, market anomalies"
 ---

@@ -4,7 +4,7 @@ initials: "YQ"
 name: "Yifan Qi"
 kind: "maintainer"
 order: 4
-role: "PhD Maintainer"
+level: "PhD"
 field: "Accounting & Finance"
 topic: "Econometrics, asset pricing, Fama-MacBeth regression"
 email: "Y.Qi-18@sms.ed.ac.uk"

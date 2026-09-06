@@ -4,7 +4,7 @@ initials: "XY"
 name: "Xindi Yang"
 kind: "contributor"
 order: 12
-role: "PhD Contributor"
+level: "PhD"
 field: "FinTech"
 topic: ""
 new: true

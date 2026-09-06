@@ -4,7 +4,7 @@ initials: "ZX"
 name: "Zhaoxi Zhang"
 kind: "contributor"
 order: 13
-role: "Guest Speaker"
+level: "PhD"
 field: "School of Mathematics"
 topic: ""
 new: true

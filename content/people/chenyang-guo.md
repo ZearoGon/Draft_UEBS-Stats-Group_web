@@ -4,7 +4,7 @@ initials: "CG"
 name: "Chenyang Guo"
 kind: "maintainer"
 order: 5
-role: "PhD Maintainer"
+level: "PhD"
 field: "MSBE"
 topic: "Sampling methods, change-point detection, MOSUM"
 email: "C.Guo-17@sms.ed.ac.uk"

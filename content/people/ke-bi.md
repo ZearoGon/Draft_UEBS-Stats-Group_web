@@ -4,8 +4,8 @@ initials: "KB"
 name: "Ke Bi"
 kind: "contributor"
 order: 10
-role: "PhD Contributor"
-field: "Economics & Finance"
+level: "PhD"
+field: "Finance"
 topic: "Micro-econometrics, policy evaluation, causal inference"
 ties: ["shiqi-fang"]
 ---

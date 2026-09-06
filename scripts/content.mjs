@@ -46,6 +46,10 @@ export const KNOWN_FIELDS = [
   "Field TBC",
 ];
 const PERSON_KINDS = ["maintainer", "contributor", "member"];
+// Standing = level + kind: "Faculty Maintainer", "PhD Contributor", ... Members on the
+// ring (nothing on record yet) show the level alone.
+const PERSON_LEVELS = ["Faculty", "PhD", "Visiting PhD"];
+const KIND_LABEL = { maintainer: "Maintainer", contributor: "Contributor", member: "" };
 const SESSION_KINDS = ["lecture", "workshop", "discussion"];
 const SESSION_STATUS = ["planned", "held", "postponed", "cancelled"];
 const SESSION_FORMATS = ["in-person", "online", "hybrid"];
@@ -189,9 +193,10 @@ function loadTopics(errors) {
 
 function loadPeople(errors) {
   const people = readCollection("people").map(({ file, slug, data, body }) => {
-    for (const k of ["id", "initials", "name", "kind", "field"]) {
+    for (const k of ["id", "initials", "name", "kind", "level", "field"]) {
       if (!data[k]) errors.push(`${file}: missing ${k}`);
     }
+    if (data.level && !PERSON_LEVELS.includes(data.level)) errors.push(`${file}: level must be one of ${PERSON_LEVELS.join(", ")}`);
     if (data.id && data.id !== slug) errors.push(`${file}: id "${data.id}" must match the file name`);
     if (data.kind && !PERSON_KINDS.includes(data.kind)) errors.push(`${file}: kind must be one of ${PERSON_KINDS.join(", ")}`);
     if (data.field && !KNOWN_FIELDS.includes(data.field)) {
@@ -208,9 +213,7 @@ function loadPeople(errors) {
       kind: data.kind,
       order: data.order ?? 99,
       slot: Number.isInteger(data.slot) ? data.slot : null,
-      role: data.role || "",
-      speakerRole: data.speaker_role || "",
-      standing: data.standing || "",
+      level: data.level || "",
       field: data.field,
       topic: data.topic || "",
       email: data.email || "",
@@ -413,7 +416,6 @@ function derivePeople(people, sessions) {
         sessionId: s.id,
       }));
     for (const x of p.extraLectures) lectures.push({ title: x.title, date: String(x.date || ""), pdf: x.pdf || "" });
-    const speakerRole = p.speakerRole || (p.kind === "maintainer" && lectures.length ? `${p.role} & Speaker` : p.role);
     return {
       id: p.id,
       initials: p.initials,
@@ -421,9 +423,8 @@ function derivePeople(people, sessions) {
       kind: p.kind,
       order: p.order,
       slot: p.slot,
-      role: p.role,
-      speakerRole,
-      standing: p.standing,
+      level: p.level,
+      standing: `${p.level} ${KIND_LABEL[p.kind] || ""}`.trim(),
       field: p.field,
       topic: p.topic,
       email: p.email,
@@ -594,7 +595,7 @@ function patchContributorsPage(people) {
     .map((x) => ({
       initials: x.initials,
       name: x.name,
-      role: x.speakerRole || x.role,
+      role: x.standing,
       field: x.field,
       topic: x.topic,
       bio: x.bio,

@@ -4,8 +4,7 @@ initials: "JK"
 name: "Jiwon Kim"
 kind: "member"
 slot: 2
-role: "Member"
-standing: "Member · Finance"
+level: "PhD"
 field: "Finance"
 new: true
 ---

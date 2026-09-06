@@ -4,7 +4,7 @@ initials: "SF"
 name: "Shiqi Fang"
 kind: "maintainer"
 order: 2
-role: "PhD Maintainer"
+level: "PhD"
 field: "MSBE"
 topic: "Gaussian processes, Bayesian methods, Git & GitHub"
 email: "S.Fang-6@sms.ed.ac.uk"

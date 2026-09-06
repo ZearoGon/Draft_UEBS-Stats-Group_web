@@ -1982,7 +1982,7 @@ function Committee() {
     if (el) window.scrollTo({ top: el.offsetTop - 60, behavior: "smooth" });
   };
   // someone on the ring has a name and a standing but nothing on record yet
-  const seatDossier = (t) => ({ initials: t.initials, name: t.name, role: t.standing, field: t.field, lectures: [] });
+  const seatDossier = (t) => ({ initials: t.initials, name: t.name, standing: t.standing, field: t.field, lectures: [] });
   const activateNode = (node) => {
     if (!node) return;
     if (!node.ghost) { setFocus(node); return; }
@@ -2045,7 +2045,7 @@ function Committee() {
                   <div className="t-n">{hovered.name}</div>
                   <div className="t-r" style={{ color: hovered.ghost ? SEAT_COL[artId] : P.hue[hovered.field] }}>
                     {hovered.ghost ? (hovered.taken ? hovered.taken.standing : "Open · hoping for " + hovered.wants)
-                      : (hovered.speakerRole || hovered.role)}
+                      : hovered.standing}
                   </div>
                   {!(hovered.ghost && hovered.taken) &&
                     <div className="t-x">
@@ -2088,7 +2088,7 @@ function Committee() {
                       {p.name}
                     </button>
                   </td>
-                  <td>{p.speakerRole || p.role}</td>
+                  <td>{p.standing}</td>
                   <td>{p.field}</td>
                   <td>
                     {p.lectures.length ? p.lectures.map((t, i) =>
@@ -2140,7 +2140,7 @@ function Committee() {
             <div className="person-modal-avatar">{focus.initials}</div>
             <div>
               <div className="person-modal-name">{focus.name}</div>
-              <div className="contrib-role">{focus.speakerRole || focus.role}{focus.field ? " · " + focus.field : ""}</div>
+              <div className="contrib-role">{focus.standing}{focus.field ? " · " + focus.field : ""}</div>
             </div>
           </div>
           {focus.bio && <div className="contrib-bio" style={{ fontSize: 14.5 }}>{focus.bio}</div>}

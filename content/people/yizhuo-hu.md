@@ -4,7 +4,7 @@ initials: "YH"
 name: "Yizhuo Hu"
 kind: "maintainer"
 order: 6
-role: "PhD Maintainer"
+level: "PhD"
 field: "FinTech"
 topic: "MLE, propensity score matching, synthetic data"
 email: "yhu8@ed.ac.uk"
