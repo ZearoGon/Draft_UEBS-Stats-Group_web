@@ -1,7 +1,10 @@
 import { createHash } from "node:crypto";
 import {
+  cpSync,
   existsSync,
+  mkdirSync,
   readFileSync,
+  rmSync,
   statSync,
   writeFileSync,
 } from "node:fs";
@@ -18,6 +21,16 @@ const sourcePath = join(projectRoot, "src", "index.source.html");
 const jsxPath = join(projectRoot, "src", "app.jsx");
 const appBundlePath = join(projectRoot, "assets", "app.min.js");
 const outputPath = join(projectRoot, "index.html");
+// Everything the site needs at runtime is collected into dist/ (the deploy
+// output - see vercel.json). Sources, scripts, content/ and node_modules stay out.
+const distPath = join(projectRoot, "dist");
+const publishedEntries = [
+  "index.html",
+  "contributors.html",
+  "20260313_UEBS Statistics Study group_AI,ML,DL_Business_Overview.html",
+  "topics",
+  "assets",
+];
 const vendorManifestPath = join(
   projectRoot,
   "assets",
@@ -281,6 +294,16 @@ function compileJsx() {
   assertNonEmptyFile(appBundlePath, "compiled application bundle");
 }
 
+function publishToDist() {
+  rmSync(distPath, { recursive: true, force: true });
+  mkdirSync(distPath);
+  for (const entry of publishedEntries) {
+    const from = join(projectRoot, entry);
+    if (!existsSync(from)) fail(`cannot publish ${entry}: not found`);
+    cpSync(from, join(distPath, entry), { recursive: true });
+  }
+}
+
 function main() {
   if (cliArgs.some((argument) => argument !== "--check") || cliArgs.length > 1) {
     fail(`unknown arguments: ${cliArgs.join(" ") || "(none)"}`);
@@ -349,6 +372,8 @@ function main() {
   console.log(
     `[build] wrote ${relative(projectRoot, jsxPath)}, ${relative(projectRoot, appBundlePath)}, and ${relative(projectRoot, outputPath)} with esbuild ${ESBUILD_VERSION}`,
   );
+  publishToDist();
+  console.log(`[build] published ${publishedEntries.length} entries to ${relative(projectRoot, distPath)}/`);
 }
 
 try {

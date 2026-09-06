@@ -2,3 +2,4 @@
 .vscode-preview-bridge/
 node_modules/
 *.log
+dist/
