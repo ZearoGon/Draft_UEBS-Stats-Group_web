@@ -46,11 +46,14 @@ const EVENTS_SORTED = [...EVENTS].sort((a, b) => eventDate(b) - eventDate(a));
 // plus every session marked `featured`, newest first.
 const NEWS = DATA.news;
 
+// The About panel is a drawer (see AboutDrawer); the nav and the photo frame open it with this.
+const openAbout = () => window.dispatchEvent(new CustomEvent("ssg:about"));
+
 
 // -------- NAV --------
 function Nav() {
   const [scrolled, setScrolled] = useState(false);
-  const [active, setActive] = useState("about");
+  const [active, setActive] = useState("posts");
   const [mobileOpen, setMobileOpen] = useState(false);
   const scrollFrame = useRef(0);
   useEffect(() => {
@@ -58,8 +61,8 @@ function Nav() {
       if (scrollFrame.current) return;
       scrollFrame.current = requestAnimationFrame(() => {
         setScrolled(window.scrollY > 20);
-        const sections = ["about", "maintainers", "talks", "posts", "join"];
-        let cur = "about";
+        const sections = ["posts", "maintainers", "talks", "join"];
+        let cur = "posts";
         for (const id of sections) {
           const el = document.getElementById(id);
           if (el && el.getBoundingClientRect().top < 140) cur = id;
@@ -112,11 +115,11 @@ function Nav() {
             </div>
           </a>
           <div className="nav-links">
-            <a href="#about" className={active === "about" ? "active" : ""} onClick={go("about")}>About</a>
+            <a href="#about" onClick={(e) => { e.preventDefault(); setMobileOpen(false); openAbout(); }}>About</a>
+            <a href="#posts" className={active === "posts" ? "active" : ""} onClick={go("posts")}>Posts</a>
             <a href="#maintainers" className={active === "maintainers" ? "active" : ""}
               aria-current={active === "maintainers" ? "location" : undefined} onClick={go("maintainers")}>Maintainers &amp; Contributors</a>
             <a href="#talks" className={active === "talks" ? "active" : ""} onClick={go("talks")}>Research Atlas</a>
-            <a href="#posts" className={active === "posts" ? "active" : ""} onClick={go("posts")}>Posts</a>
             <button className="nav-cta" onClick={go("join")}>Join Us</button>
           </div>
           <div className="nav-mobile">
@@ -129,11 +132,11 @@ function Nav() {
         {mobileOpen && (
           <div className="mobile-menu" id="mobile-navigation">
             <div className="container mobile-menu-inner">
-              <a href="#about" className={active === "about" ? "active" : ""} onClick={go("about")}>About</a>
+              <a href="#about" onClick={(e) => { e.preventDefault(); setMobileOpen(false); openAbout(); }}>About</a>
+              <a href="#posts" className={active === "posts" ? "active" : ""} onClick={go("posts")}>Posts</a>
               <a href="#maintainers" className={active === "maintainers" ? "active" : ""}
                 aria-current={active === "maintainers" ? "location" : undefined} onClick={go("maintainers")}>Maintainers &amp; Contributors</a>
               <a href="#talks" className={active === "talks" ? "active" : ""} onClick={go("talks")}>Research Atlas</a>
-              <a href="#posts" className={active === "posts" ? "active" : ""} onClick={go("posts")}>Posts</a>
               <button type="button" className="mobile-menu-cta" onClick={go("join")}>Join the group</button>
             </div>
           </div>
@@ -253,6 +256,10 @@ function HeroCarousel() {
           <polyline points="9 18 15 12 9 6"></polyline>
         </svg>
       </button>
+      <button type="button" className="about-handle" onClick={openAbout} aria-haspopup="dialog" aria-controls="about-panel">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 11v6M12 7.5v.5" /></svg>
+        <span>About the group</span>
+      </button>
       <div className="dots">
         {slides.map((_, idx) => (
           <button type="button" key={idx} className={idx === i ? "on" : ""} onClick={() => handleSelect(idx)}
@@ -337,14 +344,12 @@ function HeroMeta() {
 
 }
 
-// -------- ABOUT --------
-// Schedule & Research Topics moved into the Research Atlas (section 03);
-// About now carries the mission alone.
-function About() {
+// -------- ABOUT (a drawer over the page, opened from the nav or the photo frame) --------
+function AboutDrawer({ open, onClose }) {
   const MISSION = {
     prose: [
     "This website is managed by the UEBS Statistics Group. We are a statistics-based knowledge exchange platform for doctoral research, documenting and sharing methodologies - statistical tests, regression models and more - that are extensively used in business school research. All posts and blogs are contributed by PhD researchers from the University of Edinburgh Business School.",
-    "The resources are mainly for researchers in the area of finance. We find it useful to record the statistics-based knowledge we come across into blogs. Topics such as credit scoring, risk forecasting and asset pricing are primarily covered, as these span our current main research interests. We believe these insights are also meaningful to researchers in accounting, marketing, operations research and beyond."],
+    "The resources are mainly for researchers in the area of finance. We find it useful to record the statistics-based knowledge we come across into blogs. Topics such as credit scoring, risk forecasting and asset pricing are primarily covered, as these span our current main research interests. We believe these insights are also meaningful to researchers in accounting, marketing, operations research and other business school disciplines, and we try to make them as general as possible for other business school researchers."],
 
     list: [
     "In-person discussion sessions",
@@ -355,44 +360,57 @@ function About() {
     "GitHub: uebs-stats-group"]
 
   };
+  const closeRef = useRef(null);
+  const lastFocus = useRef(null);
+  useEffect(() => {
+    if (!open) return;
+    lastFocus.current = document.activeElement;
+    const onKey = (e) => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("keydown", onKey);
+    document.body.classList.add("about-open");
+    requestAnimationFrame(() => { if (closeRef.current) closeRef.current.focus(); });
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.classList.remove("about-open");
+      if (lastFocus.current && lastFocus.current.focus) lastFocus.current.focus();
+    };
+  }, [open]);
+  const goAtlas = (e) => {
+    e.preventDefault();
+    onClose();
+    const el = document.getElementById("talks");
+    if (el) setTimeout(() => window.scrollTo({ top: el.offsetTop - 60, behavior: "smooth" }), 260);
+  };
   return (
-    <section id="about" className="section">
-        <div className="container">
-          <div className="section-header reveal">
-            <div className="num"><span>01 / 05</span> &nbsp; About</div>
-            <h2>A community held together by <em>statistics, seminars, and a shared passion</em> for rigorous research.</h2>
-          </div>
-          <div className="reveal">
-            <div className="about-grid">
-              <div className="about-prose">
-                {MISSION.prose.map((p, i) => <p key={i}>{p}</p>)}
-                <p style={{ marginTop: 24 }}>
-                  <a href="#talks" onClick={(e) => {
-                    e.preventDefault();
-                    const el = document.getElementById("talks");
-                    if (el) window.scrollTo({ top: el.offsetTop - 60, behavior: "smooth" });
-                  }} style={{ color: "var(--accent)", textDecoration: "none", fontFamily: "var(--mono)", fontSize: 13, display: "inline-flex", alignItems: "center", gap: 8, borderBottom: "1px solid var(--accent)", paddingBottom: 2, fontWeight: 500 }}>
-                    Explore the Research Atlas - schedule, topics & lectures →
-                  </a>
-                </p>
-              </div>
-              <aside className="about-aside">
-                <div className="label">What we do · Our Mission</div>
-                <ul>
-                  {MISSION.list.map((item, i) =>
-                <li key={i}>
-                      <span className="n">{String(i + 1).padStart(2, "0")}</span>
-                      <span className="t">
-                        {item}
-                      </span>
-                    </li>
-                )}
-                </ul>
-              </aside>
-            </div>
-          </div>
+    <>
+      <div className={"about-scrim" + (open ? " open" : "")} onClick={onClose} aria-hidden="true" />
+      <aside id="about-panel" className={"about-drawer" + (open ? " open" : "")} role="dialog" aria-modal={open ? "true" : undefined} aria-labelledby="about-title" aria-hidden={!open}>
+        <button type="button" className="about-close" ref={closeRef} onClick={onClose} aria-label="Close">×</button>
+        <div className="num"><span>About</span> &nbsp; Our mission</div>
+        <h2 id="about-title">A community held together by <em>statistics, seminars, and a shared passion</em> for rigorous research.</h2>
+        <div className="about-prose">
+          {MISSION.prose.map((p, i) => <p key={i}>{p}</p>)}
+          <p style={{ marginTop: 24 }}>
+            <a href="#talks" onClick={goAtlas} style={{ color: "var(--accent)", textDecoration: "none", fontFamily: "var(--mono)", fontSize: 13, display: "inline-flex", alignItems: "center", gap: 8, borderBottom: "1px solid var(--accent)", paddingBottom: 2, fontWeight: 500 }}>
+              Explore the Research Atlas - schedule, topics & lectures →
+            </a>
+          </p>
         </div>
-      </section>);
+        <aside className="about-aside">
+          <div className="label">What we do · Our Mission</div>
+          <ul>
+            {MISSION.list.map((item, i) =>
+          <li key={i}>
+                <span className="n">{String(i + 1).padStart(2, "0")}</span>
+                <span className="t">
+                  {item}
+                </span>
+              </li>
+          )}
+          </ul>
+        </aside>
+      </aside>
+    </>);
 
 }
 
@@ -2016,7 +2034,7 @@ function Committee() {
     <section id="maintainers" className="section section-people">
       <div className="container">
         <div className="section-header reveal">
-          <div className="num"><span>02 / 05</span> &nbsp; Maintainers & Contributors</div>
+          <div className="num"><span>02 / 04</span> &nbsp; Maintainers & Contributors</div>
           <h2>One flame when we gather - <em>one network</em> when we spread.</h2>
         </div>
 
@@ -2282,7 +2300,7 @@ function ResearchAtlas() {
     <section id="talks" className="section">
       <div className="container">
         <div className="section-header reveal">
-          <div className="num"><span>03 / 05</span> &nbsp; Research Atlas</div>
+          <div className="num"><span>03 / 04</span> &nbsp; Research Atlas</div>
           <h2>Statistics as the backbone - <em>a living map</em> of our fields, lectures and materials.</h2>
         </div>
 
@@ -2695,7 +2713,7 @@ function News() {
     <section id="posts" className="section">
         <div className="container">
           <div className="section-header reveal">
-            <div className="num"><span>04 / 05</span> &nbsp; Posts</div>
+            <div className="num"><span>01 / 04</span> &nbsp; Posts</div>
             <h2>Recent posts from <em>the group - lectures, opportunities, and updates</em>.</h2>
           </div>
           <div className="reveal">
@@ -2922,7 +2940,7 @@ function Join() {
         <div className="container">
           <div>
             <div className="section-header" style={{ gridTemplateColumns: "1fr", gap: 18, marginBottom: 24 }}>
-              <div className="num"><span style={{ color: "rgba(255,255,255,0.7)" }}>05 / 05</span> &nbsp; <span style={{ color: "rgba(255,255,255,0.5)" }}>Membership</span></div>
+              <div className="num"><span style={{ color: "rgba(255,255,255,0.7)" }}>04 / 04</span> &nbsp; <span style={{ color: "rgba(255,255,255,0.5)" }}>Membership</span></div>
               <h2>Join the <em>Study Group</em>. Open to all UEBS doctoral researchers and beyond.</h2>
             </div>
             <p className="lead">
@@ -3056,6 +3074,15 @@ function App() {
   const [tweakOpen, setTweakOpen] = useState(false);
   const [theme, setTheme] = useState(window.TWEAK_DEFAULTS.theme);
   const [hero, setHero] = useState(window.TWEAK_DEFAULTS.hero);
+  const [aboutOpen, setAboutOpen] = useState(false);
+
+  // The About drawer opens from the nav, the photo-frame handle, or a #about link.
+  useEffect(() => {
+    const open = () => setAboutOpen(true);
+    window.addEventListener("ssg:about", open);
+    if (window.location.hash === "#about") open();
+    return () => window.removeEventListener("ssg:about", open);
+  }, []);
 
   // Apply theme to <html>
   useEffect(() => {
@@ -3094,13 +3121,13 @@ function App() {
         <Nav />
         <main id="main-content" tabIndex="-1">
           <Hero variant={hero} />
-          <About />
+          <News />
           <Committee />
           <ResearchAtlas />
-          <News />
           <Join />
         </main>
         <Footer />
+        <AboutDrawer open={aboutOpen} onClose={() => setAboutOpen(false)} />
         <Tweaks
         open={tweakOpen}
         theme={theme} hero={hero}
