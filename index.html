@@ -32,6 +32,8 @@
     "hero": "split"
   }/*EDITMODE-END*/;
 </script>
+<!-- Site content, compiled from content/ by scripts/content.mjs (npm run build) -->
+<script src="assets/data.js"></script>
 <style>
   :root {
     --bg: #F4EFE6;
@@ -988,6 +990,14 @@
     display: flex; gap: 12px; margin-bottom: 14px;
   }
   .news-card .meta .cat { color: var(--accent); }
+  .news-card .meta .sub::before { content: "·"; margin-right: 12px; }
+  .news-filters { margin-bottom: 20px; }
+  .news-card .deadline {
+    margin-top: 16px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--accent);
+  }
+  .news-card .deadline.closed { color: var(--ink-mute); }
+  .news-card.is-closed .img { filter: grayscale(0.6); opacity: 0.85; }
   .news-card h3 {
     font-family: var(--serif); font-weight: 500;
     font-size: 22px; line-height: 1.2; letter-spacing: -0.01em;

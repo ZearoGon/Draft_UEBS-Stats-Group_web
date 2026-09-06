@@ -8,6 +8,7 @@ import {
 import { spawnSync } from "node:child_process";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
+import { compileContent } from "./content.mjs";
 
 const ESBUILD_VERSION = "0.25.10";
 const cliArgs = process.argv.slice(2);
@@ -284,6 +285,11 @@ function main() {
   if (cliArgs.some((argument) => argument !== "--check") || cliArgs.length > 1) {
     fail(`unknown arguments: ${cliArgs.join(" ") || "(none)"}`);
   }
+  // Content first: content/ -> assets/data.js (+ topic pages, contributors.html).
+  // In --check mode it is validated without writing anything.
+  const content = compileContent({ write: !checkOnly });
+  console.log(`[build] content ${checkOnly ? "valid" : "compiled"}: ${content.summary}`);
+
   assertNonEmptyFile(sourcePath, "source HTML");
   verifyPinnedVendors();
   assertNonEmptyFile(

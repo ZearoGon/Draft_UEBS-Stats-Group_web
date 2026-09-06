@@ -402,188 +402,245 @@
     const { useState, useEffect } = React;
 
     // -------- DATA --------
+    /*SSG-CONTRIBUTORS-BEGIN generated from content/ by scripts/content.mjs - do not edit */
     const CONTRIBUTORS = [
       {
-        initials: "ZL",
-        name: "Zhengnan Lu",
-        role: "PhD Contributor",
-        field: "Finance",
-        topic: "Asset Pricing, Factor Models, Portfolio Management",
-        bio: "Zhengnan Lu is a PhD researcher in Finance, focusing on empirical asset pricing, factor structures, and market anomalies.",
-        talks: [
+        "initials": "ZC",
+        "name": "Dr Zexun Chen",
+        "role": "Faculty Maintainer & Organizer",
+        "field": "MSBE",
+        "topic": "Statistical methods for business research",
+        "bio": "Dr Zexun Chen leads the Statistics Study Group at the University of Edinburgh Business School, focusing on statistical tools and methods that are extensively used in business school research. He organises discussion sessions and coordinates the group's activities.",
+        "talks": [
           {
-            title: "Factor Momentum Revisited: Does the 47-Factor Kernel Collapse to BAB and QMJ?",
-            date: "29 May 2026",
-            pdf: ""
+            "title": "Study Group Research Methods & Discussions",
+            "date": "Continuous",
+            "pdf": ""
           }
         ]
       },
       {
-        initials: "KB",
-        name: "Ke Bi",
-        role: "PhD Contributor",
-        field: "Economics & Finance",
-        topic: "Econometrics, Causal Inference, Difference-in-Differences",
-        bio: "Ke Bi is a PhD researcher specializing in micro-econometrics, policy evaluation, and causal inference methodologies in business research.",
-        talks: [
+        "initials": "SF",
+        "name": "Shiqi Fang",
+        "role": "PhD Maintainer & Speaker",
+        "field": "MSBE",
+        "topic": "Gaussian processes, Bayesian methods, Git & GitHub",
+        "bio": "Shiqi Fang contributes to the group from a management research perspective. He has presented on topics including Git & GitHub, Gaussian Process, and Bayesian Linear Regression, helping bridge statistical methods with management science.",
+        "talks": [
           {
-            title: "Difference-in-Differences",
-            date: "13 Feb 2025",
-            pdf: "https://www.dropbox.com/scl/fi/fux8sj0ldcdlmhj8k6s5l/DiD.pdf?rlkey=61ymfgxyzny8l3q4v4skfrtgl&st=v0dtd0vf&dl=0"
+            "title": "Bayesian Linear Regression",
+            "date": "03 Oct 2025",
+            "pdf": "assets/talks/bayesian%20linear%20regression.pdf"
           },
           {
-            title: "Econometrics Foundation 2",
-            date: "25 Oct 2024",
-            pdf: "https://www.dropbox.com/scl/fi/11l9de4k067q0pdmfertl/IV.pptx?rlkey=2huic7f23bcvs0zfut7ernmsr&st=ulk4cqym&dl=0"
+            "title": "Gaussian Process",
+            "date": "27 Mar 2025",
+            "pdf": "assets/talks/Gaussian_Process.pdf"
+          },
+          {
+            "title": "Git & GitHub",
+            "date": "22 Nov 2024",
+            "pdf": "assets/talks/git%20and%20github.pdf"
           }
         ]
       },
       {
-        initials: "ZC",
-        name: "Dr Zexun Chen",
-        role: "Faculty Maintainer & Organizer",
-        field: "MSBE",
-        topic: "Statistical methods for business research",
-        bio: "Dr Zexun Chen leads the Statistics Study Group at the University of Edinburgh Business School, focusing on statistical tools and methods that are extensively used in business school research.",
-        talks: [
+        "initials": "HS",
+        "name": "Heqing Shi",
+        "role": "PhD Maintainer & Speaker",
+        "field": "FinTech",
+        "topic": "Covariance estimation, kernel methods, credit scoring",
+        "bio": "Heqing Shi focuses on fintech applications, contributing knowledge in high-dimensional covariance matrix estimation and the kernel trick. His research spans credit scoring, risk forecasting, and asset pricing statistical tools.",
+        "talks": [
           {
-            title: "Study Group Research Methods & Discussions",
-            date: "Continuous / 持续开展",
-            pdf: ""
+            "title": "Variational Auto-Encoder (II)",
+            "date": "31 Oct 2025",
+            "pdf": "assets/talks/VAE.pdf"
+          },
+          {
+            "title": "Variational Auto-Encoder",
+            "date": "19 Sep 2025",
+            "pdf": "assets/talks/VAE_20250919.pdf"
+          },
+          {
+            "title": "The Kernel Trick",
+            "date": "30 Jan 2025",
+            "pdf": "assets/talks/The_Kernel_Trick.pdf"
+          },
+          {
+            "title": "High-dimensional Covariance Matrix Estimation",
+            "date": "26 Sep 2024",
+            "pdf": "assets/talks/high_dimensional_covariance_matrix_estimation.pdf"
           }
         ]
       },
       {
-        initials: "SF",
-        name: "Shiqi Fang",
-        role: "PhD Maintainer & Speaker",
-        field: "MSBE",
-        topic: "Gaussian processes, Bayesian methods, Git & GitHub",
-        bio: "Shiqi Fang is a PhD researcher contributing to the group from a management research perspective, bridging statistical methods with management science.",
-        talks: [
+        "initials": "YQ",
+        "name": "Yifan Qi",
+        "role": "PhD Maintainer & Speaker",
+        "field": "Accounting & Finance",
+        "topic": "Econometrics, asset pricing, Fama-MacBeth regression",
+        "bio": "Yifan Qi focuses on econometrics and asset pricing. He has presented on Econometrics Foundation and the Fama-MacBeth two-pass regression procedure, a cornerstone methodology for testing asset pricing models in cross-sectional finance research.",
+        "talks": [
           {
-            title: "Bayesian Linear Regression",
-            date: "03 Oct 2025",
-            pdf: "https://www.dropbox.com/scl/fi/3jz3x5ami44gb44oiwpxp/bayesian-linear-regression.pdf?rlkey=jlyu5rg1nimf9ln1953u0l59j&st=pi203pjt&dl=0"
+            "title": "Claude Code × Stata & Python: AI Research Agent",
+            "date": "27 Mar 2026",
+            "pdf": "assets/talks/Claude_Code_Stata_Python_Workshop.pdf"
           },
           {
-            title: "Gaussian Process",
-            date: "25 Mar 2025",
-            pdf: "https://www.dropbox.com/scl/fi/kexcpoyhye1cnj1pbt93i/Gaussian_Process.pdf?rlkey=vh228goc3ydcqt156x9yb50h9&st=fc0rvck6&dl=0"
+            "title": "Shaping Research with AI, Machine Learning and Deep Learning",
+            "date": "13 Mar 2026",
+            "pdf": "assets/talks/AI_ML_DL_for_Business_Research_Overview.pdf"
           },
           {
-            title: "Git & GitHub",
-            date: "22 Nov 2024",
-            pdf: "https://www.dropbox.com/scl/fi/046ag2pcb8xe82it58zl6/git-and-github.pdf?rlkey=xx8i9gbyamggtsvaoxsn5tw8d&st=rk8jo8rz&dl=0"
+            "title": "Asset Pricing: Fama-MacBeth",
+            "date": "17 Mar 2025",
+            "pdf": "assets/talks/Yifan%20Qi_Fama%20MacBeth20250317.pdf"
+          },
+          {
+            "title": "Econometrics Foundation 1",
+            "date": "18 Oct 2024",
+            "pdf": "assets/talks/Econometric_Foundation_Discuss1_Yifan_Qi.pdf"
           }
         ]
       },
       {
-        initials: "HS",
-        name: "Heqing Shi",
-        role: "PhD Maintainer & Speaker",
-        field: "Fintech",
-        topic: "Covariance estimation, kernel methods, credit scoring",
-        bio: "Heqing Shi's research focuses on fintech applications, high-dimensional covariance matrix estimation, and credit scoring statistical tools.",
-        talks: [
+        "initials": "CG",
+        "name": "Chenyang Guo",
+        "role": "PhD Maintainer & Speaker",
+        "field": "MSBE",
+        "topic": "Sampling methods, change-point detection, MOSUM",
+        "bio": "Chenyang Guo contributes expertise in statistical sampling and time series analysis. He has presented on Accept-Reject Sampling methods and MOSUM-based change-point detection techniques for identifying structural breaks in financial data.",
+        "talks": [
           {
-            title: "The Kernel Trick",
-            date: "30 Jan 2025",
-            pdf: "https://www.dropbox.com/scl/fi/zu843zmrowdmsqoe3zaql/The_Kernel_Trick.pdf?rlkey=siad2qsrngvwpbjhdbclnrdo9&st=rd3g3j1r&dl=0"
+            "title": "Expectation-Maximization Algorithm",
+            "date": "14 Nov 2025",
+            "pdf": "assets/talks/EM_Algorithm.pdf"
           },
           {
-            title: "High-dimensional Covariance Matrix Estimation",
-            date: "26 Sep 2024",
-            pdf: "https://www.dropbox.com/scl/fi/nq15yeqswst16jt1ytf08/high_dimensional_covariance_matrix_estimation.pdf?rlkey=r9atw5fpoc7wfl1i4w3aiqgit&st=g9t4ty29&dl=0"
+            "title": "Change-Point Detection: MOSUM Methods",
+            "date": "17 Apr 2025",
+            "pdf": "assets/talks/Statistic_Study_Group_MOSUM.pdf"
+          },
+          {
+            "title": "Sampling Method: Accept-Reject Sampling",
+            "date": "08 Nov 2024",
+            "pdf": "assets/talks/Accept_Reject_Sampling.pdf"
           }
         ]
       },
       {
-        initials: "YQ",
-        name: "Yifan Qi",
-        role: "PhD Maintainer & Speaker",
-        field: "Accounting & Finance",
-        topic: "Econometrics, asset pricing, Fama-MacBeth regression",
-        bio: "Yifan Qi focuses on econometrics and empirical asset pricing, particularly cross-sectional return predictability testing.",
-        talks: [
+        "initials": "YH",
+        "name": "Yizhuo Hu",
+        "role": "PhD Maintainer & Speaker",
+        "field": "FinTech",
+        "topic": "MLE, propensity score matching, synthetic data",
+        "bio": "Yizhuo Hu works on statistical estimation and causal inference methods. He has presented on Maximum Likelihood Estimation, Propensity Score Matching, and Synthetic Data generation for financial research applications.",
+        "talks": [
           {
-            title: "Claude Code × Stata & Python: AI Research Agent",
-            date: "27 Mar 2026",
-            pdf: ""
+            "title": "Synthetic Data",
+            "date": "17 Oct 2025",
+            "pdf": "assets/talks/Synthetic_data.pdf"
           },
           {
-            title: "Asset Pricing: Fama-MacBeth",
-            date: "17 Mar 2025",
-            pdf: "https://www.dropbox.com/scl/fi/fb8audgy6o0w186q2r47c/Yifan-Qi_Fama-MacBeth20250317.pdf?rlkey=u6vy48y1eultn2136pa3lcync&st=kcvjvs3l&dl=0"
+            "title": "Matching Techniques - Propensity Score Matching",
+            "date": "27 Feb 2025",
+            "pdf": "assets/talks/psm.pdf"
           },
           {
-            title: "Econometrics Foundation 1",
-            date: "18 Oct 2024",
-            pdf: "https://www.dropbox.com/scl/fi/a4kh4t1u07wja5dmhgt0a/Econometric-Foundation_Discuss1_Yifan-Qi.pdf?rlkey=jwqwy981fi4j1mrttryjvs8a1&st=k885ao04&dl=0"
+            "title": "Maximum Likelihood Estimation",
+            "date": "06 Dec 2024",
+            "pdf": "assets/talks/Maximum%20Likelihood%20Estimation.pdf"
           }
         ]
       },
       {
-        initials: "CG",
-        name: "Chenyang Guo",
-        role: "PhD Maintainer & Speaker",
-        field: "MSBE",
-        topic: "Sampling methods, change-point detection, MOSUM",
-        bio: "Chenyang Guo contributes expertise in statistical sampling methods and change-point detection in financial time series analysis.",
-        talks: [
+        "initials": "RT",
+        "name": "Runzhi Tian",
+        "role": "PhD Maintainer & Speaker",
+        "field": "FinTech",
+        "topic": "AI research agents, Stata & Python integration",
+        "bio": "Runzhi Tian bridges AI-powered research workflows with traditional econometrics. He co-presented the hands-on workshop on Claude Code × Stata & Python, guiding researchers through building domain-specific AI research agents.",
+        "talks": [
           {
-            title: "Change-Point Detection: MOSUM Methods",
-            date: "17 Apr 2025",
-            pdf: "https://www.dropbox.com/scl/fi/9tkoswo22bozi93a6jke1/Statistic_Study_Group_MOSUM.pdf?rlkey=vx4qk4yzfp49akxzugrfrsx8v&st=e2y4mzly&dl=0"
-          },
-          {
-            title: "Sampling Method: Accept-Reject Sampling",
-            date: "08 Nov 2024",
-            pdf: "https://www.dropbox.com/scl/fi/zqshamol6je8l81weyscd/Accept_Reject_Sampling.pdf?rlkey=urw2z6qwfz9cvvc4r91oqjisw&st=bx0r9p4a&dl=0"
+            "title": "Claude Code × Stata & Python: AI Research Agent",
+            "date": "27 Mar 2026",
+            "pdf": "assets/talks/Claude_Code_Stata_Python_Workshop.pdf"
           }
         ]
       },
       {
-        initials: "YH",
-        name: "Yizhuo Hu",
-        role: "PhD Maintainer & Speaker",
-        field: "FinTech",
-        topic: "MLE, propensity score matching, synthetic data",
-        bio: "Yizhuo Hu works on statistical estimation, causal inference, and synthetic data generation for financial research applications.",
-        talks: [
+        "initials": "ZL",
+        "name": "Zhengnan Lu",
+        "role": "PhD Contributor",
+        "field": "Finance",
+        "topic": "Empirical asset pricing, factor structures, market anomalies",
+        "bio": "Zhengnan Lu is a PhD researcher in Finance, focusing on empirical asset pricing, factor structures, and market anomalies.",
+        "talks": [
           {
-            title: "Synthetic Data",
-            date: "17 Oct 2025",
-            pdf: ""
-          },
-          {
-            title: "Matching Techniques - Propensity Score Matching",
-            date: "27 Feb 2025",
-            pdf: "https://www.dropbox.com/scl/fi/a643rh9nh9x50asrs8q1i/psm.pdf?rlkey=4nijr2dp2lemecv3sorxyxlux&st=fc7ux3js&dl=0"
-          },
-          {
-            title: "Maximum Likelihood Estimation",
-            date: "06 Dec 2024",
-            pdf: "https://www.dropbox.com/scl/fi/f1pt2cokqsllraxqbp7hp/Maximum-Likelihood-Estimation.pdf?rlkey=uwqzcfc3ayx162ct2csrfx6ni&st=h1cfev32&dl=0"
+            "title": "Factor Momentum Revisited: Does the 47-Factor Kernel Collapse to BAB and QMJ?",
+            "date": "29 May 2026",
+            "pdf": ""
           }
         ]
       },
       {
-        initials: "RT",
-        name: "Runzhi Tian",
-        role: "PhD Maintainer & Speaker",
-        field: "FinTech",
-        topic: "AI research agents, Stata & Python integration",
-        bio: "Runzhi Tian focuses on bridging AI-powered research workflows with traditional econometric and statistical tools.",
-        talks: [
+        "initials": "KB",
+        "name": "Ke Bi",
+        "role": "PhD Contributor",
+        "field": "Economics & Finance",
+        "topic": "Micro-econometrics, policy evaluation, causal inference",
+        "bio": "Ke Bi is a PhD researcher specializing in micro-econometrics, policy evaluation, and causal inference methodologies in business research.",
+        "talks": [
           {
-            title: "Claude Code × Stata & Python: AI Research Agent",
-            date: "27 Mar 2026",
-            pdf: ""
+            "title": "Mechanism Analysis",
+            "date": "28 Nov 2025",
+            "pdf": "assets/talks/Mechanism_analysis.pdf"
+          },
+          {
+            "title": "Difference-in-Differences",
+            "date": "13 Feb 2025",
+            "pdf": "assets/talks/DiD.pdf"
+          },
+          {
+            "title": "Econometrics Foundation 2: Instrumental Variables and Endogeneity",
+            "date": "25 Oct 2024",
+            "pdf": "assets/talks/IV_Revised.pdf"
+          }
+        ]
+      },
+      {
+        "initials": "HZ",
+        "name": "Han Zhang",
+        "role": "PhD Contributor",
+        "field": "Marketing",
+        "topic": "Influencer marketing, sponsored content, LLMs and social media platforms",
+        "bio": "Han Zhang is a PhD researcher in the Marketing Group working on large language models, social media platforms, influencer marketing and the video game industry, and brought the group a recently published study on the “sponsored content residue” - what a sponsored post leaves behind in how audiences read an influencer’s later, unpaid posts.",
+        "talks": [
+          {
+            "title": "The “sponsored content residue” in influencer marketing",
+            "date": "27 Feb 2026",
+            "pdf": "https://www.sciencedirect.com/science/article/pii/S0167811626000091"
+          }
+        ]
+      },
+      {
+        "initials": "ZX",
+        "name": "Zhaoxi Zhang",
+        "role": "Guest Speaker",
+        "field": "School of Mathematics",
+        "topic": "",
+        "bio": "Zhaoxi Zhang is a PhD student in the School of Mathematics, invited into the group by Xindi Yang.",
+        "talks": [
+          {
+            "title": "The generalized underlap coefficient with an application in clustering",
+            "date": "13 Feb 2026",
+            "pdf": ""
           }
         ]
       }
     ];
+    /*SSG-CONTRIBUTORS-END*/
 
     // -------- NAV --------
     function Nav() {

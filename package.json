@@ -10,5 +10,9 @@
   },
   "engines": {
     "node": ">=18.17"
+  },
+  "devDependencies": {
+    "js-yaml": "^4.1.0",
+    "marked": "^15.0.12"
   }
 }

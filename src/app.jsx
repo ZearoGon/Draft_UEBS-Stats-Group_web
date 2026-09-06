@@ -4,73 +4,47 @@
 const { useState, useEffect, useRef, useMemo, useCallback } = React;
 
 // -------- DATA --------
-const COMMITTEE = [
-{ initials: "ZC", name: "Dr Zexun Chen", pron: "", role: "Faculty Maintainer", field: "MSBE", year: "", supervisor: "", topic: "Statistical methods for business research", email: "Zexun.Chen@ed.ac.uk", bio: "Dr Zexun Chen leads the Statistics Study Group at the University of Edinburgh Business School, focusing on statistical tools and methods that are extensively used in business school research. He organises discussion sessions and coordinates the group's activities." },
-{ initials: "SF", name: "Shiqi Fang", pron: "", role: "PhD Maintainer", field: "MSBE", year: "", supervisor: "", topic: "Gaussian processes, Bayesian methods, Git & GitHub", email: "S.Fang-6@sms.ed.ac.uk", bio: "Shiqi Fang contributes to the group from a management research perspective. He has presented on topics including Git & GitHub, Gaussian Process, and Bayesian Linear Regression, helping bridge statistical methods with management science." },
-{ initials: "HS", name: "Heqing Shi", pron: "", role: "PhD Maintainer", field: "FinTech", year: "", supervisor: "", topic: "Covariance estimation, kernel methods, credit scoring", email: "Heqing.Shi@ed.ac.uk", bio: "Heqing Shi focuses on fintech applications, contributing knowledge in high-dimensional covariance matrix estimation and the kernel trick. His research spans credit scoring, risk forecasting, and asset pricing statistical tools." },
-{ initials: "YQ", name: "Yifan Qi", pron: "", role: "PhD Maintainer", field: "Accounting & Finance", year: "", supervisor: "", topic: "Econometrics, asset pricing, Fama-MacBeth regression", email: "Y.Qi-18@sms.ed.ac.uk", bio: "Yifan Qi focuses on econometrics and asset pricing. He has presented on Econometrics Foundation and the Fama-MacBeth two-pass regression procedure, a cornerstone methodology for testing asset pricing models in cross-sectional finance research." },
-{ initials: "CG", name: "Chenyang Guo", pron: "", role: "PhD Maintainer", field: "MSBE", year: "", supervisor: "", topic: "Sampling methods, change-point detection, MOSUM", email: "C.Guo-17@sms.ed.ac.uk", bio: "Chenyang Guo contributes expertise in statistical sampling and time series analysis. He has presented on Accept-Reject Sampling methods and MOSUM-based change-point detection techniques for identifying structural breaks in financial data." },
-{ initials: "YH", name: "Yizhuo Hu", pron: "", role: "PhD Maintainer", field: "FinTech", year: "", supervisor: "", topic: "MLE, propensity score matching, synthetic data", email: "yhu8@ed.ac.uk", bio: "Yizhuo Hu works on statistical estimation and causal inference methods. He has presented on Maximum Likelihood Estimation, Propensity Score Matching, and Synthetic Data generation for financial research applications." },
-{ initials: "RT", name: "Runzhi Tian", pron: "", role: "PhD Maintainer", field: "FinTech", year: "", supervisor: "", topic: "AI research agents, Stata & Python integration", email: "R.Tian-6@sms.ed.ac.uk", bio: "Runzhi Tian bridges AI-powered research workflows with traditional econometrics. He co-presented the hands-on workshop on Claude Code × Stata & Python, guiding researchers through building domain-specific AI research agents." },
-{ initials: "YJ", name: "Yuyang Jiang", pron: "", role: "PhD Maintainer", field: "MSBE & Finance", year: "", supervisor: "", topic: "AI methods in finance", email: "Y.Jiang-172@sms.ed.ac.uk", bio: "Yuyang Jiang focuses on applying artificial intelligence and machine learning methods to explore financial research questions." }];
+// Everything in this block comes from content/ (Markdown + JSON), compiled by
+// scripts/content.mjs into assets/data.js. To add a session, a post or a person,
+// edit the content files and run `npm run build` - never this block.
+const DATA = window.SSG_DATA;
+if (!DATA) throw new Error("assets/data.js is missing or failed to load - run `npm run build`");
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const KIND_LABEL = { lecture: "Lecture", workshop: "Workshop", discussion: "Discussion" };
+
+// The maintainers, in roster order (used by the neural field and the roster).
+const COMMITTEE = DATA.people.filter(p => p.kind === "maintainer");
 
 
 // -------- RESEARCH ATLAS DATA --------
 // Fields of the knowledge network. Statistics is the trunk ("core");
 // every lecture hangs on one branch via its `topic` key.
-const TOPICS = [
-{ id: "core", label: "Statistics", caption: "The Backbone", x: 600, y: 380, href: "", blurb: "Statistics is the connective tissue of everything we do - the shared language that lets credit researchers argue with asset pricers and econometricians borrow from machine learning. Lectures on research craft and tooling live on the trunk itself." },
-{ id: "stat", label: "Statistical Methods", x: 600, y: 150, href: "topics/statistical-methods.html", blurb: "Tests, estimators and sampling schemes - the raw machinery. From maximum likelihood to Gaussian processes and change-point detection, these lectures sharpen the tools every other branch depends on." },
-{ id: "econ", label: "Econometrics", x: 265, y: 258, href: "topics/econometrics.html", blurb: "Bridging economics and statistics: identification, causal inference and the foundations of regression. DiD, matching and IV - the grammar of empirical economic arguments." },
-{ id: "asset", label: "Asset Pricing", x: 935, y: 258, href: "topics/asset-pricing.html", blurb: "Can returns be predicted in the cross-section? Factor models, Fama-MacBeth regressions and the ongoing hunt for pricing power in stocks, bonds and derivatives." },
-{ id: "credit", label: "Credit Research", x: 265, y: 502, href: "topics/credit-research.html", blurb: "Credit scoring, default prediction and the statistics of lending decisions. A growing branch - blog material is up, and the first dedicated lecture is waiting for a speaker." },
-{ id: "ai", label: "AI & Machine Learning", x: 935, y: 502, href: "20260313_UEBS%20Statistics%20Study%20group_AI,ML,DL_Business_Overview.html", blurb: "Machine learning, deep learning and AI-powered research workflows - from kernel methods to synthetic data and AI research agents driving Stata & Python." },
-{ id: "risk", label: "Risk Management", x: 600, y: 610, href: "topics/risk-management.html", blurb: "Risk forecasting and the high-dimensional statistics behind it - covariance estimation, portfolio risk and the models that keep tail events honest." }];
+const TOPICS = DATA.topics;
 
-const EVENTS = [
-{ date: "29", month: "May", year: "2026", kicker: "Schedule", title: "Factor Momentum Revisited: Does the 47-Factor Kernel Collapse to BAB and QMJ?", short: "Factor Momentum", topic: "asset", loc: "Conference Room, 4th Floor, UEBS", time: "17:00 - 18:00", cat: "schedule", speaker: "Zhengnan Lu", pdf: "" },
-{ date: "27", month: "Mar", year: "2026", kicker: "Schedule", title: "Claude Code × Stata & Python: AI Research Agent", short: "Claude Code × Stata", topic: "ai", loc: "UEBS Boardroom", time: "17:00 - 18:00", cat: "schedule", speaker: "Runzhi Tian, Yifan Qi", pdf: "" },
-{ date: "17", month: "Oct", year: "2025", kicker: "Schedule", title: "Synthetic Data", short: "Synthetic Data", topic: "ai", loc: "UEBS Boardroom", time: "17:00 - 18:00", cat: "schedule", speaker: "Yizhuo Hu", pdf: "" },
-{ date: "03", month: "Oct", year: "2025", kicker: "Lecture", title: "Bayesian Linear Regression", short: "Bayesian LR", topic: "stat", loc: "UEBS", time: "", cat: "talk", speaker: "Shiqi Fang", pdf: "https://www.dropbox.com/scl/fi/3jz3x5ami44gb44oiwpxp/bayesian-linear-regression.pdf?rlkey=jlyu5rg1nimf9ln1953u0l59j&st=pi203pjt&dl=0" },
-{ date: "17", month: "Apr", year: "2025", kicker: "Lecture", title: "Change-Point Detection: MOSUM Methods", short: "MOSUM", topic: "stat", loc: "UEBS", time: "", cat: "talk", speaker: "Chenyang Guo", pdf: "https://www.dropbox.com/scl/fi/9tkoswo22bozi93a6jke1/Statistic_Study_Group_MOSUM.pdf?rlkey=vx4qk4yzfp49akxzugrfrsx8v&st=e2y4mzly&dl=0" },
-{ date: "25", month: "Mar", year: "2025", kicker: "Lecture", title: "Gaussian Process", short: "Gaussian Process", topic: "stat", loc: "UEBS", time: "", cat: "talk", speaker: "Shiqi Fang", pdf: "https://www.dropbox.com/scl/fi/kexcpoyhye1cnj1pbt93i/Gaussian_Process.pdf?rlkey=vh228goc3ydcqt156x9yb50h9&st=fc0rvck6&dl=0" },
-{ date: "17", month: "Mar", year: "2025", kicker: "Lecture", title: "Asset Pricing: Fama-MacBeth", short: "Fama-MacBeth", topic: "asset", loc: "UEBS", time: "", cat: "talk", speaker: "Yifan Qi", pdf: "https://www.dropbox.com/scl/fi/fb8audgy6o0w186q2r47c/Yifan-Qi_Fama-MacBeth20250317.pdf?rlkey=u6vy48y1eultn2136pa3lcync&st=kcvjvs3l&dl=0" },
-{ date: "27", month: "Feb", year: "2025", kicker: "Lecture", title: "Matching Techniques - Propensity Score Matching", short: "PSM", topic: "econ", loc: "UEBS", time: "", cat: "talk", speaker: "YiZhuo Hu", pdf: "https://www.dropbox.com/scl/fi/a643rh9nh9x50asrs8q1i/psm.pdf?rlkey=4nijr2dp2lemecv3sorxyxlux&st=fc7ux3js&dl=0" },
-{ date: "13", month: "Feb", year: "2025", kicker: "Lecture", title: "Difference-in-Differences", short: "DiD", topic: "econ", loc: "UEBS", time: "", cat: "talk", speaker: "Ke Bi", pdf: "https://www.dropbox.com/scl/fi/fux8sj0ldcdlmhj8k6s5l/DiD.pdf?rlkey=61ymfgxyzny8l3q4v4skfrtgl&st=v0dtd0vf&dl=0" },
-{ date: "30", month: "Jan", year: "2025", kicker: "Lecture", title: "The Kernel Trick", short: "Kernel Trick", topic: "ai", loc: "UEBS", time: "", cat: "talk", speaker: "Heqing Shi", pdf: "https://www.dropbox.com/scl/fi/zu843zmrowdmsqoe3zaql/The_Kernel_Trick.pdf?rlkey=siad2qsrngvwpbjhdbclnrdo9&st=rd3g3j1r&dl=0" },
-{ date: "06", month: "Dec", year: "2024", kicker: "Lecture", title: "Maximum Likelihood Estimation", short: "MLE", topic: "stat", loc: "UEBS", time: "", cat: "talk", speaker: "Yizhuo Hu", pdf: "https://www.dropbox.com/scl/fi/f1pt2cokqsllraxqbp7hp/Maximum-Likelihood-Estimation.pdf?rlkey=uwqzcfc3ayx162ct2csrfx6ni&st=h1cfev32&dl=0" },
-{ date: "22", month: "Nov", year: "2024", kicker: "Lecture", title: "Git & GitHub", short: "Git & GitHub", topic: "core", loc: "UEBS", time: "", cat: "talk", speaker: "Shiqi Fang", pdf: "https://www.dropbox.com/scl/fi/046ag2pcb8xe82it58zl6/git-and-github.pdf?rlkey=xx8i9gbyamggtsvaoxsn5tw8d&st=rk8jo8rz&dl=0" },
-{ date: "08", month: "Nov", year: "2024", kicker: "Lecture", title: "Sampling Method: Accept-Reject Sampling", short: "A-R Sampling", topic: "stat", loc: "UEBS", time: "", cat: "talk", speaker: "Chenyang Guo", pdf: "https://www.dropbox.com/scl/fi/zqshamol6je8l81weyscd/Accept_Reject_Sampling.pdf?rlkey=urw2z6qwfz9cvvc4r91oqjisw&st=bx0r9p4a&dl=0" },
-{ date: "25", month: "Oct", year: "2024", kicker: "Lecture", title: "Econometrics Foundation 2", short: "Econometrics II", topic: "econ", loc: "UEBS", time: "", cat: "talk", speaker: "Ke Bi", pdf: "https://www.dropbox.com/scl/fi/11l9de4k067q0pdmfertl/IV.pptx?rlkey=2huic7f23bcvs0zfut7ernmsr&st=ulk4cqym&dl=0" },
-{ date: "18", month: "Oct", year: "2024", kicker: "Lecture", title: "Econometrics Foundation 1", short: "Econometrics I", topic: "econ", loc: "UEBS", time: "", cat: "talk", speaker: "Yifan Qi", pdf: "https://www.dropbox.com/scl/fi/a4kh4t1u07wja5dmhgt0a/Econometric-Foundation_Discuss1_Yifan-Qi.pdf?rlkey=jwqwy981fi4j1mrttryjvs8a1&st=k885ao04&dl=0" },
-{ date: "26", month: "Sep", year: "2024", kicker: "Lecture", title: "High-dimensional Covariance Matrix Estimation", short: "HD Covariance", topic: "risk", loc: "UEBS", time: "", cat: "talk", speaker: "Heqing Shi", pdf: "https://www.dropbox.com/scl/fi/nq15yeqswst16jt1ytf08/high_dimensional_covariance_matrix_estimation.pdf?rlkey=r9atw5fpoc7wfl1i4w3aiqgit&st=g9t4ty29&dl=0" }];
+// A session becomes an atlas leaf and an Index row. `cat` drives the Index
+// filter: "schedule" = announced and still ahead of us, "talk" = held.
+const sessionToEvent = (s) => {
+  const [y, m, d] = s.date.split("-").map(Number);
+  const ahead = s.status === "planned" || s.status === "postponed";
+  return {
+    id: s.id,
+    date: String(d).padStart(2, "0"), month: MONTHS[m - 1], year: String(y),
+    kicker: s.status === "postponed" ? "Postponed" : ahead ? "Schedule" : (KIND_LABEL[s.kind] || "Lecture"),
+    title: s.title, short: s.short, topic: s.topic,
+    loc: s.venue, time: s.timeLabel,
+    cat: ahead ? "schedule" : "talk",
+    speaker: s.speakerNames, pdf: s.pdf,
+    status: s.status, note: s.note, summary: s.summary
+  };
+};
+const EVENTS = DATA.sessions.filter(s => s.status !== "cancelled").map(sessionToEvent);
 
 const eventDate = (e) => new Date(`${e.month} ${e.date}, ${e.year}`);
 const EVENTS_SORTED = [...EVENTS].sort((a, b) => eventDate(b) - eventDate(a));
 
-const LOCAL_MATERIALS = {
-  "Bayesian Linear Regression": "assets/talks/bayesian%20linear%20regression.pdf",
-  "Change-Point Detection: MOSUM Methods": "assets/talks/Statistic_Study_Group_MOSUM.pdf",
-  "Gaussian Process": "assets/talks/Gaussian_Process.pdf",
-  "Asset Pricing: Fama-MacBeth": "assets/talks/Yifan%20Qi_Fama%20MacBeth20250317.pdf",
-  "Matching Techniques - Propensity Score Matching": "assets/talks/psm.pdf",
-  "Difference-in-Differences": "assets/talks/DiD.pdf",
-  "The Kernel Trick": "assets/talks/The_Kernel_Trick.pdf",
-  "Maximum Likelihood Estimation": "assets/talks/Maximum%20Likelihood%20Estimation.pdf",
-  "Git & GitHub": "assets/talks/git%20and%20github.pdf",
-  "Sampling Method: Accept-Reject Sampling": "assets/talks/Accept_Reject_Sampling.pdf"
-};
-const materialHref = (title, fallback) => LOCAL_MATERIALS[title] || fallback;
-
-
-const NEWS = [
-{ cat: "Blog", date: "14 Jun 2024", title: "What You Can Get From This Website", excerpt: "The resources from this website are mainly for researchers in the area of finance. We record statistical tools - models, tests and more - into blogs covering credit research, risk management and asset pricing.", img: "archive · group members · 2024", visual: "distribution", cover: "https://pub-2f317f8151d14a0da62cf2e5fb439603.r2.dev/2024.jpg", coverAlt: "Statistics Study Group members, Christmas 2024", href: "#talks" },
-{ cat: "Blog", date: "06 Jun 2024", title: "Conference & Workshop Opportunities", excerpt: "A curated list of upcoming conferences and workshops including the 2024 Edinburgh World-Class Workshop on FinTech, Economics of Financial Technology Conference, and the 1st Doctoral Finance Symposium.", img: "events · conferences", visual: "network" },
-{ cat: "Lecture", date: "29 May 2026", title: "Factor Momentum Revisited: BAB and QMJ", excerpt: "Zhengnan Lu replicates Ehsani & Linnainmaa (2022, JF) and shows that time-series factor momentum collapses onto just two well-known factors (BAB and QMJ), offering a concentrated view of pricing power.", img: "lecture · factor momentum", visual: "regression", href: "topics/asset-pricing.html" },
-{ cat: "Lecture", date: "27 Mar 2026", title: "Claude Code × Stata & Python: AI Research Agent", excerpt: "A hands-on workshop guiding participants through the full setup of an AI-powered Stata & Python research environment. Part of the UEBS Statistics Study Group series bridging econometrics and AI.", img: "workshop · AI coding", visual: "network", href: "20260313_UEBS%20Statistics%20Study%20group_AI,ML,DL_Business_Overview.html" },
-{ cat: "Lecture", date: "17 Oct 2025", title: "Synthetic Data in Finance", excerpt: "Exploring how synthetic data helps address privacy concerns, supports model training, and enhances data sharing - while acknowledging limitations in fidelity, validation, and regulatory uncertainty.", img: "lecture · synthetic data", visual: "distribution", href: "20260313_UEBS%20Statistics%20Study%20group_AI,ML,DL_Business_Overview.html" },
-{ cat: "Lecture", date: "17 Apr 2025", title: "Change-Point Detection: MOSUM Methods", excerpt: "Chenyang Guo presents MOSUM-based change-point detection methods and their applications in financial time series analysis and structural break identification.", img: "lecture slide · MOSUM methods", visual: "breaks", cover: "assets/covers/mosum-change-point.png", coverAlt: "MOSUM lecture slide showing a time-series change point and its detector", href: "assets/talks/Statistic_Study_Group_MOSUM.pdf" },
-{ cat: "Lecture", date: "17 Mar 2025", title: "Asset Pricing: Fama-MacBeth Regression", excerpt: "Yifan Qi walks through the Fama-MacBeth two-pass regression procedure - a cornerstone methodology for testing asset pricing models in cross-sectional finance research.", img: "lecture slide · Fama–MacBeth", visual: "regression", cover: "assets/covers/fama-macbeth.png", coverAlt: "Opening slide from Yifan Qi's Fama-MacBeth asset pricing lecture", href: "assets/talks/Yifan%20Qi_Fama%20MacBeth20250317.pdf" }];
+// Cards for the Posts section: blog posts and opportunities from content/posts
+// plus every session marked `featured`, newest first.
+const NEWS = DATA.news;
 
 
 // -------- NAV --------
@@ -170,13 +144,7 @@ function Nav() {
 
 // -------- HERO --------
 function HeroCarousel() {
-  const slides = [
-    { src: "https://pub-2f317f8151d14a0da62cf2e5fb439603.r2.dev/2024.jpg",   label: "2024 · Christmas" },
-    { src: "https://pub-2f317f8151d14a0da62cf2e5fb439603.r2.dev/2025_1.jpg", label: "2025 · Easter" },
-    { src: "https://pub-2f317f8151d14a0da62cf2e5fb439603.r2.dev/2025_2.jpg", label: "2025 · Halloween" },
-    { src: "https://pub-2f317f8151d14a0da62cf2e5fb439603.r2.dev/UK%20Finnovator_20260201.jpg", label: "2026 · UK Finnovator Winner · Birmingham" },
-    { src: "https://pub-2f317f8151d14a0da62cf2e5fb439603.r2.dev/20270529.jpg", label: "2027 May" },
-  ];
+  const slides = DATA.site.hero.slides;
   const [i, setI] = useState(0);
   const [manuallyPaused, setManuallyPaused] = useState(false);
   const [hoverPaused, setHoverPaused] = useState(false);
@@ -358,12 +326,13 @@ function Hero({ variant }) {
 }
 
 function HeroMeta() {
+  const { maintainers, contributors, topics, lectures, founded } = DATA.stats;
   return (
     <div className="hero-meta">
-        <div className="cell" title="8 maintainers and 12 contributors; these roles overlap"><div className="k">Maintainers &amp; Contributors</div><div className="v">8 / 12<small>roles overlap</small></div></div>
-        <div className="cell"><div className="k">Topics</div><div className="v">5+<small>fields</small></div></div>
-        <div className="cell"><div className="k">Lectures</div><div className="v">16<small>sessions</small></div></div>
-        <div className="cell"><div className="k">Founded</div><div className="v">2024<small>UEBS</small></div></div>
+        <div className="cell" title={`${maintainers} maintainers and ${contributors} contributors; these roles overlap`}><div className="k">Maintainers &amp; Contributors</div><div className="v">{maintainers} / {contributors}<small>roles overlap</small></div></div>
+        <div className="cell"><div className="k">Topics</div><div className="v">{topics}+<small>fields</small></div></div>
+        <div className="cell"><div className="k">Lectures</div><div className="v">{lectures}<small>sessions</small></div></div>
+        <div className="cell"><div className="k">Founded</div><div className="v">{founded}<small>UEBS</small></div></div>
       </div>);
 
 }
@@ -428,94 +397,30 @@ function About() {
 }
 
 // -------- SPEAKERS & CONTRIBUTORS DATA --------
-const CONTRIBUTORS = [
-{ initials: "ZL", name: "Zhengnan Lu", role: "PhD Contributor", field: "Finance", bio: "Zhengnan Lu is a PhD researcher in Finance, focusing on empirical asset pricing, factor structures, and market anomalies.", lectures: [
-  { title: "Factor Momentum Revisited: Does the 47-Factor Kernel Collapse to BAB and QMJ?", date: "29 May 2026", pdf: "" }] },
-{ initials: "KB", name: "Ke Bi", role: "PhD Contributor", field: "Economics & Finance", bio: "Ke Bi is a PhD researcher specializing in micro-econometrics, policy evaluation, and causal inference methodologies in business research.", lectures: [
-  { title: "Difference-in-Differences", date: "13 Feb 2025", pdf: "https://www.dropbox.com/scl/fi/fux8sj0ldcdlmhj8k6s5l/DiD.pdf?rlkey=61ymfgxyzny8l3q4v4skfrtgl&st=v0dtd0vf&dl=0" },
-  { title: "Econometrics Foundation 2", date: "25 Oct 2024", pdf: "https://www.dropbox.com/scl/fi/11l9de4k067q0pdmfertl/IV.pptx?rlkey=2huic7f23bcvs0zfut7ernmsr&st=ulk4cqym&dl=0" }] },
-{ initials: "ZC", name: "Dr Zexun Chen", role: "Faculty Maintainer & Organizer", field: "MSBE", bio: "Dr Zexun Chen leads the Statistics Study Group at the University of Edinburgh Business School, focusing on statistical tools and methods that are extensively used in business school research.", lectures: [
-  { title: "Study Group Research Methods & Discussions", date: "Continuous", pdf: "" }] },
-{ initials: "SF", name: "Shiqi Fang", role: "PhD Maintainer & Speaker", field: "MSBE", bio: "Shiqi Fang is a PhD researcher contributing to the group from a management research perspective, bridging statistical methods with management science.", lectures: [
-  { title: "Bayesian Linear Regression", date: "03 Oct 2025", pdf: "https://www.dropbox.com/scl/fi/3jz3x5ami44gb44oiwpxp/bayesian-linear-regression.pdf?rlkey=jlyu5rg1nimf9ln1953u0l59j&st=pi203pjt&dl=0" },
-  { title: "Gaussian Process", date: "25 Mar 2025", pdf: "https://www.dropbox.com/scl/fi/kexcpoyhye1cnj1pbt93i/Gaussian_Process.pdf?rlkey=vh228goc3ydcqt156x9yb50h9&st=fc0rvck6&dl=0" },
-  { title: "Git & GitHub", date: "22 Nov 2024", pdf: "https://www.dropbox.com/scl/fi/046ag2pcb8xe82it58zl6/git-and-github.pdf?rlkey=xx8i9gbyamggtsvaoxsn5tw8d&st=rk8jo8rz&dl=0" }] },
-{ initials: "HS", name: "Heqing Shi", role: "PhD Maintainer & Speaker", field: "FinTech", bio: "Heqing Shi's research focuses on fintech applications, high-dimensional covariance matrix estimation, and credit scoring statistical tools.", lectures: [
-  { title: "The Kernel Trick", date: "30 Jan 2025", pdf: "https://www.dropbox.com/scl/fi/zu843zmrowdmsqoe3zaql/The_Kernel_Trick.pdf?rlkey=siad2qsrngvwpbjhdbclnrdo9&st=rd3g3j1r&dl=0" },
-  { title: "High-dimensional Covariance Matrix Estimation", date: "26 Sep 2024", pdf: "https://www.dropbox.com/scl/fi/nq15yeqswst16jt1ytf08/high_dimensional_covariance_matrix_estimation.pdf?rlkey=r9atw5fpoc7wfl1i4w3aiqgit&st=g9t4ty29&dl=0" }] },
-{ initials: "YQ", name: "Yifan Qi", role: "PhD Maintainer & Speaker", field: "Accounting & Finance", bio: "Yifan Qi focuses on econometrics and empirical asset pricing, particularly cross-sectional return predictability testing.", lectures: [
-  { title: "Claude Code × Stata & Python: AI Research Agent", date: "27 Mar 2026", pdf: "" },
-  { title: "Asset Pricing: Fama-MacBeth", date: "17 Mar 2025", pdf: "https://www.dropbox.com/scl/fi/fb8audgy6o0w186q2r47c/Yifan-Qi_Fama-MacBeth20250317.pdf?rlkey=u6vy48y1eultn2136pa3lcync&st=kcvjvs3l&dl=0" },
-  { title: "Econometrics Foundation 1", date: "18 Oct 2024", pdf: "https://www.dropbox.com/scl/fi/a4kh4t1u07wja5dmhgt0a/Econometric-Foundation_Discuss1_Yifan-Qi.pdf?rlkey=jwqwy981fi4j1mrttryjvs8a1&st=k885ao04&dl=0" }] },
-{ initials: "CG", name: "Chenyang Guo", role: "PhD Maintainer & Speaker", field: "MSBE", bio: "Chenyang Guo contributes expertise in statistical sampling methods and change-point detection in financial time series analysis.", lectures: [
-  { title: "Change-Point Detection: MOSUM Methods", date: "17 Apr 2025", pdf: "https://www.dropbox.com/scl/fi/9tkoswo22bozi93a6jke1/Statistic_Study_Group_MOSUM.pdf?rlkey=vx4qk4yzfp49akxzugrfrsx8v&st=e2y4mzly&dl=0" },
-  { title: "Sampling Method: Accept-Reject Sampling", date: "08 Nov 2024", pdf: "https://www.dropbox.com/scl/fi/zqshamol6je8l81weyscd/Accept_Reject_Sampling.pdf?rlkey=urw2z6qwfz9cvvc4r91oqjisw&st=bx0r9p4a&dl=0" }] },
-{ initials: "YH", name: "Yizhuo Hu", role: "PhD Maintainer & Speaker", field: "FinTech", bio: "Yizhuo Hu works on statistical estimation, causal inference, and synthetic data generation for financial research applications.", lectures: [
-  { title: "Synthetic Data", date: "17 Oct 2025", pdf: "" },
-  { title: "Matching Techniques - Propensity Score Matching", date: "27 Feb 2025", pdf: "https://www.dropbox.com/scl/fi/a643rh9nh9x50asrs8q1i/psm.pdf?rlkey=4nijr2dp2lemecv3sorxyxlux&st=fc7ux3js&dl=0" },
-  { title: "Maximum Likelihood Estimation", date: "06 Dec 2024", pdf: "https://www.dropbox.com/scl/fi/f1pt2cokqsllraxqbp7hp/Maximum-Likelihood-Estimation.pdf?rlkey=uwqzcfc3ayx162ct2csrfx6ni&st=h1cfev32&dl=0" }] },
-{ initials: "RT", name: "Runzhi Tian", role: "PhD Maintainer & Speaker", field: "FinTech", bio: "Runzhi Tian focuses on bridging AI-powered research workflows with traditional econometric and statistical tools.", lectures: [
-  { title: "Claude Code × Stata & Python: AI Research Agent", date: "27 Mar 2026", pdf: "" }] }];
-
-/* ============================================================
-   THE PEOPLE, AS A NETWORK
-   Ported whole from the design lab (people-lab-galaxy.html): the
-   roster additions, the geometry, how the network behaves, and how
-   it is drawn. COMMITTEE and CONTRIBUTORS above are its input.
-   ============================================================ */
+// People come from content/people. Their lecture lists are derived from
+// content/sessions at build time (scripts/content.mjs), so every talk is
+// recorded exactly once.
 /* ------------------------------------------------------------
-   Added 2026-08: three contributors, two visiting PhDs, and one
-   member who has joined but not presented yet (she holds a seat).
-   Dates for the two new talks were not supplied, so none is shown.
+   With the group, but nothing on record yet: members sit on the ring
+   (they carry a `slot`), stated plainly - a name and a standing, no more.
    ------------------------------------------------------------ */
-const NEWCOMERS = [
-  { initials: "HZ", name: "Han Zhang", kind: "contributor", role: "PhD Contributor", field: "Marketing",
-    topic: "Influencer marketing, sponsored content",
-    bio: "Han Zhang works on influencer marketing. She brought the group her own published work on the “sponsored content residue” - what a sponsored post leaves behind in how audiences read an influencer’s later, unpaid posts.",
-    lectures: [{ title: "The “sponsored content residue” in influencer marketing", date: "27 Feb 2026",
-                 venue: "Int. Journal of Research in Marketing · ABS 4", pdf: "" }] },
-  { initials: "XY", name: "Xindi Yang", kind: "contributor", role: "PhD Contributor", field: "FinTech",
-    topic: "",
-    bio: "Xindi Yang brought the group its first speaker from outside the Business School, introducing Zhaoxi Zhang from the School of Mathematics.",
-    lectures: [], introduced: "ZX", introducedDate: "13 Feb 2026" },
-  { initials: "ZX", name: "Zhaoxi Zhang", kind: "contributor", role: "Guest Speaker", field: "School of Mathematics",
-    topic: "",
-    bio: "Zhaoxi Zhang is from the School of Mathematics, invited into the group by Xindi Yang.",
-    lectures: [{ title: "The generalized underlap coefficient with an application in clustering (evaluating the dependence of a partition on covariates)", date: "13 Feb 2026", pdf: "" }] },
-];
-/* With the group, but nothing on record yet. They sit on the ring rather than
-   in the core, and they are stated plainly - a name and a standing, no more. */
-const SEAT_PEOPLE = [
-  { slot: 2, initials: "JK", name: "Jiwon Kim",    field: "Finance",        standing: "Member · Finance" },
-  { slot: 3, initials: "KZ", name: "Ke Zhang",     field: "Finance",        standing: "Visiting PhD · Finance" },
-  { slot: 5, initials: "ZK", name: "Zhikai Zhang", field: "Finance",        standing: "Visiting PhD · Finance" },
-  { slot: 6, initials: "GW", name: "Gan Wang",     field: "MSBE & Finance", standing: "Member · MSBE & Finance" },
-];
+const SEAT_PEOPLE = DATA.people.filter(p => p.slot !== null && p.slot !== undefined);
 const SEAT_BY_SLOT = new Map(SEAT_PEOPLE.map(p => [p.slot, p]));
 
-const PEOPLE = (() => {
-  const byInitials = new Map();
-  COMMITTEE.forEach(m => byInitials.set(m.initials, { ...m, kind: "maintainer", lectures: [] }));
-  CONTRIBUTORS.forEach(c => {
-    const found = byInitials.get(c.initials);
-    if (found) { found.lectures = c.lectures || []; found.speakerRole = c.role; }
-    else byInitials.set(c.initials, { ...c, kind: "contributor", topic: "", email: "", lectures: c.lectures || [] });
-  });
-  return [...byInitials.values(), ...NEWCOMERS];
-})();
+const PEOPLE = DATA.people.filter(p => p.slot === null || p.slot === undefined);
 const MAINTAINERS = PEOPLE.filter(p => p.kind === "maintainer");
 const GUESTS = PEOPLE.filter(p => p.kind === "contributor");
 /* A contributor is anyone with something on record - a lecture given, or a
    speaker brought in. Most maintainers are contributors too; the two lists
    overlap, they do not partition the group. */
-const CONTRIBUTORS_ALL = PEOPLE.filter(p => p.lectures.length > 0 || !!p.introduced);
+const CONTRIBUTORS_ALL = PEOPLE.filter(p => p.contributor);
 const CONTRIB_SET = new Set(CONTRIBUTORS_ALL.map(p => p.initials));
 /* Ties: pairs who work together, drawn as one bright process in the spread
    state, the same weight as an introduction. */
-const TIES = [["SF", "KB"]];
-const RING = 4;                       // named people on the ring
-const LECTURE_COUNT = PEOPLE.reduce((n, p) => n + p.lectures.length, 0);
-const NEW_SINCE = new Set(["HZ", "XY", "ZX", "KZ", "ZK", "JK", "GW"]);
+const TIES = DATA.ties;
+const RING = SEAT_PEOPLE.length;      // named people on the ring
+const LECTURE_COUNT = DATA.stats.lectures;
+const NEW_SINCE = new Set(DATA.people.filter(p => p.new).map(p => p.initials));
 /* "Field TBC" is a placeholder, not a research area: it never joins people up */
 const NO_FIELD = "Field TBC";
 const FIELDS = ["MSBE", "FinTech", "Accounting & Finance", "MSBE & Finance", "Finance",
@@ -2191,7 +2096,7 @@ function Committee() {
                           {t.title}
                           {t.venue && <span style={{ color: "var(--ink-mute)" }}> · {t.venue}</span>}
                           {t.date && <span style={{ color: "var(--ink-mute)" }}> · {t.date}</span>}
-                          {t.pdf && <a className="pdf" href={materialHref(t.title, t.pdf)} target="_blank" rel="noopener noreferrer">PDF ↓</a>}
+                          {t.pdf && <a className="pdf" href={t.pdf} target="_blank" rel="noopener noreferrer">PDF ↓</a>}
                         </div>)
                       : p.introduced
                         ? <span>Introduced {PEOPLE.find(x => x.initials === p.introduced).name}
@@ -2251,7 +2156,7 @@ function Committee() {
                   <li key={j}>
                     <span className="d">{t.date}</span>
                     <span className="t">{t.title}</span>
-                    {t.pdf && <a href={materialHref(t.title, t.pdf)} target="_blank" rel="noopener noreferrer">PDF ↓</a>}
+                    {t.pdf && <a href={t.pdf} target="_blank" rel="noopener noreferrer">PDF ↓</a>}
                   </li>)}
               </ul>
             </div>}
@@ -2545,7 +2450,7 @@ function ResearchAtlas() {
                         </div>
                         <div className="event-time">{e.time}</div>
                         <div className="event-arrow">
-                          {e.pdf ? <a href={materialHref(e.title, e.pdf)} target="_blank" rel="noopener noreferrer" onClick={(ev) => ev.stopPropagation()} style={{color:"var(--accent)",textDecoration:"none"}} title="Download materials"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3v12M12 15l-4-4M12 15l4-4M5 21h14" stroke="currentColor" strokeWidth="1.6" /></svg></a> : <svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M1 6h16M12 1l5 5-5 5" stroke="currentColor" strokeWidth="1.4" /></svg>}
+                          {e.pdf ? <a href={e.pdf} target="_blank" rel="noopener noreferrer" onClick={(ev) => ev.stopPropagation()} style={{color:"var(--accent)",textDecoration:"none"}} title="Download materials"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3v12M12 15l-4-4M12 15l4-4M5 21h14" stroke="currentColor" strokeWidth="1.6" /></svg></a> : <svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M1 6h16M12 1l5 5-5 5" stroke="currentColor" strokeWidth="1.4" /></svg>}
                         </div>
                       </div>);
                   })}
@@ -2588,7 +2493,7 @@ function TalkIndex() {
               </div>
             </div>
             <div>
-              {displayed.length === 0 && <div className="event-empty">No events match that filter.</div>}
+              {displayed.length === 0 && <div className="event-empty">{filter === "schedule" ? "Nothing is scheduled yet - new sessions appear here as soon as they are announced." : "No events match that filter."}</div>}
               {displayed.map((e, i) =>
             <div key={i} className="event-row">
                   <div className="event-date">
@@ -2605,7 +2510,7 @@ function TalkIndex() {
                   </div>
                   <div className="event-time">{e.time}</div>
                   <div className="event-arrow">
-                    {e.pdf ? <a href={materialHref(e.title, e.pdf)} target="_blank" rel="noopener noreferrer" style={{color:"var(--accent)",textDecoration:"none"}} title="Download materials"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3v12M12 15l-4-4M12 15l4-4M5 21h14" stroke="currentColor" strokeWidth="1.6" /></svg></a> : <svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M1 6h16M12 1l5 5-5 5" stroke="currentColor" strokeWidth="1.4" /></svg>}
+                    {e.pdf ? <a href={e.pdf} target="_blank" rel="noopener noreferrer" style={{color:"var(--accent)",textDecoration:"none"}} title="Download materials"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3v12M12 15l-4-4M12 15l4-4M5 21h14" stroke="currentColor" strokeWidth="1.6" /></svg></a> : <svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M1 6h16M12 1l5 5-5 5" stroke="currentColor" strokeWidth="1.4" /></svg>}
                   </div>
                 </div>
             )}
@@ -2633,50 +2538,75 @@ function TalkIndex() {
 
 // -------- NEWS --------
 function News() {
+  const CATS = [
+  { id: "all", label: "All" },
+  { id: "lecture", label: "Lectures" },
+  { id: "opportunity", label: "Opportunities" },
+  { id: "blog", label: "Blog" }];
+
   const [q, setQ] = useState("");
+  const [cat, setCat] = useState("all");
   const [expanded, setExpanded] = useState(false);
+  const today = useMemo(() => {
+    const d = new Date();
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+  }, []);
+  const inCat = (n) => cat === "all" || n.kind === cat || (cat === "opportunity" && n.kind === "announcement");
   const filtered = useMemo(() => {
     const s = q.trim().toLowerCase();
-    if (!s) return NEWS;
-    return NEWS.filter((n) =>
+    return NEWS.filter((n) => inCat(n) && (!s ||
     n.title.toLowerCase().includes(s) ||
     n.excerpt.toLowerCase().includes(s) ||
-    n.cat.toLowerCase().includes(s)
-    );
-  }, [q]);
+    n.cat.toLowerCase().includes(s) ||
+    (n.sub || "").toLowerCase().includes(s)));
+  }, [q, cat]);
 
   useEffect(() => {
     setExpanded(false);
-  }, [q]);
+  }, [q, cat]);
 
   const displayed = expanded ? filtered : filtered.slice(0, 3);
+  // An opportunity is closed once its deadline has passed, or - without a
+  // deadline - once the event itself is behind us.
+  const isClosed = (n) => n.deadline ? n.deadline < today : (!!n.eventDate && n.eventDate < today);
+  const dateline = (n) => {
+    if (n.deadline) return n.deadline < today ? "Closed · deadline was " + n.deadlineLabel : "Deadline " + n.deadlineLabel;
+    if (n.eventDate) return n.eventDate < today ? "Took place " + n.eventDateLabel : "On " + n.eventDateLabel;
+    return "";
+  };
 
   return (
     <section id="posts" className="section">
         <div className="container">
           <div className="section-header reveal">
             <div className="num"><span>04 / 05</span> &nbsp; Posts</div>
-            <h2>Recent posts from <em>the group - tools, tutorials, and updates</em>.</h2>
+            <h2>Recent posts from <em>the group - lectures, opportunities, and updates</em>.</h2>
           </div>
           <div className="reveal">
+            <div className="filter-chips news-filters">
+              {CATS.map((c) =>
+              <button key={c.id} className={"chip" + (cat === c.id ? " active" : "")} aria-pressed={cat === c.id} onClick={() => setCat(c.id)}>{c.label}</button>
+              )}
+            </div>
             <div className="news-toolbar">
               <div className="search-box">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5.5" stroke="currentColor" strokeWidth="1.4" /><path d="M11 11l4 4" stroke="currentColor" strokeWidth="1.4" /></svg>
                 <label className="sr-only" htmlFor="post-search">Search posts</label>
-                <input id="post-search" name="post-search" type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search news, awards, fieldwork…" aria-controls="post-results" />
+                <input id="post-search" name="post-search" type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search lectures, opportunities, posts…" aria-controls="post-results" />
               </div>
-              <div className="events-count">{filtered.length} {filtered.length === 1 ? "story" : "stories"}</div>
+              <div className="events-count">{filtered.length} {filtered.length === 1 ? "post" : "posts"}</div>
             </div>
             <div className="news-grid" id="post-results">
               {displayed.map((n, i) =>
-            <article key={n.title} className={"news-card" + (n.href ? " has-link" : "")} data-visual={n.visual}>
+            <article key={n.postId || n.sessionId || n.title} className={"news-card" + (n.href ? " has-link" : "") + (isClosed(n) ? " is-closed" : "")} data-visual={n.visual}>
                   <div className={"img" + (n.cover ? " has-cover" : "")} data-label={n.img} aria-hidden={n.cover ? undefined : "true"}>
                     {n.cover && <img src={n.cover} alt={n.coverAlt} loading="lazy" decoding="async" />}
                   </div>
-                  <div className="meta"><span className="cat">{n.cat}</span> · <span>{n.date}</span></div>
+                  <div className="meta"><span className="cat">{n.cat}</span>{n.sub ? <span className="sub">{n.sub}</span> : null} · <span>{n.dateLabel}</span></div>
                   <h3>{n.title}</h3>
                   <p>{n.excerpt}</p>
-                  {n.href && <a className="read" href={n.href}>Open related material →</a>}
+                  {dateline(n) && <div className={"deadline" + (isClosed(n) ? " closed" : "")}>{dateline(n)}</div>}
+                  {n.href && <a className="read" href={n.href} target={n.external ? "_blank" : undefined} rel={n.external ? "noopener noreferrer" : undefined}>{n.external ? "Open the original announcement →" : "Open related material →"}</a>}
                 </article>
             )}
               {filtered.length === 0 &&

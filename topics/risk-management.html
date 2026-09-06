@@ -36,6 +36,11 @@ body{font-family:"Source Sans 3",system-ui,sans-serif;background:var(--bg);color
 .topic-content h3{font-family:"Source Serif 4";font-size:22px;font-weight:500;margin:32px 0 14px}
 .topic-content p{font-size:17px;line-height:1.8;color:#333;margin-bottom:16px}
 .topic-content ul{margin:0 0 20px 28px;font-size:17px;line-height:1.9;color:#333}
+.topic-content .post-card{border:1px solid var(--rule);border-radius:8px;padding:24px 28px;margin:20px 0;background:var(--paper);transition:box-shadow .2s}
+.topic-content .post-card:hover{box-shadow:0 4px 20px rgba(0,0,0,.06)}
+.topic-content .post-card .cat{font-family:"IBM Plex Mono";font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.topic-content .post-card h4{font-family:"Source Serif 4";font-size:20px;font-weight:500;margin-bottom:8px}
+.topic-content .post-card p{font-size:15px;color:#555;margin-bottom:0}
 .topic-content .wip{background:var(--paper);border:2px dashed var(--rule);border-radius:8px;padding:32px;text-align:center;margin:24px 0}
 .topic-content .wip .icon{font-size:32px;margin-bottom:12px}
 .topic-content .wip h3{font-family:"Source Serif 4";margin:0 0 8px;font-size:20px}
@@ -90,11 +95,22 @@ body{font-family:"Source Sans 3",system-ui,sans-serif;background:var(--bg);color
     <li><strong>Copula Models</strong> - Dependency structures for joint risk modelling</li>
     <li><strong>Stress Testing & Scenario Analysis</strong> - Quantifying portfolio risk under extreme conditions</li>
   </ul>
-
-  <div class="wip">
-    <div class="icon">🔬</div>
-    <h3>Content Under Construction</h3>
-    <p>Detailed blog posts and materials for Risk Management are being developed. Check back soon for updates, or join the study group to contribute!</p>
+  <h2>Lectures on this branch</h2>
+  <div class="post-card">
+    <div class="cat">Lecture · Heqing Shi · 26 Sep 2024</div>
+    <h4>High-dimensional Covariance Matrix Estimation</h4>
+    <p>Methods for estimating covariance matrices when the number of variables is large - fundamental to portfolio construction and risk measurement - <a href="../assets/talks/high_dimensional_covariance_matrix_estimation.pdf" target="_blank">Slides →</a></p>
+  </div>
+  <h2>Related lectures from other branches</h2>
+  <div class="post-card">
+    <div class="cat">Lecture · Chenyang Guo · 14 Nov 2025</div>
+    <h4>Expectation-Maximization Algorithm</h4>
+    <p>Estimating models with unobserved states: intuition, mathematical foundation, and an application to market regimes with Gaussian mixture models - <a href="../assets/talks/EM_Algorithm.pdf" target="_blank">Slides →</a></p>
+  </div>
+  <div class="post-card">
+    <div class="cat">Lecture · Chenyang Guo · 17 Apr 2025</div>
+    <h4>Change-Point Detection: MOSUM Methods</h4>
+    <p>Moving sum (MOSUM) based methods for detecting structural changes in time series - <a href="../assets/talks/Statistic_Study_Group_MOSUM.pdf" target="_blank">Slides →</a> · <a href="../assets/talks/mosum.R" target="_blank">R code →</a></p>
   </div>
 </div>
 
