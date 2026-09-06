@@ -1,7 +1,7 @@
 ---
 id: "20251127_ukfinnovator"
-type: "opportunity"
-category: "hackathon"
+type: "event"
+category: "competition"
 date: "2025-11-27"
 title: "UKFinnovator: a regional FinTech innovation competition for students"
 source: "zexun-chen"

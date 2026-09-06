@@ -1,6 +1,6 @@
 ---
 id: "20260327_saif-cafr-frontier-in-finance-research-series"
-type: "opportunity"
+type: "event"
 category: "workshop"
 date: "2026-03-27"
 event_date: "2026-05-17"

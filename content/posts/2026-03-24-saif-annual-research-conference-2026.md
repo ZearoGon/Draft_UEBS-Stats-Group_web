@@ -1,6 +1,6 @@
 ---
 id: "20260324_saif-annual-research-conference-2026"
-type: "opportunity"
+type: "event"
 category: "conference"
 date: "2026-03-24"
 event_date: "2026-05-14"

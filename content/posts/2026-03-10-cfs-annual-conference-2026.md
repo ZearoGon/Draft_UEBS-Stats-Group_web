@@ -1,6 +1,6 @@
 ---
 id: "20260310_cfs-annual-conference-2026"
-type: "opportunity"
+type: "event"
 category: "conference"
 date: "2026-03-10"
 event_date: "2026-06-19"

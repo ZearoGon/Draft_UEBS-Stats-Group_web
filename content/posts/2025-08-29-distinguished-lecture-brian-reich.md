@@ -1,7 +1,7 @@
 ---
 id: "20250829_distinguished-lecture-brian-reich"
-type: "opportunity"
-category: "seminar"
+type: "event"
+category: "lecture"
 date: "2025-08-29"
 event_date: "2025-09-05"
 title: "Distinguished Lecture: Leveraging deep learning for spatial statistics problems"

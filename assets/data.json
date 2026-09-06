@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-06T02:26:35.258Z",
+  "generatedAt": "2026-09-06T02:29:31.892Z",
   "site": {
     "name": "Statistics Study Group",
     "school": "University of Edinburgh Business School",
@@ -1819,7 +1819,7 @@
     {
       "id": "20260423_cii-working-seminars-llms",
       "slug": "2026-04-23-cii-working-seminars-llms",
-      "type": "opportunity",
+      "type": "event",
       "category": "seminar",
       "categoryLabel": "Seminar",
       "date": "2026-04-23",
@@ -1844,7 +1844,7 @@
     {
       "id": "20260421_cfs-research-afternoon-copulas",
       "slug": "2026-04-21-cfs-research-afternoon-copulas",
-      "type": "opportunity",
+      "type": "event",
       "category": "workshop",
       "categoryLabel": "Workshop",
       "date": "2026-04-21",
@@ -1870,8 +1870,8 @@
       "id": "20260413_croda-placement-and-earth-fellows",
       "slug": "2026-04-13-croda-placement-and-earth-fellows",
       "type": "opportunity",
-      "category": "funding",
-      "categoryLabel": "Funding & placements",
+      "category": "placement",
+      "categoryLabel": "Internship & placement",
       "date": "2026-04-13",
       "dateLabel": "13 Apr 2026",
       "eventDate": "",
@@ -1944,7 +1944,7 @@
     {
       "id": "20260327_saif-cafr-frontier-in-finance-research-series",
       "slug": "2026-03-27-saif-cafr-frontier-in-finance-research-series",
-      "type": "opportunity",
+      "type": "event",
       "category": "workshop",
       "categoryLabel": "Workshop",
       "date": "2026-03-27",
@@ -1969,7 +1969,7 @@
     {
       "id": "20260324_saif-annual-research-conference-2026",
       "slug": "2026-03-24-saif-annual-research-conference-2026",
-      "type": "opportunity",
+      "type": "event",
       "category": "conference",
       "categoryLabel": "Conference",
       "date": "2026-03-24",
@@ -1994,7 +1994,7 @@
     {
       "id": "20260310_cfs-annual-conference-2026",
       "slug": "2026-03-10-cfs-annual-conference-2026",
-      "type": "opportunity",
+      "type": "event",
       "category": "conference",
       "categoryLabel": "Conference",
       "date": "2026-03-10",
@@ -2019,7 +2019,7 @@
     {
       "id": "20260225_nextgenhack-natwest-google-cloud",
       "slug": "2026-02-25-nextgenhack-natwest-google-cloud",
-      "type": "opportunity",
+      "type": "event",
       "category": "hackathon",
       "categoryLabel": "Hackathon",
       "date": "2026-02-25",
@@ -2044,7 +2044,7 @@
     {
       "id": "20260222_working-seminar-generative-cascades-of-extremes",
       "slug": "2026-02-22-working-seminar-generative-cascades-of-extremes",
-      "type": "opportunity",
+      "type": "event",
       "category": "seminar",
       "categoryLabel": "Seminar",
       "date": "2026-02-22",
@@ -2094,9 +2094,9 @@
     {
       "id": "20251127_ukfinnovator",
       "slug": "2025-11-27-ukfinnovator",
-      "type": "opportunity",
-      "category": "hackathon",
-      "categoryLabel": "Hackathon",
+      "type": "event",
+      "category": "competition",
+      "categoryLabel": "Competition",
       "date": "2025-11-27",
       "dateLabel": "27 Nov 2025",
       "eventDate": "",
@@ -2119,7 +2119,7 @@
     {
       "id": "20251117_ems-talk-bi-lipschitz-embeddings",
       "slug": "2025-11-17-ems-talk-bi-lipschitz-embeddings",
-      "type": "opportunity",
+      "type": "event",
       "category": "seminar",
       "categoryLabel": "Seminar",
       "date": "2025-11-17",
@@ -2169,9 +2169,9 @@
     {
       "id": "20250829_distinguished-lecture-brian-reich",
       "slug": "2025-08-29-distinguished-lecture-brian-reich",
-      "type": "opportunity",
-      "category": "seminar",
-      "categoryLabel": "Seminar",
+      "type": "event",
+      "category": "lecture",
+      "categoryLabel": "Public lecture",
       "date": "2025-08-29",
       "dateLabel": "29 Aug 2025",
       "eventDate": "2025-09-05",
@@ -2194,7 +2194,7 @@
     {
       "id": "20250530_ntu-conference-2025-ai-for-finance",
       "slug": "2025-05-30-ntu-conference-2025-ai-for-finance",
-      "type": "opportunity",
+      "type": "event",
       "category": "conference",
       "categoryLabel": "Conference",
       "date": "2025-05-30",
@@ -2219,7 +2219,7 @@
     {
       "id": "20250217_sds-hub-seminar-cetinkaya",
       "slug": "2025-02-17-sds-hub-seminar-cetinkaya",
-      "type": "opportunity",
+      "type": "event",
       "category": "seminar",
       "categoryLabel": "Seminar",
       "date": "2025-02-17",
@@ -2374,8 +2374,8 @@
       "postId": "20260424_sofie-summer-school-2026"
     },
     {
-      "kind": "opportunity",
-      "cat": "Opportunity",
+      "kind": "event",
+      "cat": "Event",
       "sub": "Seminar",
       "date": "2026-04-23",
       "dateLabel": "23 Apr 2026",
@@ -2394,8 +2394,8 @@
       "postId": "20260423_cii-working-seminars-llms"
     },
     {
-      "kind": "opportunity",
-      "cat": "Opportunity",
+      "kind": "event",
+      "cat": "Event",
       "sub": "Workshop",
       "date": "2026-04-21",
       "dateLabel": "21 Apr 2026",
@@ -2416,7 +2416,7 @@
     {
       "kind": "opportunity",
       "cat": "Opportunity",
-      "sub": "Funding & placements",
+      "sub": "Internship & placement",
       "date": "2026-04-13",
       "dateLabel": "13 Apr 2026",
       "title": "CRODA student placement and UoE Earth Fellows research projects",
@@ -2492,8 +2492,8 @@
       "sessionId": "20260327_Runzhi Tian and Yifan Qi_AI in Statistical Analysis Workflows"
     },
     {
-      "kind": "opportunity",
-      "cat": "Opportunity",
+      "kind": "event",
+      "cat": "Event",
       "sub": "Workshop",
       "date": "2026-03-27",
       "dateLabel": "27 Mar 2026",
@@ -2512,8 +2512,8 @@
       "postId": "20260327_saif-cafr-frontier-in-finance-research-series"
     },
     {
-      "kind": "opportunity",
-      "cat": "Opportunity",
+      "kind": "event",
+      "cat": "Event",
       "sub": "Conference",
       "date": "2026-03-24",
       "dateLabel": "24 Mar 2026",
@@ -2532,8 +2532,8 @@
       "postId": "20260324_saif-annual-research-conference-2026"
     },
     {
-      "kind": "opportunity",
-      "cat": "Opportunity",
+      "kind": "event",
+      "cat": "Event",
       "sub": "Conference",
       "date": "2026-03-10",
       "dateLabel": "10 Mar 2026",
@@ -2552,8 +2552,8 @@
       "postId": "20260310_cfs-annual-conference-2026"
     },
     {
-      "kind": "opportunity",
-      "cat": "Opportunity",
+      "kind": "event",
+      "cat": "Event",
       "sub": "Hackathon",
       "date": "2026-02-25",
       "dateLabel": "25 Feb 2026",
@@ -2572,8 +2572,8 @@
       "postId": "20260225_nextgenhack-natwest-google-cloud"
     },
     {
-      "kind": "opportunity",
-      "cat": "Opportunity",
+      "kind": "event",
+      "cat": "Event",
       "sub": "Seminar",
       "date": "2026-02-22",
       "dateLabel": "22 Feb 2026",
@@ -2612,9 +2612,9 @@
       "postId": "20260113_imperial-summer-school-climate-health-attribution"
     },
     {
-      "kind": "opportunity",
-      "cat": "Opportunity",
-      "sub": "Hackathon",
+      "kind": "event",
+      "cat": "Event",
+      "sub": "Competition",
       "date": "2025-11-27",
       "dateLabel": "27 Nov 2025",
       "title": "UKFinnovator: a regional FinTech innovation competition for students",
@@ -2632,8 +2632,8 @@
       "postId": "20251127_ukfinnovator"
     },
     {
-      "kind": "opportunity",
-      "cat": "Opportunity",
+      "kind": "event",
+      "cat": "Event",
       "sub": "Seminar",
       "date": "2025-11-17",
       "dateLabel": "17 Nov 2025",
@@ -2690,9 +2690,9 @@
       "sessionId": "20251017_Yizhuo Hu_Synthetic Data"
     },
     {
-      "kind": "opportunity",
-      "cat": "Opportunity",
-      "sub": "Seminar",
+      "kind": "event",
+      "cat": "Event",
+      "sub": "Public lecture",
       "date": "2025-08-29",
       "dateLabel": "29 Aug 2025",
       "title": "Distinguished Lecture: Leveraging deep learning for spatial statistics problems",
@@ -2710,8 +2710,8 @@
       "postId": "20250829_distinguished-lecture-brian-reich"
     },
     {
-      "kind": "opportunity",
-      "cat": "Opportunity",
+      "kind": "event",
+      "cat": "Event",
       "sub": "Conference",
       "date": "2025-05-30",
       "dateLabel": "30 May 2025",
@@ -2766,8 +2766,8 @@
       "sessionId": "20250317_Yifan Qi_Asset Pricing and Fama-MacBeth"
     },
     {
-      "kind": "opportunity",
-      "cat": "Opportunity",
+      "kind": "event",
+      "cat": "Event",
       "sub": "Seminar",
       "date": "2025-02-17",
       "dateLabel": "17 Feb 2025",

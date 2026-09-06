@@ -1,7 +1,7 @@
 ---
 id: "20260413_croda-placement-and-earth-fellows"
 type: "opportunity"
-category: "funding"
+category: "placement"
 date: "2026-04-13"
 title: "CRODA student placement and UoE Earth Fellows research projects"
 source: "zexun-chen"

@@ -1,6 +1,6 @@
 ---
 id: "20260423_cii-working-seminars-llms"
-type: "opportunity"
+type: "event"
 category: "seminar"
 date: "2026-04-23"
 event_date: "2026-04-28"

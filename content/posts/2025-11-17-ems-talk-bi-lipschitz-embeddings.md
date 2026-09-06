@@ -1,6 +1,6 @@
 ---
 id: "20251117_ems-talk-bi-lipschitz-embeddings"
-type: "opportunity"
+type: "event"
 category: "seminar"
 date: "2025-11-17"
 event_date: "2025-11-21"

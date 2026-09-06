@@ -2541,6 +2541,7 @@ function News() {
   const CATS = [
   { id: "all", label: "All" },
   { id: "lecture", label: "Lectures" },
+  { id: "event", label: "Events" },
   { id: "opportunity", label: "Opportunities" },
   { id: "blog", label: "Blog" }];
 
@@ -2551,7 +2552,7 @@ function News() {
     const d = new Date();
     return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
   }, []);
-  const inCat = (n) => cat === "all" || n.kind === cat || (cat === "opportunity" && n.kind === "announcement");
+  const inCat = (n) => cat === "all" || n.kind === cat;
   const filtered = useMemo(() => {
     const s = q.trim().toLowerCase();
     return NEWS.filter((n) => inCat(n) && (!s ||

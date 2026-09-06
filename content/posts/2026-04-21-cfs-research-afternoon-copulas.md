@@ -1,6 +1,6 @@
 ---
 id: "20260421_cfs-research-afternoon-copulas"
-type: "opportunity"
+type: "event"
 category: "workshop"
 date: "2026-04-21"
 event_date: "2026-05-06"

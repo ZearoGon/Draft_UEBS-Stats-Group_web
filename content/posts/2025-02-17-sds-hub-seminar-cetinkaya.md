@@ -1,6 +1,6 @@
 ---
 id: "20250217_sds-hub-seminar-cetinkaya"
-type: "opportunity"
+type: "event"
 category: "seminar"
 date: "2025-02-17"
 event_date: "2025-02-19"

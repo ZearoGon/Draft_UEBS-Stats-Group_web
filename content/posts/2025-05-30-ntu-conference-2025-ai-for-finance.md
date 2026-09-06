@@ -1,6 +1,6 @@
 ---
 id: "20250530_ntu-conference-2025-ai-for-finance"
-type: "opportunity"
+type: "event"
 category: "conference"
 date: "2025-05-30"
 event_date: "2025-07-07"

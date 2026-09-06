@@ -53,7 +53,8 @@ const KIND_LABEL = { maintainer: "Maintainer", contributor: "Contributor", membe
 const SESSION_KINDS = ["lecture", "workshop", "discussion"];
 const SESSION_STATUS = ["planned", "held", "postponed", "cancelled"];
 const SESSION_FORMATS = ["in-person", "online", "hybrid"];
-const POST_TYPES = ["blog", "opportunity", "announcement"];
+// event = something to attend; opportunity = something to apply for or submit to.
+const POST_TYPES = ["blog", "event", "opportunity", "announcement"];
 const POST_CATEGORIES = {
   blog: "Blog",
   announcement: "Announcement",
@@ -61,12 +62,16 @@ const POST_CATEGORIES = {
   cfp: "Call for papers",
   "summer-school": "Summer school",
   seminar: "Seminar",
+  lecture: "Public lecture",
   workshop: "Workshop",
   hackathon: "Hackathon",
+  competition: "Competition",
   job: "Recruitment",
-  funding: "Funding & placements",
+  placement: "Internship & placement",
+  funding: "Funding & fellowships",
   volunteering: "Volunteering",
 };
+const TYPE_LABEL = { blog: "Blog", event: "Event", opportunity: "Opportunity", announcement: "Announcement" };
 const VISUALS = ["distribution", "network", "regression", "breaks"];
 // Meeting links and passcodes must never reach the public site.
 const FORBIDDEN = [
@@ -478,7 +483,7 @@ function deriveNews(sessions, posts, topics) {
     const href = p.link || p.href || (p.materials.find((m) => m.href)?.href ?? "");
     cards.push({
       kind: p.type,
-      cat: p.type === "blog" ? "Blog" : p.type === "announcement" ? "Announcement" : "Opportunity",
+      cat: TYPE_LABEL[p.type] || p.type,
       sub: p.type === "blog" ? (p.authors[0] || "") : p.categoryLabel,
       date: p.date,
       dateLabel: p.dateLabel,

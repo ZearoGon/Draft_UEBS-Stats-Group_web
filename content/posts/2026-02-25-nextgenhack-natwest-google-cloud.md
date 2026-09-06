@@ -1,6 +1,6 @@
 ---
 id: "20260225_nextgenhack-natwest-google-cloud"
-type: "opportunity"
+type: "event"
 category: "hackathon"
 date: "2026-02-25"
 event_date: "2026-03-21"

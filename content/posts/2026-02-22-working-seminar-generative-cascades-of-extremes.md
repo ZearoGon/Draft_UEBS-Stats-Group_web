@@ -1,6 +1,6 @@
 ---
 id: "20260222_working-seminar-generative-cascades-of-extremes"
-type: "opportunity"
+type: "event"
 category: "seminar"
 date: "2026-02-22"
 event_date: "2026-03-10"

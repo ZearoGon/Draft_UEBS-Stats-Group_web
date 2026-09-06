@@ -88,15 +88,16 @@ Members who have joined but not presented yet use `kind: "member"` and a `slot`
 (position on the ring, 0-7); their standing shows the level alone.
 Their lecture list is derived automatically from the sessions they speak at.
 
-## Adding a post (opportunity, announcement, blog)
+## Adding a post (event, opportunity, announcement, blog)
 
 Create `content/posts/YYYY-MM-DD-short-slug.md`:
 
 ```yaml
 ---
 id: "20261001_short-slug"
-type: "opportunity"            # blog | opportunity | announcement
-category: "summer-school"      # conference | cfp | summer-school | seminar | workshop | hackathon | job | funding | volunteering | blog | announcement
+type: "opportunity"            # event (something to attend) | opportunity (something to apply for) | blog | announcement
+category: "summer-school"      # events: seminar | lecture | conference | workshop | hackathon | competition
+                               # opportunities: cfp | summer-school | job | placement | funding | volunteering
 date: "2026-10-01"             # the day it was shared
 event_date: "2027-07-06"       # optional
 deadline: "2026-12-01"         # optional - the card shows "Deadline …" and greys out afterwards
