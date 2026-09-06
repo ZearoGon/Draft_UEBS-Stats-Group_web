@@ -998,6 +998,35 @@
   }
   .news-card .deadline.closed { color: var(--ink-mute); }
   .news-card.is-closed .img { filter: grayscale(0.6); opacity: 0.85; }
+  .events-share { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent); }
+
+  /* ====== THE WALL ====== */
+  .wall { margin-top: 64px; border-top: 1px solid var(--rule); padding-top: 36px; }
+  .wall-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-bottom: 22px; }
+  .wall-head h3 { font-family: var(--serif); font-weight: 500; font-size: 28px; line-height: 1.2; letter-spacing: -0.01em; margin: 8px 0 8px; text-wrap: balance; max-width: 640px; }
+  .wall-head p { margin: 0; color: var(--ink-soft); max-width: 560px; font-size: 15px; }
+  .wall-contribute { font-family: var(--mono); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent); padding-bottom: 2px; white-space: nowrap; }
+  .wall-tabs { margin-bottom: 20px; }
+  .wall-tabs .chip .n { margin-left: 8px; opacity: 0.6; }
+  .wall-grid { display: grid; grid-template-columns: minmax(280px, 380px) 1fr; gap: 36px; align-items: start; }
+  @media (max-width: 860px) { .wall-grid { grid-template-columns: 1fr; } }
+  .wall-form textarea, .wall-form input { width: 100%; font: inherit; font-size: 15px; color: var(--ink); background: var(--paper); border: 1px solid var(--rule); border-radius: 6px; padding: 10px 12px; }
+  .wall-form textarea { resize: vertical; min-height: 110px; line-height: 1.5; }
+  .wall-form textarea:focus, .wall-form input:focus { outline: none; border-color: var(--accent); }
+  .wall-form textarea:disabled, .wall-form input:disabled { opacity: 0.55; }
+  .wall-form-row { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+  .wall-form-row input { flex: 1 1 140px; }
+  .wall-form-row .chip { padding: 10px 18px; }
+  .wall-form-row .chip:disabled { opacity: 0.5; cursor: default; }
+  .wall-note { margin-top: 10px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em; color: var(--ink-mute); line-height: 1.5; }
+  .wall-note .ok { color: var(--accent); }
+  .wall-note .bad { color: #8b1e1e; }
+  .wall-list { display: grid; gap: 12px; }
+  .wall-item { background: var(--paper); border: 1px solid var(--rule); border-radius: 8px; padding: 14px 18px; }
+  .wall-meta { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: 6px; }
+  .wall-meta .who { color: var(--accent); }
+  .wall-text { font-family: var(--serif); font-size: 17px; line-height: 1.45; white-space: pre-wrap; text-wrap: pretty; }
+  .wall-empty { font-family: var(--serif); font-style: italic; color: var(--ink-mute); padding: 20px 0; }
   .news-card h3 {
     font-family: var(--serif); font-weight: 500;
     font-size: 22px; line-height: 1.2; letter-spacing: -0.01em;

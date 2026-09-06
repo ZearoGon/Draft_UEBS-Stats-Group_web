@@ -1,0 +1,45 @@
+name: Intake approval
+
+# Maintainers approve a submission from their inbox: replying "/approve" to the
+# GitHub notification email posts the reply as a comment, and this workflow merges
+# the pull request. "/changes <note>" sends it back with the note.
+# Only comments from people with write access to the repository count.
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  act:
+    if: >-
+      github.event.issue.pull_request != null &&
+      contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association) &&
+      (startsWith(github.event.comment.body, '/approve') || startsWith(github.event.comment.body, '/changes') || startsWith(github.event.comment.body, '/reject'))
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      PR: ${{ github.event.issue.number }}
+      COMMENT: ${{ github.event.comment.body }}
+      WHO: ${{ github.event.comment.user.login }}
+    steps:
+      - name: Approve and merge
+        if: startsWith(github.event.comment.body, '/approve')
+        run: |
+          gh pr comment "$PR" --repo "$GITHUB_REPOSITORY" --body "Approved by @$WHO - merging. The site redeploys in about a minute."
+          gh pr merge "$PR" --repo "$GITHUB_REPOSITORY" --squash --delete-branch
+      - name: Send back for changes
+        if: startsWith(github.event.comment.body, '/changes')
+        run: |
+          NOTE="${COMMENT#/changes}"
+          gh pr comment "$PR" --repo "$GITHUB_REPOSITORY" --body "Sent back by @$WHO:${NOTE:- (no note)}. A maintainer can edit the files on this branch and comment /approve when ready."
+          gh pr edit "$PR" --repo "$GITHUB_REPOSITORY" --add-label "changes-requested" || true
+      - name: Reject and close
+        if: startsWith(github.event.comment.body, '/reject')
+        run: |
+          NOTE="${COMMENT#/reject}"
+          gh pr comment "$PR" --repo "$GITHUB_REPOSITORY" --body "Closed by @$WHO without publishing.${NOTE}"
+          gh pr close "$PR" --repo "$GITHUB_REPOSITORY" --delete-branch

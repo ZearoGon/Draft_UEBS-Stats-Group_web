@@ -998,6 +998,35 @@
   }
   .news-card .deadline.closed { color: var(--ink-mute); }
   .news-card.is-closed .img { filter: grayscale(0.6); opacity: 0.85; }
+  .events-share { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent); }
+
+  /* ====== THE WALL ====== */
+  .wall { margin-top: 64px; border-top: 1px solid var(--rule); padding-top: 36px; }
+  .wall-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-bottom: 22px; }
+  .wall-head h3 { font-family: var(--serif); font-weight: 500; font-size: 28px; line-height: 1.2; letter-spacing: -0.01em; margin: 8px 0 8px; text-wrap: balance; max-width: 640px; }
+  .wall-head p { margin: 0; color: var(--ink-soft); max-width: 560px; font-size: 15px; }
+  .wall-contribute { font-family: var(--mono); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent); padding-bottom: 2px; white-space: nowrap; }
+  .wall-tabs { margin-bottom: 20px; }
+  .wall-tabs .chip .n { margin-left: 8px; opacity: 0.6; }
+  .wall-grid { display: grid; grid-template-columns: minmax(280px, 380px) 1fr; gap: 36px; align-items: start; }
+  @media (max-width: 860px) { .wall-grid { grid-template-columns: 1fr; } }
+  .wall-form textarea, .wall-form input { width: 100%; font: inherit; font-size: 15px; color: var(--ink); background: var(--paper); border: 1px solid var(--rule); border-radius: 6px; padding: 10px 12px; }
+  .wall-form textarea { resize: vertical; min-height: 110px; line-height: 1.5; }
+  .wall-form textarea:focus, .wall-form input:focus { outline: none; border-color: var(--accent); }
+  .wall-form textarea:disabled, .wall-form input:disabled { opacity: 0.55; }
+  .wall-form-row { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+  .wall-form-row input { flex: 1 1 140px; }
+  .wall-form-row .chip { padding: 10px 18px; }
+  .wall-form-row .chip:disabled { opacity: 0.5; cursor: default; }
+  .wall-note { margin-top: 10px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em; color: var(--ink-mute); line-height: 1.5; }
+  .wall-note .ok { color: var(--accent); }
+  .wall-note .bad { color: #8b1e1e; }
+  .wall-list { display: grid; gap: 12px; }
+  .wall-item { background: var(--paper); border: 1px solid var(--rule); border-radius: 8px; padding: 14px 18px; }
+  .wall-meta { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: 6px; }
+  .wall-meta .who { color: var(--accent); }
+  .wall-text { font-family: var(--serif); font-size: 17px; line-height: 1.45; white-space: pre-wrap; text-wrap: pretty; }
+  .wall-empty { font-family: var(--serif); font-style: italic; color: var(--ink-mute); padding: 20px 0; }
   .news-card h3 {
     font-family: var(--serif); font-weight: 500;
     font-size: 22px; line-height: 1.2; letter-spacing: -0.01em;
@@ -1805,7 +1834,7 @@ const NEW_SINCE = new Set(DATA.people.filter(p => p.new).map(p => p.initials));
 /* "Field TBC" is a placeholder, not a research area: it never joins people up */
 const NO_FIELD = "Field TBC";
 const FIELDS = ["MSBE", "FinTech", "Accounting & Finance", "MSBE & Finance", "Finance",
-                "Economics & Finance", "Marketing", "School of Mathematics"];
+                "Economics & Finance", "Marketing", "School of Mathematics", NO_FIELD];
 
 const noise = (seed) => { const x = Math.sin(seed * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
 const hex2rgb = (h) => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)];
@@ -2064,7 +2093,7 @@ const ART = {
 deepsky: {
   label: "Deep-sky", paper: false, swatch: ["#04060C", "#FFD9A8", "#9FC4F5"],
   hue: { "MSBE": "#A9DDAE", "FinTech": "#9FC4F5", "Accounting & Finance": "#F5A9A2", "MSBE & Finance": "#D9A6E8", "Finance": "#F7CE90", "Economics & Finance": "#8FDAD6",
-         "Marketing": "#F0A8D8", "School of Mathematics": "#B9B0F5" },
+         "Marketing": "#F0A8D8", "School of Mathematics": "#B9B0F5", "Field TBC": "#9AA3AD" },
   warm: [255, 184, 99],
   bg(ctx, w, h, s, e, t) {
     ctx.globalCompositeOperation = "lighter";
@@ -2432,7 +2461,7 @@ golgi: {
 tract: {
   label: "Tractography", paper: false, swatch: ["#030308", "#FF5C5C", "#5CFF8A"],
   hue: { "MSBE": "#A9DDAE", "FinTech": "#9FC4F5", "Accounting & Finance": "#F5A9A2", "MSBE & Finance": "#D9A6E8", "Finance": "#F7CE90", "Economics & Finance": "#8FDAD6",
-         "Marketing": "#F0A8D8", "School of Mathematics": "#B9B0F5" },
+         "Marketing": "#F0A8D8", "School of Mathematics": "#B9B0F5", "Field TBC": "#9AA3AD" },
   warm: [255, 190, 130],
   dirCol(ed) {
     const dx = Math.abs(ed.b.x - ed.a.x), dy = Math.abs(ed.b.y - ed.a.y);
@@ -3841,6 +3870,7 @@ function ResearchAtlas() {
           ) : (
             <TalkIndex />
           )}
+          <Wall />
         </div>
       </div>
     </section>);
@@ -3917,6 +3947,120 @@ function TalkIndex() {
 
 }
 
+// -------- THE WALL (anonymous) --------
+// Two boards, no accounts: what people would like to learn, and notes and
+// chatter. Messages are stored as comments on two issues in the site's own
+// repository (api/wall.js); maintainers moderate there by deleting a comment.
+function Wall() {
+  const BOARDS = [
+  { id: "wish", label: "What I'd like to learn", hint: "A method, a paper, a tool, a question - anything you wish the group covered next." },
+  { id: "chat", label: "Notes & chatter", hint: "A thought after a session, a reaction, a thank-you. Anything worth saying out loud." }];
+  const MAX = 500;
+  const [board, setBoard] = useState("wish");
+  const [wall, setWall] = useState({ status: "loading", boards: { wish: [], chat: [] }, passphrase: false });
+  const [text, setText] = useState("");
+  const [nick, setNick] = useState("");
+  const [pass, setPass] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [note, setNote] = useState(null);
+  const [showAll, setShowAll] = useState(false);
+
+  useEffect(() => {
+    let alive = true;
+    fetch("api/wall").then((r) => r.ok ? r.json() : Promise.reject(new Error("HTTP " + r.status))).then((d) => {
+      if (!alive) return;
+      setWall({ status: d.configured ? "ready" : "offline", boards: d.boards || { wish: [], chat: [] }, passphrase: Boolean(d.passphraseRequired) });
+    }).catch(() => { if (alive) setWall((w) => ({ ...w, status: "offline" })); });
+    return () => { alive = false; };
+  }, []);
+
+  const current = BOARDS.find((b) => b.id === board);
+  const items = wall.boards[board] || [];
+  const shown = showAll ? items : items.slice(0, 8);
+  const ready = wall.status === "ready";
+
+  const when = (iso) => {
+    const t = new Date(iso).getTime();
+    if (Number.isNaN(t)) return "";
+    const min = Math.round((Date.now() - t) / 60000);
+    if (min < 1) return "just now";
+    if (min < 60) return `${min} min ago`;
+    const h = Math.round(min / 60);
+    if (h < 24) return `${h} h ago`;
+    const d = Math.round(h / 24);
+    if (d === 1) return "yesterday";
+    if (d < 14) return `${d} days ago`;
+    const dt = new Date(t);
+    return `${String(dt.getDate()).padStart(2, "0")} ${MONTHS[dt.getMonth()]} ${dt.getFullYear()}`;
+  };
+
+  const post = async (e) => {
+    e.preventDefault();
+    if (busy || !ready) return;
+    const body = text.trim();
+    if (body.length < 2) { setNote({ kind: "bad", text: "Write something first." }); return; }
+    setBusy(true); setNote(null);
+    try {
+      const r = await fetch("api/wall", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ board, text: body, nick: nick.trim(), passphrase: pass, website: "" }) });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.detail || d.error || "HTTP " + r.status);
+      setWall((w) => ({ ...w, boards: { ...w.boards, [board]: [d.item, ...(w.boards[board] || [])] } }));
+      setText("");
+      setNote({ kind: "ok", text: "On the wall - thank you." });
+    } catch (err) {
+      setNote({ kind: "bad", text: err.message });
+    }
+    setBusy(false);
+  };
+
+  return (
+    <div className="wall" id="wall">
+      <div className="wall-head">
+        <div>
+          <div className="mono">The wall · anonymous · no account</div>
+          <h3>Say what you would like to learn - or just say something.</h3>
+          <p>Wishes shape the next semester's programme. Notes are read by the whole group. No names unless you add one.</p>
+        </div>
+        <a className="wall-contribute" href="submit.html">Post a session or share an opportunity →</a>
+      </div>
+      <div className="filter-chips wall-tabs" role="tablist">
+        {BOARDS.map((b) =>
+          <button key={b.id} type="button" role="tab" className={"chip" + (board === b.id ? " active" : "")} aria-selected={board === b.id} onClick={() => { setBoard(b.id); setShowAll(false); setNote(null); }}>
+            {b.label}<span className="n">{(wall.boards[b.id] || []).length}</span>
+          </button>
+        )}
+      </div>
+      <div className="wall-grid">
+        <form className="wall-form" onSubmit={post}>
+          <label className="sr-only" htmlFor="wall-text">{current.label}</label>
+          <textarea id="wall-text" value={text} maxLength={MAX} rows={4} placeholder={current.hint} onChange={(e) => setText(e.target.value)} disabled={!ready} />
+          <div className="wall-form-row">
+            <input type="text" value={nick} maxLength={24} placeholder="Name or nickname (optional)" aria-label="Name or nickname (optional)" onChange={(e) => setNick(e.target.value)} disabled={!ready} />
+            {wall.passphrase && <input type="password" value={pass} placeholder="Group passphrase" aria-label="Group passphrase" onChange={(e) => setPass(e.target.value)} />}
+            <button type="submit" className="chip active" disabled={busy || !ready}>{busy ? "Posting…" : "Post"}</button>
+          </div>
+          <div className="wall-note" aria-live="polite">
+            {wall.status === "loading" && "Opening the wall…"}
+            {wall.status === "offline" && "The wall is not connected yet - it opens once the site's API is set up."}
+            {ready && !note && `${MAX - text.length} characters left · maintainers can remove anything unkind, and will take yours down if you ask.`}
+            {note && <span className={note.kind}>{note.text}</span>}
+          </div>
+        </form>
+        <div className="wall-list">
+          {ready && items.length === 0 && <div className="wall-empty">Nothing here yet - be the first.</div>}
+          {shown.map((m) =>
+            <div key={m.id} className="wall-item">
+              <div className="wall-meta"><span className="who">{m.nick}</span> · <span>{when(m.at)}</span></div>
+              <div className="wall-text">{m.text}</div>
+            </div>
+          )}
+          {items.length > shown.length && <div><button type="button" className="chip" onClick={() => setShowAll(true)}>Show all {items.length}</button></div>}
+        </div>
+      </div>
+    </div>);
+
+}
+
 // -------- NEWS --------
 function News() {
   const CATS = [
@@ -3976,7 +4120,7 @@ function News() {
                 <label className="sr-only" htmlFor="post-search">Search posts</label>
                 <input id="post-search" name="post-search" type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search lectures, opportunities, posts…" aria-controls="post-results" />
               </div>
-              <div className="events-count">{filtered.length} {filtered.length === 1 ? "post" : "posts"}</div>
+              <div className="events-count">{filtered.length} {filtered.length === 1 ? "post" : "posts"} · <a className="events-share" href="submit.html">share one →</a></div>
             </div>
             <div className="news-grid" id="post-results">
               {displayed.map((n, i) =>

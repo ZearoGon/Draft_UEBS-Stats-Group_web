@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex" />
+<meta name="description" content="Post a session or share an event or opportunity with the UEBS Statistics Study Group. Submissions are reviewed by the maintainers before they appear on the site." />
+<title>Contribute - Statistics Study Group</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=Source+Sans+3:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{--bg:#f5f0e8;--fg:#1a1a1a;--accent:#0b384e;--rule:rgba(0,0,0,.14);--paper:#faf7f2;--mute:#6f6a62;--ok:#2f6b3a;--warn:#8a5a12;--bad:#8b1e1e}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Source Sans 3",system-ui,sans-serif;background:var(--bg);color:var(--fg);line-height:1.6}
+.topic-nav{position:sticky;top:0;z-index:100;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);background:rgba(245,240,232,.9);border-bottom:1px solid var(--rule);padding:16px 0}
+.topic-nav .inner{max-width:1080px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between}
+.topic-nav .brand{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--fg)}
+.topic-nav .brand img{height:36px;width:auto;display:block;filter:brightness(0) saturate(100%);opacity:.88}
+.topic-nav .brand-text .a{font-family:"Source Sans 3";font-weight:600;font-size:16px;letter-spacing:.04em}
+.topic-nav .brand-text .b{display:block;font-family:"Source Serif 4";font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#333}
+.topic-nav .back{font-family:"IBM Plex Mono";font-size:13px;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:var(--accent);border:1px solid var(--accent);padding:8px 20px;border-radius:100px;transition:all .2s}
+.topic-nav .back:hover{background:var(--accent);color:var(--paper)}
+.hero{padding:72px 0 28px;text-align:center}
+.hero .container{max-width:760px;margin:0 auto;padding:0 32px}
+.eyebrow{font-family:"IBM Plex Mono";font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:18px;display:flex;align-items:center;justify-content:center;gap:10px}
+.eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.hero h1{font-family:"Source Serif 4";font-size:clamp(34px,5vw,52px);font-weight:600;line-height:1.12;margin-bottom:18px}
+.hero h1 em{font-style:italic;color:var(--accent)}
+.hero .desc{font-size:17px;line-height:1.75;color:#444}
+main{max-width:860px;margin:0 auto;padding:0 32px 90px}
+.banner{border:1px solid var(--rule);background:var(--paper);border-radius:8px;padding:14px 18px;font-size:14px;color:var(--mute);margin:8px 0 28px;display:flex;gap:14px;flex-wrap:wrap}
+.banner b{color:var(--fg);font-weight:600}
+.banner .pill{font-family:"IBM Plex Mono";font-size:11px;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--rule);border-radius:100px;padding:3px 10px}
+.banner .pill.ok{color:var(--ok);border-color:rgba(47,107,58,.4)}
+.banner .pill.warn{color:var(--warn);border-color:rgba(138,90,18,.4)}
+.step{border-top:1px solid var(--rule);padding:34px 0 8px}
+.step h2{font-family:"Source Serif 4";font-size:26px;font-weight:600;margin-bottom:6px}
+.step h2 small{font-family:"IBM Plex Mono";font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:8px}
+.step p.hint{color:var(--mute);font-size:15px;margin-bottom:18px}
+label{display:block;font-family:"IBM Plex Mono";font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin:16px 0 6px}
+label .req{color:var(--bad)}
+input[type=text],input[type=date],input[type=time],input[type=url],input[type=email],input[type=password],select,textarea{width:100%;font:inherit;font-size:16px;color:var(--fg);background:var(--paper);border:1px solid var(--rule);border-radius:6px;padding:10px 12px;transition:border-color .2s}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent)}
+textarea{min-height:110px;resize:vertical;line-height:1.55}
+textarea.tall{min-height:200px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:0 20px}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0 20px}
+@media (max-width:640px){.row,.row3{grid-template-columns:1fr}}
+.check{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:#333;margin:12px 0;text-transform:none;letter-spacing:0;font-family:"Source Sans 3"}
+.check input{margin-top:4px}
+.btn{font-family:"IBM Plex Mono";font-size:12px;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--accent);background:var(--accent);color:var(--paper);padding:12px 22px;border-radius:100px;cursor:pointer;transition:all .2s}
+.btn:hover{background:#0f4a68;border-color:#0f4a68}
+.btn.ghost{background:transparent;color:var(--accent)}
+.btn.ghost:hover{background:var(--accent);color:var(--paper)}
+.btn:disabled{opacity:.5;cursor:default}
+.seg{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 6px}
+.seg button{font-family:"IBM Plex Mono";font-size:11px;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--rule);background:transparent;color:#444;padding:9px 16px;border-radius:100px;cursor:pointer}
+.seg button.active{background:var(--fg);color:var(--paper);border-color:var(--fg)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.chip{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--rule);background:var(--paper);border-radius:100px;padding:6px 12px;font-size:14px}
+.chip b{font-family:"IBM Plex Mono";font-size:10px;letter-spacing:.06em;color:var(--accent)}
+.chip button{border:0;background:transparent;cursor:pointer;color:var(--mute);font-size:16px;line-height:1}
+.newperson{border:1px dashed var(--rule);border-radius:8px;padding:6px 18px 18px;margin-top:12px;background:rgba(255,255,255,.35)}
+.msg{margin-top:14px;font-size:14px;color:var(--mute)}
+.msg.bad{color:var(--bad)}
+.msg.ok{color:var(--ok)}
+.result{border:1px solid var(--rule);background:var(--paper);border-radius:10px;padding:26px 28px;margin-top:26px}
+.result h3{font-family:"Source Serif 4";font-size:24px;font-weight:600;margin-bottom:10px}
+.result ul{margin:10px 0 0 22px;font-size:15px}
+.result code{font-family:"IBM Plex Mono";font-size:13px;background:rgba(0,0,0,.05);padding:1px 6px;border-radius:4px}
+.result .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.actions a.btn{text-decoration:none;display:inline-block}
+.hp{position:absolute;left:-9999px;top:-9999px;height:0;width:0;overflow:hidden}
+footer{text-align:center;padding:40px 0;border-top:1px solid var(--rule);font-family:"IBM Plex Mono";font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#888}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<nav class="topic-nav">
+  <div class="inner">
+    <a href="index.html" class="brand">
+      <img src="assets/uebs-logo.svg" alt="University of Edinburgh Business School" />
+      <div class="brand-text"><span class="a">Statistics</span><span class="b">Study Group</span></div>
+    </a>
+    <a href="index.html" class="back">← Back to Home</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <div class="eyebrow"><span class="dot"></span><span>Contribute</span></div>
+    <h1>Post a <em>session</em>, or share an <em>event or opportunity</em>.</h1>
+    <p class="desc">Fill in the form (or paste the announcement email and let it fill itself). A maintainer approves it by email, and the site updates on its own: sessions appear on the Research Atlas and the Index, everything else in Posts.</p>
+  </div>
+</section>
+
+<main>
+  <div class="banner" id="banner"><span>Checking the site's setup…</span></div>
+
+  <section class="step">
+    <h2><small>Step 1 · optional</small>Paste the announcement email</h2>
+    <p class="hint">Subject line, body, the lot. Meeting links and passcodes are stripped automatically and never published.</p>
+    <textarea id="email" class="tall" placeholder="Dear all, … Title … Abstract … When: Friday, 16 October, 17:00–18:00 … Where: Boardroom, 4th Floor, UEBS"></textarea>
+    <div class="row">
+      <div><label for="sentOn">Email sent on (helps with dates that omit the year)</label><input type="date" id="sentOn" /></div>
+      <div style="display:flex;align-items:flex-end;gap:10px;padding-top:26px"><button class="btn" id="extract" type="button">Extract the details</button><span class="msg" id="extractMsg"></span></div>
+    </div>
+  </section>
+
+  <form id="form" novalidate>
+    <input class="hp" type="text" name="website" id="website" tabindex="-1" autocomplete="off" />
+    <section class="step">
+      <h2><small>Step 2</small>What are you posting?</h2>
+      <div class="seg" id="kindSeg">
+        <button type="button" data-kind="session" class="active">A study-group session</button>
+        <button type="button" data-kind="post">An event or opportunity to share</button>
+      </div>
+    </section>
+
+    <section class="step" id="sessionPanel">
+      <h2><small>Session</small>The session</h2>
+      <label for="s_title">Title <span class="req">*</span></label>
+      <input type="text" id="s_title" placeholder="Factor Momentum Revisited: Does the 47-Factor Kernel Collapse to BAB and QMJ?" />
+      <div class="row3">
+        <div><label for="s_date">Date <span class="req">*</span></label><input type="date" id="s_date" /></div>
+        <div><label for="s_start">Start</label><input type="time" id="s_start" value="17:00" /></div>
+        <div><label for="s_end">End</label><input type="time" id="s_end" value="18:00" /></div>
+      </div>
+      <div class="row">
+        <div><label for="s_venue">Venue</label><input type="text" id="s_venue" value="Boardroom, 4th Floor, UEBS" /></div>
+        <div><label for="s_format">Format</label><select id="s_format"><option value="in-person">In person</option><option value="hybrid">Hybrid (in person + online)</option><option value="online">Online</option></select></div>
+      </div>
+      <div class="row3">
+        <div><label for="s_kind">Kind</label><select id="s_kind"><option value="lecture">Lecture</option><option value="workshop">Workshop</option><option value="discussion">Discussion</option></select></div>
+        <div><label for="s_topic">Research Atlas branch <span class="req">*</span></label><select id="s_topic"></select></div>
+        <div><label for="s_short">Short label for the atlas <span class="req">*</span></label><input type="text" id="s_short" maxlength="40" placeholder="Factor Momentum" /></div>
+      </div>
+      <label>Speakers <span class="req">*</span></label>
+      <div class="row">
+        <div><select id="s_person"><option value="">Choose a member…</option></select></div>
+        <div style="display:flex;gap:8px"><button type="button" class="btn ghost" id="addPerson">Add</button><button type="button" class="btn ghost" id="newPersonBtn">New speaker…</button></div>
+      </div>
+      <div class="chips" id="speakerChips"></div>
+      <div class="newperson" id="newPerson" hidden>
+        <div class="row"><div><label for="n_name">Full name <span class="req">*</span></label><input type="text" id="n_name" /></div><div><label for="n_level">Level</label><select id="n_level"><option>PhD</option><option>Faculty</option><option>Visiting PhD</option></select></div></div>
+        <div class="row"><div><label for="n_field">Field</label><select id="n_field"></select></div><div><label for="n_topic">Research interests (one line)</label><input type="text" id="n_topic" /></div></div>
+        <label for="n_bio">One or two sentences about the speaker</label><textarea id="n_bio" style="min-height:70px"></textarea>
+        <div style="margin-top:12px;display:flex;gap:8px"><button type="button" class="btn" id="saveNew">Add this speaker</button><button type="button" class="btn ghost" id="cancelNew">Cancel</button></div>
+      </div>
+      <label for="s_summary">One-sentence summary <span class="req">*</span></label>
+      <input type="text" id="s_summary" maxlength="320" placeholder="Shown on cards and the topic page" />
+      <label for="s_abstract">Abstract</label>
+      <textarea id="s_abstract" class="tall" placeholder="Usually the paragraph from the announcement email."></textarea>
+      <div class="row">
+        <div><label for="s_journal">Published in (if the talk presents a paper)</label><input type="text" id="s_journal" placeholder="International Journal of Research in Marketing · ABS 4" /></div>
+        <div><label for="s_status">Status</label><select id="s_status"><option value="">Decide from the date</option><option value="planned">Planned (upcoming)</option><option value="held">Held</option></select></div>
+      </div>
+    </section>
+
+    <section class="step" id="postPanel" hidden>
+      <h2><small>Event or opportunity</small>The post</h2>
+      <div class="row3">
+        <div><label for="p_type">Type <span class="req">*</span></label><select id="p_type"><option value="event">Event - something to attend</option><option value="opportunity">Opportunity - something to apply for</option><option value="announcement">Announcement</option></select></div>
+        <div><label for="p_category">Category</label><select id="p_category"></select></div>
+        <div><label for="p_date">Shared on</label><input type="date" id="p_date" /></div>
+      </div>
+      <label for="p_title">Title <span class="req">*</span></label>
+      <input type="text" id="p_title" placeholder="2026 SoFiE Summer School of Financial Econometrics: Climate Finance" />
+      <div class="row3">
+        <div><label for="p_event">Event date</label><input type="date" id="p_event" /></div>
+        <div><label for="p_deadline">Deadline</label><input type="date" id="p_deadline" /></div>
+        <div><label for="p_source">Forwarded by</label><select id="p_source"><option value="">—</option></select></div>
+      </div>
+      <label for="p_link">Link to the original announcement</label>
+      <input type="url" id="p_link" placeholder="https://" />
+      <label for="p_summary">One- or two-sentence summary <span class="req">*</span></label>
+      <input type="text" id="p_summary" maxlength="400" />
+      <label for="p_body">Longer text</label>
+      <textarea id="p_body" class="tall"></textarea>
+    </section>
+
+    <section class="step">
+      <h2><small>Step 3 · optional</small>Materials</h2>
+      <p class="hint">Slides or a PDF, up to 3 MB. Larger files: send them to a maintainer and they will attach them.</p>
+      <input type="file" id="file" accept="application/pdf,.pdf" />
+      <span class="msg" id="fileMsg"></span>
+      <label class="check" style="margin-top:16px"><input type="checkbox" id="filePublic" checked /> <span>The speaker agrees to the file being published on the public website. Untick to keep it out of the site (it still reaches the maintainers).</span></label>
+      <div class="row">
+        <div><label for="m_url">Or a link to the material</label><input type="url" id="m_url" placeholder="https://" /></div>
+        <div><label for="m_urlLabel">Link label</label><input type="text" id="m_urlLabel" placeholder="Paper (IJRM)" /></div>
+      </div>
+    </section>
+
+    <section class="step">
+      <h2><small>Step 4</small>About you</h2>
+      <div class="row">
+        <div><label for="u_name">Your name <span class="req">*</span></label><input type="text" id="u_name" autocomplete="name" /></div>
+        <div><label for="u_email">Your email (optional)</label><input type="email" id="u_email" autocomplete="email" /></div>
+      </div>
+      <label class="check"><input type="checkbox" id="u_contact" /> <span>The maintainers may quote my email address in the review notes (the repository is public). Leave unticked and they will simply merge or ask in the group.</span></label>
+      <div id="passWrap" hidden><label for="u_pass">Group passphrase</label><input type="password" id="u_pass" autocomplete="off" /></div>
+      <div style="margin-top:22px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+        <button class="btn" id="submitBtn" type="submit">Send for review</button>
+        <span class="msg" id="submitMsg"></span>
+      </div>
+    </section>
+  </form>
+
+  <div class="result" id="result" hidden></div>
+</main>
+
+<footer>Statistics Study Group · University of Edinburgh Business School</footer>
+
+<script src="assets/data.js"></script>
+<script>
+(function () {
+  const $ = (id) => document.getElementById(id);
+  const DATA = window.SSG_DATA || { people: [], topics: [] };
+  const TOPICS = [["stat", "Statistical Methods"], ["econ", "Econometrics"], ["asset", "Asset Pricing"], ["ai", "AI & Machine Learning"], ["risk", "Risk Management"], ["credit", "Credit Research"], ["core", "Statistics (the trunk: tooling, discussions)"]];
+  const FIELDS = (DATA.fields || ["MSBE", "FinTech", "Accounting & Finance", "MSBE & Finance", "Finance", "Economics & Finance", "Marketing", "School of Mathematics", "Field TBC"]);
+  const CATS = {
+    event: [["seminar", "Seminar"], ["lecture", "Public lecture"], ["conference", "Conference"], ["workshop", "Workshop"], ["hackathon", "Hackathon"], ["competition", "Competition"]],
+    opportunity: [["cfp", "Call for papers"], ["summer-school", "Summer school"], ["job", "Recruitment"], ["placement", "Internship & placement"], ["funding", "Funding & fellowships"], ["volunteering", "Volunteering"]],
+    announcement: [["announcement", "Announcement"]],
+  };
+  const state = { kind: "session", speakers: [], config: null, file: null };
+
+  // ---------- populate selects
+  $("s_topic").innerHTML = '<option value="">Choose…</option>' + TOPICS.map(([v, l]) => `<option value="${v}">${l}</option>`).join("");
+  $("n_field").innerHTML = FIELDS.map((f) => `<option>${f}</option>`).join("");
+  const people = (DATA.people || []).slice().sort((a, b) => a.name.localeCompare(b.name));
+  $("s_person").innerHTML += people.map((p) => `<option value="${p.id}">${p.name} · ${p.field}</option>`).join("");
+  $("p_source").innerHTML += people.filter((p) => p.kind !== "member").map((p) => `<option value="${p.id}">${p.name}</option>`).join("");
+  $("p_date").value = today();
+  fillCats();
+  $("p_type").addEventListener("change", fillCats);
+  function fillCats() { $("p_category").innerHTML = CATS[$("p_type").value].map(([v, l]) => `<option value="${v}">${l}</option>`).join(""); }
+  function today() { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; }
+
+  // ---------- setup banner
+  fetch("api/submit").then((r) => r.ok ? r.json() : Promise.reject(r.status)).then((c) => {
+    state.config = c;
+    $("passWrap").hidden = !c.passphraseRequired;
+    $("banner").innerHTML = [
+      `<span class="pill ${c.configured ? "ok" : "warn"}">${c.configured ? "Submissions open" : "Not connected yet"}</span>`,
+      `<span class="pill ${c.parser ? "ok" : "warn"}">${c.parser ? "AI extraction on" : "Built-in extraction only"}</span>`,
+      c.configured ? `<span>Reviewed by the maintainers of <b>${c.repo}</b>; nothing goes live before they approve.</span>` : `<span>The intake is not connected to GitHub yet - a maintainer needs to set <b>GITHUB_TOKEN</b> on the deployment. You can still prepare the text here.</span>`,
+    ].join("");
+  }).catch(() => { $("banner").innerHTML = '<span class="pill warn">Offline preview</span><span>The site\'s API is not reachable from here; the form can still be filled in.</span>'; });
+
+  // ---------- kind toggle
+  $("kindSeg").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-kind]"); if (!b) return;
+    state.kind = b.dataset.kind;
+    for (const x of $("kindSeg").querySelectorAll("button")) x.classList.toggle("active", x === b);
+    $("sessionPanel").hidden = state.kind !== "session";
+    $("postPanel").hidden = state.kind !== "post";
+  });
+
+  // ---------- speakers
+  function renderSpeakers() {
+    $("speakerChips").innerHTML = state.speakers.map((s, i) => `<span class="chip">${s.name}${s.isNew ? " <b>NEW</b>" : ""}<button type="button" data-i="${i}" aria-label="remove">×</button></span>`).join("") || '<span class="msg">No speaker yet.</span>';
+  }
+  $("speakerChips").addEventListener("click", (e) => { const b = e.target.closest("button[data-i]"); if (!b) return; state.speakers.splice(Number(b.dataset.i), 1); renderSpeakers(); });
+  $("addPerson").addEventListener("click", () => {
+    const id = $("s_person").value; if (!id) return;
+    const p = people.find((x) => x.id === id);
+    if (p && !state.speakers.some((s) => s.id === id)) state.speakers.push({ id, name: p.name });
+    $("s_person").value = ""; renderSpeakers();
+  });
+  $("newPersonBtn").addEventListener("click", () => { $("newPerson").hidden = false; $("n_name").focus(); });
+  $("cancelNew").addEventListener("click", () => { $("newPerson").hidden = true; });
+  $("saveNew").addEventListener("click", () => {
+    const name = $("n_name").value.trim(); if (!name) { $("n_name").focus(); return; }
+    const existing = people.find((p) => p.name.toLowerCase() === name.toLowerCase());
+    if (existing) state.speakers.push({ id: existing.id, name: existing.name });
+    else state.speakers.push({ name, level: $("n_level").value, field: $("n_field").value, topic: $("n_topic").value.trim(), bio: $("n_bio").value.trim(), isNew: true });
+    $("n_name").value = ""; $("n_topic").value = ""; $("n_bio").value = ""; $("newPerson").hidden = true; renderSpeakers();
+  });
+  renderSpeakers();
+
+  // ---------- file
+  $("file").addEventListener("change", () => {
+    const f = $("file").files[0]; state.file = null; $("fileMsg").textContent = "";
+    if (!f) return;
+    if (!/\.pdf$/i.test(f.name)) { $("fileMsg").textContent = "Only PDF files, please."; $("file").value = ""; return; }
+    if (f.size > 3 * 1024 * 1024) { $("fileMsg").textContent = `${(f.size / 1048576).toFixed(1)} MB is over the 3 MB limit - send it to a maintainer instead.`; $("file").value = ""; return; }
+    const reader = new FileReader();
+    reader.onload = () => { state.file = { name: f.name, base64: String(reader.result).split(",")[1] }; $("fileMsg").textContent = `${f.name} · ${(f.size / 1024).toFixed(0)} KB ready.`; };
+    reader.readAsDataURL(f);
+  });
+
+  // ---------- extraction (AI, with a built-in fallback)
+  $("extract").addEventListener("click", async () => {
+    const text = $("email").value.trim();
+    if (text.length < 40) { $("extractMsg").textContent = "Paste the email first."; return; }
+    $("extract").disabled = true; $("extractMsg").textContent = "Reading…";
+    let fields = null, how = "";
+    try {
+      const r = await fetch("api/parse", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ text, sentOn: $("sentOn").value }) });
+      const d = await r.json().catch(() => ({}));
+      if (r.ok && d.fields) { fields = d.fields; how = "Extracted by Claude - please check every field."; }
+      else how = (d.detail || "AI extraction unavailable") + " - used the built-in reader instead.";
+    } catch (e) { how = "AI extraction unavailable - used the built-in reader instead."; }
+    if (!fields) fields = heuristic(text, $("sentOn").value);
+    apply(fields);
+    $("extractMsg").textContent = how;
+    $("extract").disabled = false;
+  });
+
+  function apply(f) {
+    const isSession = f.kind === "session" || (f.kind === "unknown" && (f.abstract || f.speakers?.length));
+    state.kind = isSession ? "session" : "post";
+    $("kindSeg").querySelector(`button[data-kind="${state.kind}"]`).click();
+    if (isSession) {
+      set("s_title", f.title); set("s_date", f.date); if (f.start) set("s_start", f.start); if (f.end) set("s_end", f.end);
+      if (f.venue) set("s_venue", f.venue); if (f.format) set("s_format", f.format);
+      if (f.topic) set("s_topic", f.topic); set("s_short", f.short); set("s_summary", f.summary); set("s_abstract", f.abstract);
+      state.speakers = [];
+      for (const name of f.speakers || []) {
+        const p = people.find((x) => x.name.toLowerCase() === String(name).toLowerCase());
+        state.speakers.push(p ? { id: p.id, name: p.name } : { name, level: "PhD", field: "Field TBC", bio: f.speaker_affiliation ? `${name} (${f.speaker_affiliation}).` : "", isNew: true });
+      }
+      renderSpeakers();
+    } else {
+      set("p_type", f.kind === "announcement" ? "announcement" : f.kind === "event" ? "event" : "opportunity"); fillCats();
+      if (f.category) set("p_category", f.category);
+      set("p_title", f.title); set("p_event", f.event_date || (f.kind === "event" ? f.date : "")); set("p_deadline", f.deadline);
+      set("p_link", f.link); set("p_summary", f.summary); set("p_body", f.abstract);
+      if (f.forwarded_by) { const p = people.find((x) => x.name.toLowerCase().includes(String(f.forwarded_by).toLowerCase().replace(/^dr\s+/, ""))); if (p) set("p_source", p.id); }
+    }
+    if (f.notes) $("extractMsg").textContent = "Note: " + f.notes;
+  }
+  function set(id, v) { if (v !== undefined && v !== null && v !== "") $(id).value = v; }
+
+  // The built-in reader knows the group's own announcement layout (Title / Abstract / When / Where).
+  function heuristic(text, sentOn) {
+    const t = text.replace(/\r/g, "");
+    const lines = t.split("\n").map((l) => l.trim());
+    const grab = (re) => { const m = t.match(re); return m ? m[1].trim() : ""; };
+    const after = (label) => { const i = lines.findIndex((l) => new RegExp("^" + label + ":?$", "i").test(l)); return i >= 0 ? (lines.slice(i + 1).find((l) => l) || "") : ""; };
+    const block = (label, stops) => { const i = lines.findIndex((l) => new RegExp("^" + label + ":?\\s*", "i").test(l)); if (i < 0) return ""; const out = []; let first = lines[i].replace(new RegExp("^" + label + ":?\\s*", "i"), ""); if (first) out.push(first); for (let j = i + 1; j < lines.length; j++) { const l = lines[j]; if (!l && out.length && stops.some((s) => (lines[j + 1] || "").match(s))) break; if (stops.some((s) => l.match(s))) break; out.push(l); } return out.join("\n").replace(/\n{3,}/g, "\n\n").trim(); };
+    const title = grab(/^Title:?\s*(.+)$/im) || after("Title") || grab(/^Subject:\s*(?:FW:|Fwd:|Re:)?\s*(.+)$/im);
+    const abstract = block("(?:Article )?Abstract", [/^(When|Where|Date|Location|Time|Best|Kind regards|Looking forward)/i]);
+    const when = grab(/^(?:When|Date(?: & Time)?)\s*:\s*(.+)$/im);
+    const where = grab(/^(?:Where|Location|Venue)\s*:\s*(.+)$/im);
+    const time = (when + " " + t).match(/(\d{1,2}:\d{2})\s*[-–—]\s*(\d{1,2}:\d{2})/);
+    const speaker = grab(/(?:delivered|presented|given|led|hosted) by ([A-Z][a-z]+(?: [A-Z][a-z]+){1,2})/) || grab(/^Speaker:?\s*(.+)$/im)
+      || grab(/(?:delighted|pleased|happy) to (?:have|welcome) ([A-Z][a-z]+(?: [A-Z][a-z]+){1,2})\b/) || grab(/\b([A-Z][a-z]+ [A-Z][a-z]+) will (?:present|share|talk|give)/);
+    const date = parseDate(when || t, sentOn);
+    const deadline = parseDate(grab(/(?:application |submission |registration )?deadline(?: is| for [^:]*)?:?\s*([^\n.]+)/i), sentOn);
+    const link = (t.match(/https?:\/\/[^\s<>)\]]+/g) || []).map(unwrap).find((u) => !/teams\.microsoft|zoom\.us|aka\.ms|safelinks|srvmgmt|ed\.ac\.uk\/information-services/.test(u)) || "";
+    const isSession = /Statistics Study Group|StatsGroup|Boardroom|UEBS/i.test(t) && /(abstract|title)/i.test(t) && !/^(FW|Fwd):/im.test(t);
+    return { kind: isSession ? "session" : (/deadline|apply|application|call for papers|recruit|vacanc/i.test(t) ? "opportunity" : "event"), title, date, start: time ? pad(time[1]) : "", end: time ? pad(time[2]) : "", venue: where, format: /teams|online|hybrid/i.test(t) ? "hybrid" : "", speakers: speaker ? [speaker] : [], speaker_affiliation: "", moderator: "", topic: "", short: "", summary: "", abstract, category: "", event_date: isSession ? "" : date, deadline, link, organiser: "", forwarded_by: "", notes: "Read by the built-in parser - fill in the branch and summary yourself." };
+  }
+  function pad(hhmm) { const [h, m] = hhmm.split(":"); return `${h.padStart(2, "0")}:${m}`; }
+  function unwrap(u) { const m = u.match(/safelinks\.protection\.outlook\.com\/\?url=([^&]+)/); return m ? decodeURIComponent(m[1]) : u; }
+  function parseDate(s, sentOn) {
+    if (!s) return "";
+    const months = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+    let m = s.match(/(\d{4})-(\d{2})-(\d{2})/); if (m) return m[0];
+    m = s.match(/(\d{1,2})(?:st|nd|rd|th)?\s+([A-Za-z]{3,9})\.?,?\s*(\d{4})?/) || s.match(/([A-Za-z]{3,9})\s+(\d{1,2})(?:st|nd|rd|th)?,?\s*(\d{4})?/);
+    if (!m) return "";
+    let d, mon, y;
+    if (/^\d/.test(m[1])) { d = m[1]; mon = m[2]; y = m[3]; } else { mon = m[1]; d = m[2]; y = m[3]; }
+    const mi = months.indexOf(mon.slice(0, 3).toLowerCase()); if (mi < 0) return "";
+    if (!y) { const base = /^\d{4}-\d{2}-\d{2}$/.test(sentOn || "") ? new Date(sentOn) : new Date(); y = base.getFullYear(); if (mi < base.getMonth() - 1 && !sentOn) y += 1; }
+    return `${y}-${String(mi + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+  }
+
+  // ---------- submit
+  $("form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const msg = $("submitMsg"); msg.className = "msg"; msg.textContent = "";
+    const payload = build(); if (!payload) return;
+    $("submitBtn").disabled = true; msg.textContent = "Sending…";
+    try {
+      const r = await fetch("api/submit", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(payload) });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.detail || d.error || `HTTP ${r.status}`);
+      msg.className = "msg ok"; msg.textContent = "Sent - thank you.";
+      showResult(d, payload);
+    } catch (err) {
+      msg.className = "msg bad"; msg.textContent = err.message;
+    }
+    $("submitBtn").disabled = false;
+  });
+
+  function need(id, label) { const v = $(id).value.trim(); if (!v) { $(id).focus(); const m = $("submitMsg"); m.className = "msg bad"; m.textContent = `${label} is required.`; return null; } return v; }
+  function build() {
+    const name = need("u_name", "Your name"); if (name === null) return null;
+    const base = { website: $("website").value, passphrase: $("u_pass").value, submitter: { name, email: $("u_email").value.trim(), contact: $("u_contact").checked }, knownPeople: people.map((p) => ({ id: p.id, initials: p.initials, name: p.name })), attachment: state.file, kind: state.kind };
+    if (state.kind === "session") {
+      const title = need("s_title", "The title"); if (title === null) return null;
+      const date = need("s_date", "The date"); if (date === null) return null;
+      const topic = need("s_topic", "The Research Atlas branch"); if (topic === null) return null;
+      const short = need("s_short", "The short label"); if (short === null) return null;
+      const summary = need("s_summary", "The summary"); if (summary === null) return null;
+      if (!state.speakers.length) { const m = $("submitMsg"); m.className = "msg bad"; m.textContent = "Add at least one speaker."; return null; }
+      base.session = { title, date, start: $("s_start").value, end: $("s_end").value, venue: $("s_venue").value.trim(), format: $("s_format").value, kind: $("s_kind").value, topic, short, summary, abstract: $("s_abstract").value.trim(), journal: $("s_journal").value.trim(), status: $("s_status").value, speakers: state.speakers.map((s) => s.id ? { id: s.id, name: s.name } : s), materialPublic: $("filePublic").checked, materialUrl: $("m_url").value.trim(), materialUrlLabel: $("m_urlLabel").value.trim() };
+    } else {
+      const title = need("p_title", "The title"); if (title === null) return null;
+      const summary = need("p_summary", "The summary"); if (summary === null) return null;
+      base.post = { type: $("p_type").value, category: $("p_category").value, date: $("p_date").value, event_date: $("p_event").value, deadline: $("p_deadline").value, title, link: $("p_link").value.trim(), summary, body: $("p_body").value.trim(), source: $("p_source").value };
+    }
+    return base;
+  }
+
+  function showResult(d, payload) {
+    const r = $("result"); r.hidden = false;
+    const isSession = payload.kind === "session";
+    let extra = "";
+    if (isSession) {
+      const s = payload.session;
+      const names = state.speakers.map((x) => x.name).join(" and ");
+      const dt = new Date(s.date + "T00:00:00");
+      const long = dt.toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+      const draft = `Subject: UEBS Statistics Study Group | ${names} | ${dt.toLocaleDateString("en-GB", { day: "numeric", month: "long" })}, ${s.start}–${s.end}\n\nDear all,\n\nWe are pleased to announce that the next session of the UEBS Statistics Study Group will be delivered by ${names}.\n\nTitle\n${s.title}\n\nAbstract\n${s.abstract || s.summary}\n\nWhen: ${long}, ${s.start}–${s.end}\nWhere: ${s.venue}${s.format === "hybrid" ? " (hybrid: in person and online)" : s.format === "online" ? " (online)" : ""}\n\nWe look forward to seeing you there.\n\nBest wishes,\nUEBS Statistics Study Group`;
+      const ics = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//UEBS Statistics Study Group//EN", "BEGIN:VEVENT", `UID:${d.branch}@uebs-stats-group`, `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, "").slice(0, 15)}Z`, `DTSTART:${s.date.replace(/-/g, "")}T${(s.start || "17:00").replace(":", "")}00`, `DTEND:${s.date.replace(/-/g, "")}T${(s.end || "18:00").replace(":", "")}00`, `SUMMARY:${(s.title).replace(/,/g, "\\,")}`, `LOCATION:${s.venue.replace(/,/g, "\\,")}`, `DESCRIPTION:${(s.summary).replace(/,/g, "\\,")}`, "END:VEVENT", "END:VCALENDAR"].join("\r\n");
+      extra = `<label for="draft">Announcement email, ready to paste</label><textarea id="draft" class="tall">${draft.replace(/</g, "&lt;")}</textarea><div class="actions"><button type="button" class="btn ghost" id="copyDraft">Copy the email</button><a class="btn ghost" download="session.ics" href="data:text/calendar;charset=utf-8,${encodeURIComponent(ics)}">Download the calendar invite (.ics)</a></div>`;
+    }
+    r.innerHTML = `<h3>Sent for review.</h3><p>The maintainers have been notified. When one of them replies <code>/approve</code>, the site rebuilds on its own${isSession ? " and the session appears on the Research Atlas and the Index" : " and the post appears in Posts"}.</p><ul><li>Review page: <a href="${d.pr.url}" target="_blank" rel="noopener">${d.pr.url}</a></li>${d.files.map((f) => `<li><code>${f}</code></li>`).join("")}${d.newPeople && d.newPeople.length ? `<li>New people: ${d.newPeople.map((p) => `${p.name} (${p.initials})`).join(", ")}</li>` : ""}</ul>${extra}`;
+    const c = $("copyDraft"); if (c) c.addEventListener("click", () => { navigator.clipboard.writeText($("draft").value).then(() => { c.textContent = "Copied"; }); });
+    r.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+})();
+</script>
+</body>
+</html>

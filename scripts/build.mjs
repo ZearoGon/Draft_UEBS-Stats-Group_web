@@ -27,6 +27,7 @@ const distPath = join(projectRoot, "dist");
 const publishedEntries = [
   "index.html",
   "contributors.html",
+  "submit.html",
   "20260313_UEBS Statistics Study group_AI,ML,DL_Business_Overview.html",
   "topics",
   "assets",

@@ -6,7 +6,8 @@
   "scripts": {
     "build": "node scripts/build.mjs",
     "build:check": "node scripts/build.mjs --check",
-    "preview": "npx --yes http-server@14.1.1 . -c-1"
+    "preview": "npx --yes http-server@14.1.1 . -c-1",
+    "dev": "node scripts/dev-server.mjs"
   },
   "engines": {
     "node": ">=18.17"
@@ -14,5 +15,10 @@
   "devDependencies": {
     "js-yaml": "^4.1.0",
     "marked": "^15.0.12"
+  },
+  "type": "module",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.124.0",
+    "zod": "^4.5.4"
   }
 }
