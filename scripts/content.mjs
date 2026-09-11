@@ -28,6 +28,14 @@ import { basename, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import yaml from "js-yaml";
 import { marked } from "marked";
+import {
+  HANDLE_RE,
+  currentDuty,
+  nextDuty,
+  normaliseRoles,
+  renderCodeowners,
+  validateRoles,
+} from "../api/_lib/roles.js";
 
 const projectRoot = join(dirname(fileURLToPath(import.meta.url)), "..");
 const contentDir = join(projectRoot, "content");
@@ -210,12 +218,14 @@ function loadPeople(errors) {
     if (data.kind === "member" && !Number.isInteger(data.slot)) errors.push(`${file}: members sit on the ring and need a slot number`);
     if (data.kind !== "member" && data.slot !== undefined) errors.push(`${file}: only members have a slot`);
     if (data.introduced_date && !ISO_DATE.test(String(data.introduced_date))) errors.push(`${file}: introduced_date must be YYYY-MM-DD`);
+    if (data.github !== undefined && !HANDLE_RE.test(String(data.github))) errors.push(`${file}: github "${data.github}" is not a GitHub username (letters, digits, single hyphens, max 39)`);
     scanForbidden(body, file, errors);
     return {
       id: data.id,
       initials: data.initials,
       name: data.name,
       kind: data.kind,
+      github: data.github ? String(data.github) : "",
       order: data.order ?? 99,
       slot: Number.isInteger(data.slot) ? data.slot : null,
       level: data.level || "",
@@ -233,9 +243,15 @@ function loadPeople(errors) {
   });
   const ids = new Map(people.map((p) => [p.id, p]));
   const initials = new Set();
+  const handles = new Map();
   for (const p of people) {
     if (initials.has(p.initials)) errors.push(`people: initials "${p.initials}" used twice`);
     initials.add(p.initials);
+    if (p.github) {
+      const h = p.github.toLowerCase();
+      if (handles.has(h)) errors.push(`people: GitHub handle "${p.github}" is on both ${handles.get(h)} and ${p.id}`);
+      handles.set(h, p.id);
+    }
     if (p.introducedId && !ids.has(p.introducedId)) errors.push(`content/people/${p.id}.md: introduced "${p.introducedId}" is not a person`);
     for (const t of p.ties) if (!ids.has(t)) errors.push(`content/people/${p.id}.md: tie "${t}" is not a person`);
   }
@@ -405,9 +421,74 @@ function loadPosts(people, errors) {
   return posts;
 }
 
+// ---------------------------------------------------------------- roles
+
+function loadRoles(people, errors) {
+  const p = join(contentDir, "maintainers.json");
+  if (!existsSync(p)) { errors.push("missing content/maintainers.json"); return normaliseRoles({}); }
+  let raw;
+  try {
+    raw = JSON.parse(readFileSync(p, "utf8"));
+  } catch (e) {
+    errors.push(`content/maintainers.json: ${e.message}`);
+    return normaliseRoles({});
+  }
+  const roles = normaliseRoles(raw);
+  const ids = new Set(people.map((x) => x.id));
+  for (const e of validateRoles(roles, (id) => ids.has(id))) errors.push(e);
+  return roles;
+}
+
+// What the pages and the roles panel read: the raw structure (so the panel can
+// round-trip it) plus resolved names, this term's editor and the Join recipient.
+function deriveRoles(roles, people) {
+  const byId = new Map(people.map((p) => [p.id, p]));
+  const nameOf = (id) => byId.get(id)?.name || "";
+  const today = new Date().toISOString().slice(0, 10);
+  const duty = currentDuty(roles, today);
+  const upcoming = nextDuty(roles, today);
+  const joinArea = roles.areas.find((a) => a.id === "people") || roles.areas[0];
+  const joinId = joinArea && joinArea.owner ? joinArea.owner : roles.admins[0] || "";
+  const joinPerson = byId.get(joinId);
+  const ccIds = [duty ? duty.editor : "", joinArea ? joinArea.backup : ""].filter((id) => id && id !== joinId);
+  return {
+    areas: roles.areas.map((a) => ({
+      ...a,
+      ownerName: nameOf(a.owner),
+      backupName: nameOf(a.backup),
+      ownerHandle: byId.get(a.owner)?.github || "",
+      backupHandle: byId.get(a.backup)?.github || "",
+    })),
+    duty: roles.duty.map((d) => ({ ...d, editorName: nameOf(d.editor) })),
+    current: duty ? { ...duty, editorName: nameOf(duty.editor) } : null,
+    next: upcoming ? { ...upcoming, editorName: nameOf(upcoming.editor) } : null,
+    admins: roles.admins,
+    adminNames: roles.admins.map(nameOf),
+    history: roles.history,
+    join: joinPerson
+      ? { id: joinPerson.id, name: joinPerson.name, email: joinPerson.email, cc: ccIds.map((id) => byId.get(id)?.email || "").filter(Boolean) }
+      : null,
+  };
+}
+
+// The role labels shown on a person's card: "Sessions & Atlas", "Posts (backup)", "Editor, Autumn 2026".
+function roleLabelsFor(roles, personId) {
+  const out = [];
+  for (const a of roles.areas) {
+    if (a.owner === personId) out.push(a.label);
+    else if (a.backup === personId) out.push(`${a.label} (backup)`);
+  }
+  const duty = currentDuty(roles);
+  if (duty && duty.editor === personId) out.push(`Editor, ${duty.term}`);
+  if (roles.admins.includes(personId)) out.push("Admin");
+  return out;
+}
+
+const CODEOWNERS_PATH = ".github/CODEOWNERS";
+
 // ---------------------------------------------------------------- deriving
 
-function derivePeople(people, sessions) {
+function derivePeople(people, sessions, roles) {
   const byId = new Map(people.map((p) => [p.id, p]));
   const initialsOf = (id) => byId.get(id)?.initials || "";
   const out = people.map((p) => {
@@ -433,6 +514,8 @@ function derivePeople(people, sessions) {
       field: p.field,
       topic: p.topic,
       email: p.email,
+      github: p.github,
+      roles: roleLabelsFor(roles, p.id),
       bio: p.bio,
       lectures,
       introduced: p.introducedId ? initialsOf(p.introducedId) : "",
@@ -629,9 +712,13 @@ export function compileContent({ write = true } = {}) {
   const rawPeople = loadPeople(errors);
   const sessions = loadSessions(topics, rawPeople, errors);
   const posts = loadPosts(rawPeople, errors);
+  const rawRoles = loadRoles(rawPeople, errors);
   if (errors.length) fail(errors);
 
-  const { people, ties } = derivePeople(rawPeople, sessions);
+  const { people, ties } = derivePeople(rawPeople, sessions, rawRoles);
+  const roles = deriveRoles(rawRoles, rawPeople);
+  const handleOf = (id) => rawPeople.find((p) => p.id === id)?.github || "";
+  const codeowners = renderCodeowners(rawRoles, handleOf);
   const news = deriveNews(sessions, posts, topics);
   const stats = deriveStats(site, people, sessions);
   const data = {
@@ -645,10 +732,15 @@ export function compileContent({ write = true } = {}) {
     sessions,
     posts,
     news,
+    roles,
   };
 
   const summary = `${sessions.length} sessions, ${posts.length} posts, ${people.length} people, ${topics.length} topics`;
-  if (!write) return { data, summary, written: [] };
+  if (!write) {
+    const existing = existsSync(join(projectRoot, CODEOWNERS_PATH)) ? readFileSync(join(projectRoot, CODEOWNERS_PATH), "utf8").replace(/\r\n/g, "\n") : "";
+    if (existing !== codeowners) fail([`${CODEOWNERS_PATH} is out of date with content/maintainers.json - run npm run build and commit the result`]);
+    return { data, summary, written: [] };
+  }
 
   const written = [];
   const assetsDir = join(projectRoot, "assets");
@@ -673,6 +765,11 @@ export function compileContent({ write = true } = {}) {
     written.push(t.page.file);
   }
   if (patchContributorsPage(people)) written.push("contributors.html");
+  const coPath = join(projectRoot, CODEOWNERS_PATH);
+  if (!existsSync(coPath) || readFileSync(coPath, "utf8").replace(/\r\n/g, "\n") !== codeowners) {
+    writeFileSync(coPath, codeowners, "utf8");
+    written.push(CODEOWNERS_PATH);
+  }
   return { data, summary, written };
 }
 

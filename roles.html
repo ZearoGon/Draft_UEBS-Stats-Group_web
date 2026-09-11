@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex" />
+<title>Roles · UEBS Statistics Study Group</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=Source+Sans+3:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{--bg:#f5f0e8;--fg:#1a1a1a;--accent:#0b384e;--rule:rgba(0,0,0,.14);--paper:#faf7f2;--mute:#6f6a62;--ok:#2f6b3a;--warn:#8a5a12;--bad:#8b1e1e;--soft:rgba(11,56,78,.07)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Source Sans 3",system-ui,sans-serif;background:var(--bg);color:var(--fg);line-height:1.6}
+.topic-nav{position:sticky;top:0;z-index:100;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);background:rgba(245,240,232,.9);border-bottom:1px solid var(--rule);padding:16px 0}
+.topic-nav .inner{max-width:1080px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between}
+.topic-nav .brand{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--fg)}
+.topic-nav .brand img{height:36px;width:auto;display:block;filter:brightness(0) saturate(100%);opacity:.88}
+.topic-nav .brand-text .a{font-family:"Source Sans 3";font-weight:600;font-size:16px;letter-spacing:.04em}
+.topic-nav .brand-text .b{display:block;font-family:"Source Serif 4";font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#333}
+.topic-nav .back{font-family:"IBM Plex Mono";font-size:13px;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:var(--accent);border:1px solid var(--accent);padding:8px 20px;border-radius:100px;transition:all .2s}
+.topic-nav .back:hover{background:var(--accent);color:var(--paper)}
+.hero{padding:64px 0 24px;text-align:center}
+.hero .container{max-width:760px;margin:0 auto;padding:0 32px}
+.eyebrow{font-family:"IBM Plex Mono";font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:18px;display:flex;align-items:center;justify-content:center;gap:10px}
+.eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.hero h1{font-family:"Source Serif 4";font-size:clamp(32px,5vw,48px);font-weight:600;line-height:1.12;margin-bottom:16px}
+.hero h1 em{font-style:italic;color:var(--accent)}
+.hero .desc{font-size:17px;line-height:1.7;color:#444}
+main{max-width:1000px;margin:0 auto;padding:0 32px 90px}
+.banner{border:1px solid var(--rule);background:var(--paper);border-radius:8px;padding:14px 18px;font-size:14px;color:var(--mute);margin:8px 0 28px;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.banner b{color:var(--fg);font-weight:600}
+.pill{font-family:"IBM Plex Mono";font-size:11px;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--rule);border-radius:100px;padding:3px 10px;white-space:nowrap}
+.pill.ok{color:var(--ok);border-color:rgba(47,107,58,.4)}
+.pill.warn{color:var(--warn);border-color:rgba(138,90,18,.4)}
+.pill.bad{color:var(--bad);border-color:rgba(139,30,30,.4)}
+.step{border-top:1px solid var(--rule);padding:34px 0 8px}
+.step h2{font-family:"Source Serif 4";font-size:26px;font-weight:600;margin-bottom:6px}
+.step h2 small{font-family:"IBM Plex Mono";font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:8px}
+.step p.hint{color:var(--mute);font-size:15px;margin-bottom:18px;max-width:72ch}
+.explain{border:1px solid var(--rule);border-left:3px solid var(--accent);background:var(--paper);border-radius:0 8px 8px 0;padding:16px 20px;font-size:15px;max-width:76ch;margin:12px 0 20px}
+.explain p{margin:6px 0}
+.explain code{font-family:"IBM Plex Mono";font-size:13px;background:rgba(0,0,0,.05);padding:1px 6px;border-radius:4px}
+label{display:block;font-family:"IBM Plex Mono";font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin:16px 0 6px}
+input[type=text],input[type=date],input[type=password],select,textarea{width:100%;font:inherit;font-size:15px;color:var(--fg);background:var(--paper);border:1px solid var(--rule);border-radius:6px;padding:8px 10px;transition:border-color .2s}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent)}
+input.bad{border-color:var(--bad)}
+textarea{min-height:80px;resize:vertical;line-height:1.55}
+.tablewrap{overflow-x:auto;border:1px solid var(--rule);border-radius:8px;background:var(--paper);margin:8px 0 12px}
+table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:720px}
+th,td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--rule)}
+th{font-family:"IBM Plex Mono";font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);font-weight:500;background:rgba(0,0,0,.025)}
+tr:last-child td{border-bottom:0}
+tr.current td{background:var(--soft)}
+td .area-name{font-weight:600}
+td .paths{font-family:"IBM Plex Mono";font-size:11.5px;color:var(--mute);line-height:1.5;margin-top:2px;word-break:break-all}
+td .note{font-size:13px;color:var(--mute);margin-top:2px}
+td select{min-width:190px}
+td .who{white-space:nowrap}
+.btn{font-family:"IBM Plex Mono";font-size:12px;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--accent);background:var(--accent);color:var(--paper);padding:11px 20px;border-radius:100px;cursor:pointer;transition:all .2s}
+.btn:hover{background:#0f4a68;border-color:#0f4a68}
+.btn.ghost{background:transparent;color:var(--accent)}
+.btn.ghost:hover{background:var(--accent);color:var(--paper)}
+.btn.sm{padding:6px 12px;font-size:10.5px}
+.btn:disabled{opacity:.5;cursor:default}
+.btn:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:0 20px}
+@media (max-width:640px){.row{grid-template-columns:1fr}}
+.check{display:flex;align-items:center;gap:10px;font-size:15px;color:#333;margin:8px 0;text-transform:none;letter-spacing:0;font-family:"Source Sans 3"}
+.checks{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:0 18px;margin-top:6px}
+.changes{border:1px solid var(--rule);background:var(--paper);border-radius:8px;padding:14px 18px;font-size:14.5px;margin:8px 0 14px}
+.changes ul{margin:4px 0 0 20px}
+.changes .none{color:var(--mute)}
+details{margin:10px 0}
+summary{cursor:pointer;font-family:"IBM Plex Mono";font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+pre{font-family:"IBM Plex Mono";font-size:12.5px;line-height:1.5;background:rgba(0,0,0,.05);border-radius:6px;padding:14px 16px;overflow-x:auto;margin-top:10px}
+.msg{margin-top:14px;font-size:14px;color:var(--mute)}
+.msg.bad{color:var(--bad)}
+.msg.ok{color:var(--ok)}
+.result{border:1px solid var(--rule);background:var(--paper);border-radius:10px;padding:26px 28px;margin-top:26px}
+.result h3{font-family:"Source Serif 4";font-size:24px;font-weight:600;margin-bottom:10px}
+.result ol{margin:10px 0 0 22px;font-size:15px}
+.result code{font-family:"IBM Plex Mono";font-size:13px;background:rgba(0,0,0,.05);padding:1px 6px;border-radius:4px}
+.result .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.actions a.btn{text-decoration:none;display:inline-block}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;align-items:center}
+.history{font-size:14px;color:#444}
+.history li{margin:6px 0 6px 20px}
+.history .d{font-family:"IBM Plex Mono";font-size:12px;color:var(--mute);margin-right:8px}
+.hp{position:absolute;left:-9999px;top:-9999px;height:0;width:0;overflow:hidden}
+footer{text-align:center;padding:40px 0;border-top:1px solid var(--rule);font-family:"IBM Plex Mono";font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#888}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<nav class="topic-nav">
+  <div class="inner">
+    <a href="index.html" class="brand">
+      <img src="assets/uebs-logo.svg" alt="University of Edinburgh Business School" />
+      <div class="brand-text"><span class="a">Statistics</span><span class="b">Study Group</span></div>
+    </a>
+    <a href="index.html" class="back">← Back to Home</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <div class="eyebrow"><span class="dot"></span><span>Maintainers · Roles</span></div>
+    <h1>Who looks after <em>what</em>, and hands it over <em>when</em>.</h1>
+    <p class="desc">Each part of the site has an owner and a backup; one editor per term covers the content areas. Change the assignment here, and an admin approves it by email. Nothing changes until then.</p>
+  </div>
+</section>
+
+<main>
+  <div class="banner" id="banner"><span>Checking the site's setup…</span></div>
+
+  <section class="step">
+    <h2><small>Before you start</small>What a GitHub handle is</h2>
+    <div class="explain">
+      <p>A <b>GitHub handle</b> is the username of a GitHub account: the part after <code>github.com/</code> in a profile address. For <code>https://github.com/ZearoGon</code> the handle is <code>ZearoGon</code>. It is not an email address and it never starts with <code>@</code> here (GitHub adds the <code>@</code> when it mentions someone). Letters, digits and single hyphens only, up to 39 characters, case does not matter.</p>
+      <p>To find yours: sign in to github.com, open the menu in the top-right corner - the name in bold under the avatar is the handle. Maintainers who do not have an account yet create one at github.com/signup, ideally with their university email, and add the other university alias under Settings → Emails so replies from either address count.</p>
+      <p>Why it matters: the handle is what GitHub uses to send the review email for each submission and to recognise the <code>/approve</code> reply. A person without a handle can hold an area on paper, but cannot approve anything until the handle is filled in below.</p>
+    </div>
+  </section>
+
+  <section class="step">
+    <h2><small>1</small>Areas</h2>
+    <p class="hint">Pick an owner and a backup for each area. <b>Swap</b> promotes the backup to owner in one click (the outgoing owner becomes the backup during the handover, or set the backup to vacant if they have left). The paths show which files the area covers; a pull request touching them goes to these people.</p>
+    <div class="tablewrap"><table id="areas">
+      <thead><tr><th>Area</th><th>Owner</th><th>Backup</th><th>Status</th><th></th></tr></thead>
+      <tbody></tbody>
+    </table></div>
+  </section>
+
+  <section class="step">
+    <h2><small>2</small>Editor of the term</h2>
+    <p class="hint">One person per term has a second vote on the content areas (sessions, posts, people) and is the default contact for Join requests. The current term is highlighted; add the next one before the current one ends.</p>
+    <div class="tablewrap"><table id="duty">
+      <thead><tr><th>Term</th><th>From</th><th>To</th><th>Editor</th><th></th></tr></thead>
+      <tbody></tbody>
+    </table></div>
+    <button type="button" class="btn ghost sm" id="add-term">+ Add the next term</button>
+  </section>
+
+  <section class="step">
+    <h2><small>3</small>Admins</h2>
+    <p class="hint">Admins may approve anything, including changes to these roles. Keep at least two, so that nobody's departure locks the site. They also hold the Vercel project and the repository settings.</p>
+    <div class="checks" id="admins"></div>
+  </section>
+
+  <section class="step">
+    <h2><small>4</small>GitHub handles</h2>
+    <p class="hint">Fill in the handle for everyone who holds a role. Changing a handle here edits the person's file in the same request.</p>
+    <div class="tablewrap"><table id="handles">
+      <thead><tr><th>Person</th><th>Standing</th><th>Email</th><th>GitHub handle</th></tr></thead>
+      <tbody></tbody>
+    </table></div>
+  </section>
+
+  <section class="step">
+    <h2><small>5</small>Review and hand over</h2>
+    <div class="changes" id="changes"><span class="none">No changes yet.</span></div>
+    <details><summary>Preview the generated CODEOWNERS</summary><pre id="codeowners"></pre></details>
+    <div class="row">
+      <div>
+        <label for="by">Your name</label>
+        <select id="by"></select>
+      </div>
+      <div id="pass-wrap" hidden>
+        <label for="passphrase">Passphrase</label>
+        <input type="password" id="passphrase" autocomplete="off" />
+      </div>
+    </div>
+    <label for="note">Note for the admins (optional)</label>
+    <textarea id="note" placeholder="Why the change - e.g. Heqing takes over Sessions from January; Yifan graduates in the summer."></textarea>
+    <input class="hp" type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+    <div class="actions">
+      <button type="button" class="btn" id="send">Create handover request</button>
+      <button type="button" class="btn ghost" id="reset">Discard my edits</button>
+      <span class="msg" id="msg"></span>
+    </div>
+    <div class="result" id="result" hidden></div>
+  </section>
+
+  <section class="step">
+    <h2><small>History</small>Handovers so far</h2>
+    <ul class="history" id="history"></ul>
+  </section>
+</main>
+
+<footer>UEBS Statistics Study Group · roles are stored in content/maintainers.json</footer>
+
+<script src="assets/data.js"></script>
+<script type="module">
+import { HANDLE_RE, currentDuty, diffRoles, normaliseRoles, renderCodeowners } from "./assets/roles-lib.js";
+
+const DATA = window.SSG_DATA;
+const people = DATA.people.slice();
+const byId = new Map(people.map((p) => [p.id, p]));
+const original = normaliseRoles(DATA.roles);
+const originalHandles = Object.fromEntries(people.map((p) => [p.id, p.github || ""]));
+const DRAFT_KEY = "ssg-roles-draft";
+const today = new Date().toISOString().slice(0, 10);
+
+let state = load() || { roles: clone(original), handles: { ...originalHandles } };
+let config = { configured: false, passphraseRequired: false };
+
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+function clone(x) { return JSON.parse(JSON.stringify(x)); }
+function load() {
+  try {
+    const raw = localStorage.getItem(DRAFT_KEY);
+    if (!raw) return null;
+    const d = JSON.parse(raw);
+    if (!d || d.base !== JSON.stringify(original)) return null; // roles on the site changed since the draft
+    return { roles: normaliseRoles(d.roles), handles: { ...originalHandles, ...(d.handles || {}) } };
+  } catch { return null; }
+}
+function save() {
+  try { localStorage.setItem(DRAFT_KEY, JSON.stringify({ base: JSON.stringify(original), roles: state.roles, handles: state.handles })); } catch {}
+}
+const handleOf = (id) => state.handles[id] || "";
+const nameOf = (id) => byId.get(id)?.name || id;
+const rank = { maintainer: 0, contributor: 1, member: 2 };
+const sorted = people.slice().sort((a, b) => rank[a.kind] - rank[b.kind] || (a.order ?? 99) - (b.order ?? 99) || a.name.localeCompare(b.name));
+
+function personOptions(selected, { vacant = true } = {}) {
+  const opt = (p) => `<option value="${p.id}" ${p.id === selected ? "selected" : ""}>${esc(p.name)}${handleOf(p.id) ? " (@" + esc(handleOf(p.id)) + ")" : " - no handle yet"}</option>`;
+  const m = sorted.filter((p) => p.kind === "maintainer").map(opt).join("");
+  const o = sorted.filter((p) => p.kind !== "maintainer").map(opt).join("");
+  return `${vacant ? `<option value="" ${selected ? "" : "selected"}>— vacant —</option>` : ""}<optgroup label="Maintainers">${m}</optgroup><optgroup label="Contributors and members">${o}</optgroup>`;
+}
+
+function areaStatus(a) {
+  if (!a.owner && a.id !== "governance") return `<span class="pill bad">vacant</span>`;
+  const missing = [a.owner, a.backup].filter((id) => id && !handleOf(id));
+  if (missing.length) return `<span class="pill warn">no handle: ${esc(missing.map(nameOf).join(", "))}</span>`;
+  if (!a.backup && a.id !== "governance") return `<span class="pill warn">no backup</span>`;
+  return `<span class="pill ok">ready</span>`;
+}
+
+function renderAreas() {
+  const duty = currentDuty(state.roles, today);
+  $("#areas tbody").innerHTML = state.roles.areas.map((a, i) => `
+    <tr>
+      <td><div class="area-name">${esc(a.label)}</div>
+          <div class="paths">${a.paths.length ? a.paths.map(esc).join("<br>") : "(no files - a duty, not a folder)"}</div>
+          ${a.note ? `<div class="note">${esc(a.note)}</div>` : ""}
+          ${a.duty && duty ? `<div class="note">+ ${esc(nameOf(duty.editor))} as editor of ${esc(duty.term)}</div>` : ""}
+          ${a.approvals > 1 ? `<div class="note">${a.approvals} approvals needed</div>` : ""}</td>
+      <td><select data-area="${i}" data-role="owner" aria-label="Owner of ${esc(a.label)}">${personOptions(a.owner)}</select></td>
+      <td><select data-area="${i}" data-role="backup" aria-label="Backup of ${esc(a.label)}">${personOptions(a.backup)}</select></td>
+      <td>${areaStatus(a)}</td>
+      <td><button type="button" class="btn ghost sm" data-swap="${i}" ${a.backup ? "" : "disabled"} title="Backup becomes owner, owner becomes backup">Swap</button></td>
+    </tr>`).join("");
+}
+
+function renderDuty() {
+  $("#duty tbody").innerHTML = state.roles.duty.map((d, i) => `
+    <tr class="${d.from <= today && today <= d.to ? "current" : ""}">
+      <td><input type="text" value="${esc(d.term)}" data-duty="${i}" data-k="term" aria-label="Term name" /></td>
+      <td><input type="date" value="${esc(d.from)}" data-duty="${i}" data-k="from" aria-label="From" /></td>
+      <td><input type="date" value="${esc(d.to)}" data-duty="${i}" data-k="to" aria-label="To" /></td>
+      <td><select data-duty="${i}" data-k="editor" aria-label="Editor">${personOptions(d.editor, { vacant: false })}</select></td>
+      <td><button type="button" class="btn ghost sm" data-remove-duty="${i}">Remove</button></td>
+    </tr>`).join("") || `<tr><td colspan="5" class="note">No term editor yet.</td></tr>`;
+}
+
+function renderAdmins() {
+  $("#admins").innerHTML = sorted.filter((p) => p.kind === "maintainer" || state.roles.admins.includes(p.id)).map((p) => `
+    <label class="check"><input type="checkbox" data-admin="${p.id}" ${state.roles.admins.includes(p.id) ? "checked" : ""} /> ${esc(p.name)}${handleOf(p.id) ? "" : " <span class=\"pill warn\">no handle</span>"}</label>`).join("");
+}
+
+function renderHandles() {
+  const holders = new Set([...state.roles.admins, ...state.roles.duty.map((d) => d.editor)]);
+  for (const a of state.roles.areas) { if (a.owner) holders.add(a.owner); if (a.backup) holders.add(a.backup); }
+  $("#handles tbody").innerHTML = sorted.map((p) => {
+    const h = handleOf(p.id);
+    const bad = h && !HANDLE_RE.test(h);
+    return `<tr>
+      <td class="who">${esc(p.name)}${holders.has(p.id) && !h ? ` <span class="pill warn">needed</span>` : ""}</td>
+      <td>${esc(p.standing || p.level)}</td>
+      <td>${esc(p.email || "—")}</td>
+      <td><input type="text" value="${esc(h)}" data-handle="${p.id}" placeholder="e.g. ZearoGon" class="${bad ? "bad" : ""}" aria-label="GitHub handle of ${esc(p.name)}" spellcheck="false" /></td>
+    </tr>`;
+  }).join("");
+}
+
+function changes() {
+  const list = diffRoles(original, state.roles, nameOf);
+  for (const p of people) {
+    const a = originalHandles[p.id] || "", b = handleOf(p.id);
+    if (a !== b) list.push(`${p.name}: GitHub handle ${a ? "@" + a : "none"} -> ${b ? "@" + b : "none"}`);
+  }
+  return list;
+}
+
+function renderReview() {
+  const list = changes();
+  $("#changes").innerHTML = list.length ? `<b>${list.length} change${list.length > 1 ? "s" : ""}</b><ul>${list.map((c) => `<li>${esc(c)}</li>`).join("")}</ul>` : `<span class="none">No changes yet.</span>`;
+  $("#codeowners").textContent = renderCodeowners(state.roles, handleOf, today);
+  const admins = state.roles.admins.filter((id) => handleOf(id));
+  $("#send").disabled = !config.configured || list.length === 0;
+  const selected = $("#by").value;
+  $("#by").innerHTML = personOptions(selected, { vacant: false });
+  if (!$("#by").value) $("#by").value = state.roles.admins.find((id) => handleOf(id)) || sorted.find((p) => handleOf(p.id))?.id || sorted.find((p) => p.kind === "maintainer")?.id || "";
+  if (admins.length === 0) $("#msg").textContent = "No admin has a GitHub handle - nobody could approve this request.";
+  else if (list.length === 0) $("#msg").textContent = "";
+}
+
+function renderHistory() {
+  $("#history").innerHTML = (original.history || []).map((h) => `<li><span class="d">${esc(h.date)}</span>${esc(h.change)}${h.by ? ` <span class="d">by ${esc(nameOf(h.by))}</span>` : ""}${h.note ? `<div class="note">${esc(h.note)}</div>` : ""}</li>`).join("") || `<li class="none">None recorded.</li>`;
+}
+
+function renderAll() { renderAreas(); renderDuty(); renderAdmins(); renderHandles(); renderReview(); save(); }
+
+// ---- events (delegated)
+document.addEventListener("change", (ev) => {
+  const t = ev.target;
+  if (t.dataset.area !== undefined) { state.roles.areas[+t.dataset.area][t.dataset.role] = t.value; renderAll(); }
+  else if (t.dataset.duty !== undefined) { state.roles.duty[+t.dataset.duty][t.dataset.k] = t.value; renderAll(); }
+  else if (t.dataset.admin) {
+    const id = t.dataset.admin;
+    state.roles.admins = t.checked ? [...new Set([...state.roles.admins, id])] : state.roles.admins.filter((x) => x !== id);
+    renderAll();
+  }
+  else if (t.dataset.handle) { state.handles[t.dataset.handle] = t.value.trim().replace(/^@/, ""); renderAll(); }
+});
+document.addEventListener("click", (ev) => {
+  const b = ev.target.closest("button");
+  if (!b) return;
+  if (b.dataset.swap !== undefined) {
+    const a = state.roles.areas[+b.dataset.swap];
+    [a.owner, a.backup] = [a.backup, a.owner];
+    renderAll();
+  } else if (b.dataset.removeDuty !== undefined) {
+    state.roles.duty.splice(+b.dataset.removeDuty, 1);
+    renderAll();
+  }
+});
+$("#add-term").addEventListener("click", () => {
+  const last = state.roles.duty.slice().sort((a, b) => a.to.localeCompare(b.to)).pop();
+  const next = nextTerm(last);
+  state.roles.duty.push({ ...next, editor: last ? last.editor : (sorted.find((p) => p.kind === "maintainer")?.id || "") });
+  renderAll();
+});
+$("#reset").addEventListener("click", () => {
+  state = { roles: clone(original), handles: { ...originalHandles } };
+  try { localStorage.removeItem(DRAFT_KEY); } catch {}
+  $("#result").hidden = true;
+  renderAll();
+});
+
+// Autumn: 14 Sep - 18 Dec · Spring: 11 Jan - 2 Apr · Summer: 20 Apr - 31 Jul (edit the dates as the calendar requires).
+function nextTerm(last) {
+  const y = last ? Number(last.to.slice(0, 4)) : Number(today.slice(0, 4));
+  const name = last ? last.term.split(" ")[0] : "";
+  if (name === "Autumn") return { term: `Spring ${y + 1}`, from: `${y + 1}-01-11`, to: `${y + 1}-04-02` };
+  if (name === "Spring") return { term: `Summer ${y}`, from: `${y}-04-20`, to: `${y}-07-31` };
+  return { term: `Autumn ${name === "Summer" ? y : y}`, from: `${y}-09-14`, to: `${y}-12-18` };
+}
+
+// ---- setup + submit
+fetch("api/roles").then((r) => r.ok ? r.json() : Promise.reject(r.status)).then((c) => {
+  config = c;
+  const noHandle = people.filter((p) => p.kind === "maintainer" && !p.github).length;
+  $("#banner").innerHTML = [
+    c.configured ? `<span class="pill ok">connected</span> <span>Requests become pull requests on <b>${esc(c.repo)}</b>.</span>` : `<span class="pill warn">not connected</span> <span>You can prepare a change, but it cannot be sent until the deployment has a GitHub token. Edit <b>content/maintainers.json</b> by hand meanwhile.</span>`,
+    noHandle ? `<span class="pill warn">${noHandle} maintainer${noHandle > 1 ? "s" : ""} without a handle</span>` : `<span class="pill ok">all maintainers have handles</span>`,
+  ].join("");
+  $("#pass-wrap").hidden = !c.passphraseRequired;
+  renderReview();
+}).catch(() => {
+  $("#banner").innerHTML = `<span class="pill warn">offline</span> <span>The roles function is not reachable; you can still preview changes.</span>`;
+});
+
+$("#send").addEventListener("click", async () => {
+  const msg = $("#msg");
+  msg.className = "msg";
+  const bad = people.find((p) => handleOf(p.id) && !HANDLE_RE.test(handleOf(p.id)));
+  if (bad) { msg.className = "msg bad"; msg.textContent = `"${handleOf(bad.id)}" is not a valid GitHub handle.`; return; }
+  const by = $("#by").value;
+  if (!by) { msg.className = "msg bad"; msg.textContent = "Pick your name."; return; }
+  $("#send").disabled = true;
+  msg.textContent = "Creating the request…";
+  const payload = {
+    roles: state.roles,
+    people: people.map((p) => ({ id: p.id, name: p.name, github: originalHandles[p.id] || "" })),
+    handles: Object.fromEntries(people.filter((p) => (originalHandles[p.id] || "") !== handleOf(p.id)).map((p) => [p.id, handleOf(p.id)])),
+    by,
+    note: $("#note").value,
+    passphrase: $("#passphrase").value,
+    website: $("#website").value,
+  };
+  try {
+    const r = await fetch("api/roles", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(payload) });
+    const d = await r.json();
+    if (!r.ok || !d.ok) throw new Error(d.detail || d.error || `HTTP ${r.status}`);
+    msg.className = "msg ok"; msg.textContent = "Request created.";
+    const admins = state.roles.admins.filter((id) => handleOf(id)).map((id) => `${nameOf(id)} (@${handleOf(id)})`);
+    $("#result").hidden = false;
+    $("#result").innerHTML = `<h3>Handover request #${d.pr.number} is open.</h3>
+      <p>${d.changes.length} change${d.changes.length > 1 ? "s" : ""} in ${d.files.length} file${d.files.length > 1 ? "s" : ""}. Nothing is live yet.</p>
+      <ol>
+        <li>GitHub has emailed the admins: ${esc(admins.join(", ") || "nobody with a handle yet")}.</li>
+        <li>One of them replies <code>/approve</code> to that email (or comments it on the pull request).</li>
+        <li>The change merges, the new CODEOWNERS takes effect at once, and the site redeploys in about a minute.</li>
+      </ol>
+      <div class="actions"><a class="btn" href="${esc(d.pr.url)}" target="_blank" rel="noopener">Open the request</a></div>`;
+    $("#result").scrollIntoView({ behavior: "smooth", block: "start" });
+    try { localStorage.removeItem(DRAFT_KEY); } catch {}
+  } catch (e) {
+    msg.className = "msg bad"; msg.textContent = e.message;
+    $("#send").disabled = false;
+  }
+});
+
+renderAll();
+renderHistory();
+</script>
+</body>
+</html>

@@ -58,6 +58,16 @@ export async function createBranchWithFiles(cfg, { branch, files, message }) {
   return { sha: commit.sha, branch };
 }
 
+// A text file from the base branch (null when it does not exist).
+export async function getFile(cfg, path) {
+  const res = await gh(cfg, `/repos/${cfg.repo}/contents/${path.split("/").map(encodeURIComponent).join("/")}?ref=${encodeURIComponent(cfg.base)}`, { raw: true });
+  if (res.status === 404) return null;
+  if (!res.ok) throw new HttpError(502, "github", `GitHub read ${path} failed (${res.status})`);
+  const data = await res.json();
+  if (!data || data.type !== "file") return null;
+  return Buffer.from(String(data.content || ""), "base64").toString("utf8");
+}
+
 export async function createPullRequest(cfg, { head, title, body }) {
   const pr = await gh(cfg, `/repos/${cfg.repo}/pulls`, { method: "POST", body: { title, head, base: cfg.base, body, maintainer_can_modify: true } });
   return { number: pr.number, url: pr.html_url };

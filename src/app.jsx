@@ -8,6 +8,9 @@ const { useState, useEffect, useRef, useMemo, useCallback } = React;
 // scripts/content.mjs into assets/data.js. To add a session, a post or a person,
 // edit the content files and run `npm run build` - never this block.
 const DATA = window.SSG_DATA;
+const JOIN_TO = (DATA.roles && DATA.roles.join && DATA.roles.join.email)
+  ? DATA.roles.join
+  : { name: "Dr Zexun Chen", email: (DATA.site.contact && DATA.site.contact.email) || "", cc: [] };
 if (!DATA) throw new Error("assets/data.js is missing or failed to load - run `npm run build`");
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const KIND_LABEL = { lecture: "Lecture", workshop: "Workshop", discussion: "Discussion" };
@@ -2146,6 +2149,9 @@ function Committee() {
             bright process in the spread state. Dates follow the British order, day first.
             Zhikai Zhang and Zhaoxi Zhang share a surname and an initial, so they are shortened
             to <b>ZK</b> and <b>ZX</b>.
+            {DATA.roles && DATA.roles.current &&
+              <> This term's editor is <b>{DATA.roles.current.editorName}</b> ({DATA.roles.current.term}).</>}
+            {DATA.roles && <> Who looks after which part of the site: <a href="roles.html">roles</a>.</>}
           </div>
         </div>
       </div>
@@ -2164,6 +2170,8 @@ function Committee() {
           {focus.bio && <div className="contrib-bio" style={{ fontSize: 14.5 }}>{focus.bio}</div>}
           {focus.topic &&
             <div className="person-modal-row"><span>Research Focus</span>{focus.topic}</div>}
+          {focus.roles && focus.roles.length > 0 &&
+            <div className="person-modal-row"><span>Looks after</span>{focus.roles.join(" · ")}</div>}
           {focus.email &&
             <div className="person-modal-row"><span>Contact</span><a href={"mailto:" + focus.email}>{focus.email}</a></div>}
           {focus.lectures && focus.lectures.length > 0 &&
@@ -2929,7 +2937,8 @@ function Join() {
       "",
       "Please add me to the Statistics Study Group discussion session invites."
     ].join("\n");
-    const mailto = `mailto:Zexun.Chen@ed.ac.uk?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    const cc = JOIN_TO.cc && JOIN_TO.cc.length ? `cc=${encodeURIComponent(JOIN_TO.cc.join(","))}&` : "";
+    const mailto = `mailto:${JOIN_TO.email}?${cc}subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     setSubmitted(true);
     requestAnimationFrame(() => { window.location.href = mailto; });
   };
@@ -2950,9 +2959,9 @@ function Join() {
           <div>
             {submitted ?
           <div className="form-success" role="status" tabIndex="-1">
-                <strong>Email draft prepared.</strong> Your email app should open with a message addressed to Dr Zexun Chen. Send that email to complete your request. Nothing has been sent automatically.
+                <strong>Email draft prepared.</strong> Your email app should open with a message addressed to {JOIN_TO.name}, who looks after membership this term. Send that email to complete your request. Nothing has been sent automatically.
                 <div className="form-success-actions">
-                  <a href="mailto:Zexun.Chen@ed.ac.uk">Email Zexun directly</a>
+                  <a href={"mailto:" + JOIN_TO.email}>Email {JOIN_TO.name.replace(/^Dr /, "").split(" ")[0]} directly</a>
                   <button type="button" onClick={() => setSubmitted(false)}>Review details</button>
                 </div>
               </div> :

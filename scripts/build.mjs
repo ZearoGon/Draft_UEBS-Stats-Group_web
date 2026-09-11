@@ -9,6 +9,7 @@ import {
   writeFileSync,
 } from "node:fs";
 import { spawnSync } from "node:child_process";
+import { copyFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { compileContent } from "./content.mjs";
@@ -28,6 +29,7 @@ const publishedEntries = [
   "index.html",
   "contributors.html",
   "submit.html",
+  "roles.html",
   "20260313_UEBS Statistics Study group_AI,ML,DL_Business_Overview.html",
   "topics",
   "assets",
@@ -312,6 +314,8 @@ function main() {
   // Content first: content/ -> assets/data.js (+ topic pages, contributors.html).
   // In --check mode it is validated without writing anything.
   const content = compileContent({ write: !checkOnly });
+  // roles.html runs the same role logic as the compiler and the approval workflow.
+  if (!checkOnly) copyFileSync(join(projectRoot, "api", "_lib", "roles.js"), join(projectRoot, "assets", "roles-lib.js"));
   console.log(`[build] content ${checkOnly ? "valid" : "compiled"}: ${content.summary}`);
 
   assertNonEmptyFile(sourcePath, "source HTML");

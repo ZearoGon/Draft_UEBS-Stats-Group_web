@@ -1,4 +1,42 @@
-# Everyone listed here is asked to review every pull request - which is what
-# makes GitHub send the notification email that maintainers reply to with /approve.
-# Add the GitHub handles of the maintainers, one per line or space-separated.
+# Generated from content/maintainers.json by scripts/content.mjs - do not edit.
+# Change roles in content/maintainers.json (or through roles.html) and run npm run build.
+#
+# GitHub asks the owners of the changed paths to review each pull request and emails
+# them; replying /approve to that email is what publishes the change.
+
+# Everything not claimed below: the admins.
 * @ZearoGon
+
+# Sessions & Atlas
+/content/sessions/ @ZearoGon
+/content/topics/ @ZearoGon
+/assets/talks/ @ZearoGon
+
+# Posts
+/content/posts/ @ZearoGon
+/assets/posts/ @ZearoGon
+
+# People & Membership
+/content/people/ @ZearoGon
+
+# Wall & Photos
+/assets/photos/ @ZearoGon
+/content/gallery.json @ZearoGon
+
+# Calendar & Broadcast
+/src/templates/feed.xml @ZearoGon
+/src/templates/calendar.ics @ZearoGon
+
+# Platform & Release
+/src/ @ZearoGon
+/scripts/ @ZearoGon
+/api/ @ZearoGon
+/.github/workflows/ @ZearoGon
+/vercel.json @ZearoGon
+/package.json @ZearoGon
+/package-lock.json @ZearoGon
+
+# Roles & Governance
+# /content/maintainers.json (no owner with a GitHub handle - falls to the admins)
+# /.github/CODEOWNERS (no owner with a GitHub handle - falls to the admins)
+# /content/site.json (no owner with a GitHub handle - falls to the admins)

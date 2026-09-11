@@ -2,8 +2,12 @@ name: Intake approval
 
 # Maintainers approve a submission from their inbox: replying "/approve" to the
 # GitHub notification email posts the reply as a comment, and this workflow merges
-# the pull request. "/changes <note>" sends it back with the note.
-# Only comments from people with write access to the repository count.
+# the pull request. "/changes <note>" sends it back with the note; "/reject" closes it.
+#
+# Who may act is decided by content/maintainers.json on main (scripts/authority.mjs):
+# the owner and backup of the area the changed files belong to, this term's editor
+# for the content areas, and the admins. Some areas need two approvals.
+# Only comments from people with write access to the repository count at all.
 
 on:
   issue_comment:
@@ -26,19 +30,47 @@ jobs:
       COMMENT: ${{ github.event.comment.body }}
       WHO: ${{ github.event.comment.user.login }}
     steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main   # roles are always read from main, never from the pull request
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Who may act on this pull request
+        id: auth
+        run: |
+          COMMAND="${COMMENT%%[[:space:]]*}"
+          FILES=$(gh pr view "$PR" --repo "$GITHUB_REPOSITORY" --json files --jq '[.files[].path] | join(",")')
+          APPROVERS=$(gh api "repos/$GITHUB_REPOSITORY/issues/$PR/comments" --paginate \
+            --jq '[.[] | select(.body | startswith("/approve")) | select(.author_association | IN("OWNER","MEMBER","COLLABORATOR")) | .user.login] | unique | join(",")')
+          node scripts/authority.mjs --files "$FILES" --who "$WHO" --command "$COMMAND" --approvers "$APPROVERS" > auth.json
+          cat auth.json
+          {
+            echo "allowed=$(jq -r .allowed auth.json)"
+            echo "message<<EOF"
+            jq -r .message auth.json
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+      - name: Say who is needed
+        if: steps.auth.outputs.allowed != 'true'
+        env:
+          MESSAGE: ${{ steps.auth.outputs.message }}
+        run: gh pr comment "$PR" --repo "$GITHUB_REPOSITORY" --body "$MESSAGE"
       - name: Approve and merge
-        if: startsWith(github.event.comment.body, '/approve')
+        if: steps.auth.outputs.allowed == 'true' && startsWith(github.event.comment.body, '/approve')
         run: |
           gh pr comment "$PR" --repo "$GITHUB_REPOSITORY" --body "Approved by @$WHO - merging. The site redeploys in about a minute."
           gh pr merge "$PR" --repo "$GITHUB_REPOSITORY" --squash --delete-branch
       - name: Send back for changes
-        if: startsWith(github.event.comment.body, '/changes')
+        if: steps.auth.outputs.allowed == 'true' && startsWith(github.event.comment.body, '/changes')
         run: |
           NOTE="${COMMENT#/changes}"
           gh pr comment "$PR" --repo "$GITHUB_REPOSITORY" --body "Sent back by @$WHO:${NOTE:- (no note)}. A maintainer can edit the files on this branch and comment /approve when ready."
           gh pr edit "$PR" --repo "$GITHUB_REPOSITORY" --add-label "changes-requested" || true
       - name: Reject and close
-        if: startsWith(github.event.comment.body, '/reject')
+        if: steps.auth.outputs.allowed == 'true' && startsWith(github.event.comment.body, '/reject')
         run: |
           NOTE="${COMMENT#/reject}"
           gh pr comment "$PR" --repo "$GITHUB_REPOSITORY" --body "Closed by @$WHO without publishing.${NOTE}"

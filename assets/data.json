@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-06T09:45:19.271Z",
+  "generatedAt": "2026-09-11T15:47:39.109Z",
   "site": {
     "name": "Statistics Study Group",
     "school": "University of Edinburgh Business School",
@@ -144,6 +144,11 @@
       "field": "MSBE",
       "topic": "Statistical methods for business research",
       "email": "Zexun.Chen@ed.ac.uk",
+      "github": "",
+      "roles": [
+        "Platform & Release (backup)",
+        "Admin"
+      ],
       "bio": "Dr Zexun Chen leads the Statistics Study Group at the University of Edinburgh Business School, focusing on statistical tools and methods that are extensively used in business school research. He organises discussion sessions and coordinates the group's activities.",
       "lectures": [
         {
@@ -169,6 +174,8 @@
       "field": "MSBE",
       "topic": "Gaussian processes, Bayesian methods, Git & GitHub",
       "email": "S.Fang-6@sms.ed.ac.uk",
+      "github": "",
+      "roles": [],
       "bio": "Shiqi Fang contributes to the group from a management research perspective. He has presented on topics including Git & GitHub, Gaussian Process, and Bayesian Linear Regression, helping bridge statistical methods with management science.",
       "lectures": [
         {
@@ -207,6 +214,8 @@
       "field": "FinTech",
       "topic": "Covariance estimation, kernel methods, credit scoring",
       "email": "Heqing.Shi@ed.ac.uk",
+      "github": "",
+      "roles": [],
       "bio": "Heqing Shi focuses on fintech applications, contributing knowledge in high-dimensional covariance matrix estimation and the kernel trick. His research spans credit scoring, risk forecasting, and asset pricing statistical tools.",
       "lectures": [
         {
@@ -251,6 +260,17 @@
       "field": "Accounting & Finance",
       "topic": "Econometrics, asset pricing, Fama-MacBeth regression",
       "email": "Y.Qi-18@sms.ed.ac.uk",
+      "github": "ZearoGon",
+      "roles": [
+        "Sessions & Atlas",
+        "Posts",
+        "People & Membership",
+        "Wall & Photos",
+        "Archive & Materials",
+        "Calendar & Broadcast",
+        "Platform & Release",
+        "Admin"
+      ],
       "bio": "Yifan Qi focuses on econometrics and asset pricing. He has presented on Econometrics Foundation and the Fama-MacBeth two-pass regression procedure, a cornerstone methodology for testing asset pricing models in cross-sectional finance research.",
       "lectures": [
         {
@@ -295,6 +315,8 @@
       "field": "MSBE",
       "topic": "Sampling methods, change-point detection, MOSUM",
       "email": "C.Guo-17@sms.ed.ac.uk",
+      "github": "",
+      "roles": [],
       "bio": "Chenyang Guo contributes expertise in statistical sampling and time series analysis. He has presented on Accept-Reject Sampling methods and MOSUM-based change-point detection techniques for identifying structural breaks in financial data.",
       "lectures": [
         {
@@ -333,6 +355,8 @@
       "field": "FinTech",
       "topic": "MLE, propensity score matching, synthetic data",
       "email": "yhu8@ed.ac.uk",
+      "github": "",
+      "roles": [],
       "bio": "Yizhuo Hu works on statistical estimation and causal inference methods. He has presented on Maximum Likelihood Estimation, Propensity Score Matching, and Synthetic Data generation for financial research applications.",
       "lectures": [
         {
@@ -371,6 +395,8 @@
       "field": "FinTech",
       "topic": "AI research agents, Stata & Python integration",
       "email": "R.Tian-6@sms.ed.ac.uk",
+      "github": "",
+      "roles": [],
       "bio": "Runzhi Tian bridges AI-powered research workflows with traditional econometrics. He co-presented the hands-on workshop on Claude Code × Stata & Python, guiding researchers through building domain-specific AI research agents.",
       "lectures": [
         {
@@ -397,6 +423,8 @@
       "field": "MSBE & Finance",
       "topic": "AI methods in finance",
       "email": "Y.Jiang-172@sms.ed.ac.uk",
+      "github": "",
+      "roles": [],
       "bio": "Yuyang Jiang focuses on applying artificial intelligence and machine learning methods to explore financial research questions.",
       "lectures": [],
       "introduced": "",
@@ -416,6 +444,8 @@
       "field": "Finance",
       "topic": "Empirical asset pricing, factor structures, market anomalies",
       "email": "",
+      "github": "",
+      "roles": [],
       "bio": "Zhengnan Lu is a PhD researcher in Finance, focusing on empirical asset pricing, factor structures, and market anomalies.",
       "lectures": [
         {
@@ -442,6 +472,8 @@
       "field": "Finance",
       "topic": "Micro-econometrics, policy evaluation, causal inference",
       "email": "",
+      "github": "",
+      "roles": [],
       "bio": "Ke Bi is a PhD researcher specializing in micro-econometrics, policy evaluation, and causal inference methodologies in business research.",
       "lectures": [
         {
@@ -480,6 +512,8 @@
       "field": "Marketing",
       "topic": "Influencer marketing, sponsored content, LLMs and social media platforms",
       "email": "",
+      "github": "",
+      "roles": [],
       "bio": "Han Zhang is a PhD researcher in the Marketing Group working on large language models, social media platforms, influencer marketing and the video game industry, and brought the group a recently published study on the “sponsored content residue” - what a sponsored post leaves behind in how audiences read an influencer’s later, unpaid posts.",
       "lectures": [
         {
@@ -507,6 +541,8 @@
       "field": "FinTech",
       "topic": "",
       "email": "",
+      "github": "",
+      "roles": [],
       "bio": "Xindi Yang brought the group its first speaker from outside the Business School, introducing Zhaoxi Zhang from the School of Mathematics.",
       "lectures": [],
       "introduced": "ZX",
@@ -526,6 +562,8 @@
       "field": "School of Mathematics",
       "topic": "",
       "email": "",
+      "github": "",
+      "roles": [],
       "bio": "Zhaoxi Zhang is a PhD student in the School of Mathematics, invited into the group by Xindi Yang.",
       "lectures": [
         {
@@ -552,6 +590,8 @@
       "field": "MSBE & Finance",
       "topic": "",
       "email": "",
+      "github": "",
+      "roles": [],
       "bio": "",
       "lectures": [],
       "introduced": "",
@@ -571,6 +611,8 @@
       "field": "Finance",
       "topic": "",
       "email": "",
+      "github": "",
+      "roles": [],
       "bio": "",
       "lectures": [],
       "introduced": "",
@@ -590,6 +632,8 @@
       "field": "Finance",
       "topic": "",
       "email": "",
+      "github": "",
+      "roles": [],
       "bio": "",
       "lectures": [],
       "introduced": "",
@@ -609,6 +653,8 @@
       "field": "Finance",
       "topic": "",
       "email": "",
+      "github": "",
+      "roles": [],
       "bio": "",
       "lectures": [],
       "introduced": "",
@@ -2825,5 +2871,187 @@
       "eventDateLabel": "",
       "postId": "20240606_conference-and-workshop-opportunities"
     }
-  ]
+  ],
+  "roles": {
+    "areas": [
+      {
+        "id": "sessions",
+        "label": "Sessions & Atlas",
+        "paths": [
+          "content/sessions/",
+          "content/topics/",
+          "assets/talks/"
+        ],
+        "owner": "yifan-qi",
+        "backup": "",
+        "approvals": 1,
+        "duty": true,
+        "note": "",
+        "ownerName": "Yifan Qi",
+        "backupName": "",
+        "ownerHandle": "ZearoGon",
+        "backupHandle": ""
+      },
+      {
+        "id": "posts",
+        "label": "Posts",
+        "paths": [
+          "content/posts/",
+          "assets/posts/"
+        ],
+        "owner": "yifan-qi",
+        "backup": "",
+        "approvals": 1,
+        "duty": true,
+        "note": "",
+        "ownerName": "Yifan Qi",
+        "backupName": "",
+        "ownerHandle": "ZearoGon",
+        "backupHandle": ""
+      },
+      {
+        "id": "people",
+        "label": "People & Membership",
+        "paths": [
+          "content/people/"
+        ],
+        "owner": "yifan-qi",
+        "backup": "",
+        "approvals": 2,
+        "duty": true,
+        "note": "Also answers the Join form.",
+        "ownerName": "Yifan Qi",
+        "backupName": "",
+        "ownerHandle": "ZearoGon",
+        "backupHandle": ""
+      },
+      {
+        "id": "community",
+        "label": "Wall & Photos",
+        "paths": [
+          "assets/photos/",
+          "content/gallery.json"
+        ],
+        "owner": "yifan-qi",
+        "backup": "",
+        "approvals": 1,
+        "duty": false,
+        "note": "",
+        "ownerName": "Yifan Qi",
+        "backupName": "",
+        "ownerHandle": "ZearoGon",
+        "backupHandle": ""
+      },
+      {
+        "id": "archive",
+        "label": "Archive & Materials",
+        "paths": [],
+        "owner": "yifan-qi",
+        "backup": "",
+        "approvals": 1,
+        "duty": false,
+        "note": "OneDrive email archive, the group's SharePoint library, date verification.",
+        "ownerName": "Yifan Qi",
+        "backupName": "",
+        "ownerHandle": "ZearoGon",
+        "backupHandle": ""
+      },
+      {
+        "id": "broadcast",
+        "label": "Calendar & Broadcast",
+        "paths": [
+          "src/templates/feed.xml",
+          "src/templates/calendar.ics"
+        ],
+        "owner": "yifan-qi",
+        "backup": "",
+        "approvals": 1,
+        "duty": false,
+        "note": "feed.xml, calendar.ics, the announcement emails, the Power Automate flow.",
+        "ownerName": "Yifan Qi",
+        "backupName": "",
+        "ownerHandle": "ZearoGon",
+        "backupHandle": ""
+      },
+      {
+        "id": "platform",
+        "label": "Platform & Release",
+        "paths": [
+          "src/",
+          "scripts/",
+          "api/",
+          ".github/workflows/",
+          "vercel.json",
+          "package.json",
+          "package-lock.json"
+        ],
+        "owner": "yifan-qi",
+        "backup": "zexun-chen",
+        "approvals": 1,
+        "duty": false,
+        "note": "",
+        "ownerName": "Yifan Qi",
+        "backupName": "Dr Zexun Chen",
+        "ownerHandle": "ZearoGon",
+        "backupHandle": ""
+      },
+      {
+        "id": "governance",
+        "label": "Roles & Governance",
+        "paths": [
+          "content/maintainers.json",
+          ".github/CODEOWNERS",
+          "content/site.json"
+        ],
+        "owner": "",
+        "backup": "",
+        "approvals": 1,
+        "duty": false,
+        "note": "Changes here are approved by the admins only.",
+        "ownerName": "",
+        "backupName": "",
+        "ownerHandle": "",
+        "backupHandle": ""
+      }
+    ],
+    "duty": [
+      {
+        "term": "Autumn 2026",
+        "from": "2026-09-14",
+        "to": "2026-12-18",
+        "editor": "yifan-qi",
+        "editorName": "Yifan Qi"
+      }
+    ],
+    "current": null,
+    "next": {
+      "term": "Autumn 2026",
+      "from": "2026-09-14",
+      "to": "2026-12-18",
+      "editor": "yifan-qi",
+      "editorName": "Yifan Qi"
+    },
+    "admins": [
+      "yifan-qi",
+      "zexun-chen"
+    ],
+    "adminNames": [
+      "Yifan Qi",
+      "Dr Zexun Chen"
+    ],
+    "history": [
+      {
+        "date": "2026-09-11",
+        "change": "Roles introduced; every area starts with Yifan Qi while the maintainers pick their areas.",
+        "by": "yifan-qi",
+        "note": ""
+      }
+    ],
+    "join": {
+      "id": "yifan-qi",
+      "name": "Yifan Qi",
+      "email": "Y.Qi-18@sms.ed.ac.uk",
+      "cc": []
+    }
+  }
 }

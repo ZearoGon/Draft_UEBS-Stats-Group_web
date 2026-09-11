@@ -78,6 +78,7 @@ order: 14                      # position in the roster
 field: "Finance"               # must have a colour in the network - see KNOWN_FIELDS in scripts/content.mjs
 topic: "One line of research interests"
 email: ""                      # optional
+github: ""                     # optional - the GitHub username (github.com/<this>), needed to approve anything
 new: true                      # shows the "New" tag in the roster
 ---
 
@@ -118,3 +119,13 @@ Never paste Teams links or passcodes anywhere - the build rejects them.
 Session dates are the day the session took place, not the day the email was
 sent. Two sessions in 2024/25 are still unconfirmed; they carry
 `date_verified: false` and a `date_note` until checked against the calendar.
+
+## Roles (content/maintainers.json)
+
+Who looks after which part of the site. Areas list the repository paths they cover
+(`content/sessions/`, `assets/talks/`, ...), an `owner` and a `backup` (person ids from
+this folder), optionally `"approvals": 2` and `"duty": true` (the editor of the term also
+counts). `duty` lists one editor per term with dates, `admins` may approve anything, and
+`history` is appended on every handover. `npm run build` regenerates `.github/CODEOWNERS`
+from it; `npm run build:check` fails when the two disagree. Change it through roles.html
+on the site (a pull request for the admins) or by hand.

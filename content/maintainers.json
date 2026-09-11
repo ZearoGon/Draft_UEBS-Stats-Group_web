@@ -1,0 +1,75 @@
+{
+  "areas": [
+    {
+      "id": "sessions",
+      "label": "Sessions & Atlas",
+      "paths": ["content/sessions/", "content/topics/", "assets/talks/"],
+      "owner": "yifan-qi",
+      "backup": "",
+      "duty": true
+    },
+    {
+      "id": "posts",
+      "label": "Posts",
+      "paths": ["content/posts/", "assets/posts/"],
+      "owner": "yifan-qi",
+      "backup": "",
+      "duty": true
+    },
+    {
+      "id": "people",
+      "label": "People & Membership",
+      "paths": ["content/people/"],
+      "owner": "yifan-qi",
+      "backup": "",
+      "approvals": 2,
+      "duty": true,
+      "note": "Also answers the Join form."
+    },
+    {
+      "id": "community",
+      "label": "Wall & Photos",
+      "paths": ["assets/photos/", "content/gallery.json"],
+      "owner": "yifan-qi",
+      "backup": ""
+    },
+    {
+      "id": "archive",
+      "label": "Archive & Materials",
+      "paths": [],
+      "owner": "yifan-qi",
+      "backup": "",
+      "note": "OneDrive email archive, the group's SharePoint library, date verification."
+    },
+    {
+      "id": "broadcast",
+      "label": "Calendar & Broadcast",
+      "paths": ["src/templates/feed.xml", "src/templates/calendar.ics"],
+      "owner": "yifan-qi",
+      "backup": "",
+      "note": "feed.xml, calendar.ics, the announcement emails, the Power Automate flow."
+    },
+    {
+      "id": "platform",
+      "label": "Platform & Release",
+      "paths": ["src/", "scripts/", "api/", ".github/workflows/", "vercel.json", "package.json", "package-lock.json"],
+      "owner": "yifan-qi",
+      "backup": "zexun-chen"
+    },
+    {
+      "id": "governance",
+      "label": "Roles & Governance",
+      "paths": ["content/maintainers.json", ".github/CODEOWNERS", "content/site.json"],
+      "owner": "",
+      "backup": "",
+      "note": "Changes here are approved by the admins only."
+    }
+  ],
+  "duty": [
+    { "term": "Autumn 2026", "from": "2026-09-14", "to": "2026-12-18", "editor": "yifan-qi" }
+  ],
+  "admins": ["yifan-qi", "zexun-chen"],
+  "history": [
+    { "date": "2026-09-11", "change": "Roles introduced; every area starts with Yifan Qi while the maintainers pick their areas.", "by": "yifan-qi", "note": "" }
+  ]
+}
