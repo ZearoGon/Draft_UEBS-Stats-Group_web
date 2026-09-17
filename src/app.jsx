@@ -798,7 +798,7 @@ deepsky: {
   },
   nameTag(ctx, nd, a) {
     if ("letterSpacing" in ctx) ctx.letterSpacing = "1.2px";
-    ctx.font = '500 9.5px "IBM Plex Mono", monospace';
+    ctx.font = '500 9.5px "Jost", "Helvetica Neue", Arial, sans-serif';
     ctx.fillStyle = `rgba(206,220,244,${a})`;
     ctx.fillText(nd.p.name.toUpperCase(), nd.x, nd.y + nd.r + 10);
     if ("letterSpacing" in ctx) ctx.letterSpacing = "0px";
@@ -878,7 +878,7 @@ journal: {
   },
   nameTag(ctx, nd, a) {
     if ("letterSpacing" in ctx) ctx.letterSpacing = "0.9px";
-    ctx.font = '600 9px "Source Sans 3", system-ui, sans-serif';
+    ctx.font = '600 9px "Jost", "Helvetica Neue", Arial, sans-serif';
     ctx.fillStyle = `rgba(222,232,246,${a * 0.95})`;
     ctx.fillText(nd.p.name.toUpperCase(), nd.x, nd.y + nd.r + 10);
     if ("letterSpacing" in ctx) ctx.letterSpacing = "0px";
@@ -888,7 +888,7 @@ journal: {
     ctx.strokeStyle = "rgba(190,214,244,0.16)"; ctx.lineWidth = 1;
     ctx.strokeRect(16.5, 16.5, w - 33, h - 33);
     if ("letterSpacing" in ctx) ctx.letterSpacing = "1.4px";
-    ctx.textAlign = "right"; ctx.font = '500 8.5px "IBM Plex Mono", monospace';
+    ctx.textAlign = "right"; ctx.font = '500 8.5px "Jost", "Helvetica Neue", Arial, sans-serif';
     ctx.fillStyle = "rgba(190,214,244,0.5)";
     ctx.fillText("FIG. 1 · FUNCTIONAL CONNECTIVITY, UEBS STATISTICS GROUP (n = " + PEOPLE.length + ")", w - 30, h - 34);
     ctx.textAlign = "center";
@@ -973,7 +973,7 @@ fluor: {
   },
   nameTag(ctx, nd, a) {
     if ("letterSpacing" in ctx) ctx.letterSpacing = "1px";
-    ctx.font = '500 9px "IBM Plex Mono", monospace';
+    ctx.font = '500 9px "Jost", "Helvetica Neue", Arial, sans-serif';
     ctx.fillStyle = `rgba(214,240,224,${a * 0.8})`;
     ctx.fillText(nd.p.name.toUpperCase(), nd.x, nd.y + nd.r + 11);
     if ("letterSpacing" in ctx) ctx.letterSpacing = "0px";
@@ -982,7 +982,7 @@ fluor: {
     ctx.globalCompositeOperation = "source-over";
     ctx.fillStyle = "rgba(236,255,244,0.82)";
     ctx.fillRect(w - 118, h - 40, 70, 3);
-    ctx.textAlign = "center"; ctx.font = '500 8.5px "IBM Plex Mono", monospace';
+    ctx.textAlign = "center"; ctx.font = '500 8.5px "Jost", "Helvetica Neue", Arial, sans-serif';
     ctx.fillStyle = "rgba(236,255,244,0.6)";
     ctx.fillText("20 μm", w - 83, h - 34);
     ctx.globalAlpha = 0.06; ctx.drawImage(s.grain(Math.round(w), Math.round(h)), 0, 0, w, h); ctx.globalAlpha = 1;
@@ -1069,7 +1069,7 @@ golgi: {
   },
   nameTag(ctx, nd, a) {
     ctx.globalCompositeOperation = "source-over";
-    ctx.font = 'italic 500 11.5px "Source Serif 4", Georgia, serif';
+    ctx.font = 'italic 500 11.5px "Jost", "Helvetica Neue", Arial, sans-serif';
     ctx.fillStyle = `rgba(42,32,22,${Math.min(0.9, a * 1.6)})`;
     ctx.fillText(nd.p.name, nd.x, nd.y + nd.r + 12);
   },
@@ -1078,7 +1078,7 @@ golgi: {
     ctx.globalAlpha = 0.05; ctx.drawImage(s.grain(Math.round(w), Math.round(h)), 0, 0, w, h); ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = "source-over";
     ctx.textAlign = "right";
-    ctx.font = 'italic 400 10.5px "Source Serif 4", Georgia, serif';
+    ctx.font = 'italic 400 10.5px "Jost", "Helvetica Neue", Arial, sans-serif';
     ctx.fillStyle = "rgba(60,46,32,0.5)";
     ctx.fillText("Pl. I - Réseau de la Société de Statistique, Édimbourg.", w - 30, h - 30);
     ctx.textAlign = "center";
@@ -1159,7 +1159,7 @@ tract: {
   },
   nameTag(ctx, nd, a) {
     if ("letterSpacing" in ctx) ctx.letterSpacing = "0.9px";
-    ctx.font = '500 9px "IBM Plex Mono", monospace';
+    ctx.font = '500 9px "Jost", "Helvetica Neue", Arial, sans-serif';
     ctx.fillStyle = `rgba(226,234,250,${a * 0.85})`;
     ctx.fillText(nd.p.name.toUpperCase(), nd.x, nd.y + nd.r + 10);
     if ("letterSpacing" in ctx) ctx.letterSpacing = "0px";
@@ -1167,7 +1167,7 @@ tract: {
   over(ctx, w, h) {
     ctx.globalCompositeOperation = "source-over";
     if ("letterSpacing" in ctx) ctx.letterSpacing = "1.2px";
-    ctx.textAlign = "right"; ctx.font = '500 8.5px "IBM Plex Mono", monospace';
+    ctx.textAlign = "right"; ctx.font = '500 8.5px "Jost", "Helvetica Neue", Arial, sans-serif';
     ctx.fillStyle = "rgba(210,220,244,0.45)";
     ctx.fillText("DIRECTION-ENCODED · R: L-R   G: A-P   B: OBLIQUE", w - 30, h - 32);
     ctx.textAlign = "center";
@@ -1202,12 +1202,12 @@ function seatCaption(ctx, nd, P, a, big, small, colOverride) {
   ctx.textAlign = "center"; ctx.textBaseline = "top";
   const col = colOverride || P.seatRGB;
   if ("letterSpacing" in ctx) ctx.letterSpacing = "1.4px";
-  ctx.font = '600 8.5px "IBM Plex Mono", monospace';
+  ctx.font = '600 8.5px "Jost", "Helvetica Neue", Arial, sans-serif';
   ctx.fillStyle = rgba(col, a);
   ctx.fillText(big, nd.x, nd.y + 17);
   if ("letterSpacing" in ctx) ctx.letterSpacing = "0px";
   if (small) {
-    ctx.font = 'italic 400 11px "Source Serif 4", Georgia, serif';
+    ctx.font = 'italic 400 11px "Jost", "Helvetica Neue", Arial, sans-serif';
     ctx.fillStyle = rgba(P.paper ? [90, 70, 50] : [226, 234, 250], a * 0.72);
     ctx.fillText(small, nd.x, nd.y + 29);
   }
@@ -2873,7 +2873,7 @@ function StarRiver() {
         if (p.x > 1.18) p.x = -0.18;
         const px = p.x * W;
         const py = p.y * H + flowY(p.x, p.y, t * 0.6) * 1.6;
-        ctx.font = `italic ${p.s}px "Source Serif 4", Georgia, serif`;
+        ctx.font = `italic ${p.s}px "Jost", "Helvetica Neue", Arial, sans-serif`;
         ctx.globalAlpha = 0.17;
         ctx.fillStyle = "#bcd8e8";
         ctx.fillText(p.tex, px, py);
