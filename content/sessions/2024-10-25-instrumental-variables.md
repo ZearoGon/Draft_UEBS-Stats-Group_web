@@ -9,7 +9,7 @@ format: "in-person"
 speakers: ["ke-bi"]
 title: "Econometrics Foundation 2: Instrumental Variables and Endogeneity"
 short: "IV & Endogeneity"
-topic: "econ"
+method: "causal"
 semester: "Autumn 2024"
 materials: 
   - {"label": "Slides (revised after the session)", "file": "assets/talks/IV_Revised.pdf"}

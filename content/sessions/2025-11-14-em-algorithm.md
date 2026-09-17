@@ -11,8 +11,8 @@ format: "in-person"
 speakers: ["chenyang-guo"]
 title: "Expectation-Maximization Algorithm"
 short: "EM Algorithm"
-topic: "stat"
-also: ["risk"]
+method: "estimation"
+fields: {"risk": 3, "asset": 2, "econ": 2}
 semester: "Autumn 2025"
 materials: 
   - {"label": "Slides", "file": "assets/talks/EM_Algorithm.pdf"}

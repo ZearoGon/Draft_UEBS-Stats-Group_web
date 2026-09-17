@@ -11,8 +11,7 @@ format: "in-person"
 speakers: ["heqing-shi"]
 title: "Variational Auto-Encoder (II)"
 short: "VAE II"
-topic: "ai"
-also: ["stat"]
+method: "ml"
 semester: "Autumn 2025"
 materials: 
   - {"label": "Notes", "file": "assets/talks/VAE.pdf"}

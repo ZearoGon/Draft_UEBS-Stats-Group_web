@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-17T21:16:24.161Z",
+  "generatedAt": "2026-09-17T23:22:44.687Z",
   "site": {
     "name": "Statistics Study Group",
     "school": "University of Edinburgh Business School",
@@ -38,6 +38,8 @@
     "contributors": 12,
     "lectures": 23,
     "sessions": 24,
+    "fields": 5,
+    "methods": 7,
     "topics": 5,
     "founded": 2024
   },
@@ -54,81 +56,173 @@
   ],
   "topics": [
     {
-      "id": "core",
-      "label": "Statistics",
-      "caption": "The Backbone",
+      "id": "stat",
+      "kind": "methods",
+      "label": "Statistical Methods",
       "order": 0,
-      "x": 600,
-      "y": 380,
+      "href": "topics/statistical-methods.html",
+      "blurb": "Tests, estimators and sampling schemes - the raw machinery. From maximum likelihood to Gaussian processes and change-point detection, these lectures sharpen the tools every other branch depends on.",
+      "fields": null,
+      "hasPage": true
+    },
+    {
+      "id": "causal",
+      "kind": "method",
+      "label": "Regression & causal inference",
+      "order": 1,
       "href": "",
-      "blurb": "Statistics is the connective tissue of everything we do - the shared language that lets credit researchers argue with asset pricers and econometricians borrow from machine learning. Lectures on research craft and tooling live on the trunk itself.",
+      "blurb": "From least squares to identification: instrumental variables, difference-in-differences, matching and mechanism analysis - the grammar of an empirical argument, in economics and in marketing alike.",
+      "fields": {
+        "econ": 3,
+        "marketing": 3,
+        "asset": 2,
+        "credit": 2,
+        "risk": 1
+      },
       "hasPage": false
     },
     {
-      "id": "stat",
-      "label": "Statistical Methods",
-      "caption": "",
+      "id": "econ",
+      "kind": "field",
+      "label": "Econometrics",
       "order": 1,
-      "x": 600,
-      "y": 150,
-      "href": "topics/statistical-methods.html",
-      "blurb": "Tests, estimators and sampling schemes - the raw machinery. From maximum likelihood to Gaussian processes and change-point detection, these lectures sharpen the tools every other branch depends on.",
+      "href": "topics/econometrics.html",
+      "blurb": "Bridging economics and statistics: identification, causal inference and the foundations of regression. DiD, matching and IV - the grammar of empirical economic arguments.",
+      "fields": null,
       "hasPage": true
     },
     {
-      "id": "econ",
-      "label": "Econometrics",
-      "caption": "",
+      "id": "estimation",
+      "kind": "method",
+      "label": "Estimation & Bayesian inference",
       "order": 2,
-      "x": 265,
-      "y": 258,
-      "href": "topics/econometrics.html",
-      "blurb": "Bridging economics and statistics: identification, causal inference and the foundations of regression. DiD, matching and IV - the grammar of empirical economic arguments.",
-      "hasPage": true
+      "href": "",
+      "blurb": "Maximum likelihood, the EM algorithm, Bayesian regression and Gaussian processes: how parameters are learned from data, and what a prior buys you.",
+      "fields": {
+        "econ": 3,
+        "marketing": 2,
+        "asset": 2,
+        "risk": 2,
+        "credit": 2
+      },
+      "hasPage": false
+    },
+    {
+      "id": "marketing",
+      "kind": "field",
+      "label": "Marketing",
+      "order": 2,
+      "href": "",
+      "blurb": "Consumers, platforms and influence: field experiments, causal designs and the econometrics of behaviour. The group's newest field, opened by a marketing paper on what sponsored content leaves behind.",
+      "fields": null,
+      "hasPage": false
     },
     {
       "id": "asset",
+      "kind": "field",
       "label": "Asset Pricing",
-      "caption": "",
       "order": 3,
-      "x": 935,
-      "y": 258,
       "href": "topics/asset-pricing.html",
       "blurb": "Can returns be predicted in the cross-section? Factor models, Fama-MacBeth regressions and the ongoing hunt for pricing power in stocks, bonds and derivatives.",
+      "fields": null,
       "hasPage": true
     },
     {
-      "id": "credit",
-      "label": "Credit Research",
-      "caption": "",
+      "id": "factor",
+      "kind": "method",
+      "label": "Factor models & cross-sectional tests",
+      "order": 3,
+      "href": "",
+      "blurb": "Fama-MacBeth regressions, the factor zoo and momentum in the factors themselves - the statistics that decide whether returns can be explained.",
+      "fields": {
+        "asset": 3,
+        "risk": 2,
+        "econ": 1
+      },
+      "hasPage": false
+    },
+    {
+      "id": "multivariate",
+      "kind": "method",
+      "label": "Multivariate & time series",
       "order": 4,
-      "x": 265,
-      "y": 502,
-      "href": "topics/credit-research.html",
-      "blurb": "Credit scoring, default prediction and the statistics of lending decisions. A growing branch - blog material is up, and the first dedicated lecture is waiting for a speaker.",
-      "hasPage": true
-    },
-    {
-      "id": "ai",
-      "label": "AI & Machine Learning",
-      "caption": "",
-      "order": 5,
-      "x": 935,
-      "y": 502,
-      "href": "20260313_UEBS%20Statistics%20Study%20group_AI,ML,DL_Business_Overview.html",
-      "blurb": "Machine learning, deep learning and AI-powered research workflows - from kernel methods to synthetic data and AI research agents driving Stata & Python.",
+      "href": "",
+      "blurb": "Large covariance matrices, change-point detection and measures of separation between groups - structure across many variables, and across time.",
+      "fields": {
+        "risk": 3,
+        "asset": 3,
+        "econ": 2,
+        "credit": 1,
+        "marketing": 1
+      },
       "hasPage": false
     },
     {
       "id": "risk",
+      "kind": "field",
       "label": "Risk Management",
-      "caption": "",
-      "order": 6,
-      "x": 600,
-      "y": 610,
+      "order": 4,
       "href": "topics/risk-management.html",
       "blurb": "Risk forecasting and the high-dimensional statistics behind it - covariance estimation, portfolio risk and the models that keep tail events honest.",
+      "fields": null,
       "hasPage": true
+    },
+    {
+      "id": "credit",
+      "kind": "field",
+      "label": "Credit Research",
+      "order": 5,
+      "href": "topics/credit-research.html",
+      "blurb": "Credit scoring, default prediction and the statistics of lending decisions. A growing branch - blog material is up, and the first dedicated lecture is waiting for a speaker.",
+      "fields": null,
+      "hasPage": true
+    },
+    {
+      "id": "sampling",
+      "kind": "method",
+      "label": "Sampling & simulation",
+      "order": 5,
+      "href": "",
+      "blurb": "Drawing from distributions you cannot invert: accept-reject sampling and the Monte Carlo machinery behind risk measures and pricing.",
+      "fields": {
+        "risk": 3,
+        "asset": 2,
+        "credit": 1,
+        "econ": 1
+      },
+      "hasPage": false
+    },
+    {
+      "id": "ml",
+      "kind": "method",
+      "label": "Machine learning",
+      "order": 6,
+      "href": "20260313_UEBS%20Statistics%20Study%20group_AI,ML,DL_Business_Overview.html",
+      "blurb": "Kernel methods, variational auto-encoders, synthetic data and where AI now sits in research practice - learning from data when the model is not written down in advance.",
+      "fields": {
+        "credit": 3,
+        "asset": 2,
+        "marketing": 2,
+        "risk": 2,
+        "econ": 1
+      },
+      "hasPage": false
+    },
+    {
+      "id": "craft",
+      "kind": "method",
+      "label": "Research craft & tooling",
+      "order": 7,
+      "href": "",
+      "blurb": "Version control, AI research agents driving Stata and Python, and the group's own planning sessions - the working practices every field shares.",
+      "fields": {
+        "econ": 1,
+        "marketing": 1,
+        "asset": 1,
+        "risk": 1,
+        "credit": 1
+      },
+      "hasPage": false
     }
   ],
   "people": [
@@ -694,8 +788,11 @@
       "introducedBy": "",
       "title": "Factor Momentum Revisited: Does the 47-Factor Kernel Collapse to BAB and QMJ?",
       "short": "Factor Momentum",
-      "topic": "asset",
-      "also": [],
+      "method": "factor",
+      "fields": {
+        "asset": 3
+      },
+      "fieldsOwn": true,
       "semester": "Spring 2026",
       "journal": "",
       "materials": [],
@@ -732,8 +829,15 @@
       "introducedBy": "",
       "title": "Claude Code × Stata & Python: AI Research Agent",
       "short": "Claude Code × Stata",
-      "topic": "ai",
-      "also": [],
+      "method": "craft",
+      "fields": {
+        "econ": 1,
+        "marketing": 1,
+        "asset": 1,
+        "risk": 1,
+        "credit": 1
+      },
+      "fieldsOwn": false,
       "semester": "Spring 2026",
       "journal": "",
       "materials": [
@@ -784,8 +888,15 @@
       "introducedBy": "",
       "title": "Shaping Research with AI, Machine Learning and Deep Learning",
       "short": "AI & ML Overview",
-      "topic": "ai",
-      "also": [],
+      "method": "ml",
+      "fields": {
+        "credit": 3,
+        "asset": 2,
+        "marketing": 2,
+        "risk": 2,
+        "econ": 1
+      },
+      "fieldsOwn": false,
       "semester": "Spring 2026",
       "journal": "",
       "materials": [
@@ -836,10 +947,12 @@
       "introducedBy": "",
       "title": "The “sponsored content residue” in influencer marketing",
       "short": "Content Residue",
-      "topic": "econ",
-      "also": [
-        "ai"
-      ],
+      "method": "causal",
+      "fields": {
+        "marketing": 3,
+        "econ": 1
+      },
+      "fieldsOwn": true,
       "semester": "Spring 2026",
       "journal": "International Journal of Research in Marketing · ABS 4",
       "materials": [
@@ -883,8 +996,13 @@
       "introducedBy": "xindi-yang",
       "title": "The generalized underlap coefficient with an application in clustering",
       "short": "Underlap Coefficient",
-      "topic": "stat",
-      "also": [],
+      "method": "multivariate",
+      "fields": {
+        "marketing": 2,
+        "credit": 2,
+        "risk": 1
+      },
+      "fieldsOwn": true,
       "semester": "Spring 2026",
       "journal": "",
       "materials": [],
@@ -918,8 +1036,15 @@
       "introducedBy": "",
       "title": "Spring 2026 Kick-off Discussion",
       "short": "Kick-off",
-      "topic": "core",
-      "also": [],
+      "method": "craft",
+      "fields": {
+        "econ": 1,
+        "marketing": 1,
+        "asset": 1,
+        "risk": 1,
+        "credit": 1
+      },
+      "fieldsOwn": false,
       "semester": "Spring 2026",
       "journal": "",
       "materials": [
@@ -963,8 +1088,15 @@
       "introducedBy": "",
       "title": "Mechanism Analysis",
       "short": "Mechanism Analysis",
-      "topic": "econ",
-      "also": [],
+      "method": "causal",
+      "fields": {
+        "econ": 3,
+        "marketing": 3,
+        "asset": 2,
+        "credit": 2,
+        "risk": 1
+      },
+      "fieldsOwn": false,
       "semester": "Autumn 2025",
       "journal": "",
       "materials": [
@@ -1008,10 +1140,13 @@
       "introducedBy": "",
       "title": "Expectation-Maximization Algorithm",
       "short": "EM Algorithm",
-      "topic": "stat",
-      "also": [
-        "risk"
-      ],
+      "method": "estimation",
+      "fields": {
+        "risk": 3,
+        "asset": 2,
+        "econ": 2
+      },
+      "fieldsOwn": true,
       "semester": "Autumn 2025",
       "journal": "",
       "materials": [
@@ -1055,10 +1190,15 @@
       "introducedBy": "",
       "title": "Variational Auto-Encoder (II)",
       "short": "VAE II",
-      "topic": "ai",
-      "also": [
-        "stat"
-      ],
+      "method": "ml",
+      "fields": {
+        "credit": 3,
+        "asset": 2,
+        "marketing": 2,
+        "risk": 2,
+        "econ": 1
+      },
+      "fieldsOwn": false,
       "semester": "Autumn 2025",
       "journal": "",
       "materials": [
@@ -1102,8 +1242,13 @@
       "introducedBy": "",
       "title": "Synthetic Data",
       "short": "Synthetic Data",
-      "topic": "ai",
-      "also": [],
+      "method": "ml",
+      "fields": {
+        "credit": 3,
+        "risk": 2,
+        "marketing": 1
+      },
+      "fieldsOwn": true,
       "semester": "Autumn 2025",
       "journal": "",
       "materials": [
@@ -1147,8 +1292,15 @@
       "introducedBy": "",
       "title": "Bayesian Linear Regression",
       "short": "Bayesian LR",
-      "topic": "stat",
-      "also": [],
+      "method": "estimation",
+      "fields": {
+        "econ": 3,
+        "marketing": 2,
+        "asset": 2,
+        "risk": 2,
+        "credit": 2
+      },
+      "fieldsOwn": false,
       "semester": "Autumn 2025",
       "journal": "",
       "materials": [
@@ -1192,10 +1344,15 @@
       "introducedBy": "",
       "title": "Variational Auto-Encoder",
       "short": "VAE",
-      "topic": "ai",
-      "also": [
-        "stat"
-      ],
+      "method": "ml",
+      "fields": {
+        "credit": 3,
+        "asset": 2,
+        "marketing": 2,
+        "risk": 2,
+        "econ": 1
+      },
+      "fieldsOwn": false,
       "semester": "Autumn 2025",
       "journal": "",
       "materials": [
@@ -1239,10 +1396,13 @@
       "introducedBy": "",
       "title": "Change-Point Detection: MOSUM Methods",
       "short": "MOSUM",
-      "topic": "stat",
-      "also": [
-        "risk"
-      ],
+      "method": "multivariate",
+      "fields": {
+        "risk": 3,
+        "asset": 2,
+        "econ": 2
+      },
+      "fieldsOwn": true,
       "semester": "Spring 2025",
       "journal": "",
       "materials": [
@@ -1293,8 +1453,15 @@
       "introducedBy": "",
       "title": "Gaussian Process",
       "short": "Gaussian Process",
-      "topic": "stat",
-      "also": [],
+      "method": "estimation",
+      "fields": {
+        "econ": 3,
+        "marketing": 2,
+        "asset": 2,
+        "risk": 2,
+        "credit": 2
+      },
+      "fieldsOwn": false,
       "semester": "Spring 2025",
       "journal": "",
       "materials": [
@@ -1338,8 +1505,13 @@
       "introducedBy": "",
       "title": "Asset Pricing: Fama-MacBeth",
       "short": "Fama-MacBeth",
-      "topic": "asset",
-      "also": [],
+      "method": "factor",
+      "fields": {
+        "asset": 3,
+        "risk": 2,
+        "econ": 1
+      },
+      "fieldsOwn": false,
       "semester": "Spring 2025",
       "journal": "",
       "materials": [
@@ -1383,10 +1555,15 @@
       "introducedBy": "",
       "title": "Matching Techniques - Propensity Score Matching",
       "short": "PSM",
-      "topic": "econ",
-      "also": [
-        "stat"
-      ],
+      "method": "causal",
+      "fields": {
+        "econ": 3,
+        "marketing": 3,
+        "asset": 2,
+        "credit": 2,
+        "risk": 1
+      },
+      "fieldsOwn": false,
       "semester": "Spring 2025",
       "journal": "",
       "materials": [
@@ -1430,10 +1607,15 @@
       "introducedBy": "",
       "title": "Difference-in-Differences",
       "short": "DiD",
-      "topic": "econ",
-      "also": [
-        "stat"
-      ],
+      "method": "causal",
+      "fields": {
+        "econ": 3,
+        "marketing": 3,
+        "asset": 2,
+        "credit": 2,
+        "risk": 1
+      },
+      "fieldsOwn": false,
       "semester": "Spring 2025",
       "journal": "",
       "materials": [
@@ -1477,10 +1659,15 @@
       "introducedBy": "",
       "title": "The Kernel Trick",
       "short": "Kernel Trick",
-      "topic": "ai",
-      "also": [
-        "stat"
-      ],
+      "method": "ml",
+      "fields": {
+        "credit": 3,
+        "asset": 2,
+        "marketing": 2,
+        "risk": 2,
+        "econ": 1
+      },
+      "fieldsOwn": false,
       "semester": "Spring 2025",
       "journal": "",
       "materials": [
@@ -1524,10 +1711,15 @@
       "introducedBy": "",
       "title": "Maximum Likelihood Estimation",
       "short": "MLE",
-      "topic": "stat",
-      "also": [
-        "econ"
-      ],
+      "method": "estimation",
+      "fields": {
+        "econ": 3,
+        "marketing": 2,
+        "asset": 2,
+        "risk": 2,
+        "credit": 2
+      },
+      "fieldsOwn": false,
       "semester": "Autumn 2024",
       "journal": "",
       "materials": [
@@ -1571,10 +1763,15 @@
       "introducedBy": "",
       "title": "Git & GitHub",
       "short": "Git & GitHub",
-      "topic": "core",
-      "also": [
-        "stat"
-      ],
+      "method": "craft",
+      "fields": {
+        "econ": 1,
+        "marketing": 1,
+        "asset": 1,
+        "risk": 1,
+        "credit": 1
+      },
+      "fieldsOwn": false,
       "semester": "Autumn 2024",
       "journal": "",
       "materials": [
@@ -1618,8 +1815,14 @@
       "introducedBy": "",
       "title": "Sampling Method: Accept-Reject Sampling",
       "short": "A-R Sampling",
-      "topic": "stat",
-      "also": [],
+      "method": "sampling",
+      "fields": {
+        "risk": 3,
+        "asset": 2,
+        "credit": 1,
+        "econ": 1
+      },
+      "fieldsOwn": false,
       "semester": "Autumn 2024",
       "journal": "",
       "materials": [
@@ -1663,8 +1866,15 @@
       "introducedBy": "",
       "title": "Econometrics Foundation 2: Instrumental Variables and Endogeneity",
       "short": "IV & Endogeneity",
-      "topic": "econ",
-      "also": [],
+      "method": "causal",
+      "fields": {
+        "econ": 3,
+        "marketing": 3,
+        "asset": 2,
+        "credit": 2,
+        "risk": 1
+      },
+      "fieldsOwn": false,
       "semester": "Autumn 2024",
       "journal": "",
       "materials": [
@@ -1708,8 +1918,15 @@
       "introducedBy": "",
       "title": "Econometrics Foundation 1",
       "short": "Econometrics I",
-      "topic": "econ",
-      "also": [],
+      "method": "causal",
+      "fields": {
+        "econ": 3,
+        "marketing": 3,
+        "asset": 2,
+        "credit": 2,
+        "risk": 1
+      },
+      "fieldsOwn": false,
       "semester": "Autumn 2024",
       "journal": "",
       "materials": [
@@ -1753,11 +1970,15 @@
       "introducedBy": "",
       "title": "High-dimensional Covariance Matrix Estimation",
       "short": "HD Covariance",
-      "topic": "risk",
-      "also": [
-        "stat",
-        "asset"
-      ],
+      "method": "multivariate",
+      "fields": {
+        "risk": 3,
+        "asset": 3,
+        "econ": 2,
+        "credit": 1,
+        "marketing": 1
+      },
+      "fieldsOwn": false,
       "semester": "Autumn 2024",
       "journal": "",
       "materials": [

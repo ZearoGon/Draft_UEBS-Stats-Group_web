@@ -11,8 +11,8 @@ format: "in-person"
 speakers: ["han-zhang"]
 title: "The “sponsored content residue” in influencer marketing"
 short: "Content Residue"
-topic: "econ"
-also: ["ai"]
+method: "causal"
+fields: {"marketing": 3, "econ": 1}
 semester: "Spring 2026"
 journal: "International Journal of Research in Marketing · ABS 4"
 materials: 

@@ -11,8 +11,7 @@ format: "in-person"
 speakers: ["heqing-shi"]
 title: "High-dimensional Covariance Matrix Estimation"
 short: "HD Covariance"
-topic: "risk"
-also: ["stat", "asset"]
+method: "multivariate"
 semester: "Autumn 2024"
 materials: 
   - {"label": "Slides", "file": "assets/talks/high_dimensional_covariance_matrix_estimation.pdf"}

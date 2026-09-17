@@ -10,8 +10,8 @@ format: "in-person"
 speakers: ["chenyang-guo"]
 title: "Change-Point Detection: MOSUM Methods"
 short: "MOSUM"
-topic: "stat"
-also: ["risk"]
+method: "multivariate"
+fields: {"risk": 3, "asset": 2, "econ": 2}
 semester: "Spring 2025"
 materials: 
   - {"label": "Slides", "file": "assets/talks/Statistic_Study_Group_MOSUM.pdf"}

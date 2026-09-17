@@ -1,7 +1,7 @@
 // Compiles the Markdown/JSON content under content/ into the data the site consumes.
 //
 //   content/site.json          -> site-wide settings (hero slides, founding year, contact)
-//   content/topics/*.md        -> the seven branches of the Research Atlas (+ the topic sub-pages)
+//   content/topics/*.md        -> the Research Atlas: fields, method families (+ the topic sub-pages)
 //   content/people/*.md        -> maintainers, contributors and members
 //   content/sessions/*.md      -> one file per session (lecture / workshop / discussion)
 //   content/posts/*.md         -> blog posts, opportunities, announcements
@@ -175,11 +175,40 @@ function loadSite(errors) {
   return site;
 }
 
+// The Research Atlas has two axes. A "field" is where research is done
+// (asset pricing, marketing, ...); a "method" is a family of techniques the
+// group teaches (causal inference, sampling, ...) and carries a map of how
+// central it is to each field, 1 to 3. The single "methods" entry is the
+// overview page for the whole method axis.
+const TOPIC_KINDS = ["field", "method", "methods"];
+export const RELEVANCE = { 1: "occasional", 2: "common", 3: "core" };
+
+// A {fieldId: 1..3} map, checked against the fields that exist.
+function readFieldMap(raw, fieldIds, file, errors, what) {
+  if (raw === undefined || raw === null) return null;
+  if (typeof raw !== "object" || Array.isArray(raw)) {
+    errors.push(`${file}: ${what} must be a map of field id to 1, 2 or 3`);
+    return null;
+  }
+  const out = {};
+  for (const [id, w] of Object.entries(raw)) {
+    if (!fieldIds.has(id)) errors.push(`${file}: ${what} names "${id}", which is not a field in content/topics`);
+    if (![1, 2, 3].includes(w)) errors.push(`${file}: ${what}.${id} must be 1 (occasional), 2 (common) or 3 (core)`);
+    out[id] = w;
+  }
+  return out;
+}
+
 function loadTopics(errors) {
-  const topics = readCollection("topics").map(({ file, data, body }) => {
-    for (const k of ["id", "label", "x", "y", "blurb"]) {
+  const raw = readCollection("topics");
+  const fieldIds = new Set(raw.filter((t) => t.data.kind === "field").map((t) => t.data.id));
+  const topics = raw.map(({ file, data, body }) => {
+    for (const k of ["id", "kind", "label", "blurb"]) {
       if (data[k] === undefined || data[k] === "") errors.push(`${file}: missing ${k}`);
     }
+    if (data.kind && !TOPIC_KINDS.includes(data.kind)) errors.push(`${file}: kind must be one of ${TOPIC_KINDS.join(", ")}`);
+    if (data.kind === "method" && !data.fields) errors.push(`${file}: a method needs a fields map - the fields it is used in, 1 to 3`);
+    if (data.kind !== "method" && data.fields) errors.push(`${file}: only a method carries a fields map`);
     if (data.page) {
       for (const k of ["file", "title", "eyebrow", "h1", "desc", "related"]) {
         if (!data.page[k]) errors.push(`${file}: page.${k} is required when page is set`);
@@ -187,13 +216,12 @@ function loadTopics(errors) {
     }
     return {
       id: data.id,
+      kind: data.kind,
       label: data.label,
-      caption: data.caption || "",
       order: data.order ?? 99,
-      x: data.x,
-      y: data.y,
       href: data.href || "",
       blurb: data.blurb,
+      fields: data.kind === "method" ? readFieldMap(data.fields, fieldIds, file, errors, "fields") || {} : null,
       page: data.page || null,
       introHtml: body, // raw HTML, not Markdown - it is the hand-written intro of the sub-page
     };
@@ -201,6 +229,7 @@ function loadTopics(errors) {
   topics.sort((a, b) => a.order - b.order);
   const ids = new Set(topics.map((t) => t.id));
   if (ids.size !== topics.length) errors.push("topics: duplicate ids");
+  if (topics.filter((t) => t.kind === "methods").length > 1) errors.push("topics: only one entry can be the methods overview (kind: methods)");
   return topics;
 }
 
@@ -285,11 +314,12 @@ function normaliseMaterials(list, file, errors) {
 }
 
 function loadSessions(topics, people, errors) {
-  const topicIds = new Set(topics.map((t) => t.id));
+  const methods = new Map(topics.filter((t) => t.kind === "method").map((t) => [t.id, t]));
+  const fieldIds = new Set(topics.filter((t) => t.kind === "field").map((t) => t.id));
   const byId = new Map(people.map((p) => [p.id, p]));
   const seenIds = new Set();
   const sessions = readCollection("sessions").map(({ file, slug, data, body }) => {
-    for (const k of ["id", "date", "title", "short", "topic"]) {
+    for (const k of ["id", "date", "title", "short", "method"]) {
       if (!data[k]) errors.push(`${file}: missing ${k}`);
     }
     const date = data.date instanceof Date ? data.date.toISOString().slice(0, 10) : String(data.date || "");
@@ -305,9 +335,11 @@ function loadSessions(topics, people, errors) {
     if (!SESSION_KINDS.includes(kind)) errors.push(`${file}: kind must be one of ${SESSION_KINDS.join(", ")}`);
     if (!SESSION_STATUS.includes(status)) errors.push(`${file}: status must be one of ${SESSION_STATUS.join(", ")}`);
     if (!SESSION_FORMATS.includes(format)) errors.push(`${file}: format must be one of ${SESSION_FORMATS.join(", ")}`);
-    if (data.topic && !topicIds.has(data.topic)) errors.push(`${file}: topic "${data.topic}" is not in content/topics`);
-    const also = Array.isArray(data.also) ? data.also : [];
-    for (const t of also) if (!topicIds.has(t)) errors.push(`${file}: also "${t}" is not in content/topics`);
+    if (data.topic !== undefined || data.also !== undefined) errors.push(`${file}: topic/also are no more - name the method, and the fields only where they differ from the method's own map`);
+    if (data.method && !methods.has(data.method)) errors.push(`${file}: method "${data.method}" is not a method in content/topics`);
+    // a lecture inherits its method's field map unless it speaks for itself
+    const ownFields = readFieldMap(data.fields, fieldIds, file, errors, "fields");
+    const fields = ownFields || (methods.get(data.method) || {}).fields || {};
     const speakers = Array.isArray(data.speakers) ? data.speakers : [];
     for (const s of speakers) if (!byId.has(s)) errors.push(`${file}: speaker "${s}" is not in content/people`);
     if (speakers.length === 0 && !data.speaker_label) errors.push(`${file}: needs speakers or a speaker_label`);
@@ -349,8 +381,9 @@ function loadSessions(topics, people, errors) {
       introducedBy: data.introduced_by || "",
       title: data.title,
       short: data.short,
-      topic: data.topic,
-      also,
+      method: data.method,
+      fields,
+      fieldsOwn: !!ownFields,
       semester: data.semester || "",
       journal: data.journal || "",
       materials,
@@ -538,6 +571,11 @@ function derivePeople(people, sessions, roles) {
   return { people: out, ties };
 }
 
+// The field a lecture serves most; on a tie, the first in atlas order.
+function topField(s) {
+  return Object.entries(s.fields || {}).sort((a, b) => b[1] - a[1])[0]?.[0] || "";
+}
+
 function deriveNews(sessions, posts, topics) {
   const topicHref = new Map(topics.map((t) => [t.id, t.href]));
   const cards = [];
@@ -555,7 +593,7 @@ function deriveNews(sessions, posts, topics) {
       visual: s.visual,
       cover: s.cover,
       coverAlt: s.coverAlt,
-      href: s.pdf || topicHref.get(s.topic) || "",
+      href: s.pdf || topicHref.get(s.method) || topicHref.get(topField(s)) || "",
       external: false,
       deadline: "",
       deadlineLabel: "",
@@ -589,14 +627,18 @@ function deriveNews(sessions, posts, topics) {
   return cards;
 }
 
-function deriveStats(site, people, sessions) {
+function deriveStats(site, people, sessions, topics) {
   const held = sessions.filter((s) => s.status === "held");
+  // a field counts once a lecture is at least commonly used in it
+  const fields = topics.filter((t) => t.kind === "field" && held.some((s) => (s.fields[t.id] || 0) >= 2)).length;
   return {
     maintainers: people.filter((p) => p.kind === "maintainer").length,
     contributors: people.filter((p) => p.contributor).length,
     lectures: held.filter((s) => s.kind !== "discussion").length,
     sessions: held.length,
-    topics: new Set(held.map((s) => s.topic).filter((t) => t !== "core")).size,
+    fields,
+    methods: topics.filter((t) => t.kind === "method" && held.some((s) => s.method === t.id)).length,
+    topics: fields,
     founded: site.founded,
   };
 }
@@ -628,18 +670,27 @@ function lectureCard(s, rel) {
 function renderTopicPage(topic, topics, sessions, template) {
   const rel = "../";
   const held = sessions.filter((s) => s.status !== "cancelled" && s.status !== "postponed");
-  const primary = held.filter((s) => s.topic === topic.id);
-  const cross = held.filter((s) => s.topic !== topic.id && s.also.includes(topic.id));
   const parts = [];
-  if (primary.length) {
-    parts.push(`  <h2>Lectures on this branch</h2>`);
-    parts.push(...primary.map((s) => lectureCard(s, rel)));
+  if (topic.kind === "methods") {
+    // the overview: every method family, each with the lectures that taught it
+    for (const m of topics.filter((t) => t.kind === "method")) {
+      const own = held.filter((s) => s.method === m.id);
+      if (!own.length) continue;
+      parts.push(`  <h2>${escapeHtml(m.label)}</h2>`);
+      parts.push(`  <p>${escapeHtml(m.blurb)}</p>`);
+      parts.push(...own.map((s) => lectureCard(s, rel)));
+    }
+  } else {
+    // a field: the lectures that serve it, the most central first
+    const groups = [[3, "Core methods for this field"], [2, "Methods this field draws on"], [1, "Occasionally relevant"]];
+    for (const [w, heading] of groups) {
+      const rows = held.filter((s) => s.fields[topic.id] === w);
+      if (!rows.length) continue;
+      parts.push(`  <h2>${heading}</h2>`);
+      parts.push(...rows.map((s) => lectureCard(s, rel)));
+    }
   }
-  if (cross.length) {
-    parts.push(`  <h2>Related lectures from other branches</h2>`);
-    parts.push(...cross.map((s) => lectureCard(s, rel)));
-  }
-  if (!primary.length && !cross.length) {
+  if (!parts.length) {
     parts.push('  <div class="wip">');
     parts.push('    <div class="icon">🔬</div>');
     parts.push("    <h3>Content Under Construction</h3>");
@@ -651,7 +702,7 @@ function renderTopicPage(topic, topics, sessions, template) {
     .map((id) => byId.get(id))
     .filter((t) => t && t.page)
     .map((t) => {
-      const label = ["stat", "econ", "core"].includes(t.id) ? "Methodology" : "Finance";
+      const label = t.kind === "field" ? "Field" : "Methods";
       return [
         `    <a href="${basename(t.page.file)}">`,
         `      <div class="label">${label}</div>`,
@@ -720,7 +771,7 @@ export function compileContent({ write = true } = {}) {
   const handleOf = (id) => rawPeople.find((p) => p.id === id)?.github || "";
   const codeowners = renderCodeowners(rawRoles, handleOf);
   const news = deriveNews(sessions, posts, topics);
-  const stats = deriveStats(site, people, sessions);
+  const stats = deriveStats(site, people, sessions, topics);
   const data = {
     generatedAt: new Date().toISOString(),
     site,

@@ -11,7 +11,7 @@ format: "in-person"
 speakers: ["shiqi-fang"]
 title: "Bayesian Linear Regression"
 short: "Bayesian LR"
-topic: "stat"
+method: "estimation"
 semester: "Autumn 2025"
 materials: 
   - {"label": "Slides", "file": "assets/talks/bayesian linear regression.pdf"}

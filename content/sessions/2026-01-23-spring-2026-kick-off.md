@@ -13,7 +13,7 @@ speaker_label: "All members"
 moderator: "yifan-qi"
 title: "Spring 2026 Kick-off Discussion"
 short: "Kick-off"
-topic: "core"
+method: "craft"
 semester: "Spring 2026"
 materials: 
   - {"label": "Welcome deck", "file": "assets/talks/Spring_2026_Kickoff_Welcome.pdf"}

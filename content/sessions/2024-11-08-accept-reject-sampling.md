@@ -9,7 +9,7 @@ format: "in-person"
 speakers: ["chenyang-guo"]
 title: "Sampling Method: Accept-Reject Sampling"
 short: "A-R Sampling"
-topic: "stat"
+method: "sampling"
 semester: "Autumn 2024"
 materials: 
   - {"label": "Slides", "file": "assets/talks/Accept_Reject_Sampling.pdf"}

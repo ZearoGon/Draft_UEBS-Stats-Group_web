@@ -244,7 +244,7 @@
   @media (max-width: 720px){ .hero-meta { grid-template-columns: repeat(2, 1fr); gap: 24px; } }
 
   /* HERO variant: split */
-  .hero.split { padding: 56px 0 88px; }
+  .hero.split { padding: 56px 0 48px; }
   .hero.split .hero-grid {
     display: grid;
     grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
@@ -388,8 +388,8 @@
     text-wrap: pretty;
   }
   .about-prose p:first-of-type::first-letter {
-    font-family: var(--serif); font-size: 64px; line-height: 0.85;
-    float: left; padding: 6px 12px 0 0; color: var(--accent); font-weight: 500;
+    font-size: inherit; line-height: inherit;
+    float: none; padding: 0; color: inherit; font-weight: inherit;
     font-variation-settings: "opsz" 60;
   }
   .about-aside {
@@ -625,7 +625,7 @@
 
   .event-empty {
     padding: 60px 0; text-align: center;
-    font-family: var(--serif); font-style: italic; font-size: 20px; color: var(--ink-mute);
+    font-size: 18px; color: var(--ink-mute);
   }
 
   /* ====== RESEARCH ATLAS ====== */
@@ -640,9 +640,9 @@
   .atlas-rail:active { cursor: grabbing; }
   .atlas-rail::-webkit-scrollbar { height: 4px; }
   .atlas-rail::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 4px; }
-  .atlas-rail-label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.03em; text-transform: uppercase; color: var(--accent); flex-shrink: 0; font-weight: 500; }
-  .atlas-rail-chip { white-space: nowrap; flex-shrink: 0; text-transform: none; letter-spacing: 0.02em; }
-  .atlas-rail-chip .d { color: var(--ink-mute); margin-right: 7px; font-size: 10px; text-transform: uppercase; }
+  .atlas-rail-label { font-family: var(--sans); font-size: 11.5px; letter-spacing: 0.015em; text-transform: uppercase; color: var(--accent); flex-shrink: 0; font-weight: 500; }
+  .atlas-rail-chip { white-space: nowrap; flex-shrink: 0; text-transform: none; letter-spacing: normal; }
+  .atlas-rail-chip .d { color: var(--ink-mute); margin-right: 7px; font-size: 10.5px; text-transform: uppercase; }
   .atlas-rail-chip .f { color: var(--ink-mute); }
   .atlas-rail-chip.active .d, .atlas-rail-chip.active .f { color: inherit; opacity: 0.72; }
   .atlas-switch { display: flex; gap: 8px; flex-shrink: 0; }
@@ -657,45 +657,50 @@
   .atlas-zoom-btn {
     width: 34px; height: 34px; border-radius: 999px;
     border: 1px solid var(--rule); background: var(--paper);
-    font-family: var(--mono); font-size: 16px; line-height: 1; color: var(--ink-soft);
+    font-family: var(--sans); font-size: 16px; line-height: 1; color: var(--ink-soft);
     display: flex; align-items: center; justify-content: center;
     cursor: pointer; transition: all .2s;
   }
-  .atlas-zoom-btn.reset { font-size: 10px; letter-spacing: 0.015em; }
+  .atlas-zoom-btn.reset { font-size: 10.5px; }
   .atlas-zoom-btn:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
   .atlas-zoom-btn:disabled { opacity: 0.35; cursor: default; }
-  .atlas-svg { display: block; width: 100%; min-width: 860px; height: auto; }
+  .atlas-svg { display: block; width: 100%; min-width: 760px; height: auto; }
 
-  .atlas-edge {
-    fill: none; stroke: var(--rule); stroke-width: 1.4;
-    stroke-dasharray: 1400; stroke-dashoffset: 1400;
-    animation: atlasDraw 1.8s ease forwards;
-  }
-  .atlas-edge.active { stroke: var(--accent); stroke-width: 2; }
-  .atlas-edge.ghost { stroke-dasharray: 5 7; stroke-dashoffset: 0; animation: none; opacity: 0.65; }
-  .atlas-edge-flow {
-    fill: none; stroke: var(--accent); stroke-width: 2; opacity: 0.45;
-    stroke-dasharray: 3 11; animation: atlasFlow 1.1s linear infinite;
-  }
-  @keyframes atlasDraw { to { stroke-dashoffset: 0; } }
-  @keyframes atlasFlow { to { stroke-dashoffset: -14; } }
+  /* the two columns */
+  .atlas-col-head { font-family: var(--sans); font-size: 11.5px; letter-spacing: 0.02em; text-transform: uppercase; fill: var(--ink-mute); }
 
-  .atlas-node { cursor: pointer; }
+  /* ribbons: grey at rest, the accent where the selection runs */
+  .atlas-ribbon { fill: none; stroke: var(--ink); stroke-linecap: round; transition: stroke .25s, opacity .25s; }
+  .atlas-ribbon-g.w1 .atlas-ribbon { opacity: 0.12; }
+  .atlas-ribbon-g.w2 .atlas-ribbon { opacity: 0.16; }
+  .atlas-ribbon-g.w3 .atlas-ribbon { opacity: 0.2; }
+  .atlas-ribbon-g.lit .atlas-ribbon { stroke: var(--accent); }
+  .atlas-ribbon-g.lit.w1 .atlas-ribbon { opacity: 0.55; }
+  .atlas-ribbon-g.lit.w2 .atlas-ribbon { opacity: 0.7; }
+  .atlas-ribbon-g.lit.w3 .atlas-ribbon { opacity: 0.82; }
+  .atlas-w {
+    font-family: var(--sans); font-size: 10.5px; letter-spacing: 0.02em; text-transform: uppercase; fill: var(--accent);
+    paint-order: stroke; stroke: var(--bg); stroke-width: 4px; stroke-linejoin: round; pointer-events: none;
+  }
+
+  .atlas-node { cursor: pointer; transition: opacity .25s; }
+  .atlas-node.faint { opacity: 0.42; }
+  .atlas-node:hover, .atlas-node.is-selected { opacity: 1; }
   .atlas-node-c { fill: var(--paper); stroke: var(--ink); stroke-width: 1.5; transition: stroke .25s, fill .25s; }
   .atlas-node:hover .atlas-node-c { stroke: var(--accent); stroke-width: 2; }
   .atlas-node-c.active { fill: var(--accent); stroke: var(--accent-deep); }
   .atlas-node-c.empty { stroke-dasharray: 4 5; }
-  .atlas-count { font-family: var(--serif); font-size: 26px; font-weight: 500; fill: var(--ink); pointer-events: none; }
+  .atlas-count { font-family: var(--sans); font-size: 24px; font-weight: 500; fill: var(--ink); pointer-events: none; }
   .atlas-count.active { fill: var(--paper); }
-  .atlas-count-sub { font-family: var(--mono); font-size: 9px; letter-spacing: 0.03em; text-transform: uppercase; fill: var(--ink-mute); pointer-events: none; }
+  .atlas-count-sub { font-family: var(--sans); font-size: 9px; letter-spacing: 0.02em; text-transform: uppercase; fill: var(--ink-mute); pointer-events: none; }
   .atlas-count-sub.active { fill: var(--paper); opacity: 0.8; }
   .atlas-node-label {
-    font-family: var(--serif); font-size: 15px; font-weight: 500; fill: var(--ink);
+    font-family: var(--sans); font-size: 15px; font-weight: 500; fill: var(--ink);
     paint-order: stroke; stroke: var(--bg); stroke-width: 5px; stroke-linejoin: round;
   }
-  .atlas-node-label.ghost { font-size: 13px; font-style: italic; fill: var(--ink-mute); }
+  .atlas-node-label.ghost { font-size: 13.5px; fill: var(--ink-mute); font-weight: 400; }
   .atlas-flag {
-    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.03em; text-transform: uppercase;
+    font-family: var(--sans); font-size: 10.5px; letter-spacing: 0.02em; text-transform: uppercase;
     fill: var(--accent); font-weight: 500;
     paint-order: stroke; stroke: var(--bg); stroke-width: 4px; stroke-linejoin: round;
   }
@@ -710,45 +715,46 @@
     70% { transform: scale(1.45); opacity: 0; }
     100% { transform: scale(1.45); opacity: 0; }
   }
-  .atlas-float { animation: atlasFloat 7s ease-in-out infinite; }
-  .atlas-float.f1 { animation-duration: 8.5s; animation-delay: -2.4s; }
-  .atlas-float.f2 { animation-duration: 10s; animation-delay: -4.8s; }
-  @keyframes atlasFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-
-  .atlas-twig { stroke: var(--ink-mute); stroke-width: 1; opacity: 0.55; }
-  .atlas-leaf { fill: var(--paper); stroke: var(--ink); stroke-width: 1.4; transition: stroke .2s, fill .2s; }
-  .atlas-leaf.focused { fill: var(--accent); stroke: var(--accent-deep); }
-  .atlas-leaf-g { cursor: pointer; opacity: 0; animation: atlasLeafIn 0.45s ease forwards; }
-  .atlas-leaf-g:hover .atlas-leaf { stroke: var(--accent); }
-  .atlas-leaf-label {
-    font-family: var(--mono); font-size: 11px; letter-spacing: 0.015em; fill: var(--ink-soft);
-    paint-order: stroke; stroke: var(--bg); stroke-width: 4px; stroke-linejoin: round;
-  }
-  @keyframes atlasLeafIn { from { opacity: 0; } to { opacity: 1; } }
-
-  .atlas-core-c { fill: var(--accent); stroke: var(--accent-deep); stroke-width: 2; transition: fill .25s; }
-  .atlas-core-c.active { fill: var(--accent-deep); }
-  .atlas-core-t { font-family: var(--serif); font-style: italic; font-size: 27px; font-weight: 500; fill: var(--paper); pointer-events: none; }
-  .atlas-core-sub { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.03em; text-transform: uppercase; fill: var(--paper); opacity: 0.8; pointer-events: none; }
   .atlas-ghost-c { fill: transparent; stroke: var(--ink-mute); stroke-width: 1.4; stroke-dasharray: 4 5; transition: stroke .25s; }
   .atlas-ghost:hover .atlas-ghost-c { stroke: var(--accent); }
-  .atlas-ghost-plus { font-family: var(--serif); font-size: 22px; fill: var(--ink-mute); pointer-events: none; }
+  .atlas-ghost-plus { font-family: var(--sans); font-size: 22px; fill: var(--ink-mute); pointer-events: none; }
   .atlas-ghost:hover .atlas-ghost-plus { fill: var(--accent); }
 
-  .atlas-hint { font-family: var(--mono); font-size: 11.5px; color: var(--ink-mute); text-align: center; margin: -18px 0 34px; letter-spacing: 0.015em; }
+  .atlas-hint { font-size: 12.5px; color: var(--ink-mute); text-align: center; margin: -18px 0 34px; line-height: 1.6; }
+  .atlas-legend { display: inline-flex; gap: 18px; margin-right: 18px; vertical-align: middle; }
+  .atlas-legend span { display: inline-flex; align-items: center; gap: 8px; }
+  .atlas-legend i { display: inline-block; width: 26px; background: var(--accent); border-radius: 2px; opacity: 0.75; }
 
   .atlas-panel-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 28px; margin-bottom: 8px; }
-  .atlas-panel-kicker { font-family: var(--mono); font-size: 11px; letter-spacing: 0.03em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
-  .atlas-panel-title { font-family: var(--serif); font-size: 30px; font-weight: 500; margin: 0 0 10px; letter-spacing: normal; }
-  .atlas-panel-blurb { max-width: 640px; color: var(--ink-soft); font-size: 15.5px; margin: 0 0 18px; }
+  .atlas-panel-kicker { font-size: 11.5px; letter-spacing: 0.015em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  .atlas-panel-title { font-size: 28px; font-weight: 400; margin: 0 0 10px; letter-spacing: normal; line-height: 1.2; }
+  .atlas-panel-blurb { max-width: 640px; color: var(--ink-soft); font-size: 15.5px; margin: 0 0 14px; }
+  .atlas-rel-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 20px; }
+  .atlas-rel-k { font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.015em; color: var(--ink-mute); margin-right: 4px; }
+  .atlas-rel {
+    display: inline-flex; align-items: center; gap: 8px;
+    font: inherit; font-size: 13px; color: var(--ink-soft);
+    background: transparent; border: 1px solid var(--rule); border-radius: 999px; padding: 5px 12px 5px 10px;
+    cursor: pointer; transition: border-color .2s, color .2s;
+  }
+  .atlas-rel b { font-weight: 400; font-size: 9px; letter-spacing: 1px; color: var(--accent); }
+  .atlas-rel.w1 b { opacity: 0.55; }
+  .atlas-rel:hover { border-color: var(--accent); color: var(--accent); }
+  .atlas-rel-tag {
+    margin-left: 10px; padding: 2px 8px; border-radius: 99px;
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.02em;
+    border: 1px solid var(--accent); color: var(--accent);
+    display: inline-block; vertical-align: middle; line-height: 1.2;
+  }
+  .atlas-rel-tag.w1 { border-color: var(--rule); color: var(--ink-mute); }
   .atlas-panel-link {
-    flex-shrink: 0; font-family: var(--mono); font-size: 12.5px; color: var(--accent);
+    flex-shrink: 0; font-size: 13px; color: var(--accent);
     text-decoration: none; border-bottom: 1px solid var(--accent); padding-bottom: 2px;
     margin-bottom: 22px; white-space: nowrap;
   }
   .atlas-badge {
     margin-left: 10px; padding: 2px 8px; border-radius: 99px;
-    font-size: 10px; font-family: var(--mono); text-transform: uppercase;
+    font-size: 10px; text-transform: uppercase;
     letter-spacing: 0.02em; font-weight: 500;
     background: var(--accent); color: var(--paper);
     display: inline-block; vertical-align: middle; line-height: 1.2;
@@ -758,6 +764,9 @@
     .atlas-toolbar { flex-direction: column; align-items: stretch; }
     .atlas-switch { justify-content: flex-end; }
     .atlas-panel-head { flex-direction: column; align-items: flex-start; gap: 6px; }
+    .atlas-hint { margin-top: -8px; }
+    .atlas-legend { display: flex; justify-content: center; margin: 0 0 8px; }
+    .atlas-zoom { display: none; }   /* a phone pinches; the wheel is a desktop thing */
   }
 
   /* ====== MAINTAINERS & CONTRIBUTORS - the neural field ====== */
@@ -949,7 +958,7 @@
   .contrib-ghost-sub { font-family: var(--mono); font-size: 10.5px; color: var(--ink-mute); max-width: 230px; letter-spacing: 0.015em; line-height: 1.6; }
 
   /* ====== NEWS ====== */
-  .news-toolbar { display: flex; gap: 16px; margin-bottom: 36px; align-items: center; }
+  .news-toolbar { display: flex; gap: 16px; margin-bottom: 8px; align-items: center; }
   .search-box {
     flex: 1; max-width: 460px;
     display: flex; align-items: center; gap: 10px;
@@ -962,52 +971,45 @@
     flex: 1; border: 0; background: transparent; outline: none;
     font-family: var(--sans); font-size: 16px; color: var(--ink);
   }
-  .search-box input::placeholder { color: var(--ink-mute); font-style: italic; }
-
-  .news-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
-    border-top: 1px solid var(--rule);
-  }
-  @media (max-width: 900px){ .news-grid { grid-template-columns: 1fr; } }
-
-  .news-card {
-    border-right: 1px solid var(--rule);
-    border-bottom: 1px solid var(--rule);
-    padding: 28px 28px 32px;
-    cursor: pointer;
-    transition: background .25s;
-    display: flex; flex-direction: column;
-    min-height: 360px;
-  }
-  .news-card:hover { background: var(--paper); }
-  .news-grid .news-card:nth-child(3n) { border-right: 0; }
-  .news-card .img {
-    aspect-ratio: 16/10; margin: -28px -28px 22px;
-    background: repeating-linear-gradient(135deg, var(--bg-2) 0 12px, var(--bg) 12px 24px);
-    border-bottom: 1px solid var(--rule);
-    position: relative;
-  }
-  .news-card .img::after {
-    content: attr(data-label);
-    position: absolute; left: 14px; bottom: 12px;
-    font-family: var(--mono); font-size: 10.5px; color: var(--ink-mute);
-    text-transform: uppercase; letter-spacing: 0.02em;
-  }
-  .news-card .meta {
-    font-family: var(--mono); font-size: 11px; color: var(--ink-mute);
-    text-transform: uppercase; letter-spacing: 0.03em;
-    display: flex; gap: 12px; margin-bottom: 14px;
-  }
-  .news-card .meta .cat { color: var(--accent); }
-  .news-card .meta .sub::before { content: "·"; margin-right: 12px; }
+  .search-box input::placeholder { color: var(--ink-mute); }
   .news-filters { margin-bottom: 20px; }
-  .news-card .deadline {
-    margin-top: 16px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.02em;
-    text-transform: uppercase; color: var(--accent);
-  }
-  .news-card .deadline.closed { color: var(--ink-mute); }
-  .news-card.is-closed .img { filter: grayscale(0.6); opacity: 0.85; }
   .events-share { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent); }
+
+  /* the posts: entries under the kind of thing they are, no covers */
+  .post-list { margin-top: 18px; }
+  .post-group + .post-group { margin-top: 38px; }
+  .post-group-h {
+    display: flex; align-items: baseline; gap: 12px;
+    padding: 0 0 10px; border-bottom: 1px solid var(--ink);
+  }
+  .post-group-h .t { font-size: 19px; font-weight: 500; }
+  .post-group-h .n { font-size: 12.5px; color: var(--accent); }
+  .post-group-h .note { font-size: 13px; color: var(--ink-mute); }
+  .post-row {
+    display: grid; grid-template-columns: 118px minmax(0, 1fr) 28px; gap: 24px; align-items: start;
+    padding: 18px 0; border-bottom: 1px solid var(--rule);
+    transition: background .2s, transform .2s;
+  }
+  .post-row.has-link:hover { background: linear-gradient(90deg, var(--paper), transparent); transform: translateX(8px); }
+  .post-date { font-size: 13px; color: var(--ink-mute); padding-top: 3px; white-space: nowrap; }
+  .post-meta { font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.015em; color: var(--accent); margin-bottom: 5px; }
+  .post-meta .post-dl { color: var(--ink-mute); text-transform: none; letter-spacing: normal; font-size: 12.5px; }
+  .post-title { font-size: 18px; font-weight: 500; line-height: 1.3; margin: 0 0 6px; }
+  .post-title a { color: inherit; text-decoration: none; }
+  .post-title a:hover { color: var(--accent); }
+  .post-excerpt { margin: 0; font-size: 14.5px; line-height: 1.5; color: var(--ink-soft); max-width: 74ch; }
+  .post-row.is-closed .post-title, .post-row.is-closed .post-excerpt { color: var(--ink-mute); }
+  .post-go { color: var(--ink-mute); font-size: 18px; padding-top: 20px; text-align: right; transition: color .2s, transform .2s; }
+  .post-row:hover .post-go { color: var(--accent); transform: translateX(4px); }
+  .post-more {
+    margin: 16px 0 0; padding: 0 0 2px; background: none; border: 0; border-bottom: 1px solid var(--accent);
+    font: inherit; font-size: 13.5px; color: var(--accent); cursor: pointer;
+  }
+  @media (max-width: 720px) {
+    .post-row { grid-template-columns: 1fr; gap: 4px; padding: 16px 0; }
+    .post-go { display: none; }
+    .post-date { padding-top: 0; }
+  }
 
   /* ====== ABOUT DRAWER + HANDLE ====== */
   .about-handle {
@@ -1042,7 +1044,7 @@
   .about-drawer .num { font-family: var(--mono); font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: 18px; }
   .about-drawer .num span { color: var(--accent); }
   .about-drawer h2 { font-family: var(--serif); font-weight: 500; font-size: clamp(26px, 3vw, 34px); line-height: 1.15; letter-spacing: normal; margin: 0 0 26px; text-wrap: balance; }
-  .about-drawer h2 em { font-style: italic; color: var(--accent); }
+  .about-drawer h2 em { font-style: normal; color: var(--accent); }
   .about-drawer .about-aside { margin-top: 34px; }
   .about-close {
     position: absolute; top: 18px; right: 20px; width: 40px; height: 40px; border-radius: 999px;
@@ -1080,7 +1082,7 @@
   .wall-meta { font-family: var(--mono); font-size: 11px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: 6px; }
   .wall-meta .who { color: var(--accent); }
   .wall-text { font-family: var(--serif); font-size: 17px; line-height: 1.45; white-space: pre-wrap; text-wrap: pretty; }
-  .wall-empty { font-family: var(--serif); font-style: italic; color: var(--ink-mute); padding: 20px 0; }
+  .wall-empty { color: var(--ink-mute); padding: 20px 0; }
   .news-card h3 {
     font-family: var(--serif); font-weight: 500;
     font-size: 22px; line-height: 1.2; letter-spacing: normal;
@@ -1114,7 +1116,7 @@
     margin: 0 0 24px; color: var(--paper);
     text-wrap: balance;
   }
-  .join h2 em { font-style: italic; color: color-mix(in oklab, var(--accent) 70%, white); }
+  .join h2 em { font-style: normal; color: color-mix(in oklab, var(--accent) 70%, white); }
   .join .lead { font-family: var(--serif); font-size: 19px; line-height: 1.55; color: rgba(255,255,255,0.75); max-width: 42ch; }
   .join .num { color: rgba(255,255,255,0.5); }
   .join .section-header { margin-bottom: 0; }
@@ -1150,7 +1152,7 @@
   .form-note { font-family: var(--mono); font-size: 11px; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.02em; }
   .form-success {
     padding: 28px; border: 1px dashed rgba(255,255,255,0.35);
-    font-family: var(--serif); font-style: italic; font-size: 18px;
+    font-size: 18px;
     color: var(--paper);
   }
 
@@ -1484,11 +1486,18 @@ const COMMITTEE = DATA.people.filter(p => p.kind === "maintainer");
 
 
 // -------- RESEARCH ATLAS DATA --------
-// Fields of the knowledge network. Statistics is the trunk ("core");
-// every lecture hangs on one branch via its `topic` key.
+// Two axes. The methods are what the group teaches - families of technique -
+// and the fields are where the work is done. A method carries a map of how
+// central it is to each field (1 occasional, 2 common, 3 core); every lecture
+// names its method and inherits that map unless it says otherwise.
 const TOPICS = DATA.topics;
+const METHODS = TOPICS.filter((t) => t.kind === "method");
+const ATLAS_FIELDS = TOPICS.filter((t) => t.kind === "field");
+const METHODS_PAGE = TOPICS.find((t) => t.kind === "methods") || null;
+const RELEVANCE = { 1: "occasional", 2: "common", 3: "core" };
+const topicById = (id) => TOPICS.find((t) => t.id === id);
 
-// A session becomes an atlas leaf and an Index row. `cat` drives the Index
+// A session becomes an atlas lecture and an Index row. `cat` drives the Index
 // filter: "schedule" = announced and still ahead of us, "talk" = held.
 const sessionToEvent = (s) => {
   const [y, m, d] = s.date.split("-").map(Number);
@@ -1497,7 +1506,7 @@ const sessionToEvent = (s) => {
     id: s.id,
     date: String(d).padStart(2, "0"), month: MONTHS[m - 1], year: String(y),
     kicker: s.status === "postponed" ? "Postponed" : ahead ? "Schedule" : (KIND_LABEL[s.kind] || "Lecture"),
-    title: s.title, short: s.short, topic: s.topic,
+    title: s.title, short: s.short, method: s.method, fields: s.fields || {},
     loc: s.venue, time: s.timeLabel,
     cat: ahead ? "schedule" : "talk",
     speaker: s.speakerNames, pdf: s.pdf,
@@ -1816,11 +1825,11 @@ function Hero({ variant }) {
 }
 
 function HeroMeta() {
-  const { maintainers, contributors, topics, lectures, founded } = DATA.stats;
+  const { maintainers, contributors, fields, methods, lectures, founded } = DATA.stats;
   return (
     <div className="hero-meta">
         <div className="cell" title={`${maintainers} maintainers and ${contributors} contributors; these roles overlap`}><div className="k">Maintainers &amp; Contributors</div><div className="v">{maintainers} / {contributors}<small>roles overlap</small></div></div>
-        <div className="cell"><div className="k">Topics</div><div className="v">{topics}+<small>fields</small></div></div>
+        <div className="cell" title={methods + " method families, used across " + fields + " fields"}><div className="k">Methods &amp; Fields</div><div className="v">{methods} / {fields}<small>taught / applied</small></div></div>
         <div className="cell"><div className="k">Lectures</div><div className="v">{lectures}<small>sessions</small></div></div>
         <div className="cell"><div className="k">Founded</div><div className="v">{founded}<small>UEBS</small></div></div>
       </div>);
@@ -3675,24 +3684,21 @@ function Committee() {
 // Statistics sits at the centre as the trunk; the six fields branch off it;
 // every talk is a leaf on its branch, newest first. Clicking a field unfolds
 // its branch on the map and opens the dossier below.
-const ATLAS_C = { x: 600, y: 380 };
-const talkKey = (e) => `${e.year}-${e.month}-${e.date}`;
-
-function leafPoints(t, n) {
-  const base = Math.atan2(t.y - ATLAS_C.y, t.x - ATLAS_C.x);
-  const spread = Math.min(1.9, 0.55 * Math.max(n - 1, 0));
-  const R = 108;
-  return Array.from({ length: n }, (_, i) => {
-    const a = n === 1 ? base : base - spread / 2 + (spread * i) / (n - 1);
-    return { x: t.x + R * Math.cos(a), y: t.y + R * Math.sin(a) };
-  });
-}
+// Methods down the left, fields down the right, and between them a ribbon for
+// every place a method is used - the wider, the more central. Select either
+// side and the lectures follow below.
+const ATLAS = { w: 1200, top: 72, rowGap: 82, xM: 340, xF: 880 };
+const RIBBON_W = { 1: 1.6, 2: 4.5, 3: 9 };
+const talkKey = (e) => e.year + "-" + e.month + "-" + e.date;
+const relDots = (w) => "●".repeat(w) + "○".repeat(3 - w);
+const plural = (n, word) => n + " " + (n === 1 ? word : word + "s");
 
 function ResearchAtlas() {
   const newest = EVENTS_SORTED[0];
   const isUpcoming = eventDate(newest) > new Date();
   const [view, setView] = useState("map");
-  const [sel, setSel] = useState(newest.topic);
+  const [sel, setSel] = useState({ kind: "method", id: newest.method });
+  const [hover, setHover] = useState(null);
   const [focus, setFocus] = useState(talkKey(newest));
   const [zoom, setZoom] = useState(1);
   const interacted = useRef(false);
@@ -3756,15 +3762,26 @@ function ResearchAtlas() {
     }
   };
 
-  const byTopic = useMemo(() => {
+  // lectures by method, newest first; by field, the most central first
+  const byMethod = useMemo(() => {
     const m = {};
-    TOPICS.forEach((t) => { m[t.id] = EVENTS_SORTED.filter((e) => e.topic === t.id); });
+    METHODS.forEach((t) => { m[t.id] = EVENTS_SORTED.filter((e) => e.method === t.id); });
     return m;
   }, []);
+  const byField = useMemo(() => {
+    const m = {};
+    ATLAS_FIELDS.forEach((f) => {
+      m[f.id] = EVENTS_SORTED.filter((e) => (e.fields[f.id] || 0) > 0)
+        .sort((a, b) => (b.fields[f.id] || 0) - (a.fields[f.id] || 0));
+    });
+    return m;
+  }, []);
+  // how many of the method families are at least commonly used in a field
+  const methodsServing = (f) => METHODS.filter((m) => (m.fields[f.id] || 0) >= 2).length;
 
-  const pick = (topicId, key) => {
+  const pick = (kind, id, key) => {
     interacted.current = true;
-    setSel(topicId);
+    setSel({ kind, id });
     setFocus(key || null);
   };
 
@@ -3780,16 +3797,41 @@ function ResearchAtlas() {
     if (el) el.scrollIntoView({ block: "nearest", behavior: "smooth" });
   }, [focus, sel]);
 
-  const selTopic = TOPICS.find((t) => t.id === sel);
-  const selTalks = byTopic[sel] || [];
-  const branches = TOPICS.filter((t) => t.id !== "core");
+  const selTopic = topicById(sel.id);
+  const selTalks = sel.kind === "method" ? byMethod[sel.id] : byField[sel.id];
+  const active = hover || sel;
+  const activeTopic = topicById(active.id);
+  const touches = (mId, fId) => active.kind === "method" ? active.id === mId : active.id === fId;
+  // what the selection is joined to, strongest first, for the panel
+  const relations = sel.kind === "method"
+    ? ATLAS_FIELDS.map((f) => [f, selTopic.fields[f.id] || 0]).filter(([, w]) => w > 0).sort((a, b) => b[1] - a[1])
+    : METHODS.map((m) => [m, m.fields[sel.id] || 0]).filter(([, w]) => w > 0).sort((a, b) => b[1] - a[1]);
+  const panelLink = sel.kind === "field"
+    ? (selTopic.href ? { href: selTopic.href, label: "Read the field notes →" } : null)
+    : (selTopic.href ? { href: selTopic.href, label: "Read more →" }
+      : METHODS_PAGE && METHODS_PAGE.href ? { href: METHODS_PAGE.href, label: "All the methods →" } : null);
+
+  // geometry: methods evenly down the left; the fields (and the seat kept
+  // open) spread over the same span on the right
+  const nM = METHODS.length, nFRows = ATLAS_FIELDS.length + 1;
+  const span = (nM - 1) * ATLAS.rowGap;
+  const yM = (i) => ATLAS.top + i * ATLAS.rowGap;
+  const yF = (j) => ATLAS.top + j * span / (nFRows - 1);
+  const H = ATLAS.top + span + 72;
+  const rM = (m) => Math.min(40, 24 + 1.5 * byMethod[m.id].length);
+  const rF = (f) => Math.min(40, 24 + 2.2 * methodsServing(f));
+  const ribbon = (x1, y1, x2, y2) => {
+    const dx = (x2 - x1) * 0.42;
+    return "M " + x1 + " " + y1 + " C " + (x1 + dx) + " " + y1 + ", " + (x2 - dx) + " " + y2 + ", " + x2 + " " + y2;
+  };
+  const onKey = (fn) => (event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); fn(); } };
 
   return (
     <section id="talks" className="section">
       <div className="container">
         <div className="section-header reveal">
           <div className="num"><span>01 / 03</span> &nbsp; Research Atlas</div>
-          <h2>Statistics as the backbone - <em>a living map</em> of our fields, lectures and materials.</h2>
+          <h2>Statistics as the backbone - <em>the methods we teach</em>, and the fields they are used in.</h2>
         </div>
 
         <div className="reveal">
@@ -3799,13 +3841,13 @@ function ResearchAtlas() {
               <span className="atlas-rail-label">Latest</span>
               {EVENTS_SORTED.slice(0, 5).map((e) => {
                 const k = talkKey(e);
-                const t = TOPICS.find((x) => x.id === e.topic);
+                const t = topicById(e.method);
                 return (
                   <button key={k}
                     className={"chip atlas-rail-chip" + (view === "map" && focus === k ? " active" : "")}
                     aria-pressed={view === "map" && focus === k}
-                    onClick={() => { setView("map"); pick(e.topic, k); }}>
-                    <span className="d">{e.month} {e.year}</span>{e.short}<span className="f"> · {t.label}</span>
+                    onClick={() => { setView("map"); pick("method", e.method, k); }}>
+                    <span className="d">{e.month} {e.year}</span>{e.short}<span className="f"> · {t ? t.label : ""}</span>
                   </button>);
               })}
               </div>
@@ -3820,92 +3862,81 @@ function ResearchAtlas() {
             <>
               <div className="atlas-map-outer">
                 <div className="atlas-map-wrap" ref={mapWrapRef}>
-                <svg className={"atlas-svg" + (sel !== "core" ? " branch-selected" : "")} viewBox="0 0 1290 760" role="group"
-                  style={{ width: `${zoom * 100}%`, minWidth: `${860 * zoom}px` }}
-                  aria-label="Research atlas: statistics at the centre, research fields as branches, lectures as leaves">
-                  <g transform="translate(35,0)">
+                <svg className="atlas-svg" viewBox={"0 0 " + ATLAS.w + " " + H} role="group"
+                  style={{ width: (zoom * 100) + "%", minWidth: (760 * zoom) + "px" }}
+                  aria-label="Research atlas: the methods we teach on the left, the fields they are used in on the right, joined by ribbons as wide as the method matters to the field">
 
-                    {/* trunk → field edges */}
-                    {branches.map((t, i) => {
-                      const mx = (ATLAS_C.x + t.x) / 2, my = (ATLAS_C.y + t.y) / 2;
-                      const px = t.y - ATLAS_C.y, py = ATLAS_C.x - t.x;
-                      const plen = Math.hypot(px, py) || 1;
-                      const off = (i % 2 ? -1 : 1) * 26;
-                      const d = `M ${ATLAS_C.x} ${ATLAS_C.y} Q ${mx + (px / plen) * off} ${my + (py / plen) * off} ${t.x} ${t.y}`;
-                      return (
-                        <g key={t.id}>
-                          <path className={"atlas-edge" + (sel === t.id ? " active" : "")} d={d} />
-                          {sel === t.id && <path className="atlas-edge-flow" d={d} />}
-                        </g>);
-                    })}
+                  <text className="atlas-col-head" x={ATLAS.xM} y={28} textAnchor="middle">Methods · what we teach</text>
+                  <text className="atlas-col-head" x={ATLAS.xF} y={28} textAnchor="middle">Fields · where it is used</text>
 
-                    {/* frontier: the branch that doesn't exist yet */}
-                    <path className="atlas-edge ghost" d="M 600 380 Q 860 336 1105 380" />
+                  {/* ribbons: one for every place a method is used */}
+                  {METHODS.map((m, i) => ATLAS_FIELDS.map((f, j) => {
+                    const w = m.fields[f.id] || 0;
+                    if (!w) return null;
+                    const lit = touches(m.id, f.id);
+                    const x1 = ATLAS.xM + rM(m) + 6, x2 = ATLAS.xF - rF(f) - 6;
+                    const y1 = yM(i), y2 = yF(j);
+                    const tagAtField = active.kind === "method";
+                    return (
+                      <g key={m.id + "-" + f.id} className={"atlas-ribbon-g w" + w + (lit ? " lit" : "")}>
+                        <path className="atlas-ribbon" d={ribbon(x1, y1, x2, y2)} style={{ strokeWidth: RIBBON_W[w] }} />
+                        {lit && <text className="atlas-w" x={tagAtField ? x2 - 12 : x1 + 12} y={(tagAtField ? y2 : y1) - 11}
+                          textAnchor={tagAtField ? "end" : "start"}>{RELEVANCE[w]}</text>}
+                      </g>);
+                  }))}
 
-                    {/* leaves of the selected branch */}
-                    {sel !== "core" && selTopic && leafPoints(selTopic, selTalks.length).map((p, i) => {
-                      const e = selTalks[i];
-                      const k = talkKey(e);
-                      const rightSide = p.x >= selTopic.x;
-                      return (
-                        <g key={sel + "-" + k} className="atlas-leaf-g" style={{ animationDelay: `${i * 70}ms` }} onClick={() => pick(sel, k)}
-                          role="button" tabIndex="0" aria-label={`Open ${e.title}`} aria-pressed={focus === k} aria-controls="atlas-panel"
-                          onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); pick(sel, k); } }}>
-                          <line className="atlas-twig" x1={selTopic.x} y1={selTopic.y} x2={p.x} y2={p.y} />
-                          <circle className={"atlas-leaf" + (focus === k ? " focused" : "")} cx={p.x} cy={p.y} r={focus === k ? 7 : 5.5} />
-                          <text className="atlas-leaf-label" x={p.x + (rightSide ? 12 : -12)} y={p.y + 4}
-                            textAnchor={rightSide ? "start" : "end"}>{e.short} · {e.year}</text>
-                          <title>{e.title}</title>
-                        </g>);
-                    })}
+                  {/* methods */}
+                  {METHODS.map((m, i) => {
+                    const n = byMethod[m.id].length, r = rM(m), y = yM(i);
+                    const isSel = sel.kind === "method" && sel.id === m.id;
+                    const faint = active.kind === "field" && !((m.fields[active.id] || 0) > 0);
+                    const isNewest = m.id === newest.method;
+                    const flagY = i === 0 ? y + r + 22 : y - r - 12;
+                    return (
+                      <g key={m.id} className={"atlas-node" + (isSel ? " is-selected" : "") + (faint ? " faint" : "")}
+                        onClick={() => pick("method", m.id, null)}
+                        onMouseEnter={() => setHover({ kind: "method", id: m.id })} onMouseLeave={() => setHover(null)}
+                        role="button" tabIndex="0" aria-label={"Open " + m.label + ", " + plural(n, "lecture")}
+                        aria-pressed={isSel} aria-controls="atlas-panel" onKeyDown={onKey(() => pick("method", m.id, null))}>
+                        {isNewest && <circle className="atlas-pulse" cx={ATLAS.xM} cy={y} r={r + 6} />}
+                        <circle className={"atlas-node-c" + (isSel ? " active" : "") + (n === 0 ? " empty" : "")} cx={ATLAS.xM} cy={y} r={r} />
+                        <text className={"atlas-count" + (isSel ? " active" : "")} x={ATLAS.xM} y={y + 4} textAnchor="middle">{String(n).padStart(2, "0")}</text>
+                        <text className={"atlas-count-sub" + (isSel ? " active" : "")} x={ATLAS.xM} y={y + 19} textAnchor="middle">{n === 1 ? "lecture" : "lectures"}</text>
+                        <text className="atlas-node-label" x={ATLAS.xM - r - 14} y={y + 5} textAnchor="end">{m.label}</text>
+                        {isNewest &&
+                          <text className="atlas-flag" x={ATLAS.xM} y={flagY} textAnchor="middle">
+                            {(isUpcoming ? "next · " : "latest · ") + newest.month + " " + newest.year}
+                          </text>}
+                        <title>{m.label}</title>
+                      </g>);
+                  })}
 
-                    {/* field nodes */}
-                    {branches.map((t, i) => {
-                      const n = byTopic[t.id].length;
-                      const r = 30 + 2.5 * n;
-                      const isNewestField = t.id === newest.topic;
-                      const topRow = t.y < ATLAS_C.y;   // caption sits on the side facing the centre, flag on the other
-                      const capY = t.y + (topRow ? r + 24 : -(r + 16));
-                      const flagY = topRow ? t.y - r - 16 : t.y + r + 40;
-                      return (
-                        <g key={t.id} className={"atlas-node atlas-float f" + (i % 3) + (sel === t.id ? " is-selected" : "")} onClick={() => pick(t.id, null)}
-                          role="button" tabIndex="0" aria-label={`Open ${t.label}, ${n} ${n === 1 ? "lecture" : "lectures"}`}
-                          aria-pressed={sel === t.id} aria-controls="atlas-panel"
-                          onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); pick(t.id, null); } }}>
-                          {isNewestField && <circle className="atlas-pulse" cx={t.x} cy={t.y} r={r + 6} />}
-                          <circle className={"atlas-node-c" + (sel === t.id ? " active" : "") + (n === 0 ? " empty" : "")} cx={t.x} cy={t.y} r={r} />
-                          <text className={"atlas-count" + (sel === t.id ? " active" : "")} x={t.x} y={t.y + 4} textAnchor="middle">{String(n).padStart(2, "0")}</text>
-                          <text className={"atlas-count-sub" + (sel === t.id ? " active" : "")} x={t.x} y={t.y + 19} textAnchor="middle">{n === 0 ? "growing" : n === 1 ? "lecture" : "lectures"}</text>
-                          <text className="atlas-node-label" x={t.x} y={capY + 4} textAnchor="middle">{t.label}</text>
-                          {isNewestField &&
-                            <text className="atlas-flag" x={t.x} y={flagY} textAnchor="middle">
-                              {(isUpcoming ? "next · " : "latest · ") + newest.month + " " + newest.year}
-                            </text>}
-                          <title>{t.label}</title>
-                        </g>);
-                    })}
+                  {/* fields */}
+                  {ATLAS_FIELDS.map((f, j) => {
+                    const n = methodsServing(f), r = rF(f), y = yF(j);
+                    const isSel = sel.kind === "field" && sel.id === f.id;
+                    const faint = active.kind === "method" && !(((activeTopic && activeTopic.fields) || {})[f.id] > 0);
+                    return (
+                      <g key={f.id} className={"atlas-node" + (isSel ? " is-selected" : "") + (faint ? " faint" : "")}
+                        onClick={() => pick("field", f.id, null)}
+                        onMouseEnter={() => setHover({ kind: "field", id: f.id })} onMouseLeave={() => setHover(null)}
+                        role="button" tabIndex="0" aria-label={"Open " + f.label + ", served by " + plural(n, "method")}
+                        aria-pressed={isSel} aria-controls="atlas-panel" onKeyDown={onKey(() => pick("field", f.id, null))}>
+                        <circle className={"atlas-node-c" + (isSel ? " active" : "") + (n === 0 ? " empty" : "")} cx={ATLAS.xF} cy={y} r={r} />
+                        <text className={"atlas-count" + (isSel ? " active" : "")} x={ATLAS.xF} y={y + 4} textAnchor="middle">{String(n).padStart(2, "0")}</text>
+                        <text className={"atlas-count-sub" + (isSel ? " active" : "")} x={ATLAS.xF} y={y + 19} textAnchor="middle">{n === 1 ? "method" : "methods"}</text>
+                        <text className="atlas-node-label" x={ATLAS.xF + r + 14} y={y + 5} textAnchor="start">{f.label}</text>
+                        <title>{f.label}</title>
+                      </g>);
+                  })}
 
-                    {/* ghost node: the map keeps growing */}
-                    <g className="atlas-node atlas-ghost" onClick={() => goJoin()} role="button" tabIndex="0" aria-label="Propose a new research field"
-                      onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); goJoin(); } }}>
-                      <circle className="atlas-ghost-c" cx="1105" cy="380" r="24" />
-                      <text className="atlas-ghost-plus" x="1105" y="387" textAnchor="middle">+</text>
-                      <text className="atlas-node-label ghost" x="1105" y="426" textAnchor="middle">your field?</text>
-                      <title>Propose a new branch - join us</title>
-                    </g>
-
-                    {/* the trunk */}
-                    <g className={"atlas-node atlas-core" + (sel === "core" ? " is-selected" : "")} onClick={() => pick("core", null)} role="button" tabIndex="0" aria-label="Open Statistics trunk lectures"
-                      aria-pressed={sel === "core"} aria-controls="atlas-panel"
-                      onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); pick("core", null); } }}>
-                      <ellipse className={"atlas-core-c" + (sel === "core" ? " active" : "")} cx="600" cy="380" rx="118" ry="50" />
-                      <text className="atlas-core-t" x="600" y="378" textAnchor="middle">Statistics</text>
-                      <text className="atlas-core-sub" x="600" y="400" textAnchor="middle">
-                        the backbone · {byTopic.core.length} trunk {byTopic.core.length === 1 ? "lecture" : "lectures"}
-                      </text>
-                      <title>Statistics - the backbone of every branch</title>
-                    </g>
-
+                  {/* the seat kept open: the map grows with the group */}
+                  <g className="atlas-node atlas-ghost" onClick={() => goJoin()} role="button" tabIndex="0"
+                    aria-label="Propose a new research field" onKeyDown={onKey(() => goJoin())}>
+                    <circle className="atlas-ghost-c" cx={ATLAS.xF} cy={yF(ATLAS_FIELDS.length)} r="24" />
+                    <text className="atlas-ghost-plus" x={ATLAS.xF} y={yF(ATLAS_FIELDS.length) + 7} textAnchor="middle">+</text>
+                    <text className="atlas-node-label ghost" x={ATLAS.xF + 38} y={yF(ATLAS_FIELDS.length) + 5} textAnchor="start">your field?</text>
+                    <title>Propose a new field - join us</title>
                   </g>
                 </svg>
                 </div>
@@ -3915,30 +3946,49 @@ function ResearchAtlas() {
                   <button className="atlas-zoom-btn" onClick={() => setZoom((z) => Math.min(2, +(z + 0.25).toFixed(2)))} disabled={zoom >= 2} aria-label="Zoom in">+</button>
                 </div>
               </div>
-              <div className="atlas-hint">Click a field to unfold its branch · leaves are lectures, newest first · scroll the map to zoom · the map grows with every session</div>
+              <div className="atlas-hint">
+                <span className="atlas-legend" aria-hidden="true">
+                  <span><i style={{ height: 9 }} />core</span>
+                  <span><i style={{ height: 4.5 }} />common</span>
+                  <span><i style={{ height: 1.6 }} />occasional</span>
+                </span>
+                A ribbon joins a method to a field it is used in, as wide as the method matters there · click either side and the lectures follow below · scroll the map to zoom
+              </div>
 
-              <div key={sel} className="atlas-panel" id="atlas-panel">
+              <div key={sel.kind + sel.id} className="atlas-panel" id="atlas-panel">
                 <div className="atlas-panel-head">
                   <div>
-                    <div className="atlas-panel-kicker">{sel === "core" ? "The trunk" : "Branch"} · {selTalks.length} {selTalks.length === 1 ? "lecture" : "lectures"}</div>
+                    <div className="atlas-panel-kicker">
+                      {sel.kind === "method" ? "Method · " + plural(selTalks.length, "lecture") : "Field · served by " + plural(methodsServing(selTopic), "method")}
+                    </div>
                     <h3 className="atlas-panel-title" aria-live="polite">{selTopic.label}</h3>
                     <p className="atlas-panel-blurb">{selTopic.blurb}</p>
+                    {relations.length > 0 &&
+                      <div className="atlas-rel-row">
+                        <span className="atlas-rel-k">{sel.kind === "method" ? "Used in" : "Draws on"}</span>
+                        {relations.map(([t, w]) =>
+                          <button key={t.id} type="button" className={"atlas-rel w" + w} title={RELEVANCE[w]}
+                            onClick={() => pick(sel.kind === "method" ? "field" : "method", t.id, null)}>
+                            <b>{relDots(w)}</b>{t.label}
+                          </button>)}
+                      </div>}
                   </div>
-                  {selTopic.href && <a className="atlas-panel-link" href={selTopic.href}>Read the field notes →</a>}
+                  {panelLink && <a className="atlas-panel-link" href={panelLink.href}>{panelLink.label}</a>}
                 </div>
                 <div>
                   {selTalks.length === 0 &&
                     <div className="event-empty">
-                      This branch is still growing - no lectures yet.&nbsp;
+                      {sel.kind === "method" ? "Nothing taught here yet." : "No lecture serves this field yet."}&nbsp;
                       <a href="#join" onClick={goJoin} style={{ color: "var(--accent)" }}>Propose the first one →</a>
                     </div>}
                   {selTalks.map((e) => {
                     const k = talkKey(e);
                     const isNewestAll = e === newest;
+                    const w = sel.kind === "field" ? (e.fields[sel.id] || 0) : 0;
                     return (
-                      <div key={k} id={"atlas-talk-" + k} className={"event-row" + (focus === k ? " focused" : "")} onClick={() => pick(sel, k)}
+                      <div key={k} id={"atlas-talk-" + k} className={"event-row" + (focus === k ? " focused" : "")} onClick={() => pick(sel.kind, sel.id, k)}
                         role="button" tabIndex="0" aria-pressed={focus === k}
-                        onKeyDown={(event) => { if (event.target === event.currentTarget && (event.key === "Enter" || event.key === " ")) { event.preventDefault(); pick(sel, k); } }}>
+                        onKeyDown={(event) => { if (event.target === event.currentTarget && (event.key === "Enter" || event.key === " ")) { event.preventDefault(); pick(sel.kind, sel.id, k); } }}>
                         <div className="event-date">
                           <div className="d">{e.date}</div>
                           <div className="m">{e.month} · {e.year}</div>
@@ -3946,6 +3996,12 @@ function ResearchAtlas() {
                         <div className="event-title">
                           <span className="kicker">
                             {e.kicker}{e.speaker ? " · " + e.speaker : ""}
+                            {sel.kind === "field" && w > 0 && <span className={"atlas-rel-tag w" + w}>{RELEVANCE[w]}</span>}
+                            {sel.kind === "method" && e.fields && Object.keys(e.fields).length > 0 && (() => {
+                              const top = Object.entries(e.fields).sort((a, b) => b[1] - a[1])[0];
+                              const ft = top && topicById(top[0]);
+                              return ft && top[1] >= 3 ? <span className="atlas-rel-tag w3">{ft.label}</span> : null;
+                            })()}
                             {isNewestAll && <span className="atlas-badge">{isUpcoming ? "upcoming" : "newest"}</span>}
                           </span>
                           {e.title}
@@ -4166,12 +4222,22 @@ function News() {
   { id: "opportunity", label: "Opportunities" },
   { id: "blog", label: "Blog" }];
 
+  // The list is grouped by what a post is. Each group shows its newest few
+  // and opens out on demand; a filter or a search flattens it.
+  const GROUPS = [
+  { id: "lecture", label: "Lectures", note: "sessions of our own, worth a second look" },
+  { id: "event", label: "Events", note: "to attend" },
+  { id: "opportunity", label: "Opportunities", note: "to apply for" },
+  { id: "blog", label: "Blog", note: "" },
+  { id: "announcement", label: "Announcements", note: "" }];
+  const LIMIT = 4;
+
   const [q, setQ] = useState("");
   const [cat, setCat] = useState("all");
-  const [expanded, setExpanded] = useState(false);
+  const [open, setOpen] = useState({});
   const today = useMemo(() => {
     const d = new Date();
-    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+    return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
   }, []);
   const inCat = (n) => cat === "all" || n.kind === cat;
   const filtered = useMemo(() => {
@@ -4184,10 +4250,9 @@ function News() {
   }, [q, cat]);
 
   useEffect(() => {
-    setExpanded(false);
+    setOpen({});
   }, [q, cat]);
 
-  const displayed = expanded ? filtered : filtered.slice(0, 3);
   // An opportunity is closed once its deadline has passed, or - without a
   // deadline - once the event itself is behind us.
   const isClosed = (n) => n.deadline ? n.deadline < today : (!!n.eventDate && n.eventDate < today);
@@ -4195,6 +4260,34 @@ function News() {
     if (n.deadline) return n.deadline < today ? "Closed · deadline was " + n.deadlineLabel : "Deadline " + n.deadlineLabel;
     if (n.eventDate) return n.eventDate < today ? "Took place " + n.eventDateLabel : "On " + n.eventDateLabel;
     return "";
+  };
+
+  const grouped = cat === "all" && !q.trim();
+  const groups = grouped
+    ? GROUPS.map((g) => ({ ...g, rows: filtered.filter((n) => n.kind === g.id) })).filter((g) => g.rows.length)
+    : [{ id: "all", label: "", note: "", rows: filtered }];
+
+  const renderRow = (n, showType) => {
+    const closed = isClosed(n);
+    const meta = [showType ? n.cat : "", n.sub].filter(Boolean).join(" · ");
+    const when = dateline(n);
+    return (
+      <article key={n.postId || n.sessionId || n.title} className={"post-row" + (closed ? " is-closed" : "") + (n.href ? " has-link" : "")}>
+        <div className="post-date">{n.dateLabel}</div>
+        <div className="post-main">
+          <div className="post-meta">
+            {meta}
+            {when && <span className={"post-dl" + (closed ? " closed" : "")}>{meta ? " · " : ""}{when}</span>}
+          </div>
+          <h3 className="post-title">
+            {n.href
+              ? <a href={n.href} target={n.external ? "_blank" : undefined} rel={n.external ? "noopener noreferrer" : undefined}>{n.title}</a>
+              : n.title}
+          </h3>
+          <p className="post-excerpt">{n.excerpt}</p>
+        </div>
+        <div className="post-go" aria-hidden="true">{n.href ? "→" : ""}</div>
+      </article>);
   };
 
   return (
@@ -4218,42 +4311,28 @@ function News() {
               </div>
               <div className="events-count">{filtered.length} {filtered.length === 1 ? "post" : "posts"} · <a className="events-share" href="submit.html">share one →</a></div>
             </div>
-            <div className="news-grid" id="post-results">
-              {displayed.map((n, i) =>
-            <article key={n.postId || n.sessionId || n.title} className={"news-card" + (n.href ? " has-link" : "") + (isClosed(n) ? " is-closed" : "")} data-visual={n.visual}>
-                  <div className={"img" + (n.cover ? " has-cover" : "")} data-label={n.img} aria-hidden={n.cover ? undefined : "true"}>
-                    {n.cover && <img src={n.cover} alt={n.coverAlt} loading="lazy" decoding="async" />}
-                  </div>
-                  <div className="meta"><span className="cat">{n.cat}</span>{n.sub ? <span className="sub">{n.sub}</span> : null} · <span>{n.dateLabel}</span></div>
-                  <h3>{n.title}</h3>
-                  <p>{n.excerpt}</p>
-                  {dateline(n) && <div className={"deadline" + (isClosed(n) ? " closed" : "")}>{dateline(n)}</div>}
-                  {n.href && <a className="read" href={n.href} target={n.external ? "_blank" : undefined} rel={n.external ? "noopener noreferrer" : undefined}>{n.external ? "Open the original announcement →" : "Open related material →"}</a>}
-                </article>
-            )}
-              {filtered.length === 0 &&
-            <div style={{ gridColumn: "1/-1", padding: "60px 0", textAlign: "center", fontFamily: "var(--serif)", fontStyle: "italic", color: "var(--ink-mute)", fontSize: 20 }}>
-                  Nothing matches that search.
-                </div>
-            }
+            <div className="post-list" id="post-results">
+              {groups.map((g) => {
+                const isOpen = !grouped || !!open[g.id];
+                const rows = isOpen ? g.rows : g.rows.slice(0, LIMIT);
+                return (
+                  <div key={g.id} className="post-group">
+                    {grouped &&
+                      <div className="post-group-h">
+                        <span className="t">{g.label}</span>
+                        <span className="n">{g.rows.length}</span>
+                        {g.note && <span className="note">{g.note}</span>}
+                      </div>}
+                    {rows.map((n) => renderRow(n, !grouped))}
+                    {grouped && g.rows.length > LIMIT &&
+                      <button type="button" className="post-more" aria-expanded={!!open[g.id]}
+                        onClick={() => setOpen((o) => ({ ...o, [g.id]: !o[g.id] }))}>
+                        {open[g.id] ? "Show fewer" : "All " + g.rows.length + " " + g.label.toLowerCase() + " →"}
+                      </button>}
+                  </div>);
+              })}
+              {filtered.length === 0 && <div className="event-empty">Nothing matches that search.</div>}
             </div>
-            {filtered.length > 3 && (
-              <div style={{ display: "flex", justifyContent: "center", marginTop: 32 }}>
-                <button onClick={() => setExpanded(!expanded)} aria-expanded={expanded} className="chip" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "10px 24px" }}>
-                  {expanded ? (
-                    <>
-                      Show Less
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
-                    </>
-                  ) : (
-                    <>
-                      Show More (+{filtered.length - 3})
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                    </>
-                  )}
-                </button>
-              </div>
-            )}
           </div>
         </div>
       </section>);

@@ -10,8 +10,7 @@ format: "in-person"
 speakers: ["heqing-shi"]
 title: "The Kernel Trick"
 short: "Kernel Trick"
-topic: "ai"
-also: ["stat"]
+method: "ml"
 semester: "Spring 2025"
 materials: 
   - {"label": "Notes", "file": "assets/talks/The_Kernel_Trick.pdf"}

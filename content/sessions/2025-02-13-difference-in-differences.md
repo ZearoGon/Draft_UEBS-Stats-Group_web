@@ -10,8 +10,7 @@ format: "in-person"
 speakers: ["ke-bi"]
 title: "Difference-in-Differences"
 short: "DiD"
-topic: "econ"
-also: ["stat"]
+method: "causal"
 semester: "Spring 2025"
 materials: 
   - {"label": "Slides", "file": "assets/talks/DiD.pdf"}

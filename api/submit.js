@@ -14,8 +14,8 @@ import {
   POST_TYPES,
   SESSION_FORMATS,
   SESSION_KINDS,
-  TOPIC_IDS,
-  TOPIC_LABELS,
+  METHOD_IDS,
+  METHOD_LABELS,
   assertNoForbidden,
   cleanText,
   errorResponse,
@@ -126,8 +126,8 @@ function planSession(s, attachment, known) {
   if (!isIsoDate(date)) throw new HttpError(400, "date", "The session needs a date (YYYY-MM-DD).");
   const title = oneLine(s.title, 200);
   if (!title) throw new HttpError(400, "title", "The session needs a title.");
-  const topic = TOPIC_IDS.includes(s.topic) ? s.topic : "";
-  if (!topic) throw new HttpError(400, "topic", "Choose the branch of the Research Atlas the session belongs to.");
+  const method = METHOD_IDS.includes(s.method) ? s.method : "";
+  if (!method) throw new HttpError(400, "method", "Choose the method family the session belongs to.");
   const kind = SESSION_KINDS.includes(s.kind) ? s.kind : "lecture";
   const format = SESSION_FORMATS.includes(s.format) ? s.format : "in-person";
   const start = s.start ? String(s.start) : "";
@@ -220,7 +220,7 @@ function planSession(s, attachment, known) {
     speaker_label: speakers.length ? "" : speakerLabel,
     title,
     short,
-    topic,
+    method,
     semester,
     journal,
     materials,
@@ -240,7 +240,7 @@ function planSession(s, attachment, known) {
       ["When", `${fmtDate(date)}${start ? " · " + start : ""}${end ? "–" + end : ""}`],
       ["Where", `${venue} (${format})`],
       ["Speakers", speakerNames.join(", ") || speakerLabel],
-      ["Branch", TOPIC_LABELS[topic]],
+      ["Method", METHOD_LABELS[method]],
       ["Materials", materials.length ? materials.map((m) => m.file ? `${m.label}: ${m.file}${m.public ? "" : " (not public)"}` : `${m.label}: ${m.url}`).join("; ") : "none"],
     ],
   };

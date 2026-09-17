@@ -9,8 +9,7 @@ format: "in-person"
 speakers: ["shiqi-fang"]
 title: "Git & GitHub"
 short: "Git & GitHub"
-topic: "core"
-also: ["stat"]
+method: "craft"
 semester: "Autumn 2024"
 materials: 
   - {"label": "Guide", "file": "assets/talks/git and github.pdf"}

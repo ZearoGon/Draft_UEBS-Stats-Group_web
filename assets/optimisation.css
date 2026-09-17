@@ -838,8 +838,7 @@ body {
 
 /* Hero: a stronger editorial silhouette with a visible statistical field. */
 .hero.split {
-  min-height: calc(100svh - 4.4rem);
-  padding-block: clamp(3.2rem, 6vw, 6.5rem) clamp(3.5rem, 6vw, 6rem);
+  padding-block: clamp(2.6rem, 4.5vw, 4.5rem) clamp(1.75rem, 3vw, 3rem);
   background:
     linear-gradient(112deg, rgb(250 248 244 / 0.38) 0 44%, transparent 67%),
     linear-gradient(to bottom, transparent 82%, rgb(11 56 78 / 0.025));
@@ -958,7 +957,7 @@ body {
 }
 
 .hero-meta {
-  margin-block-start: clamp(3.5rem, 6vw, 5rem);
+  margin-block-start: clamp(1.9rem, 3.2vw, 2.8rem);
   gap: 0;
   padding-block-start: 0;
   border-top: 2px solid var(--accent);
@@ -1277,7 +1276,7 @@ body {
 }
 
 #talks > .container > .reveal:not(.section-header)::before {
-  content: "RESEARCH INSTRUMENT  /  LIVE INDEX";
+  content: "RESEARCH ATLAS  /  METHODS AND FIELDS";
   display: block;
   margin-block-end: 1rem;
   color: var(--accent);
@@ -1299,46 +1298,16 @@ body {
   background-size: 2.4rem 2.4rem, 2.4rem 2.4rem, auto;
 }
 
-#talks .atlas-float {
-  animation-play-state: paused;
-}
-
-#talks .atlas-node:hover,
-#talks .atlas-node:focus-visible,
-#talks .atlas-node.is-selected {
-  opacity: 1;
-}
-
-#talks .atlas-node {
-  transition: opacity 220ms ease;
-}
-
-#talks .atlas-svg.branch-selected .atlas-node:not(.is-selected):not(.atlas-core):not(.atlas-ghost) {
-  opacity: 0.38;
-}
-
-#talks .atlas-svg.branch-selected .atlas-core,
-#talks .atlas-svg.branch-selected .atlas-ghost {
-  opacity: 0.7;
-}
-
-#talks .atlas-svg.branch-selected .atlas-node:is(:hover, :focus-visible) {
-  opacity: 1;
-}
-
-#talks .atlas-node:focus-visible,
-#talks .atlas-leaf-g:focus-visible {
+#talks .atlas-node:focus-visible {
   outline: none;
 }
 
-#talks .atlas-node:focus-visible .atlas-node-c,
-#talks .atlas-leaf-g:focus-visible .atlas-leaf {
+#talks .atlas-node:focus-visible .atlas-node-c {
   stroke: var(--accent);
   stroke-width: 3;
 }
 
-#talks .atlas-node:is(:hover, :focus-visible) .atlas-node-label,
-#talks .atlas-leaf-g:is(:hover, :focus-visible) .atlas-leaf-label {
+#talks .atlas-node:is(:hover, :focus-visible) .atlas-node-label {
   fill: var(--accent);
 }
 
@@ -1378,160 +1347,22 @@ body {
 }
 
 #posts .news-toolbar {
-  margin-block-end: 1.5rem;
+  margin-block-end: 0.25rem;
   padding-block: 0.4rem 0.75rem;
-  border-top: 1px solid var(--ink);
 }
 
-#posts .news-grid {
-  grid-template-columns: minmax(0, 1.32fr) minmax(18rem, 0.68fr);
-  gap: 1px;
-  border: 1px solid var(--rule);
-  background: var(--rule);
+#posts .post-group-h {
+  border-bottom-color: color-mix(in oklab, var(--accent) 45%, var(--rule));
 }
 
-#posts .news-card {
-  min-height: 18rem;
-  padding: clamp(1.25rem, 2.4vw, 2rem);
-  border: 0;
-  background: var(--bg);
-  transition: color 220ms ease, background-color 220ms ease, transform 220ms ease, box-shadow 220ms ease;
-  cursor: default;
+#posts .post-row.has-link:hover,
+#posts .post-row:focus-within {
+  background: color-mix(in oklab, var(--paper) 72%, transparent);
 }
 
-#posts .news-card.has-link {
-  cursor: pointer;
-}
-
-#posts .news-card:first-child {
-  grid-row: span 2;
-  min-height: 39rem;
-}
-
-#posts .news-card:hover,
-#posts .news-card:focus-within {
-  z-index: 2;
-  background: var(--paper);
-  box-shadow: 0 1.5rem 4rem -2.5rem rgb(6 38 55 / 0.55);
-  transform: translateY(-0.25rem);
-}
-
-#posts .news-card .img {
-  isolation: isolate;
-  overflow: hidden;
-  margin: calc(clamp(1.25rem, 2.4vw, 2rem) * -1) calc(clamp(1.25rem, 2.4vw, 2rem) * -1) 1.5rem;
-  border-bottom-color: color-mix(in oklab, var(--accent) 20%, var(--rule));
-  background:
-    linear-gradient(145deg, rgb(11 56 78 / 0.96), rgb(6 25 36 / 0.99));
-}
-
-#posts .news-card:first-child .img {
-  aspect-ratio: 16 / 10.2;
-}
-
-#posts .news-card:not(:first-child) .img {
-  aspect-ratio: 2.4 / 1;
-}
-
-#posts .news-card .img::before {
-  content: "";
-  position: absolute;
-  inset: -16%;
-  z-index: -1;
-  background:
-    radial-gradient(circle at 22% 67%, rgb(196 225 237 / 0.9) 0 0.11rem, transparent 0.14rem),
-    radial-gradient(circle at 48% 34%, rgb(196 225 237 / 0.62) 0 0.09rem, transparent 0.12rem),
-    radial-gradient(circle at 72% 58%, rgb(196 225 237 / 0.76) 0 0.13rem, transparent 0.16rem),
-    repeating-radial-gradient(ellipse at 58% 53%, transparent 0 1.2rem, rgb(157 206 225 / 0.16) 1.25rem 1.32rem, transparent 1.38rem 2.5rem);
-  background-size: 1.85rem 1.85rem, 2.25rem 2.25rem, 2.8rem 2.8rem, auto;
-  opacity: 0.92;
-  transform: rotate(-9deg) scale(1.1);
-  transition: transform 700ms cubic-bezier(0.2, 0.75, 0.25, 1), opacity 220ms ease;
-  -webkit-mask-image: radial-gradient(ellipse at center, #000 0 52%, transparent 84%);
-  mask-image: radial-gradient(ellipse at center, #000 0 52%, transparent 84%);
-}
-
-#posts .news-card[data-visual="regression"] .img::before {
-  background:
-    linear-gradient(153deg, transparent 0 46%, rgb(224 240 247 / 0.78) 46.3% 47%, transparent 47.3%),
-    radial-gradient(circle, rgb(196 225 237 / 0.78) 0 0.12rem, transparent 0.15rem);
-  background-size: auto, 1.9rem 1.9rem;
-  transform: rotate(-5deg) scale(1.08);
-}
-
-#posts .news-card[data-visual="breaks"] .img::before {
-  background:
-    linear-gradient(90deg, transparent 0 33%, rgb(224 240 247 / 0.72) 33.2% 33.65%, transparent 33.8% 67%, rgb(224 240 247 / 0.5) 67.2% 67.55%, transparent 67.8%),
-    repeating-linear-gradient(0deg, transparent 0 1.1rem, rgb(157 206 225 / 0.16) 1.15rem 1.2rem);
-  transform: rotate(-2deg) scale(1.08);
-}
-
-#posts .news-card[data-visual="network"] .img::before {
-  background:
-    radial-gradient(circle at 26% 35%, rgb(224 240 247 / 0.94) 0 0.28rem, transparent 0.31rem),
-    radial-gradient(circle at 67% 63%, rgb(224 240 247 / 0.84) 0 0.38rem, transparent 0.41rem),
-    radial-gradient(circle at 78% 27%, rgb(224 240 247 / 0.7) 0 0.22rem, transparent 0.25rem),
-    linear-gradient(28deg, transparent 0 48%, rgb(157 206 225 / 0.38) 48.3% 48.7%, transparent 49%),
-    linear-gradient(151deg, transparent 0 52%, rgb(157 206 225 / 0.28) 52.3% 52.7%, transparent 53%);
-  transform: rotate(2deg) scale(1.05);
-}
-
-#posts .news-card:hover .img::before {
-  opacity: 1;
-  transform: rotate(-4deg) scale(1.17);
-}
-
-#posts .news-card .img::after {
-  left: 1rem;
-  bottom: 0.85rem;
-  z-index: 2;
-  color: rgb(235 244 247 / 0.74);
-}
-
-#posts .news-card .img.has-cover {
-  background: var(--bg-2);
-}
-
-#posts .news-card .img.has-cover::before {
-  inset: 0;
-  z-index: 1;
-  background: linear-gradient(to top, rgb(4 17 26 / 0.68), transparent 48%);
-  opacity: 1;
-  transform: none;
-  -webkit-mask-image: none;
-  mask-image: none;
-}
-
-#posts .news-card .img.has-cover img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  filter: saturate(0.78) contrast(1.04);
-  transition: filter 400ms ease, transform 700ms cubic-bezier(0.2, 0.75, 0.25, 1);
-}
-
-#posts .news-card:hover .img.has-cover::before {
-  transform: none;
-}
-
-#posts .news-card:hover .img.has-cover img {
-  filter: saturate(0.95) contrast(1.04);
-  transform: scale(1.025);
-}
-
-#posts .news-card .meta .cat,
-#posts .news-card .read {
-  color: var(--accent);
-}
-
-#posts .news-card h3 {
-  font-size: clamp(1.1rem, 0.7vw + 0.9rem, 1.4rem);
-}
-
-#posts .news-card:first-child h3 {
-  max-width: 18ch;
-  font-size: clamp(1.45rem, 1.7vw, 2rem);
+#posts .post-title a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }
 
 /* Continuous resizing and deliberate mobile compositions. */
@@ -1594,14 +1425,6 @@ body {
     margin-block-end: 1rem;
   }
 
-  #posts .news-grid {
-    grid-template-columns: 1fr;
-  }
-
-  #posts .news-card:first-child {
-    grid-row: auto;
-    min-height: 34rem;
-  }
 }
 
 @media (max-width: 720px) {
@@ -1737,16 +1560,6 @@ body {
     padding-inline: 0.25rem;
   }
 
-  #posts .news-card,
-  #posts .news-card:first-child {
-    min-height: 0;
-  }
-
-  #posts .news-card:first-child .img,
-  #posts .news-card:not(:first-child) .img {
-    aspect-ratio: 16 / 9;
-  }
-
   .footer-links {
     width: 100%;
     flex-wrap: wrap;
@@ -1770,7 +1583,6 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .hero.split .hero-carousel .slide,
-  #posts .news-card .img::before,
   #talks .atlas-panel {
     animation: none !important;
     transition: none !important;

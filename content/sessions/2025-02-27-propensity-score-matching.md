@@ -10,8 +10,7 @@ format: "in-person"
 speakers: ["yizhuo-hu"]
 title: "Matching Techniques - Propensity Score Matching"
 short: "PSM"
-topic: "econ"
-also: ["stat"]
+method: "causal"
 semester: "Spring 2025"
 materials: 
   - {"label": "Slides", "file": "assets/talks/psm.pdf"}

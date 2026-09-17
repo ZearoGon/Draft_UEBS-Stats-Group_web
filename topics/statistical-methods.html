@@ -8,51 +8,51 @@
 <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=Source+Sans+3:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;1,400&display=swap">
 <style>
 :root{--bg:#f5f0e8;--fg:#1a1a1a;--accent:#0b384e;--rule:rgba(0,0,0,.12);--paper:#faf7f2}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:"Source Sans 3",system-ui,sans-serif;background:var(--bg);color:var(--fg);line-height:1.7}
+body{font-family:"Jost","Helvetica Neue",Helvetica,Arial,sans-serif;background:var(--bg);color:var(--fg);line-height:1.7}
 .topic-nav{position:sticky;top:0;z-index:100;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);background:rgba(245,240,232,.88);border-bottom:1px solid var(--rule);padding:16px 0}
 .topic-nav .inner{max-width:1080px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between}
 .topic-nav .brand{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--fg)}
 .topic-nav .brand img{height:36px;width:auto;display:block;filter:brightness(0) saturate(100%);opacity:.88}
-.topic-nav .brand-text .a{font-family:"Source Sans 3";font-weight:600;font-size:16px;letter-spacing:.04em}
-.topic-nav .brand-text .b{display:block;font-family:"Source Serif 4";font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#333}
-.topic-nav .back{font-family:"IBM Plex Mono";font-size:13px;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:var(--accent);border:1px solid var(--accent);padding:8px 20px;border-radius:100px;transition:all .2s}
+.topic-nav .brand-text .a{font-family:"Jost","Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:500;font-size:16px;letter-spacing:.015em}
+.topic-nav .brand-text .b{display:block;font-family:"Jost","Helvetica Neue",Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:.03em;text-transform:uppercase;color:#333}
+.topic-nav .back{font-family:"Jost","Helvetica Neue",Helvetica,Arial,sans-serif;font-size:13px;letter-spacing:.03em;text-transform:uppercase;text-decoration:none;color:var(--accent);border:1px solid var(--accent);padding:8px 20px;border-radius:100px;transition:all .2s}
 .topic-nav .back:hover{background:var(--accent);color:var(--paper)}
 .topic-nav .back:active{transform:translateY(1px)}
 .topic-nav a:focus-visible,.related-grid a:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
-@media (max-width:640px){.topic-nav{padding:12px 0}.topic-nav .inner{padding:0 18px;gap:12px}.topic-nav .brand-text{display:none}.topic-nav .brand img{height:28px}.topic-nav .back{font-size:11px;letter-spacing:.04em;padding:8px 12px;white-space:nowrap}}
+@media (max-width:640px){.topic-nav{padding:12px 0}.topic-nav .inner{padding:0 18px;gap:12px}.topic-nav .brand-text{display:none}.topic-nav .brand img{height:28px}.topic-nav .back{font-size:11px;letter-spacing:.015em;padding:8px 12px;white-space:nowrap}}
 .topic-hero{padding:100px 0 60px;text-align:center}
 .topic-hero .container{max-width:800px;margin:0 auto;padding:0 32px}
-.topic-hero .eyebrow{font-family:"IBM Plex Mono";font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:18px;display:flex;align-items:center;justify-content:center;gap:10px}
+.topic-hero .eyebrow{font-family:"Jost","Helvetica Neue",Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:.03em;text-transform:uppercase;color:var(--accent);margin-bottom:18px;display:flex;align-items:center;justify-content:center;gap:10px}
 .topic-hero .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
-.topic-hero h1{font-family:"Source Serif 4";font-size:clamp(36px,5vw,56px);font-weight:600;line-height:1.15;margin-bottom:24px}
-.topic-hero h1 em{font-style:italic;color:var(--accent)}
+.topic-hero h1{font-family:"Jost","Helvetica Neue",Helvetica,Arial,sans-serif;font-size:clamp(36px,5vw,56px);font-weight:500;line-height:1.15;margin-bottom:24px}
+.topic-hero h1 em{font-style:normal;color:var(--accent)}
 .topic-hero .desc{font-size:18px;line-height:1.8;color:#444;max-width:680px;margin:0 auto}
 .topic-content{max-width:800px;margin:0 auto;padding:0 32px 80px}
-.topic-content h2{font-family:"Source Serif 4";font-size:28px;font-weight:600;margin:48px 0 18px;padding-bottom:12px;border-bottom:1px solid var(--rule)}
-.topic-content h3{font-family:"Source Serif 4";font-size:22px;font-weight:500;margin:32px 0 14px}
+.topic-content h2{font-family:"Jost","Helvetica Neue",Helvetica,Arial,sans-serif;font-size:28px;font-weight:500;margin:48px 0 18px;padding-bottom:12px;border-bottom:1px solid var(--rule)}
+.topic-content h3{font-family:"Jost","Helvetica Neue",Helvetica,Arial,sans-serif;font-size:22px;font-weight:500;margin:32px 0 14px}
 .topic-content p{font-size:17px;line-height:1.8;color:#333;margin-bottom:16px}
 .topic-content ul{margin:0 0 20px 28px;font-size:17px;line-height:1.9;color:#333}
 .topic-content .post-card{border:1px solid var(--rule);border-radius:8px;padding:24px 28px;margin:20px 0;background:var(--paper);transition:box-shadow .2s}
 .topic-content .post-card:hover{box-shadow:0 4px 20px rgba(0,0,0,.06)}
-.topic-content .post-card .cat{font-family:"IBM Plex Mono";font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
-.topic-content .post-card h4{font-family:"Source Serif 4";font-size:20px;font-weight:500;margin-bottom:8px}
+.topic-content .post-card .cat{font-family:"Jost","Helvetica Neue",Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:.03em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.topic-content .post-card h4{font-family:"Jost","Helvetica Neue",Helvetica,Arial,sans-serif;font-size:20px;font-weight:500;margin-bottom:8px}
 .topic-content .post-card p{font-size:15px;color:#555;margin-bottom:0}
 .topic-content .wip{background:var(--paper);border:2px dashed var(--rule);border-radius:8px;padding:32px;text-align:center;margin:24px 0}
 .topic-content .wip .icon{font-size:32px;margin-bottom:12px}
-.topic-content .wip h3{font-family:"Source Serif 4";margin:0 0 8px;font-size:20px}
+.topic-content .wip h3{font-family:"Jost","Helvetica Neue",Helvetica,Arial,sans-serif;margin:0 0 8px;font-size:20px}
 .topic-content .wip p{color:#666;margin:0}
-.topic-footer{text-align:center;padding:40px 0;border-top:1px solid var(--rule);font-family:"IBM Plex Mono";font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#888}
+.topic-footer{text-align:center;padding:40px 0;border-top:1px solid var(--rule);font-family:"Jost","Helvetica Neue",Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:.03em;text-transform:uppercase;color:#888}
 .related-topics{max-width:800px;margin:0 auto 60px;padding:0 32px}
-.related-topics h2{font-family:"Source Serif 4";font-size:28px;font-weight:600;margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid var(--rule)}
+.related-topics h2{font-family:"Jost","Helvetica Neue",Helvetica,Arial,sans-serif;font-size:28px;font-weight:500;margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid var(--rule)}
 .related-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
 .related-grid a{display:block;text-decoration:none;border:1px solid var(--rule);border-radius:8px;padding:24px;background:var(--paper);transition:all .2s;color:var(--fg)}
 .related-grid a:hover{border-color:var(--accent);box-shadow:0 4px 16px rgba(0,0,0,.06)}
-.related-grid a .label{font-family:"IBM Plex Mono";font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
-.related-grid a .name{font-family:"Source Serif 4";font-size:18px;font-weight:500}
+.related-grid a .label{font-family:"Jost","Helvetica Neue",Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:.03em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.related-grid a .name{font-family:"Jost","Helvetica Neue",Helvetica,Arial,sans-serif;font-size:18px;font-weight:500}
 </style>
 </head>
 <body>
@@ -84,52 +84,17 @@ body{font-family:"Source Sans 3",system-ui,sans-serif;background:var(--bg);color
 
 <div class="topic-content">
 
-  <h2>Lectures on this branch</h2>
+  <h2>Regression &amp; causal inference</h2>
+  <p>From least squares to identification: instrumental variables, difference-in-differences, matching and mechanism analysis - the grammar of an empirical argument, in economics and in marketing alike.</p>
   <div class="post-card">
-    <div class="cat">Lecture · Zhaoxi Zhang · 13 Feb 2026</div>
-    <h4>The generalized underlap coefficient with an application in clustering</h4>
-    <p>A multi-group separation measure for multivariate variables, its link to total variation, and its use for assessing partition-covariate dependence in clustering.</p>
+    <div class="cat">Lecture · Han Zhang · 27 Feb 2026</div>
+    <h4>The “sponsored content residue” in influencer marketing</h4>
+    <p>Influencers' next post after sponsored content suffers an engagement loss; the talk focuses on the econometric modelling and online experiment behind the finding - <a href="https://www.sciencedirect.com/science/article/pii/S0167811626000091" target="_blank" rel="noopener noreferrer">Paper (IJRM) →</a></p>
   </div>
   <div class="post-card">
-    <div class="cat">Lecture · Chenyang Guo · 14 Nov 2025</div>
-    <h4>Expectation-Maximization Algorithm</h4>
-    <p>Estimating models with unobserved states: intuition, mathematical foundation, and an application to market regimes with Gaussian mixture models - <a href="../assets/talks/EM_Algorithm.pdf" target="_blank">Slides →</a></p>
-  </div>
-  <div class="post-card">
-    <div class="cat">Lecture · Shiqi Fang · 03 Oct 2025</div>
-    <h4>Bayesian Linear Regression</h4>
-    <p>Bayesian framework for linear models with prior distributions and posterior inference - <a href="../assets/talks/bayesian%20linear%20regression.pdf" target="_blank">Slides →</a></p>
-  </div>
-  <div class="post-card">
-    <div class="cat">Lecture · Chenyang Guo · 17 Apr 2025</div>
-    <h4>Change-Point Detection: MOSUM Methods</h4>
-    <p>Moving sum (MOSUM) based methods for detecting structural changes in time series - <a href="../assets/talks/Statistic_Study_Group_MOSUM.pdf" target="_blank">Slides →</a> · <a href="../assets/talks/mosum.R" target="_blank">R code →</a></p>
-  </div>
-  <div class="post-card">
-    <div class="cat">Lecture · Shiqi Fang · 27 Mar 2025</div>
-    <h4>Gaussian Process</h4>
-    <p>Non-parametric Bayesian approach for regression and classification - <a href="../assets/talks/Gaussian_Process.pdf" target="_blank">Slides →</a></p>
-  </div>
-  <div class="post-card">
-    <div class="cat">Lecture · Yizhuo Hu · 06 Dec 2024</div>
-    <h4>Maximum Likelihood Estimation</h4>
-    <p>Parametric estimation techniques - theory, computation and applications in research - <a href="../assets/talks/Maximum%20Likelihood%20Estimation.pdf" target="_blank">Slides →</a></p>
-  </div>
-  <div class="post-card">
-    <div class="cat">Lecture · Chenyang Guo · 08 Nov 2024</div>
-    <h4>Sampling Method: Accept-Reject Sampling</h4>
-    <p>Introduction to the accept-reject algorithm for generating random samples from complex distributions - <a href="../assets/talks/Accept_Reject_Sampling.pdf" target="_blank">Slides →</a></p>
-  </div>
-  <h2>Related lectures from other branches</h2>
-  <div class="post-card">
-    <div class="cat">Lecture · Heqing Shi · 31 Oct 2025</div>
-    <h4>Variational Auto-Encoder (II)</h4>
-    <p>Key concepts of the variational auto-encoder and a derivation of its training loss (ELBO), with simple Python use cases - <a href="../assets/talks/VAE.pdf" target="_blank">Notes →</a></p>
-  </div>
-  <div class="post-card">
-    <div class="cat">Lecture · Heqing Shi · 19 Sep 2025</div>
-    <h4>Variational Auto-Encoder</h4>
-    <p>Opening session of the 2025/26 year: non-parametric dimension reduction and generative modelling with variational auto-encoders - <a href="../assets/talks/VAE_20250919.pdf" target="_blank">Notes →</a></p>
+    <div class="cat">Lecture · Ke Bi · 28 Nov 2025</div>
+    <h4>Mechanism Analysis</h4>
+    <p>Why does X cause Y? What mechanism analysis is, why it matters, and how to conduct it, with examples from top-tier journals - <a href="../assets/talks/Mechanism_analysis.pdf" target="_blank">Slides →</a></p>
   </div>
   <div class="post-card">
     <div class="cat">Lecture · Yizhuo Hu · 27 Feb 2025</div>
@@ -142,19 +107,116 @@ body{font-family:"Source Sans 3",system-ui,sans-serif;background:var(--bg);color
     <p>The DiD methodology for estimating causal effects from observational data - <a href="../assets/talks/DiD.pdf" target="_blank">Slides →</a></p>
   </div>
   <div class="post-card">
-    <div class="cat">Lecture · Heqing Shi · 30 Jan 2025</div>
-    <h4>The Kernel Trick</h4>
-    <p>Understanding kernel methods for non-linear transformations in machine learning and statistics - <a href="../assets/talks/The_Kernel_Trick.pdf" target="_blank">Notes →</a></p>
+    <div class="cat">Lecture · Ke Bi · 25 Oct 2024</div>
+    <h4>Econometrics Foundation 2: Instrumental Variables and Endogeneity</h4>
+    <p>Deep dive into instrumental variables and endogeneity - <a href="../assets/talks/IV_Revised.pdf" target="_blank">Slides (revised after the session) →</a></p>
   </div>
   <div class="post-card">
-    <div class="cat">Lecture · Shiqi Fang · 22 Nov 2024</div>
-    <h4>Git &amp; GitHub</h4>
-    <p>Version control and collaboration tools essential for reproducible research - <a href="../assets/talks/git%20and%20github.pdf" target="_blank">Guide →</a></p>
+    <div class="cat">Lecture · Yifan Qi · 18 Oct 2024</div>
+    <h4>Econometrics Foundation 1</h4>
+    <p>Introduction to core econometric concepts and OLS estimation - <a href="../assets/talks/Econometric_Foundation_Discuss1_Yifan_Qi.pdf" target="_blank">Notes →</a></p>
+  </div>
+  <h2>Estimation &amp; Bayesian inference</h2>
+  <p>Maximum likelihood, the EM algorithm, Bayesian regression and Gaussian processes: how parameters are learned from data, and what a prior buys you.</p>
+  <div class="post-card">
+    <div class="cat">Lecture · Chenyang Guo · 14 Nov 2025</div>
+    <h4>Expectation-Maximization Algorithm</h4>
+    <p>Estimating models with unobserved states: intuition, mathematical foundation, and an application to market regimes with Gaussian mixture models - <a href="../assets/talks/EM_Algorithm.pdf" target="_blank">Slides →</a></p>
+  </div>
+  <div class="post-card">
+    <div class="cat">Lecture · Shiqi Fang · 03 Oct 2025</div>
+    <h4>Bayesian Linear Regression</h4>
+    <p>Bayesian framework for linear models with prior distributions and posterior inference - <a href="../assets/talks/bayesian%20linear%20regression.pdf" target="_blank">Slides →</a></p>
+  </div>
+  <div class="post-card">
+    <div class="cat">Lecture · Shiqi Fang · 27 Mar 2025</div>
+    <h4>Gaussian Process</h4>
+    <p>Non-parametric Bayesian approach for regression and classification - <a href="../assets/talks/Gaussian_Process.pdf" target="_blank">Slides →</a></p>
+  </div>
+  <div class="post-card">
+    <div class="cat">Lecture · Yizhuo Hu · 06 Dec 2024</div>
+    <h4>Maximum Likelihood Estimation</h4>
+    <p>Parametric estimation techniques - theory, computation and applications in research - <a href="../assets/talks/Maximum%20Likelihood%20Estimation.pdf" target="_blank">Slides →</a></p>
+  </div>
+  <h2>Factor models &amp; cross-sectional tests</h2>
+  <p>Fama-MacBeth regressions, the factor zoo and momentum in the factors themselves - the statistics that decide whether returns can be explained.</p>
+  <div class="post-card">
+    <div class="cat">Lecture · Zhengnan Lu · 29 May 2026</div>
+    <h4>Factor Momentum Revisited: Does the 47-Factor Kernel Collapse to BAB and QMJ?</h4>
+    <p>Zhengnan Lu replicates Ehsani &amp; Linnainmaa (2022, JF) and shows that time-series factor momentum collapses onto just two well-known factors (BAB and QMJ), offering a concentrated view of pricing power.</p>
+  </div>
+  <div class="post-card">
+    <div class="cat">Lecture · Yifan Qi · 17 Mar 2025</div>
+    <h4>Asset Pricing: Fama-MacBeth</h4>
+    <p>A detailed walkthrough of the Fama-MacBeth two-pass regression procedure - a cornerstone methodology for testing asset pricing models - <a href="../assets/talks/Yifan%20Qi_Fama%20MacBeth20250317.pdf" target="_blank">Notes →</a></p>
+  </div>
+  <h2>Multivariate &amp; time series</h2>
+  <p>Large covariance matrices, change-point detection and measures of separation between groups - structure across many variables, and across time.</p>
+  <div class="post-card">
+    <div class="cat">Lecture · Zhaoxi Zhang · 13 Feb 2026</div>
+    <h4>The generalized underlap coefficient with an application in clustering</h4>
+    <p>A multi-group separation measure for multivariate variables, its link to total variation, and its use for assessing partition-covariate dependence in clustering.</p>
+  </div>
+  <div class="post-card">
+    <div class="cat">Lecture · Chenyang Guo · 17 Apr 2025</div>
+    <h4>Change-Point Detection: MOSUM Methods</h4>
+    <p>Moving sum (MOSUM) based methods for detecting structural changes in time series - <a href="../assets/talks/Statistic_Study_Group_MOSUM.pdf" target="_blank">Slides →</a> · <a href="../assets/talks/mosum.R" target="_blank">R code →</a></p>
   </div>
   <div class="post-card">
     <div class="cat">Lecture · Heqing Shi · 26 Sep 2024</div>
     <h4>High-dimensional Covariance Matrix Estimation</h4>
     <p>Methods for estimating covariance matrices when the number of variables is large - fundamental to portfolio construction and risk measurement - <a href="../assets/talks/high_dimensional_covariance_matrix_estimation.pdf" target="_blank">Slides →</a></p>
+  </div>
+  <h2>Sampling &amp; simulation</h2>
+  <p>Drawing from distributions you cannot invert: accept-reject sampling and the Monte Carlo machinery behind risk measures and pricing.</p>
+  <div class="post-card">
+    <div class="cat">Lecture · Chenyang Guo · 08 Nov 2024</div>
+    <h4>Sampling Method: Accept-Reject Sampling</h4>
+    <p>Introduction to the accept-reject algorithm for generating random samples from complex distributions - <a href="../assets/talks/Accept_Reject_Sampling.pdf" target="_blank">Slides →</a></p>
+  </div>
+  <h2>Machine learning</h2>
+  <p>Kernel methods, variational auto-encoders, synthetic data and where AI now sits in research practice - learning from data when the model is not written down in advance.</p>
+  <div class="post-card">
+    <div class="cat">Workshop · Yifan Qi · 13 Mar 2026</div>
+    <h4>Shaping Research with AI, Machine Learning and Deep Learning</h4>
+    <p>A collaborative workshop on how AI is used in research practice and how frontier AI methods can inform research questions, mapping the group's agenda for the semester - <a href="../assets/talks/AI_ML_DL_for_Business_Research_Overview.pdf" target="_blank">Summary deck →</a> · <a href="20260313_UEBS%20Statistics%20Study%20group_AI,ML,DL_Business_Overview.html" target="_blank" rel="noopener noreferrer">AI &amp; business research overview page →</a></p>
+  </div>
+  <div class="post-card">
+    <div class="cat">Lecture · Heqing Shi · 31 Oct 2025</div>
+    <h4>Variational Auto-Encoder (II)</h4>
+    <p>Key concepts of the variational auto-encoder and a derivation of its training loss (ELBO), with simple Python use cases - <a href="../assets/talks/VAE.pdf" target="_blank">Notes →</a></p>
+  </div>
+  <div class="post-card">
+    <div class="cat">Lecture · Yizhuo Hu · 17 Oct 2025</div>
+    <h4>Synthetic Data</h4>
+    <p>Exploring how synthetic data helps address privacy concerns, supports model training, and enhances data sharing - while acknowledging limitations in fidelity, validation, and regulatory uncertainty - <a href="../assets/talks/Synthetic_data.pdf" target="_blank">Slides →</a></p>
+  </div>
+  <div class="post-card">
+    <div class="cat">Lecture · Heqing Shi · 19 Sep 2025</div>
+    <h4>Variational Auto-Encoder</h4>
+    <p>Opening session of the 2025/26 year: non-parametric dimension reduction and generative modelling with variational auto-encoders - <a href="../assets/talks/VAE_20250919.pdf" target="_blank">Notes →</a></p>
+  </div>
+  <div class="post-card">
+    <div class="cat">Lecture · Heqing Shi · 30 Jan 2025</div>
+    <h4>The Kernel Trick</h4>
+    <p>Understanding kernel methods for non-linear transformations in machine learning and statistics - <a href="../assets/talks/The_Kernel_Trick.pdf" target="_blank">Notes →</a></p>
+  </div>
+  <h2>Research craft &amp; tooling</h2>
+  <p>Version control, AI research agents driving Stata and Python, and the group's own planning sessions - the working practices every field shares.</p>
+  <div class="post-card">
+    <div class="cat">Workshop · Runzhi Tian, Yifan Qi · 27 Mar 2026</div>
+    <h4>Claude Code × Stata &amp; Python: AI Research Agent</h4>
+    <p>A hands-on workshop guiding participants through the full setup of an AI-powered Stata &amp; Python research environment - <a href="../assets/talks/Claude_Code_Stata_Python_Workshop.pdf" target="_blank">Workshop slides (with configuration workflow) →</a> · <a href="20260313_UEBS%20Statistics%20Study%20group_AI,ML,DL_Business_Overview.html" target="_blank" rel="noopener noreferrer">AI &amp; business research overview page →</a></p>
+  </div>
+  <div class="post-card">
+    <div class="cat">Discussion · All members · 23 Jan 2026</div>
+    <h4>Spring 2026 Kick-off Discussion</h4>
+    <p>An open, informal discussion to reflect on what the group has explored so far and to shape a light-touch plan for the semester - <a href="../assets/talks/Spring_2026_Kickoff_Welcome.pdf" target="_blank">Welcome deck →</a></p>
+  </div>
+  <div class="post-card">
+    <div class="cat">Lecture · Shiqi Fang · 22 Nov 2024</div>
+    <h4>Git &amp; GitHub</h4>
+    <p>Version control and collaboration tools essential for reproducible research - <a href="../assets/talks/git%20and%20github.pdf" target="_blank">Guide →</a></p>
   </div>
 </div>
 
@@ -162,19 +224,19 @@ body{font-family:"Source Sans 3",system-ui,sans-serif;background:var(--bg);color
   <h2>Related Topics</h2>
   <div class="related-grid">
     <a href="econometrics.html">
-      <div class="label">Methodology</div>
+      <div class="label">Field</div>
       <div class="name">Econometrics Foundation</div>
     </a>
     <a href="asset-pricing.html">
-      <div class="label">Finance</div>
+      <div class="label">Field</div>
       <div class="name">Asset Pricing</div>
     </a>
     <a href="credit-research.html">
-      <div class="label">Finance</div>
+      <div class="label">Field</div>
       <div class="name">Credit Research</div>
     </a>
     <a href="risk-management.html">
-      <div class="label">Finance</div>
+      <div class="label">Field</div>
       <div class="name">Risk Management</div>
     </a>
   </div>

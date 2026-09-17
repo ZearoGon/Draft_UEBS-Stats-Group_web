@@ -1,9 +1,8 @@
 ---
 id: "asset"
+kind: "field"
 label: "Asset Pricing"
 order: 3
-x: 935
-y: 258
 href: "topics/asset-pricing.html"
 blurb: "Can returns be predicted in the cross-section? Factor models, Fama-MacBeth regressions and the ongoing hunt for pricing power in stocks, bonds and derivatives."
 page: {"file": "topics/asset-pricing.html", "title": "Asset Pricing - Statistics Study Group", "meta_description": "Research notes and study-group talks on asset pricing, factor models, and empirical finance.", "eyebrow": "Research Topic · Finance", "h1": "<em>Asset Pricing</em>", "desc": "Asset Pricing is an important research topic in finance. Asset pricing studies try to answer the fundamental question - whether the return of financial assets (typically stocks, bonds, options and other derivative instruments) can be predicted (usually in cross-section). Statistical models and tests are intensively used to examine the return predictability. We summarize some important statistics-based knowledge and post it below.", "related": ["econ", "credit", "risk", "stat"]}

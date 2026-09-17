@@ -1,9 +1,8 @@
 ---
 id: "credit"
+kind: "field"
 label: "Credit Research"
-order: 4
-x: 265
-y: 502
+order: 5
 href: "topics/credit-research.html"
 blurb: "Credit scoring, default prediction and the statistics of lending decisions. A growing branch - blog material is up, and the first dedicated lecture is waiting for a speaker."
 page: {"file": "topics/credit-research.html", "title": "Credit Research - Statistics Study Group", "meta_description": "Research notes and study-group resources on credit risk, scoring, and empirical credit research.", "eyebrow": "Research Topic · Finance", "h1": "<em>Credit</em> Research", "desc": "Credit research focuses on the statistical methods and models used to assess creditworthiness, predict default probabilities, and manage credit risk in financial institutions. This area bridges quantitative finance with machine learning and traditional econometric approaches.", "related": ["risk", "econ", "asset", "stat"]}

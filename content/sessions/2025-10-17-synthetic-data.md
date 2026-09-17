@@ -11,7 +11,8 @@ format: "in-person"
 speakers: ["yizhuo-hu"]
 title: "Synthetic Data"
 short: "Synthetic Data"
-topic: "ai"
+method: "ml"
+fields: {"credit": 3, "risk": 2, "marketing": 1}
 semester: "Autumn 2025"
 materials: 
   - {"label": "Slides", "file": "assets/talks/Synthetic_data.pdf"}

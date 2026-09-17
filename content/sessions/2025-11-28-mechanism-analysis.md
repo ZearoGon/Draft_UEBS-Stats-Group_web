@@ -11,7 +11,7 @@ format: "in-person"
 speakers: ["ke-bi"]
 title: "Mechanism Analysis"
 short: "Mechanism Analysis"
-topic: "econ"
+method: "causal"
 semester: "Autumn 2025"
 materials: 
   - {"label": "Slides", "file": "assets/talks/Mechanism_analysis.pdf"}

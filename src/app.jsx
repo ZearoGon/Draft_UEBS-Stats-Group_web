@@ -20,11 +20,18 @@ const COMMITTEE = DATA.people.filter(p => p.kind === "maintainer");
 
 
 // -------- RESEARCH ATLAS DATA --------
-// Fields of the knowledge network. Statistics is the trunk ("core");
-// every lecture hangs on one branch via its `topic` key.
+// Two axes. The methods are what the group teaches - families of technique -
+// and the fields are where the work is done. A method carries a map of how
+// central it is to each field (1 occasional, 2 common, 3 core); every lecture
+// names its method and inherits that map unless it says otherwise.
 const TOPICS = DATA.topics;
+const METHODS = TOPICS.filter((t) => t.kind === "method");
+const ATLAS_FIELDS = TOPICS.filter((t) => t.kind === "field");
+const METHODS_PAGE = TOPICS.find((t) => t.kind === "methods") || null;
+const RELEVANCE = { 1: "occasional", 2: "common", 3: "core" };
+const topicById = (id) => TOPICS.find((t) => t.id === id);
 
-// A session becomes an atlas leaf and an Index row. `cat` drives the Index
+// A session becomes an atlas lecture and an Index row. `cat` drives the Index
 // filter: "schedule" = announced and still ahead of us, "talk" = held.
 const sessionToEvent = (s) => {
   const [y, m, d] = s.date.split("-").map(Number);
@@ -33,7 +40,7 @@ const sessionToEvent = (s) => {
     id: s.id,
     date: String(d).padStart(2, "0"), month: MONTHS[m - 1], year: String(y),
     kicker: s.status === "postponed" ? "Postponed" : ahead ? "Schedule" : (KIND_LABEL[s.kind] || "Lecture"),
-    title: s.title, short: s.short, topic: s.topic,
+    title: s.title, short: s.short, method: s.method, fields: s.fields || {},
     loc: s.venue, time: s.timeLabel,
     cat: ahead ? "schedule" : "talk",
     speaker: s.speakerNames, pdf: s.pdf,
@@ -352,11 +359,11 @@ function Hero({ variant }) {
 }
 
 function HeroMeta() {
-  const { maintainers, contributors, topics, lectures, founded } = DATA.stats;
+  const { maintainers, contributors, fields, methods, lectures, founded } = DATA.stats;
   return (
     <div className="hero-meta">
         <div className="cell" title={`${maintainers} maintainers and ${contributors} contributors; these roles overlap`}><div className="k">Maintainers &amp; Contributors</div><div className="v">{maintainers} / {contributors}<small>roles overlap</small></div></div>
-        <div className="cell"><div className="k">Topics</div><div className="v">{topics}+<small>fields</small></div></div>
+        <div className="cell" title={methods + " method families, used across " + fields + " fields"}><div className="k">Methods &amp; Fields</div><div className="v">{methods} / {fields}<small>taught / applied</small></div></div>
         <div className="cell"><div className="k">Lectures</div><div className="v">{lectures}<small>sessions</small></div></div>
         <div className="cell"><div className="k">Founded</div><div className="v">{founded}<small>UEBS</small></div></div>
       </div>);
@@ -2211,24 +2218,21 @@ function Committee() {
 // Statistics sits at the centre as the trunk; the six fields branch off it;
 // every talk is a leaf on its branch, newest first. Clicking a field unfolds
 // its branch on the map and opens the dossier below.
-const ATLAS_C = { x: 600, y: 380 };
-const talkKey = (e) => `${e.year}-${e.month}-${e.date}`;
-
-function leafPoints(t, n) {
-  const base = Math.atan2(t.y - ATLAS_C.y, t.x - ATLAS_C.x);
-  const spread = Math.min(1.9, 0.55 * Math.max(n - 1, 0));
-  const R = 108;
-  return Array.from({ length: n }, (_, i) => {
-    const a = n === 1 ? base : base - spread / 2 + (spread * i) / (n - 1);
-    return { x: t.x + R * Math.cos(a), y: t.y + R * Math.sin(a) };
-  });
-}
+// Methods down the left, fields down the right, and between them a ribbon for
+// every place a method is used - the wider, the more central. Select either
+// side and the lectures follow below.
+const ATLAS = { w: 1200, top: 72, rowGap: 82, xM: 340, xF: 880 };
+const RIBBON_W = { 1: 1.6, 2: 4.5, 3: 9 };
+const talkKey = (e) => e.year + "-" + e.month + "-" + e.date;
+const relDots = (w) => "●".repeat(w) + "○".repeat(3 - w);
+const plural = (n, word) => n + " " + (n === 1 ? word : word + "s");
 
 function ResearchAtlas() {
   const newest = EVENTS_SORTED[0];
   const isUpcoming = eventDate(newest) > new Date();
   const [view, setView] = useState("map");
-  const [sel, setSel] = useState(newest.topic);
+  const [sel, setSel] = useState({ kind: "method", id: newest.method });
+  const [hover, setHover] = useState(null);
   const [focus, setFocus] = useState(talkKey(newest));
   const [zoom, setZoom] = useState(1);
   const interacted = useRef(false);
@@ -2292,15 +2296,26 @@ function ResearchAtlas() {
     }
   };
 
-  const byTopic = useMemo(() => {
+  // lectures by method, newest first; by field, the most central first
+  const byMethod = useMemo(() => {
     const m = {};
-    TOPICS.forEach((t) => { m[t.id] = EVENTS_SORTED.filter((e) => e.topic === t.id); });
+    METHODS.forEach((t) => { m[t.id] = EVENTS_SORTED.filter((e) => e.method === t.id); });
     return m;
   }, []);
+  const byField = useMemo(() => {
+    const m = {};
+    ATLAS_FIELDS.forEach((f) => {
+      m[f.id] = EVENTS_SORTED.filter((e) => (e.fields[f.id] || 0) > 0)
+        .sort((a, b) => (b.fields[f.id] || 0) - (a.fields[f.id] || 0));
+    });
+    return m;
+  }, []);
+  // how many of the method families are at least commonly used in a field
+  const methodsServing = (f) => METHODS.filter((m) => (m.fields[f.id] || 0) >= 2).length;
 
-  const pick = (topicId, key) => {
+  const pick = (kind, id, key) => {
     interacted.current = true;
-    setSel(topicId);
+    setSel({ kind, id });
     setFocus(key || null);
   };
 
@@ -2316,16 +2331,41 @@ function ResearchAtlas() {
     if (el) el.scrollIntoView({ block: "nearest", behavior: "smooth" });
   }, [focus, sel]);
 
-  const selTopic = TOPICS.find((t) => t.id === sel);
-  const selTalks = byTopic[sel] || [];
-  const branches = TOPICS.filter((t) => t.id !== "core");
+  const selTopic = topicById(sel.id);
+  const selTalks = sel.kind === "method" ? byMethod[sel.id] : byField[sel.id];
+  const active = hover || sel;
+  const activeTopic = topicById(active.id);
+  const touches = (mId, fId) => active.kind === "method" ? active.id === mId : active.id === fId;
+  // what the selection is joined to, strongest first, for the panel
+  const relations = sel.kind === "method"
+    ? ATLAS_FIELDS.map((f) => [f, selTopic.fields[f.id] || 0]).filter(([, w]) => w > 0).sort((a, b) => b[1] - a[1])
+    : METHODS.map((m) => [m, m.fields[sel.id] || 0]).filter(([, w]) => w > 0).sort((a, b) => b[1] - a[1]);
+  const panelLink = sel.kind === "field"
+    ? (selTopic.href ? { href: selTopic.href, label: "Read the field notes →" } : null)
+    : (selTopic.href ? { href: selTopic.href, label: "Read more →" }
+      : METHODS_PAGE && METHODS_PAGE.href ? { href: METHODS_PAGE.href, label: "All the methods →" } : null);
+
+  // geometry: methods evenly down the left; the fields (and the seat kept
+  // open) spread over the same span on the right
+  const nM = METHODS.length, nFRows = ATLAS_FIELDS.length + 1;
+  const span = (nM - 1) * ATLAS.rowGap;
+  const yM = (i) => ATLAS.top + i * ATLAS.rowGap;
+  const yF = (j) => ATLAS.top + j * span / (nFRows - 1);
+  const H = ATLAS.top + span + 72;
+  const rM = (m) => Math.min(40, 24 + 1.5 * byMethod[m.id].length);
+  const rF = (f) => Math.min(40, 24 + 2.2 * methodsServing(f));
+  const ribbon = (x1, y1, x2, y2) => {
+    const dx = (x2 - x1) * 0.42;
+    return "M " + x1 + " " + y1 + " C " + (x1 + dx) + " " + y1 + ", " + (x2 - dx) + " " + y2 + ", " + x2 + " " + y2;
+  };
+  const onKey = (fn) => (event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); fn(); } };
 
   return (
     <section id="talks" className="section">
       <div className="container">
         <div className="section-header reveal">
           <div className="num"><span>01 / 03</span> &nbsp; Research Atlas</div>
-          <h2>Statistics as the backbone - <em>a living map</em> of our fields, lectures and materials.</h2>
+          <h2>Statistics as the backbone - <em>the methods we teach</em>, and the fields they are used in.</h2>
         </div>
 
         <div className="reveal">
@@ -2335,13 +2375,13 @@ function ResearchAtlas() {
               <span className="atlas-rail-label">Latest</span>
               {EVENTS_SORTED.slice(0, 5).map((e) => {
                 const k = talkKey(e);
-                const t = TOPICS.find((x) => x.id === e.topic);
+                const t = topicById(e.method);
                 return (
                   <button key={k}
                     className={"chip atlas-rail-chip" + (view === "map" && focus === k ? " active" : "")}
                     aria-pressed={view === "map" && focus === k}
-                    onClick={() => { setView("map"); pick(e.topic, k); }}>
-                    <span className="d">{e.month} {e.year}</span>{e.short}<span className="f"> · {t.label}</span>
+                    onClick={() => { setView("map"); pick("method", e.method, k); }}>
+                    <span className="d">{e.month} {e.year}</span>{e.short}<span className="f"> · {t ? t.label : ""}</span>
                   </button>);
               })}
               </div>
@@ -2356,92 +2396,81 @@ function ResearchAtlas() {
             <>
               <div className="atlas-map-outer">
                 <div className="atlas-map-wrap" ref={mapWrapRef}>
-                <svg className={"atlas-svg" + (sel !== "core" ? " branch-selected" : "")} viewBox="0 0 1290 760" role="group"
-                  style={{ width: `${zoom * 100}%`, minWidth: `${860 * zoom}px` }}
-                  aria-label="Research atlas: statistics at the centre, research fields as branches, lectures as leaves">
-                  <g transform="translate(35,0)">
+                <svg className="atlas-svg" viewBox={"0 0 " + ATLAS.w + " " + H} role="group"
+                  style={{ width: (zoom * 100) + "%", minWidth: (760 * zoom) + "px" }}
+                  aria-label="Research atlas: the methods we teach on the left, the fields they are used in on the right, joined by ribbons as wide as the method matters to the field">
 
-                    {/* trunk → field edges */}
-                    {branches.map((t, i) => {
-                      const mx = (ATLAS_C.x + t.x) / 2, my = (ATLAS_C.y + t.y) / 2;
-                      const px = t.y - ATLAS_C.y, py = ATLAS_C.x - t.x;
-                      const plen = Math.hypot(px, py) || 1;
-                      const off = (i % 2 ? -1 : 1) * 26;
-                      const d = `M ${ATLAS_C.x} ${ATLAS_C.y} Q ${mx + (px / plen) * off} ${my + (py / plen) * off} ${t.x} ${t.y}`;
-                      return (
-                        <g key={t.id}>
-                          <path className={"atlas-edge" + (sel === t.id ? " active" : "")} d={d} />
-                          {sel === t.id && <path className="atlas-edge-flow" d={d} />}
-                        </g>);
-                    })}
+                  <text className="atlas-col-head" x={ATLAS.xM} y={28} textAnchor="middle">Methods · what we teach</text>
+                  <text className="atlas-col-head" x={ATLAS.xF} y={28} textAnchor="middle">Fields · where it is used</text>
 
-                    {/* frontier: the branch that doesn't exist yet */}
-                    <path className="atlas-edge ghost" d="M 600 380 Q 860 336 1105 380" />
+                  {/* ribbons: one for every place a method is used */}
+                  {METHODS.map((m, i) => ATLAS_FIELDS.map((f, j) => {
+                    const w = m.fields[f.id] || 0;
+                    if (!w) return null;
+                    const lit = touches(m.id, f.id);
+                    const x1 = ATLAS.xM + rM(m) + 6, x2 = ATLAS.xF - rF(f) - 6;
+                    const y1 = yM(i), y2 = yF(j);
+                    const tagAtField = active.kind === "method";
+                    return (
+                      <g key={m.id + "-" + f.id} className={"atlas-ribbon-g w" + w + (lit ? " lit" : "")}>
+                        <path className="atlas-ribbon" d={ribbon(x1, y1, x2, y2)} style={{ strokeWidth: RIBBON_W[w] }} />
+                        {lit && <text className="atlas-w" x={tagAtField ? x2 - 12 : x1 + 12} y={(tagAtField ? y2 : y1) - 11}
+                          textAnchor={tagAtField ? "end" : "start"}>{RELEVANCE[w]}</text>}
+                      </g>);
+                  }))}
 
-                    {/* leaves of the selected branch */}
-                    {sel !== "core" && selTopic && leafPoints(selTopic, selTalks.length).map((p, i) => {
-                      const e = selTalks[i];
-                      const k = talkKey(e);
-                      const rightSide = p.x >= selTopic.x;
-                      return (
-                        <g key={sel + "-" + k} className="atlas-leaf-g" style={{ animationDelay: `${i * 70}ms` }} onClick={() => pick(sel, k)}
-                          role="button" tabIndex="0" aria-label={`Open ${e.title}`} aria-pressed={focus === k} aria-controls="atlas-panel"
-                          onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); pick(sel, k); } }}>
-                          <line className="atlas-twig" x1={selTopic.x} y1={selTopic.y} x2={p.x} y2={p.y} />
-                          <circle className={"atlas-leaf" + (focus === k ? " focused" : "")} cx={p.x} cy={p.y} r={focus === k ? 7 : 5.5} />
-                          <text className="atlas-leaf-label" x={p.x + (rightSide ? 12 : -12)} y={p.y + 4}
-                            textAnchor={rightSide ? "start" : "end"}>{e.short} · {e.year}</text>
-                          <title>{e.title}</title>
-                        </g>);
-                    })}
+                  {/* methods */}
+                  {METHODS.map((m, i) => {
+                    const n = byMethod[m.id].length, r = rM(m), y = yM(i);
+                    const isSel = sel.kind === "method" && sel.id === m.id;
+                    const faint = active.kind === "field" && !((m.fields[active.id] || 0) > 0);
+                    const isNewest = m.id === newest.method;
+                    const flagY = i === 0 ? y + r + 22 : y - r - 12;
+                    return (
+                      <g key={m.id} className={"atlas-node" + (isSel ? " is-selected" : "") + (faint ? " faint" : "")}
+                        onClick={() => pick("method", m.id, null)}
+                        onMouseEnter={() => setHover({ kind: "method", id: m.id })} onMouseLeave={() => setHover(null)}
+                        role="button" tabIndex="0" aria-label={"Open " + m.label + ", " + plural(n, "lecture")}
+                        aria-pressed={isSel} aria-controls="atlas-panel" onKeyDown={onKey(() => pick("method", m.id, null))}>
+                        {isNewest && <circle className="atlas-pulse" cx={ATLAS.xM} cy={y} r={r + 6} />}
+                        <circle className={"atlas-node-c" + (isSel ? " active" : "") + (n === 0 ? " empty" : "")} cx={ATLAS.xM} cy={y} r={r} />
+                        <text className={"atlas-count" + (isSel ? " active" : "")} x={ATLAS.xM} y={y + 4} textAnchor="middle">{String(n).padStart(2, "0")}</text>
+                        <text className={"atlas-count-sub" + (isSel ? " active" : "")} x={ATLAS.xM} y={y + 19} textAnchor="middle">{n === 1 ? "lecture" : "lectures"}</text>
+                        <text className="atlas-node-label" x={ATLAS.xM - r - 14} y={y + 5} textAnchor="end">{m.label}</text>
+                        {isNewest &&
+                          <text className="atlas-flag" x={ATLAS.xM} y={flagY} textAnchor="middle">
+                            {(isUpcoming ? "next · " : "latest · ") + newest.month + " " + newest.year}
+                          </text>}
+                        <title>{m.label}</title>
+                      </g>);
+                  })}
 
-                    {/* field nodes */}
-                    {branches.map((t, i) => {
-                      const n = byTopic[t.id].length;
-                      const r = 30 + 2.5 * n;
-                      const isNewestField = t.id === newest.topic;
-                      const topRow = t.y < ATLAS_C.y;   // caption sits on the side facing the centre, flag on the other
-                      const capY = t.y + (topRow ? r + 24 : -(r + 16));
-                      const flagY = topRow ? t.y - r - 16 : t.y + r + 40;
-                      return (
-                        <g key={t.id} className={"atlas-node atlas-float f" + (i % 3) + (sel === t.id ? " is-selected" : "")} onClick={() => pick(t.id, null)}
-                          role="button" tabIndex="0" aria-label={`Open ${t.label}, ${n} ${n === 1 ? "lecture" : "lectures"}`}
-                          aria-pressed={sel === t.id} aria-controls="atlas-panel"
-                          onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); pick(t.id, null); } }}>
-                          {isNewestField && <circle className="atlas-pulse" cx={t.x} cy={t.y} r={r + 6} />}
-                          <circle className={"atlas-node-c" + (sel === t.id ? " active" : "") + (n === 0 ? " empty" : "")} cx={t.x} cy={t.y} r={r} />
-                          <text className={"atlas-count" + (sel === t.id ? " active" : "")} x={t.x} y={t.y + 4} textAnchor="middle">{String(n).padStart(2, "0")}</text>
-                          <text className={"atlas-count-sub" + (sel === t.id ? " active" : "")} x={t.x} y={t.y + 19} textAnchor="middle">{n === 0 ? "growing" : n === 1 ? "lecture" : "lectures"}</text>
-                          <text className="atlas-node-label" x={t.x} y={capY + 4} textAnchor="middle">{t.label}</text>
-                          {isNewestField &&
-                            <text className="atlas-flag" x={t.x} y={flagY} textAnchor="middle">
-                              {(isUpcoming ? "next · " : "latest · ") + newest.month + " " + newest.year}
-                            </text>}
-                          <title>{t.label}</title>
-                        </g>);
-                    })}
+                  {/* fields */}
+                  {ATLAS_FIELDS.map((f, j) => {
+                    const n = methodsServing(f), r = rF(f), y = yF(j);
+                    const isSel = sel.kind === "field" && sel.id === f.id;
+                    const faint = active.kind === "method" && !(((activeTopic && activeTopic.fields) || {})[f.id] > 0);
+                    return (
+                      <g key={f.id} className={"atlas-node" + (isSel ? " is-selected" : "") + (faint ? " faint" : "")}
+                        onClick={() => pick("field", f.id, null)}
+                        onMouseEnter={() => setHover({ kind: "field", id: f.id })} onMouseLeave={() => setHover(null)}
+                        role="button" tabIndex="0" aria-label={"Open " + f.label + ", served by " + plural(n, "method")}
+                        aria-pressed={isSel} aria-controls="atlas-panel" onKeyDown={onKey(() => pick("field", f.id, null))}>
+                        <circle className={"atlas-node-c" + (isSel ? " active" : "") + (n === 0 ? " empty" : "")} cx={ATLAS.xF} cy={y} r={r} />
+                        <text className={"atlas-count" + (isSel ? " active" : "")} x={ATLAS.xF} y={y + 4} textAnchor="middle">{String(n).padStart(2, "0")}</text>
+                        <text className={"atlas-count-sub" + (isSel ? " active" : "")} x={ATLAS.xF} y={y + 19} textAnchor="middle">{n === 1 ? "method" : "methods"}</text>
+                        <text className="atlas-node-label" x={ATLAS.xF + r + 14} y={y + 5} textAnchor="start">{f.label}</text>
+                        <title>{f.label}</title>
+                      </g>);
+                  })}
 
-                    {/* ghost node: the map keeps growing */}
-                    <g className="atlas-node atlas-ghost" onClick={() => goJoin()} role="button" tabIndex="0" aria-label="Propose a new research field"
-                      onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); goJoin(); } }}>
-                      <circle className="atlas-ghost-c" cx="1105" cy="380" r="24" />
-                      <text className="atlas-ghost-plus" x="1105" y="387" textAnchor="middle">+</text>
-                      <text className="atlas-node-label ghost" x="1105" y="426" textAnchor="middle">your field?</text>
-                      <title>Propose a new branch - join us</title>
-                    </g>
-
-                    {/* the trunk */}
-                    <g className={"atlas-node atlas-core" + (sel === "core" ? " is-selected" : "")} onClick={() => pick("core", null)} role="button" tabIndex="0" aria-label="Open Statistics trunk lectures"
-                      aria-pressed={sel === "core"} aria-controls="atlas-panel"
-                      onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); pick("core", null); } }}>
-                      <ellipse className={"atlas-core-c" + (sel === "core" ? " active" : "")} cx="600" cy="380" rx="118" ry="50" />
-                      <text className="atlas-core-t" x="600" y="378" textAnchor="middle">Statistics</text>
-                      <text className="atlas-core-sub" x="600" y="400" textAnchor="middle">
-                        the backbone · {byTopic.core.length} trunk {byTopic.core.length === 1 ? "lecture" : "lectures"}
-                      </text>
-                      <title>Statistics - the backbone of every branch</title>
-                    </g>
-
+                  {/* the seat kept open: the map grows with the group */}
+                  <g className="atlas-node atlas-ghost" onClick={() => goJoin()} role="button" tabIndex="0"
+                    aria-label="Propose a new research field" onKeyDown={onKey(() => goJoin())}>
+                    <circle className="atlas-ghost-c" cx={ATLAS.xF} cy={yF(ATLAS_FIELDS.length)} r="24" />
+                    <text className="atlas-ghost-plus" x={ATLAS.xF} y={yF(ATLAS_FIELDS.length) + 7} textAnchor="middle">+</text>
+                    <text className="atlas-node-label ghost" x={ATLAS.xF + 38} y={yF(ATLAS_FIELDS.length) + 5} textAnchor="start">your field?</text>
+                    <title>Propose a new field - join us</title>
                   </g>
                 </svg>
                 </div>
@@ -2451,30 +2480,49 @@ function ResearchAtlas() {
                   <button className="atlas-zoom-btn" onClick={() => setZoom((z) => Math.min(2, +(z + 0.25).toFixed(2)))} disabled={zoom >= 2} aria-label="Zoom in">+</button>
                 </div>
               </div>
-              <div className="atlas-hint">Click a field to unfold its branch · leaves are lectures, newest first · scroll the map to zoom · the map grows with every session</div>
+              <div className="atlas-hint">
+                <span className="atlas-legend" aria-hidden="true">
+                  <span><i style={{ height: 9 }} />core</span>
+                  <span><i style={{ height: 4.5 }} />common</span>
+                  <span><i style={{ height: 1.6 }} />occasional</span>
+                </span>
+                A ribbon joins a method to a field it is used in, as wide as the method matters there · click either side and the lectures follow below · scroll the map to zoom
+              </div>
 
-              <div key={sel} className="atlas-panel" id="atlas-panel">
+              <div key={sel.kind + sel.id} className="atlas-panel" id="atlas-panel">
                 <div className="atlas-panel-head">
                   <div>
-                    <div className="atlas-panel-kicker">{sel === "core" ? "The trunk" : "Branch"} · {selTalks.length} {selTalks.length === 1 ? "lecture" : "lectures"}</div>
+                    <div className="atlas-panel-kicker">
+                      {sel.kind === "method" ? "Method · " + plural(selTalks.length, "lecture") : "Field · served by " + plural(methodsServing(selTopic), "method")}
+                    </div>
                     <h3 className="atlas-panel-title" aria-live="polite">{selTopic.label}</h3>
                     <p className="atlas-panel-blurb">{selTopic.blurb}</p>
+                    {relations.length > 0 &&
+                      <div className="atlas-rel-row">
+                        <span className="atlas-rel-k">{sel.kind === "method" ? "Used in" : "Draws on"}</span>
+                        {relations.map(([t, w]) =>
+                          <button key={t.id} type="button" className={"atlas-rel w" + w} title={RELEVANCE[w]}
+                            onClick={() => pick(sel.kind === "method" ? "field" : "method", t.id, null)}>
+                            <b>{relDots(w)}</b>{t.label}
+                          </button>)}
+                      </div>}
                   </div>
-                  {selTopic.href && <a className="atlas-panel-link" href={selTopic.href}>Read the field notes →</a>}
+                  {panelLink && <a className="atlas-panel-link" href={panelLink.href}>{panelLink.label}</a>}
                 </div>
                 <div>
                   {selTalks.length === 0 &&
                     <div className="event-empty">
-                      This branch is still growing - no lectures yet.&nbsp;
+                      {sel.kind === "method" ? "Nothing taught here yet." : "No lecture serves this field yet."}&nbsp;
                       <a href="#join" onClick={goJoin} style={{ color: "var(--accent)" }}>Propose the first one →</a>
                     </div>}
                   {selTalks.map((e) => {
                     const k = talkKey(e);
                     const isNewestAll = e === newest;
+                    const w = sel.kind === "field" ? (e.fields[sel.id] || 0) : 0;
                     return (
-                      <div key={k} id={"atlas-talk-" + k} className={"event-row" + (focus === k ? " focused" : "")} onClick={() => pick(sel, k)}
+                      <div key={k} id={"atlas-talk-" + k} className={"event-row" + (focus === k ? " focused" : "")} onClick={() => pick(sel.kind, sel.id, k)}
                         role="button" tabIndex="0" aria-pressed={focus === k}
-                        onKeyDown={(event) => { if (event.target === event.currentTarget && (event.key === "Enter" || event.key === " ")) { event.preventDefault(); pick(sel, k); } }}>
+                        onKeyDown={(event) => { if (event.target === event.currentTarget && (event.key === "Enter" || event.key === " ")) { event.preventDefault(); pick(sel.kind, sel.id, k); } }}>
                         <div className="event-date">
                           <div className="d">{e.date}</div>
                           <div className="m">{e.month} · {e.year}</div>
@@ -2482,6 +2530,12 @@ function ResearchAtlas() {
                         <div className="event-title">
                           <span className="kicker">
                             {e.kicker}{e.speaker ? " · " + e.speaker : ""}
+                            {sel.kind === "field" && w > 0 && <span className={"atlas-rel-tag w" + w}>{RELEVANCE[w]}</span>}
+                            {sel.kind === "method" && e.fields && Object.keys(e.fields).length > 0 && (() => {
+                              const top = Object.entries(e.fields).sort((a, b) => b[1] - a[1])[0];
+                              const ft = top && topicById(top[0]);
+                              return ft && top[1] >= 3 ? <span className="atlas-rel-tag w3">{ft.label}</span> : null;
+                            })()}
                             {isNewestAll && <span className="atlas-badge">{isUpcoming ? "upcoming" : "newest"}</span>}
                           </span>
                           {e.title}
@@ -2702,12 +2756,22 @@ function News() {
   { id: "opportunity", label: "Opportunities" },
   { id: "blog", label: "Blog" }];
 
+  // The list is grouped by what a post is. Each group shows its newest few
+  // and opens out on demand; a filter or a search flattens it.
+  const GROUPS = [
+  { id: "lecture", label: "Lectures", note: "sessions of our own, worth a second look" },
+  { id: "event", label: "Events", note: "to attend" },
+  { id: "opportunity", label: "Opportunities", note: "to apply for" },
+  { id: "blog", label: "Blog", note: "" },
+  { id: "announcement", label: "Announcements", note: "" }];
+  const LIMIT = 4;
+
   const [q, setQ] = useState("");
   const [cat, setCat] = useState("all");
-  const [expanded, setExpanded] = useState(false);
+  const [open, setOpen] = useState({});
   const today = useMemo(() => {
     const d = new Date();
-    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+    return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
   }, []);
   const inCat = (n) => cat === "all" || n.kind === cat;
   const filtered = useMemo(() => {
@@ -2720,10 +2784,9 @@ function News() {
   }, [q, cat]);
 
   useEffect(() => {
-    setExpanded(false);
+    setOpen({});
   }, [q, cat]);
 
-  const displayed = expanded ? filtered : filtered.slice(0, 3);
   // An opportunity is closed once its deadline has passed, or - without a
   // deadline - once the event itself is behind us.
   const isClosed = (n) => n.deadline ? n.deadline < today : (!!n.eventDate && n.eventDate < today);
@@ -2731,6 +2794,34 @@ function News() {
     if (n.deadline) return n.deadline < today ? "Closed · deadline was " + n.deadlineLabel : "Deadline " + n.deadlineLabel;
     if (n.eventDate) return n.eventDate < today ? "Took place " + n.eventDateLabel : "On " + n.eventDateLabel;
     return "";
+  };
+
+  const grouped = cat === "all" && !q.trim();
+  const groups = grouped
+    ? GROUPS.map((g) => ({ ...g, rows: filtered.filter((n) => n.kind === g.id) })).filter((g) => g.rows.length)
+    : [{ id: "all", label: "", note: "", rows: filtered }];
+
+  const renderRow = (n, showType) => {
+    const closed = isClosed(n);
+    const meta = [showType ? n.cat : "", n.sub].filter(Boolean).join(" · ");
+    const when = dateline(n);
+    return (
+      <article key={n.postId || n.sessionId || n.title} className={"post-row" + (closed ? " is-closed" : "") + (n.href ? " has-link" : "")}>
+        <div className="post-date">{n.dateLabel}</div>
+        <div className="post-main">
+          <div className="post-meta">
+            {meta}
+            {when && <span className={"post-dl" + (closed ? " closed" : "")}>{meta ? " · " : ""}{when}</span>}
+          </div>
+          <h3 className="post-title">
+            {n.href
+              ? <a href={n.href} target={n.external ? "_blank" : undefined} rel={n.external ? "noopener noreferrer" : undefined}>{n.title}</a>
+              : n.title}
+          </h3>
+          <p className="post-excerpt">{n.excerpt}</p>
+        </div>
+        <div className="post-go" aria-hidden="true">{n.href ? "→" : ""}</div>
+      </article>);
   };
 
   return (
@@ -2754,42 +2845,28 @@ function News() {
               </div>
               <div className="events-count">{filtered.length} {filtered.length === 1 ? "post" : "posts"} · <a className="events-share" href="submit.html">share one →</a></div>
             </div>
-            <div className="news-grid" id="post-results">
-              {displayed.map((n, i) =>
-            <article key={n.postId || n.sessionId || n.title} className={"news-card" + (n.href ? " has-link" : "") + (isClosed(n) ? " is-closed" : "")} data-visual={n.visual}>
-                  <div className={"img" + (n.cover ? " has-cover" : "")} data-label={n.img} aria-hidden={n.cover ? undefined : "true"}>
-                    {n.cover && <img src={n.cover} alt={n.coverAlt} loading="lazy" decoding="async" />}
-                  </div>
-                  <div className="meta"><span className="cat">{n.cat}</span>{n.sub ? <span className="sub">{n.sub}</span> : null} · <span>{n.dateLabel}</span></div>
-                  <h3>{n.title}</h3>
-                  <p>{n.excerpt}</p>
-                  {dateline(n) && <div className={"deadline" + (isClosed(n) ? " closed" : "")}>{dateline(n)}</div>}
-                  {n.href && <a className="read" href={n.href} target={n.external ? "_blank" : undefined} rel={n.external ? "noopener noreferrer" : undefined}>{n.external ? "Open the original announcement →" : "Open related material →"}</a>}
-                </article>
-            )}
-              {filtered.length === 0 &&
-            <div style={{ gridColumn: "1/-1", padding: "60px 0", textAlign: "center", fontFamily: "var(--serif)", fontStyle: "italic", color: "var(--ink-mute)", fontSize: 20 }}>
-                  Nothing matches that search.
-                </div>
-            }
+            <div className="post-list" id="post-results">
+              {groups.map((g) => {
+                const isOpen = !grouped || !!open[g.id];
+                const rows = isOpen ? g.rows : g.rows.slice(0, LIMIT);
+                return (
+                  <div key={g.id} className="post-group">
+                    {grouped &&
+                      <div className="post-group-h">
+                        <span className="t">{g.label}</span>
+                        <span className="n">{g.rows.length}</span>
+                        {g.note && <span className="note">{g.note}</span>}
+                      </div>}
+                    {rows.map((n) => renderRow(n, !grouped))}
+                    {grouped && g.rows.length > LIMIT &&
+                      <button type="button" className="post-more" aria-expanded={!!open[g.id]}
+                        onClick={() => setOpen((o) => ({ ...o, [g.id]: !o[g.id] }))}>
+                        {open[g.id] ? "Show fewer" : "All " + g.rows.length + " " + g.label.toLowerCase() + " →"}
+                      </button>}
+                  </div>);
+              })}
+              {filtered.length === 0 && <div className="event-empty">Nothing matches that search.</div>}
             </div>
-            {filtered.length > 3 && (
-              <div style={{ display: "flex", justifyContent: "center", marginTop: 32 }}>
-                <button onClick={() => setExpanded(!expanded)} aria-expanded={expanded} className="chip" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "10px 24px" }}>
-                  {expanded ? (
-                    <>
-                      Show Less
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
-                    </>
-                  ) : (
-                    <>
-                      Show More (+{filtered.length - 3})
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                    </>
-                  )}
-                </button>
-              </div>
-            )}
           </div>
         </div>
       </section>);

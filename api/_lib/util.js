@@ -4,15 +4,16 @@
 import { createHash, timingSafeEqual } from "node:crypto";
 
 // Keep these in step with scripts/content.mjs.
-export const TOPIC_IDS = ["core", "stat", "econ", "asset", "credit", "ai", "risk"];
-export const TOPIC_LABELS = {
-  core: "Statistics (trunk)",
-  stat: "Statistical Methods",
-  econ: "Econometrics",
-  asset: "Asset Pricing",
-  credit: "Credit Research",
-  ai: "AI & Machine Learning",
-  risk: "Risk Management",
+// The method families of the Research Atlas (content/topics, kind: method).
+export const METHOD_IDS = ["causal", "estimation", "factor", "multivariate", "sampling", "ml", "craft"];
+export const METHOD_LABELS = {
+  causal: "Regression & causal inference",
+  estimation: "Estimation & Bayesian inference",
+  factor: "Factor models & cross-sectional tests",
+  multivariate: "Multivariate & time series",
+  sampling: "Sampling & simulation",
+  ml: "Machine learning",
+  craft: "Research craft & tooling",
 };
 export const KNOWN_FIELDS = [
   "MSBE",

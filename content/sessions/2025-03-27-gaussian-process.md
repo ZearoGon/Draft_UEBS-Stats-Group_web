@@ -10,7 +10,7 @@ format: "in-person"
 speakers: ["shiqi-fang"]
 title: "Gaussian Process"
 short: "Gaussian Process"
-topic: "stat"
+method: "estimation"
 semester: "Spring 2025"
 materials: 
   - {"label": "Slides", "file": "assets/talks/Gaussian_Process.pdf"}

@@ -11,7 +11,8 @@ format: "in-person"
 speakers: ["zhengnan-lu"]
 title: "Factor Momentum Revisited: Does the 47-Factor Kernel Collapse to BAB and QMJ?"
 short: "Factor Momentum"
-topic: "asset"
+method: "factor"
+fields: {"asset": 3}
 semester: "Spring 2026"
 materials: []
 featured: true

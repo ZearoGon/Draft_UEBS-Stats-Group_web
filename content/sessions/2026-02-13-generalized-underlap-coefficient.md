@@ -13,7 +13,8 @@ speakers: ["zhaoxi-zhang"]
 introduced_by: "xindi-yang"
 title: "The generalized underlap coefficient with an application in clustering"
 short: "Underlap Coefficient"
-topic: "stat"
+method: "multivariate"
+fields: {"marketing": 2, "credit": 2, "risk": 1}
 semester: "Spring 2026"
 materials: []
 summary: "A multi-group separation measure for multivariate variables, its link to total variation, and its use for assessing partition-covariate dependence in clustering."

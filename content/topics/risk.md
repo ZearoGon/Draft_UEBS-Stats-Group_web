@@ -1,9 +1,8 @@
 ---
 id: "risk"
+kind: "field"
 label: "Risk Management"
-order: 6
-x: 600
-y: 610
+order: 4
 href: "topics/risk-management.html"
 blurb: "Risk forecasting and the high-dimensional statistics behind it - covariance estimation, portfolio risk and the models that keep tail events honest."
 page: {"file": "topics/risk-management.html", "title": "Risk Management - Statistics Study Group", "meta_description": "Study-group resources on financial risk measurement, modelling, and risk management research.", "eyebrow": "Research Topic · Finance", "h1": "<em>Risk</em> Management", "desc": "Risk management research examines the statistics-based knowledge and quantitative models used to measure, monitor, and mitigate financial risk. This covers market risk, credit risk, operational risk, and emerging areas like climate-related financial risks.", "related": ["credit", "asset", "econ", "stat"]}

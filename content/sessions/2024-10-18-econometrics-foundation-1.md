@@ -10,7 +10,7 @@ format: "in-person"
 speakers: ["yifan-qi"]
 title: "Econometrics Foundation 1"
 short: "Econometrics I"
-topic: "econ"
+method: "causal"
 semester: "Autumn 2024"
 materials: 
   - {"label": "Notes", "file": "assets/talks/Econometric_Foundation_Discuss1_Yifan_Qi.pdf"}

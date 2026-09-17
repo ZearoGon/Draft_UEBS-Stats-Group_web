@@ -11,7 +11,7 @@ note: "Rescheduled from Thursday 13 March."
 speakers: ["yifan-qi"]
 title: "Asset Pricing: Fama-MacBeth"
 short: "Fama-MacBeth"
-topic: "asset"
+method: "factor"
 semester: "Spring 2025"
 materials: 
   - {"label": "Notes", "file": "assets/talks/Yifan Qi_Fama MacBeth20250317.pdf"}

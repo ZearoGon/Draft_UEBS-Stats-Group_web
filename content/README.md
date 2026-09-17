@@ -8,7 +8,7 @@ generated from these files - **edit here, never in `index.html`, `assets/data.js
 ```
 content/
   site.json          hero photos, founding year, contact
-  topics/*.md        the seven branches of the Research Atlas (+ the topic sub-pages)
+  topics/*.md        the Research Atlas: its fields, its method families, and the topic sub-pages
   people/*.md        maintainers, contributors, members
   sessions/*.md      one file per session - lecture, workshop or discussion
   posts/*.md         blog posts, opportunities, announcements
@@ -42,9 +42,9 @@ venue: "Boardroom, 4th Floor, UEBS"
 format: "hybrid"                             # in-person | online | hybrid
 speakers: ["jane-doe"]                       # ids from content/people
 title: "Topic Title: a longer subtitle"
-short: "Topic"                               # 1-3 words, shown on the atlas leaf
-topic: "stat"                                # core | stat | econ | asset | credit | ai | risk
-also: ["econ"]                               # optional cross-listing on other topic pages
+short: "Topic"                               # 1-3 words, shown on the atlas and the Latest rail
+method: "estimation"                         # causal | estimation | factor | multivariate | sampling | ml | craft
+fields: {"risk": 3, "asset": 2}              # optional - see "The two axes" below
 semester: "Autumn 2026"
 materials:
   - {"label": "Slides", "file": "assets/talks/20261016_topic.pdf", "public": true}
@@ -60,8 +60,36 @@ The abstract, in Markdown. Usually the paragraph from the announcement email.
   agreed to publication - the file is then kept out of the site entirely.
 - A guest brought in by a member: add `introduced_by: "member-id"` here and
   `introduced: "guest-id"` plus `introduced_date` on the member's file.
-- `featured: true` (with an optional `cover`) also shows the session as a card
-  in Posts.
+- `featured: true` also lists the session under Lectures in Posts.
+
+## The two axes of the Research Atlas
+
+The atlas has methods down one side and fields down the other. A **method** is
+a family of technique the group teaches; a **field** is where the work is done.
+Both live in `content/topics/` and say which they are with `kind`.
+
+A method carries a map of how central it is to each field, 1 to 3:
+
+```yaml
+id: "causal"
+kind: "method"
+label: "Regression & causal inference"
+fields: {"econ": 3, "marketing": 3, "asset": 2, "credit": 2, "risk": 1}
+```
+
+- 3 = core to that field, 2 = commonly used there, 1 = occasionally.
+- The atlas draws a ribbon for every entry, as wide as the number.
+
+A session names its `method` and inherits the method's map. Give it its own
+`fields` only when the lecture served the fields differently from the family
+as a whole - a marketing paper that used DiD is `method: "causal"` with
+`fields: {"marketing": 3, "econ": 1}`. The field pages list lectures by that
+number ("Core methods for this field", "Methods this field draws on",
+"Occasionally relevant"); the methods page lists every family.
+
+Adding a field: a new `content/topics/<id>.md` with `kind: "field"`, a label,
+an `order` and a blurb (`href` and `page` once it has a sub-page). Then give it
+a number in the `fields` map of each method that is used there.
 
 ## Adding a person
 
@@ -105,7 +133,7 @@ deadline: "2026-12-01"         # optional - the card shows "Deadline …" and gr
 title: "Title as it should appear on the card"
 source: "zexun-chen"           # who forwarded it (a person id), optional
 link: "https://example.org/"   # the original announcement, optional
-visual: "distribution"         # placeholder art when there is no cover: distribution | network | regression | breaks
+visual: "distribution"         # accepted, no longer shown - Posts is a list without covers
 summary: "One or two sentences for the card."
 ---
 

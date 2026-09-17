@@ -11,7 +11,7 @@ format: "in-person"
 speakers: ["runzhi-tian", "yifan-qi"]
 title: "Claude Code × Stata & Python: AI Research Agent"
 short: "Claude Code × Stata"
-topic: "ai"
+method: "craft"
 semester: "Spring 2026"
 materials: 
   - {"label": "Workshop slides (with configuration workflow)", "file": "assets/talks/Claude_Code_Stata_Python_Workshop.pdf"}

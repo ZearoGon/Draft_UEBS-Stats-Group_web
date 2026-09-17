@@ -9,8 +9,7 @@ format: "in-person"
 speakers: ["yizhuo-hu"]
 title: "Maximum Likelihood Estimation"
 short: "MLE"
-topic: "stat"
-also: ["econ"]
+method: "estimation"
 semester: "Autumn 2024"
 materials: 
   - {"label": "Slides", "file": "assets/talks/Maximum Likelihood Estimation.pdf"}

@@ -11,7 +11,7 @@ format: "in-person"
 speakers: ["yifan-qi"]
 title: "Shaping Research with AI, Machine Learning and Deep Learning"
 short: "AI & ML Overview"
-topic: "ai"
+method: "ml"
 semester: "Spring 2026"
 materials: 
   - {"label": "Summary deck", "file": "assets/talks/AI_ML_DL_for_Business_Research_Overview.pdf"}

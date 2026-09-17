@@ -23,7 +23,7 @@ const Extracted = z.object({
   speakers: z.array(z.string()),
   speaker_affiliation: z.string(),
   moderator: z.string(),
-  topic: z.enum(["core", "stat", "econ", "asset", "credit", "ai", "risk", ""]),
+  method: z.enum(["causal", "estimation", "factor", "multivariate", "sampling", "ml", "craft", ""]),
   short: z.string(),
   summary: z.string(),
   abstract: z.string(),
@@ -46,7 +46,7 @@ Rules:
 - date, event_date and deadline are ISO YYYY-MM-DD. If the year is missing, infer it from the email's sent date given in the input; if that is missing too, leave the field empty.
 - start/end are HH:MM (24 h). "17:00–18:00" means start 17:00, end 18:00.
 - abstract: the abstract or description verbatim (plain text, no signatures, no meeting links). summary: one sentence of your own, at most 40 words.
-- For sessions: topic is the Research Atlas branch - core (research craft/tooling such as Git, or group-wide discussions), stat (estimation, sampling, Bayesian methods, change-point detection, clustering), econ (causal inference, IV, DiD, matching, mechanism analysis, empirical marketing methods), asset (asset pricing, factors, returns), credit (credit scoring, default prediction), ai (machine learning, deep learning, LLMs, AI workflows, synthetic data), risk (risk forecasting, covariance, volatility). short is a 1-3 word label for the atlas.
+- For sessions: method is the family of technique the session teaches, whatever field it is applied in - causal (OLS, IV, DiD, matching, mechanism analysis, field experiments and other identification), estimation (maximum likelihood, EM, Bayesian regression, Gaussian processes), factor (Fama-MacBeth, factor models, cross-sectional return tests), multivariate (covariance estimation, change-point detection, clustering, time series), sampling (accept-reject, Monte Carlo, simulation), ml (kernel methods, neural networks, VAEs, synthetic data, LLMs, AI workflows), craft (Git, research tooling, planning discussions). A marketing paper that uses DiD is causal. short is a 1-3 word label for the atlas.
 - speakers: full names only, no titles. speaker_affiliation: e.g. "first-year PhD, Marketing Group".
 - Strip Microsoft Teams links, meeting IDs and passcodes entirely; never copy them into any field.
 - link: the single most useful public URL (registration, job advert, conference page); unwrap Outlook safelinks (the real URL is in the "url=" query parameter, percent-decoded). Never a Teams or Zoom link.
