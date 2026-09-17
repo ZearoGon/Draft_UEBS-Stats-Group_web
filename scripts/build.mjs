@@ -22,11 +22,22 @@ const sourcePath = join(projectRoot, "src", "index.source.html");
 const jsxPath = join(projectRoot, "src", "app.jsx");
 const appBundlePath = join(projectRoot, "assets", "app.min.js");
 const outputPath = join(projectRoot, "index.html");
+// Maintainers & Contributors is its own page. It is the same document as the
+// home page - same shell, same bundle - with the root element told which page
+// to mount, so the two can never drift apart.
+const peoplePath = join(projectRoot, "people.html");
+const peopleMeta = {
+  title: "Maintainers &amp; Contributors - Statistics Study Group",
+  description:
+    "The people behind the UEBS Statistics Study Group: maintainers, contributors, the lectures they have given and the seats kept open.",
+  ogTitle: "Maintainers &amp; Contributors | Statistics Study Group",
+};
 // Everything the site needs at runtime is collected into dist/ (the deploy
 // output - see vercel.json). Sources, scripts, content/ and node_modules stay out.
 const distPath = join(projectRoot, "dist");
 const publishedEntries = [
   "index.html",
+  "people.html",
   "contributors.html",
   "submit.html",
   "roles.html",
@@ -297,6 +308,39 @@ function compileJsx() {
   assertNonEmptyFile(appBundlePath, "compiled application bundle");
 }
 
+function derivePeoplePage(document) {
+  const rootPattern = /<div\s+id="root"\s*>\s*<\/div\s*>/i;
+  if (!rootPattern.test(document)) {
+    fail("cannot find the root element to mark the people page");
+  }
+  let out = document.replace(rootPattern, '<div id="root" data-page="people"></div>');
+
+  const swap = (pattern, replacement, label) => {
+    const matches = [...out.matchAll(pattern)];
+    if (matches.length !== 1) {
+      fail(`people page: expected one ${label}, found ${matches.length}`);
+    }
+    out = out.replace(pattern, replacement);
+  };
+  swap(/<title>[^<]*<\/title>/gi, `<title>${peopleMeta.title}</title>`, "<title>");
+  swap(
+    /<meta name="description" content="[^"]*"\s*\/?>/gi,
+    `<meta name="description" content="${peopleMeta.description}" />`,
+    "description meta",
+  );
+  swap(
+    /<meta property="og:title" content="[^"]*"\s*\/?>/gi,
+    `<meta property="og:title" content="${peopleMeta.ogTitle}" />`,
+    "og:title meta",
+  );
+  swap(
+    /<meta property="og:description" content="[^"]*"\s*\/?>/gi,
+    `<meta property="og:description" content="${peopleMeta.description}" />`,
+    "og:description meta",
+  );
+  return out;
+}
+
 function publishToDist() {
   rmSync(distPath, { recursive: true, force: true });
   mkdirSync(distPath);
@@ -359,9 +403,13 @@ function main() {
     fail("generated HTML still contains a development runtime reference");
   }
 
+  // Derived either way, so a broken root element or head fails the preflight
+  // rather than the deploy.
+  const peopleOutput = derivePeoplePage(output);
+
   if (checkOnly) {
     console.log(
-      `[build] preflight passed: one JSX block (${Buffer.byteLength(jsx, "utf8")} bytes), pinned vendors, and production HTML transforms are valid`,
+      `[build] preflight passed: one JSX block (${Buffer.byteLength(jsx, "utf8")} bytes), pinned vendors, the people page, and production HTML transforms are valid`,
     );
     return;
   }
@@ -374,8 +422,9 @@ function main() {
   }
 
   writeFileSync(outputPath, output, "utf8");
+  writeFileSync(peoplePath, peopleOutput, "utf8");
   console.log(
-    `[build] wrote ${relative(projectRoot, jsxPath)}, ${relative(projectRoot, appBundlePath)}, and ${relative(projectRoot, outputPath)} with esbuild ${ESBUILD_VERSION}`,
+    `[build] wrote ${relative(projectRoot, jsxPath)}, ${relative(projectRoot, appBundlePath)}, ${relative(projectRoot, outputPath)}, and ${relative(projectRoot, peoplePath)} with esbuild ${ESBUILD_VERSION}`,
   );
   publishToDist();
   console.log(`[build] published ${publishedEntries.length} entries to ${relative(projectRoot, distPath)}/`);

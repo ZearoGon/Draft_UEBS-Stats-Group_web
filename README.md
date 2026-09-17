@@ -11,15 +11,20 @@ content/              the source of truth: sessions, people, posts, topics (Mark
 src/index.source.html the single-page app (HTML + CSS + one JSX block) - the only file to edit for design changes
 src/templates/        HTML templates for the generated topic pages
 scripts/content.mjs   compiles content/ -> assets/data.js, topics/*.html, contributors.html
-scripts/build.mjs     runs the content compiler, then esbuild -> assets/app.min.js and index.html
+scripts/build.mjs     runs the content compiler, then esbuild -> assets/app.min.js, index.html, people.html
 assets/talks/         lecture slides (PDF) and code
 assets/posts/         files attached to posts
 ```
 
-Generated files (`index.html`, `src/app.jsx`, `assets/app.min.js`, `assets/data.js`,
-`assets/data.json`, `topics/*.html`, the data block in `contributors.html`) are
-committed so the site can be served as plain static files, but they are never
-edited by hand.
+Generated files (`index.html`, `people.html`, `src/app.jsx`, `assets/app.min.js`,
+`assets/data.js`, `assets/data.json`, `topics/*.html`, the data block in
+`contributors.html`) are committed so the site can be served as plain static
+files, but they are never edited by hand.
+
+Two pages come out of the one source. `index.html` mounts the home page - the
+research atlas, the posts, the membership section - and `people.html` mounts
+Maintainers & Contributors on its own. They are the same document and the same
+bundle; the root element carries `data-page`, and the app mounts accordingly.
 
 ## Updating content
 

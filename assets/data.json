@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-11T15:47:39.109Z",
+  "generatedAt": "2026-09-17T20:53:32.778Z",
   "site": {
     "name": "Statistics Study Group",
     "school": "University of Edinburgh Business School",
@@ -269,6 +269,7 @@
         "Archive & Materials",
         "Calendar & Broadcast",
         "Platform & Release",
+        "Editor, Autumn 2026",
         "Admin"
       ],
       "bio": "Yifan Qi focuses on econometrics and asset pricing. He has presented on Econometrics Foundation and the Fama-MacBeth two-pass regression procedure, a cornerstone methodology for testing asset pricing models in cross-sectional finance research.",
@@ -3023,14 +3024,14 @@
         "editorName": "Yifan Qi"
       }
     ],
-    "current": null,
-    "next": {
+    "current": {
       "term": "Autumn 2026",
       "from": "2026-09-14",
       "to": "2026-12-18",
       "editor": "yifan-qi",
       "editorName": "Yifan Qi"
     },
+    "next": null,
     "admins": [
       "yifan-qi",
       "zexun-chen"
