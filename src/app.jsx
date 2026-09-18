@@ -2661,6 +2661,7 @@ function Wall() {
   }, []);
 
   const current = BOARDS.find((b) => b.id === board);
+  const tintOf = (id) => String(id).split("").reduce((a, c) => a + c.charCodeAt(0), 0) % 3;
   const items = wall.boards[board] || [];
   const shown = showAll ? items : items.slice(0, 8);
   const ready = wall.status === "ready";
@@ -2701,13 +2702,14 @@ function Wall() {
 
   return (
     <div className="wall" id="wall">
+      <a className="wall-contribute" href="submit.html">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5" /><path d="M4 15v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4" /></svg>
+        Post a session or share an opportunity →
+      </a>
       <div className="wall-head">
-        <div>
-          <div className="mono">The wall · anonymous · no account</div>
-          <h3>Say what you would like to learn - or just say something.</h3>
-          <p>Wishes shape the next semester's programme. Notes are read by the whole group. No names unless you add one.</p>
-        </div>
-        <a className="wall-contribute" href="submit.html">Post a session or share an opportunity →</a>
+        <div className="mono">The wall · anonymous · no account</div>
+        <h3>Say what you would like to learn - or just say something.</h3>
+        <p>Wishes shape the next semester's programme. Notes are read by the whole group. No names unless you add one; maintainers take down anything unkind, and yours if you ask.</p>
       </div>
       <div className="filter-chips wall-tabs" role="tablist">
         {BOARDS.map((b) =>
@@ -2716,33 +2718,38 @@ function Wall() {
           </button>
         )}
       </div>
-      <div className="wall-grid">
-        <form className="wall-form" onSubmit={post}>
+
+      {/* the board: paper notes on a dark surface, and a blank one to write on */}
+      <div className="wall-board">
+        <form className="wall-note wall-composer" onSubmit={post}>
+          <span className="wall-pin" aria-hidden="true" />
+          <div className="wall-meta">
+            <span className="who">{nick.trim() || "You"}</span> · <span>{ready ? "a new note" : wall.status === "loading" ? "opening the wall…" : "not connected yet"}</span>
+          </div>
           <label className="sr-only" htmlFor="wall-text">{current.label}</label>
           <textarea id="wall-text" value={text} maxLength={MAX} rows={4} placeholder={current.hint} onChange={(e) => setText(e.target.value)} disabled={!ready} />
           <div className="wall-form-row">
             <input type="text" value={nick} maxLength={24} placeholder="Name or nickname (optional)" aria-label="Name or nickname (optional)" onChange={(e) => setNick(e.target.value)} disabled={!ready} />
             {wall.passphrase && <input type="password" value={pass} placeholder="Group passphrase" aria-label="Group passphrase" onChange={(e) => setPass(e.target.value)} />}
-            <button type="submit" className="chip active" disabled={busy || !ready}>{busy ? "Posting…" : "Post"}</button>
+            <button type="submit" className="wall-post" disabled={busy || !ready}>{busy ? "Pinning…" : "Pin it"}</button>
           </div>
-          <div className="wall-note" aria-live="polite">
+          <div className="wall-note-foot" aria-live="polite">
             {wall.status === "loading" && "Opening the wall…"}
-            {wall.status === "offline" && "The wall is not connected yet - it opens once the site's API is set up."}
-            {ready && !note && `${MAX - text.length} characters left · maintainers can remove anything unkind, and will take yours down if you ask.`}
+            {wall.status === "offline" && "The wall opens once the site's API is set up."}
+            {ready && !note && (MAX - text.length) + " characters left"}
             {note && <span className={note.kind}>{note.text}</span>}
           </div>
         </form>
-        <div className="wall-list">
-          {ready && items.length === 0 && <div className="wall-empty">Nothing here yet - be the first.</div>}
-          {shown.map((m) =>
-            <div key={m.id} className="wall-item">
-              <div className="wall-meta"><span className="who">{m.nick}</span> · <span>{when(m.at)}</span></div>
-              <div className="wall-text">{m.text}</div>
-            </div>
-          )}
-          {items.length > shown.length && <div><button type="button" className="chip" onClick={() => setShowAll(true)}>Show all {items.length}</button></div>}
-        </div>
+        {ready && items.length === 0 && <div className="wall-note wall-ghost">Nothing here yet - yours would be the first.</div>}
+        {shown.map((m) =>
+          <article key={m.id} className={"wall-note tint-" + tintOf(m.id)}>
+            <span className="wall-pin" aria-hidden="true" />
+            <div className="wall-meta"><span className="who">{m.nick}</span> · <span>{when(m.at)}</span></div>
+            <div className="wall-text">{m.text}</div>
+          </article>
+        )}
       </div>
+      {items.length > shown.length && <div className="wall-more"><button type="button" className="chip" onClick={() => setShowAll(true)}>Show all {items.length}</button></div>}
     </div>);
 
 }
@@ -3006,7 +3013,7 @@ function Join() {
     if (!form.name.trim()) e.name = "Enter your full name.";
     if (!form.email.trim()) e.email = "Enter your university email.";else
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = "Enter a valid email address.";
-    if (!form.program) e.program = "Select a research area.";
+    if (!form.program) e.program = "Select your subject group.";
     if (!form.year) e.year = "Select your year of study.";
     return e;
   };
@@ -3024,7 +3031,7 @@ function Join() {
     const body = [
       `Name: ${form.name.trim()}`,
       `University email: ${form.email.trim()}`,
-      `Research area: ${form.program}`,
+      `Subject group: ${form.program}`,
       `Year of study: ${form.year}`,
       `Research interests: ${form.interests.trim() || "Not provided"}`,
       "",
@@ -3072,17 +3079,16 @@ function Join() {
                 </div>
                 <div className="field-row">
                   <div className={"field" + (errors.program ? " error" : "")}>
-                    <label htmlFor="join-program">Research area</label>
+                    <label htmlFor="join-program">Subject group</label>
                     <select id="join-program" name="research-area" required value={form.program} onChange={set("program")} aria-invalid={Boolean(errors.program)} aria-describedby={errors.program ? "join-program-error" : undefined}>
                       <option value="">Select…</option>
-                      <option>Credit Research</option>
-                      <option>Risk Management</option>
-                      <option>Econometrics</option>
-                      <option>Asset Pricing</option>
-                      <option>Statistics</option>
-                      <option>AI (Machine Learning & Deep Learning)</option>
-                      <option>FinTech</option>
-                      <option>Other</option>
+                      <option>Accounting and Finance</option>
+                      <option>Entrepreneurship and Innovation</option>
+                      <option>Management Science and Business Economics</option>
+                      <option>Marketing</option>
+                      <option>Organisation Studies</option>
+                      <option>Strategy</option>
+                      <option>Outside the Business School</option>
                     </select>
                     {errors.program && <div className="err" id="join-program-error" role="alert">{errors.program}</div>}
                   </div>

@@ -1057,32 +1057,68 @@
   @media (prefers-reduced-motion: reduce) { .about-drawer, .about-scrim { transition: none; } }
 
   /* ====== THE WALL ====== */
-  .wall { margin-top: 64px; border-top: 1px solid var(--rule); padding-top: 36px; }
-  .wall-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-bottom: 22px; }
-  .wall-head h3 { font-family: var(--serif); font-weight: 500; font-size: 28px; line-height: 1.2; letter-spacing: normal; margin: 8px 0 8px; text-wrap: balance; max-width: 640px; }
-  .wall-head p { margin: 0; color: var(--ink-soft); max-width: 560px; font-size: 15px; }
-  .wall-contribute { font-family: var(--mono); font-size: 12px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent); padding-bottom: 2px; white-space: nowrap; }
-  .wall-tabs { margin-bottom: 20px; }
+  .wall { margin-top: 64px; border-top: 1px solid var(--rule); padding-top: 32px; }
+  .wall-contribute {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 14px; color: var(--accent); text-decoration: none;
+    border: 1px solid var(--accent); border-radius: 999px; padding: 9px 18px 9px 14px;
+    margin-bottom: 30px; transition: background .2s, color .2s;
+  }
+  .wall-contribute svg { flex-shrink: 0; }
+  .wall-contribute:hover { background: var(--accent); color: var(--paper); }
+  .wall-head { margin-bottom: 20px; }
+  .wall-head h3 { font-weight: 400; font-size: 28px; line-height: 1.2; letter-spacing: normal; margin: 8px 0 8px; text-wrap: balance; max-width: 640px; }
+  .wall-head p { margin: 0; color: var(--ink-soft); max-width: 620px; font-size: 15px; }
+  .wall-tabs { margin-bottom: 16px; }
   .wall-tabs .chip .n { margin-left: 8px; opacity: 0.6; }
-  .wall-grid { display: grid; grid-template-columns: minmax(280px, 380px) 1fr; gap: 36px; align-items: start; }
-  @media (max-width: 860px) { .wall-grid { grid-template-columns: 1fr; } }
-  .wall-form textarea, .wall-form input { width: 100%; font: inherit; font-size: 15px; color: var(--ink); background: var(--paper); border: 1px solid var(--rule); border-radius: 6px; padding: 10px 12px; }
-  .wall-form textarea { resize: vertical; min-height: 110px; line-height: 1.5; }
-  .wall-form textarea:focus, .wall-form input:focus { outline: none; border-color: var(--accent); }
-  .wall-form textarea:disabled, .wall-form input:disabled { opacity: 0.55; }
-  .wall-form-row { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
-  .wall-form-row input { flex: 1 1 140px; }
-  .wall-form-row .chip { padding: 10px 18px; }
-  .wall-form-row .chip:disabled { opacity: 0.5; cursor: default; }
-  .wall-note { margin-top: 10px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.015em; color: var(--ink-mute); line-height: 1.5; }
-  .wall-note .ok { color: var(--accent); }
-  .wall-note .bad { color: #8b1e1e; }
-  .wall-list { display: grid; gap: 12px; }
-  .wall-item { background: var(--paper); border: 1px solid var(--rule); border-radius: 8px; padding: 14px 18px; }
-  .wall-meta { font-family: var(--mono); font-size: 11px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: 6px; }
+
+  /* the board itself: a dark surface, paper on it */
+  .wall-board {
+    columns: 3; column-gap: 16px;
+    padding: 22px 22px 6px; border-radius: 8px;
+    background:
+      radial-gradient(ellipse at 20% 0%, rgb(255 255 255 / 0.07), transparent 46%),
+      linear-gradient(160deg, #11394f, #0b2a3c 68%, #08222f);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.08), 0 1.6rem 3rem -2rem rgb(6 38 55 / 0.6);
+  }
+  @media (max-width: 1000px) { .wall-board { columns: 2; } }
+  @media (max-width: 640px) { .wall-board { columns: 1; padding: 14px 14px 2px; } }
+  .wall-note {
+    position: relative; display: block; break-inside: avoid;
+    margin: 0 0 16px; padding: 22px 18px 16px;
+    background: var(--paper); color: var(--ink); border-radius: 3px;
+    box-shadow: 0 1px 0 rgb(0 0 0 / 0.1), 0 12px 24px -14px rgb(0 0 0 / 0.6);
+  }
+  .wall-note.tint-1 { background: #F4ECD6; }
+  .wall-note.tint-2 { background: #E6EDF2; }
+  .wall-pin {
+    position: absolute; top: 8px; left: 50%; width: 9px; height: 9px; margin-left: -4.5px;
+    border-radius: 50%; background: var(--accent);
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.4), inset 0 -2px 2px rgb(0 0 0 / 0.25);
+  }
+  .wall-meta { font-size: 11px; letter-spacing: 0.015em; text-transform: uppercase; color: var(--ink-mute); margin: 0 0 8px; }
   .wall-meta .who { color: var(--accent); }
-  .wall-text { font-family: var(--serif); font-size: 17px; line-height: 1.45; white-space: pre-wrap; text-wrap: pretty; }
-  .wall-empty { color: var(--ink-mute); padding: 20px 0; }
+  .wall-text { font-size: 16.5px; line-height: 1.45; white-space: pre-wrap; text-wrap: pretty; }
+  .wall-ghost {
+    background: transparent; color: rgb(255 255 255 / 0.7); box-shadow: none;
+    border: 1px dashed rgb(255 255 255 / 0.4); font-size: 15px; padding: 18px;
+  }
+  .wall-composer { background: #FFFDF8; }
+  .wall-composer textarea, .wall-composer input {
+    width: 100%; font: inherit; font-size: 15px; color: var(--ink);
+    background: transparent; border: 0; border-bottom: 1px solid var(--rule); border-radius: 0; padding: 6px 0;
+  }
+  .wall-composer textarea { resize: vertical; min-height: 92px; line-height: 1.5; border-bottom: 0; }
+  .wall-composer textarea:focus, .wall-composer input:focus { outline: none; border-color: var(--accent); }
+  .wall-composer textarea:disabled, .wall-composer input:disabled { opacity: 0.55; }
+  .wall-form-row { display: flex; gap: 10px; margin-top: 6px; align-items: center; flex-wrap: wrap; }
+  .wall-form-row input { flex: 1 1 120px; }
+  .wall-post { font: inherit; font-size: 13px; color: var(--paper); background: var(--accent); border: 0; border-radius: 999px; padding: 8px 16px; cursor: pointer; }
+  .wall-post:disabled { opacity: 0.5; cursor: default; }
+  .wall-note-foot { margin-top: 10px; font-size: 11.5px; color: var(--ink-mute); line-height: 1.5; }
+  .wall-note-foot .ok { color: var(--accent); }
+  .wall-note-foot .bad { color: #8b1e1e; }
+  .wall-more { margin-top: 14px; }
   .news-card h3 {
     font-family: var(--serif); font-weight: 500;
     font-size: 22px; line-height: 1.2; letter-spacing: normal;
