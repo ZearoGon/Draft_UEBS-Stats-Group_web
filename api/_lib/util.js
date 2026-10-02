@@ -27,7 +27,7 @@ export const KNOWN_FIELDS = [
   "Field TBC",
 ];
 export const LEVELS = ["Faculty", "PhD", "Visiting PhD"];
-export const SESSION_KINDS = ["lecture", "workshop", "discussion"];
+export const SESSION_KINDS = ["lecture", "workshop", "discussion", "introduction"];
 export const SESSION_FORMATS = ["in-person", "online", "hybrid"];
 export const POST_TYPES = ["event", "opportunity", "announcement", "blog"];
 export const POST_CATEGORIES = {

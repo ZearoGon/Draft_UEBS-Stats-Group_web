@@ -3,7 +3,7 @@
 //   content/site.json          -> site-wide settings (hero slides, founding year, contact)
 //   content/topics/*.md        -> the Research Atlas: fields, method families (+ the topic sub-pages)
 //   content/people/*.md        -> maintainers, contributors and members
-//   content/sessions/*.md      -> one file per session (lecture / workshop / discussion)
+//   content/sessions/*.md      -> one file per session (lecture / workshop / discussion / introduction)
 //   content/posts/*.md         -> blog posts, opportunities, announcements
 //
 // Outputs (all derived - never edit them by hand):
@@ -58,7 +58,9 @@ const PERSON_KINDS = ["maintainer", "contributor", "member"];
 // ring (nothing on record yet) show the level alone.
 const PERSON_LEVELS = ["Faculty", "PhD", "Visiting PhD"];
 const KIND_LABEL = { maintainer: "Maintainer", contributor: "Contributor", member: "" };
-const SESSION_KINDS = ["lecture", "workshop", "discussion"];
+// "introduction" = the group presenting itself (a welcome week, an induction).
+const SESSION_KIND_LABEL = { lecture: "Lecture", workshop: "Workshop", discussion: "Discussion", introduction: "Introduction" };
+const SESSION_KINDS = Object.keys(SESSION_KIND_LABEL);
 const SESSION_STATUS = ["planned", "held", "postponed", "cancelled"];
 const SESSION_FORMATS = ["in-person", "online", "hybrid"];
 // event = something to attend; opportunity = something to apply for or submit to.
@@ -344,6 +346,11 @@ function loadSessions(topics, people, errors) {
     for (const s of speakers) if (!byId.has(s)) errors.push(`${file}: speaker "${s}" is not in content/people`);
     if (speakers.length === 0 && !data.speaker_label) errors.push(`${file}: needs speakers or a speaker_label`);
     if (data.moderator && !byId.has(data.moderator)) errors.push(`${file}: moderator "${data.moderator}" is not in content/people`);
+    if (data.discussant && !byId.has(data.discussant)) errors.push(`${file}: discussant "${data.discussant}" is not in content/people`);
+    // who was in the room: a person id where there is one, otherwise the name as given
+    if (data.attendees !== undefined && !Array.isArray(data.attendees)) errors.push(`${file}: attendees must be a list`);
+    const attendees = (Array.isArray(data.attendees) ? data.attendees : []).map((a) => byId.get(a)?.name || String(a));
+    if (new Set(attendees).size !== attendees.length) errors.push(`${file}: someone is listed twice in attendees`);
     if (data.introduced_by && !byId.has(data.introduced_by)) errors.push(`${file}: introduced_by "${data.introduced_by}" is not in content/people`);
     for (const k of ["start", "end"]) {
       if (data[k] !== undefined && !HHMM.test(String(data[k]))) errors.push(`${file}: ${k} must be HH:MM (quote it)`);
@@ -360,6 +367,7 @@ function loadSessions(topics, people, errors) {
       : data.speaker_label || "";
     const firstFile = materials.find((m) => m.public && m.file);
     const firstAny = materials.find((m) => m.public);
+    const discussant = data.discussant ? byId.get(data.discussant)?.name || "" : "";
     return {
       id: data.id,
       slug,
@@ -378,6 +386,10 @@ function loadSessions(topics, people, errors) {
       speakers,
       speakerNames,
       moderator: data.moderator ? byId.get(data.moderator)?.name || "" : "",
+      discussantId: data.discussant || "",
+      discussant,
+      byline: discussant ? `${speakerNames} · discussant ${discussant}` : speakerNames,
+      attendees,
       introducedBy: data.introduced_by || "",
       title: data.title,
       short: data.short,
@@ -526,15 +538,18 @@ function derivePeople(people, sessions, roles) {
   const initialsOf = (id) => byId.get(id)?.initials || "";
   const out = people.map((p) => {
     const lectures = sessions
-      .filter((s) => s.speakers.includes(p.id) && s.status !== "cancelled")
+      .filter((s) => (s.speakers.includes(p.id) || s.discussantId === p.id) && s.status !== "cancelled")
       .map((s) => ({
-        title: s.title,
+        title: s.discussantId === p.id ? `Discussant: ${s.title}` : s.title,
         date: s.dateLabel,
         pdf: s.pdf,
         venue: s.journal || undefined,
         sessionId: s.id,
       }));
     for (const x of p.extraLectures) lectures.push({ title: x.title, date: String(x.date || ""), pdf: x.pdf || "" });
+    // presenting the group itself (kind: introduction) stays on the record but is not a contribution
+    const contributed = sessions.some((s) => (s.speakers.includes(p.id) || s.discussantId === p.id)
+      && s.status !== "cancelled" && s.kind !== "introduction") || p.extraLectures.length > 0;
     return {
       id: p.id,
       initials: p.initials,
@@ -554,7 +569,7 @@ function derivePeople(people, sessions, roles) {
       introduced: p.introducedId ? initialsOf(p.introducedId) : "",
       introducedDate: p.introducedDate ? fmtDate(p.introducedDate) : "",
       new: p.isNew,
-      contributor: p.contributorFlag || lectures.length > 0 || !!p.introducedId,
+      contributor: p.contributorFlag || contributed || !!p.introducedId,
     };
   });
   const rank = { maintainer: 0, contributor: 1, member: 2 };
@@ -576,6 +591,13 @@ function topField(s) {
   return Object.entries(s.fields || {}).sort((a, b) => b[1] - a[1])[0]?.[0] || "";
 }
 
+// The materials a card does not already link from its title.
+function otherLinks(materials, href) {
+  return materials
+    .filter((m) => m.public && m.href && m.href !== href)
+    .map((m) => ({ label: m.label, href: m.href, external: /^https?:/.test(m.href) }));
+}
+
 function deriveNews(sessions, posts, topics) {
   const topicHref = new Map(topics.map((t) => [t.id, t.href]));
   const cards = [];
@@ -583,8 +605,8 @@ function deriveNews(sessions, posts, topics) {
     if (!s.featured || s.status === "cancelled") continue;
     cards.push({
       kind: "lecture",
-      cat: s.kind === "workshop" ? "Workshop" : s.kind === "discussion" ? "Discussion" : "Lecture",
-      sub: s.speakerNames,
+      cat: SESSION_KIND_LABEL[s.kind] || "Lecture",
+      sub: s.byline,
       date: s.date,
       dateLabel: s.dateLabel,
       title: s.title,
@@ -594,6 +616,7 @@ function deriveNews(sessions, posts, topics) {
       cover: s.cover,
       coverAlt: s.coverAlt,
       href: s.pdf || topicHref.get(s.method) || topicHref.get(topField(s)) || "",
+      links: otherLinks(s.materials, s.pdf),
       external: false,
       deadline: "",
       deadlineLabel: "",
@@ -602,6 +625,7 @@ function deriveNews(sessions, posts, topics) {
   }
   for (const p of posts) {
     const href = p.link || p.href || (p.materials.find((m) => m.href)?.href ?? "");
+    const links = otherLinks(p.materials, href);
     cards.push({
       kind: p.type,
       cat: TYPE_LABEL[p.type] || p.type,
@@ -615,6 +639,7 @@ function deriveNews(sessions, posts, topics) {
       cover: p.cover,
       coverAlt: p.coverAlt,
       href,
+      links,
       external: /^https?:/.test(href),
       deadline: p.deadline,
       deadlineLabel: p.deadlineLabel,
@@ -634,7 +659,7 @@ function deriveStats(site, people, sessions, topics) {
   return {
     maintainers: people.filter((p) => p.kind === "maintainer").length,
     contributors: people.filter((p) => p.contributor).length,
-    lectures: held.filter((s) => s.kind !== "discussion").length,
+    lectures: held.filter((s) => s.kind !== "discussion" && s.kind !== "introduction").length,
     sessions: held.length,
     fields,
     methods: topics.filter((t) => t.kind === "method" && held.some((s) => s.method === t.id)).length,
@@ -646,8 +671,8 @@ function deriveStats(site, people, sessions, topics) {
 // ---------------------------------------------------------------- rendering
 
 function lectureCard(s, rel) {
-  const who = s.kind === "discussion" ? "Discussion" : s.kind === "workshop" ? "Workshop" : "Lecture";
-  const cat = `${who} · ${escapeHtml(s.speakerNames)} · ${s.dateLabel}`;
+  const who = SESSION_KIND_LABEL[s.kind] || "Lecture";
+  const cat = `${who} · ${escapeHtml(s.byline)} · ${s.dateLabel}`;
   const links = s.materials
     .filter((m) => m.public && m.href)
     .map((m) => {
@@ -663,6 +688,7 @@ function lectureCard(s, rel) {
     `    <div class="cat">${cat}</div>`,
     `    <h4>${escapeHtml(s.title)}</h4>`,
     `    <p>${escapeHtml(summary)}${tail}</p>`,
+    ...(s.attendees.length ? [`    <p class="room">In the room (${s.attendees.length}): ${s.attendees.map(escapeHtml).join(", ")}</p>`] : []),
     "  </div>",
   ].join("\n");
 }
@@ -730,7 +756,7 @@ function patchContributorsPage(people) {
   const html = readFileSync(p, "utf8");
   const eol = html.includes("\r\n") ? "\r\n" : "\n";
   const list = people
-    .filter((x) => x.lectures.length > 0 && x.kind !== "member")
+    .filter((x) => x.contributor && x.lectures.length > 0 && x.kind !== "member")
     .map((x) => ({
       initials: x.initials,
       name: x.name,

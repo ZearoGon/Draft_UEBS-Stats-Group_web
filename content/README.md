@@ -33,7 +33,7 @@ Create `content/sessions/YYYY-MM-DD-short-slug.md`:
 ---
 id: "20261016_Jane Doe_Topic Title"          # same name as the OneDrive folder
 type: "session"
-kind: "lecture"                              # lecture | workshop | discussion
+kind: "lecture"                              # lecture | workshop | discussion | introduction
 status: "planned"                            # planned | held | postponed | cancelled
 date: "2026-10-16"                           # always quoted, YYYY-MM-DD
 start: "17:00"
@@ -61,6 +61,17 @@ The abstract, in Markdown. Usually the paragraph from the announcement email.
 - A guest brought in by a member: add `introduced_by: "member-id"` here and
   `introduced: "guest-id"` plus `introduced_date` on the member's file.
 - `featured: true` also lists the session under Lectures in Posts.
+- `kind: introduction` is the group presenting itself (a welcome week, an
+  induction); like a discussion it is not counted as a lecture.
+- A paper session with a discussant: `discussant: "person-id"`. The byline reads
+  "Speaker · discussant Name", and the session appears on the discussant's
+  record as "Discussant: <title>".
+- Who came: `attendees: ["person-id", "Full Name", ...]` - a person id where the
+  person is in content/people, the name as it should appear otherwise. The topic
+  pages show it under the lecture ("In the room (17): ..."). The repository is
+  public, so list only people who are happy to be named.
+- Every public material a card does not already link from its title is listed
+  under it as a link, on posts as well as on featured sessions.
 
 ## The two axes of the Research Atlas
 

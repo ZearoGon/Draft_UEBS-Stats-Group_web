@@ -13,7 +13,7 @@ const JOIN_TO = (DATA.roles && DATA.roles.join && DATA.roles.join.email)
   : { name: "Dr Zexun Chen", email: (DATA.site.contact && DATA.site.contact.email) || "", cc: [] };
 if (!DATA) throw new Error("assets/data.js is missing or failed to load - run `npm run build`");
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-const KIND_LABEL = { lecture: "Lecture", workshop: "Workshop", discussion: "Discussion" };
+const KIND_LABEL = { lecture: "Lecture", workshop: "Workshop", discussion: "Discussion", introduction: "Introduction" };
 
 // The maintainers, in roster order (used by the neural field and the roster).
 const COMMITTEE = DATA.people.filter(p => p.kind === "maintainer");
@@ -43,7 +43,7 @@ const sessionToEvent = (s) => {
     title: s.title, short: s.short, method: s.method, fields: s.fields || {},
     loc: s.venue, time: s.timeLabel,
     cat: ahead ? "schedule" : "talk",
-    speaker: s.speakerNames, pdf: s.pdf,
+    speaker: s.byline || s.speakerNames, pdf: s.pdf,
     status: s.status, note: s.note, summary: s.summary
   };
 };
@@ -2826,6 +2826,11 @@ function News() {
               : n.title}
           </h3>
           <p className="post-excerpt">{n.excerpt}</p>
+          {n.links && n.links.length > 0 &&
+            <div className="post-links">
+              {n.links.map((l) =>
+                <a key={l.href} href={l.href} target="_blank" rel={l.external ? "noopener noreferrer" : undefined}>{l.label} ↗</a>)}
+            </div>}
         </div>
         <div className="post-go" aria-hidden="true">{n.href ? "→" : ""}</div>
       </article>);
