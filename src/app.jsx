@@ -56,6 +56,10 @@ const EVENTS_SORTED = [...EVENTS].sort((a, b) => eventDate(b) - eventDate(a));
 // plus every session marked `featured`, newest first.
 const NEWS = DATA.news;
 
+// The two most recent sessions that took place in a room (sessions are newest first).
+const IN_PERSON = DATA.sessions.filter((s) => s.status === "held" && s.format !== "online").slice(0, 2);
+const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
 // The About panel is a drawer (see AboutDrawer); the nav and the photo frame open it with this.
 const openAbout = () => window.dispatchEvent(new CustomEvent("ssg:about"));
 
@@ -2754,6 +2758,44 @@ function Wall() {
 
 }
 
+// -------- LATEST, IN PERSON (beside the Posts heading) --------
+function InPerson() {
+  if (!IN_PERSON.length) return null;
+  return (
+    <aside className="inperson reveal" aria-label="Latest sessions in person">
+      <div className="inperson-h">Latest, in person</div>
+      <div className="inperson-cards">
+        {IN_PERSON.map((s, i) => {
+          const [y, m, d] = s.date.split("-").map(Number);
+          const weekday = WEEKDAYS[new Date(Date.UTC(y, m - 1, d)).getUTCDay()];
+          const links = (s.materials || []).filter((x) => x.public && x.href);
+          const room = s.attendees && s.attendees.length ? s.attendees.length + " in the room" : "";
+          return (
+            <article key={s.id} className={"ip-card" + (i === 0 ? " lead" : "")}>
+              <div className="ip-date">
+                <span className="d">{String(d).padStart(2, "0")}</span>
+                <span className="m">{MONTHS[m - 1]} {y} · {weekday}</span>
+              </div>
+              <div className="ip-kicker">{KIND_LABEL[s.kind] || "Lecture"}</div>
+              <h3 className="ip-title">
+                {s.pdf ? <a href={s.pdf} target="_blank" rel="noopener noreferrer">{s.title}</a> : s.title}
+              </h3>
+              <div className="ip-by">{s.byline || s.speakerNames}</div>
+              <div className="ip-foot">
+                <span>{s.venue}</span>
+                {(s.timeLabel || room) && <span>{[s.timeLabel, room].filter(Boolean).join(" · ")}</span>}
+                {links.length > 0 &&
+                  <span className="ip-links">
+                    {links.map((x) =>
+                      <a key={x.href} href={x.href} target="_blank" rel={x.file ? undefined : "noopener noreferrer"}>{x.label} {x.file ? "↓" : "↗"}</a>)}
+                  </span>}
+              </div>
+            </article>);
+        })}
+      </div>
+    </aside>);
+}
+
 // -------- NEWS --------
 function News() {
   const CATS = [
@@ -2839,9 +2881,12 @@ function News() {
   return (
     <section id="posts" className="section">
         <div className="container">
-          <div className="section-header reveal">
-            <div className="num"><span>02 / 03</span> &nbsp; Posts</div>
-            <h2>Recent posts from <em>the group - lectures, opportunities, and updates</em>.</h2>
+          <div className="posts-lead">
+            <div className="section-header reveal">
+              <div className="num"><span>02 / 03</span> &nbsp; Posts</div>
+              <h2>Recent posts from <em>the group - lectures, opportunities, and updates</em>.</h2>
+            </div>
+            <InPerson />
           </div>
           <div className="reveal">
             <div className="filter-chips news-filters">
