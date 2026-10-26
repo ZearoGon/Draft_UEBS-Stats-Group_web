@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-26T00:22:11.204Z",
+  "generatedAt": "2026-10-26T00:34:55.604Z",
   "site": {
     "name": "Statistics Study Group",
     "school": "University of Edinburgh Business School",
@@ -25,6 +25,10 @@
         {
           "src": "https://pub-2f317f8151d14a0da62cf2e5fb439603.r2.dev/20270529.jpg",
           "label": "2026 · May"
+        },
+        {
+          "src": "assets/hero/20261016-amce-ppml.jpg",
+          "label": "2026 · October · AMCE & PPML"
         }
       ]
     },
