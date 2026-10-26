@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-02T11:28:19.331Z",
+  "generatedAt": "2026-10-26T00:22:11.204Z",
   "site": {
     "name": "Statistics Study Group",
     "school": "University of Edinburgh Business School",
@@ -36,8 +36,8 @@
   "stats": {
     "maintainers": 8,
     "contributors": 12,
-    "lectures": 24,
-    "sessions": 26,
+    "lectures": 25,
+    "sessions": 27,
     "fields": 5,
     "methods": 7,
     "topics": 5,
@@ -374,6 +374,12 @@
       ],
       "bio": "Yifan Qi focuses on econometrics and asset pricing. He has presented on Econometrics Foundation and the Fama-MacBeth two-pass regression procedure, a cornerstone methodology for testing asset pricing models in cross-sectional finance research.",
       "lectures": [
+        {
+          "title": "Estimation Methods: AMCE and PPML - which estimator, when, and how?",
+          "date": "16 Oct 2026",
+          "pdf": "assets/slides/20261016-amce-ppml/index.html",
+          "sessionId": "20261016_Yifan Qi_Estimation Method_AMCE & PPML"
+        },
         {
           "title": "Discussant: Bridging Structured Knowledge and Data: A Unified Framework with Finance Applications",
           "date": "01 Oct 2026",
@@ -808,6 +814,58 @@
     ]
   ],
   "sessions": [
+    {
+      "id": "20261016_Yifan Qi_Estimation Method_AMCE & PPML",
+      "slug": "2026-10-16-amce-and-ppml",
+      "date": "2026-10-16",
+      "dateLabel": "16 Oct 2026",
+      "dateVerified": true,
+      "dateNote": "",
+      "start": "17:00",
+      "end": "18:00",
+      "timeLabel": "17:00 - 18:00",
+      "venue": "Boardroom, 4th Floor, UEBS",
+      "format": "in-person",
+      "kind": "lecture",
+      "status": "held",
+      "note": "",
+      "speakers": [
+        "yifan-qi"
+      ],
+      "speakerNames": "Yifan Qi",
+      "moderator": "",
+      "discussantId": "",
+      "discussant": "",
+      "byline": "Yifan Qi",
+      "attendees": [],
+      "introducedBy": "",
+      "title": "Estimation Methods: AMCE and PPML - which estimator, when, and how?",
+      "short": "AMCE & PPML",
+      "method": "estimation",
+      "fields": {
+        "econ": 3
+      },
+      "fieldsOwn": true,
+      "semester": "Autumn 2026",
+      "journal": "",
+      "materials": [
+        {
+          "label": "Interactive slides",
+          "file": "assets/slides/20261016-amce-ppml/index.html",
+          "url": "",
+          "public": true,
+          "href": "assets/slides/20261016-amce-ppml/index.html"
+        }
+      ],
+      "pdf": "assets/slides/20261016-amce-ppml/index.html",
+      "summary": "Three questions to ask of any empirical paper: which number you want (a difference, the AMCE, or a ratio, estimated by PPML), why it is causal, and what the data look like - from OLS and GLS to logit and PPML.",
+      "bodyHtml": "<p>The whole talk comes down to three questions you can ask of any empirical paper, in this order.</p>\n<ol>\n<li><strong>Which number do you want?</strong> A difference - the average marginal component effect (AMCE), usually estimated by OLS - or a ratio - the risk ratio, usually estimated by Poisson pseudo-maximum likelihood (PPML).</li>\n<li><strong>Why is it causal?</strong> The key is assumption A5, E(ε | X) = 0. Randomisation secures it by design; observational data argue for it with controls, fixed effects, difference-in-differences or instruments.</li>\n<li><strong>What do the data look like?</strong> Continuous outcomes: OLS. Repeated, correlated answers: GLS. 0/1 outcomes: OLS or logit. Non-negative with many zeros: PPML.</li>\n</ol>\n<p>One made-up example carries all five estimators, and underneath they all solve the same equation; changing the estimator changes what you assume. The interactive slides include the full derivations, among them the definition of the classical linear model (CLM) added after Dr Zexun Chen raised it in the room. For Stata, Han Zhang recommended <code>margins, dydx(...)</code> after the regression: it averages over the sample distribution of the other attributes and gives the AMCE directly.</p>",
+      "featured": true,
+      "visual": "distribution",
+      "cover": "assets/covers/20261016-amce-ppml.jpg",
+      "coverAlt": "Yifan Qi presenting the AMCE and PPML session in the Boardroom, 16 October 2026",
+      "imgLabel": "lecture · amce & ppml"
+    },
     {
       "id": "20261001_Heqing Shi_Structured-Knowledge-Informed Neural Networks",
       "slug": "2026-10-01-structured-knowledge-informed-neural-networks",
@@ -2921,6 +2979,25 @@
     }
   ],
   "news": [
+    {
+      "kind": "lecture",
+      "cat": "Lecture",
+      "sub": "Yifan Qi",
+      "date": "2026-10-16",
+      "dateLabel": "16 Oct 2026",
+      "title": "Estimation Methods: AMCE and PPML - which estimator, when, and how?",
+      "excerpt": "Three questions to ask of any empirical paper: which number you want (a difference, the AMCE, or a ratio, estimated by PPML), why it is causal, and what the data look like - from OLS and GLS to logit and PPML.",
+      "img": "lecture · amce & ppml",
+      "visual": "distribution",
+      "cover": "assets/covers/20261016-amce-ppml.jpg",
+      "coverAlt": "Yifan Qi presenting the AMCE and PPML session in the Boardroom, 16 October 2026",
+      "href": "assets/slides/20261016-amce-ppml/index.html",
+      "links": [],
+      "external": false,
+      "deadline": "",
+      "deadlineLabel": "",
+      "sessionId": "20261016_Yifan Qi_Estimation Method_AMCE & PPML"
+    },
     {
       "kind": "lecture",
       "cat": "Lecture",

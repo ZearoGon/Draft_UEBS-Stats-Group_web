@@ -1029,6 +1029,10 @@
       linear-gradient(160deg, #11394f, #0b2a3c 68%, #08222f);
     box-shadow: 0 1.6rem 3rem -2rem rgb(6 38 55 / 0.6);
   }
+  .ip-cover {
+    display: block; width: calc(100% + 48px); max-width: none; margin: -22px -24px 18px;
+    aspect-ratio: 16 / 10; object-fit: cover; border-radius: 4px 4px 0 0;
+  }
   .ip-date { display: flex; align-items: baseline; gap: 12px; }
   .ip-date .d { font-size: 52px; line-height: 1; font-weight: 300; }
   .ip-date .m { font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.015em; color: var(--ink-mute); }
@@ -4326,6 +4330,7 @@ function InPerson() {
           const room = s.attendees && s.attendees.length ? s.attendees.length + " in the room" : "";
           return (
             <article key={s.id} className={"ip-card" + (i === 0 ? " lead" : "")}>
+              {s.cover && <img className="ip-cover" src={s.cover} alt={s.coverAlt || ""} loading="lazy" decoding="async" />}
               <div className="ip-date">
                 <span className="d">{String(d).padStart(2, "0")}</span>
                 <span className="m">{MONTHS[m - 1]} {y} · {weekday}</span>
@@ -4341,7 +4346,7 @@ function InPerson() {
                 {links.length > 0 &&
                   <span className="ip-links">
                     {links.map((x) =>
-                      <a key={x.href} href={x.href} target="_blank" rel={x.file ? undefined : "noopener noreferrer"}>{x.label} {x.file ? "↓" : "↗"}</a>)}
+                      <a key={x.href} href={x.href} target="_blank" rel={x.file ? undefined : "noopener noreferrer"}>{x.label} {x.file && !/\.html?$/i.test(x.file) ? "↓" : "↗"}</a>)}
                   </span>}
               </div>
             </article>);

@@ -2772,6 +2772,7 @@ function InPerson() {
           const room = s.attendees && s.attendees.length ? s.attendees.length + " in the room" : "";
           return (
             <article key={s.id} className={"ip-card" + (i === 0 ? " lead" : "")}>
+              {s.cover && <img className="ip-cover" src={s.cover} alt={s.coverAlt || ""} loading="lazy" decoding="async" />}
               <div className="ip-date">
                 <span className="d">{String(d).padStart(2, "0")}</span>
                 <span className="m">{MONTHS[m - 1]} {y} · {weekday}</span>
@@ -2787,7 +2788,7 @@ function InPerson() {
                 {links.length > 0 &&
                   <span className="ip-links">
                     {links.map((x) =>
-                      <a key={x.href} href={x.href} target="_blank" rel={x.file ? undefined : "noopener noreferrer"}>{x.label} {x.file ? "↓" : "↗"}</a>)}
+                      <a key={x.href} href={x.href} target="_blank" rel={x.file ? undefined : "noopener noreferrer"}>{x.label} {x.file && !/\.html?$/i.test(x.file) ? "↓" : "↗"}</a>)}
                   </span>}
               </div>
             </article>);
