@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-26T01:46:21.654Z",
+  "generatedAt": "2026-10-28T19:53:58.802Z",
   "site": {
     "name": "Statistics Study Group",
     "school": "University of Edinburgh Business School",
@@ -665,6 +665,12 @@
       "bio": "Han Zhang is a PhD researcher in the Marketing Group working on large language models, social media platforms, influencer marketing and the video game industry, and brought the group a recently published study on the “sponsored content residue” - what a sponsored post leaves behind in how audiences read an influencer’s later, unpaid posts.",
       "lectures": [
         {
+          "title": "Experiments & Quasi-Experiments",
+          "date": "29 Oct 2026",
+          "pdf": "assets/talks/20261029_Han_Zhang_Experiments_and_Quasi-Experiments.pdf",
+          "sessionId": "20261029_Han Zhang_Quasi-Experiment"
+        },
+        {
           "title": "The “sponsored content residue” in influencer marketing",
           "date": "27 Feb 2026",
           "pdf": "https://www.sciencedirect.com/science/article/pii/S0167811626000091",
@@ -818,6 +824,69 @@
     ]
   ],
   "sessions": [
+    {
+      "id": "20261029_Han Zhang_Quasi-Experiment",
+      "slug": "2026-10-29-experiments-and-quasi-experiments",
+      "date": "2026-10-29",
+      "dateLabel": "29 Oct 2026",
+      "dateVerified": true,
+      "dateNote": "",
+      "start": "17:00",
+      "end": "18:00",
+      "timeLabel": "17:00 - 18:00",
+      "venue": "Boardroom, 4th Floor, UEBS",
+      "format": "in-person",
+      "kind": "lecture",
+      "status": "planned",
+      "note": "",
+      "speakers": [
+        "han-zhang"
+      ],
+      "speakerNames": "Han Zhang",
+      "moderator": "",
+      "discussantId": "",
+      "discussant": "",
+      "byline": "Han Zhang",
+      "attendees": [],
+      "introducedBy": "",
+      "title": "Experiments & Quasi-Experiments",
+      "short": "Quasi-Experiments",
+      "method": "causal",
+      "fields": {
+        "econ": 3,
+        "marketing": 3,
+        "asset": 2,
+        "credit": 2,
+        "risk": 1
+      },
+      "fieldsOwn": false,
+      "semester": "Autumn 2026",
+      "journal": "",
+      "materials": [
+        {
+          "label": "Slides",
+          "file": "assets/talks/20261029_Han_Zhang_Experiments_and_Quasi-Experiments.pdf",
+          "url": "",
+          "public": true,
+          "href": "assets/talks/20261029_Han_Zhang_Experiments_and_Quasi-Experiments.pdf"
+        },
+        {
+          "label": "Reading: Goldfarb, Tucker & Wang (2022, JM)",
+          "file": "",
+          "url": "https://doi.org/10.1177/00222429221082977",
+          "public": true,
+          "href": "https://doi.org/10.1177/00222429221082977"
+        }
+      ],
+      "pdf": "assets/talks/20261029_Han_Zhang_Experiments_and_Quasi-Experiments.pdf",
+      "summary": "Any test is just a comparison of means: from randomised controlled trials to quasi-experimental designs (DID, RDD, IV) and the ways of addressing selection bias (PSM, synthetic control, the Heckman correction).",
+      "bodyHtml": "<p>Following the discussion in the last session, presented by Yifan, we were curious about margins as estimates, which are in fact commonly used in experimental studies. The most basic form of testing is comparing the means of two groups, and the idea of this session is that any test is just a comparison of means. We will discuss experiments (randomised controlled trials, RCTs), quasi-experimental designs (difference-in-differences, regression discontinuity and instrumental variables), and ways of addressing selection bias (propensity score matching, synthetic control and the Heckman correction term).</p>\n<p>For more on the methodology, Han recommends Goldfarb, A., Tucker, C., &amp; Wang, Y. (2022). Conducting Research in Marketing with Quasi-Experiments. <em>Journal of Marketing</em>, 86(3), 1-20.</p>",
+      "featured": true,
+      "visual": "distribution",
+      "cover": "",
+      "coverAlt": "",
+      "imgLabel": "lecture · quasi-experiments"
+    },
     {
       "id": "20261016_Yifan Qi_Estimation Method_AMCE & PPML",
       "slug": "2026-10-16-amce-and-ppml",
@@ -2983,6 +3052,31 @@
     }
   ],
   "news": [
+    {
+      "kind": "lecture",
+      "cat": "Lecture",
+      "sub": "Han Zhang",
+      "date": "2026-10-29",
+      "dateLabel": "29 Oct 2026",
+      "title": "Experiments & Quasi-Experiments",
+      "excerpt": "Any test is just a comparison of means: from randomised controlled trials to quasi-experimental designs (DID, RDD, IV) and the ways of addressing selection bias (PSM, synthetic control, the Heckman correction).",
+      "img": "lecture · quasi-experiments",
+      "visual": "distribution",
+      "cover": "",
+      "coverAlt": "",
+      "href": "assets/talks/20261029_Han_Zhang_Experiments_and_Quasi-Experiments.pdf",
+      "links": [
+        {
+          "label": "Reading: Goldfarb, Tucker & Wang (2022, JM)",
+          "href": "https://doi.org/10.1177/00222429221082977",
+          "external": true
+        }
+      ],
+      "external": false,
+      "deadline": "",
+      "deadlineLabel": "",
+      "sessionId": "20261029_Han Zhang_Quasi-Experiment"
+    },
     {
       "kind": "lecture",
       "cat": "Lecture",
